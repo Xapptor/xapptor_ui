@@ -5,8 +5,8 @@ import 'package:xapptor_auth/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:xapptor_routing/app_screen.dart';
-import 'package:xapptor_routing/app_screens.dart';
+import 'package:xapptor_router/app_screen.dart';
+import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
 import 'certificate_visualizer.dart';

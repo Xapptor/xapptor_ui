@@ -8,7 +8,7 @@ import 'package:xapptor_ui/widgets/abeinstitute/download_apps_container.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
 import 'package:xapptor_ui/widgets/contact_us_container.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_routing/app_screens.dart';
+import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/values/urls.dart';
 import 'package:xapptor_ui/values/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';

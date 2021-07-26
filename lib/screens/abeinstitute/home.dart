@@ -21,8 +21,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:xapptor_routing/app_screen.dart';
-import 'package:xapptor_routing/app_screens.dart';
+import 'package:xapptor_router/app_screen.dart';
+import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
 
 class Home extends StatefulWidget {

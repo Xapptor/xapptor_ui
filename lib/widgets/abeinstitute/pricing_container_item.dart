@@ -1,7 +1,7 @@
 import 'package:universal_platform/universal_platform.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
-import 'package:xapptor_routing/app_screens.dart';
+import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:xapptor_ui/widgets/covered_container_coming_soon.dart';
 import 'package:flutter/material.dart';

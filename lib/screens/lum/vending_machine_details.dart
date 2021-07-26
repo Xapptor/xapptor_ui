@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_routing/app_screen.dart';
-import 'package:xapptor_routing/app_screens.dart';
+import 'package:xapptor_router/app_screen.dart';
+import 'package:xapptor_router/app_screens.dart';
 
 class VendingMachineDetails extends StatefulWidget {
   const VendingMachineDetails({
