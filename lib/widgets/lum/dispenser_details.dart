@@ -1,8 +1,5 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:xapptor_logic/get_main_color_from_remote_image.dart';
 import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
-import 'package:xapptor_logic/get_remote_svg.dart';
 import 'package:xapptor_ui/models/lum/dispenser.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
@@ -31,7 +28,6 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   bool dispenser_enabled = false;
   bool enable_dispenser_edit = true;
   Color main_color = Colors.grey;
-  Uint8List? svg_bytes = null;
 
   switch_button_callback(bool dispenser_enabled_new_value) {
     setState(() {
@@ -40,7 +36,6 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   }
 
   check_mainColor() async {
-    svg_bytes = await get_remote_svg(widget.product.url);
     main_color = await get_main_color_from_remote_svg(widget.product.url);
     print("main_color: " + main_color.toString());
     setState(() {});
