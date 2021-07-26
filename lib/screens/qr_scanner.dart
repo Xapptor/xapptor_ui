@@ -28,7 +28,7 @@ class QRScanner extends StatefulWidget {
 class _QRScannerState extends State<QRScanner> {
   Barcode? result;
   late QRViewController controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final GlobalKey qr_Key = GlobalKey(debugLabel: 'QR');
 
   @override
   void dispose() {
@@ -53,7 +53,7 @@ class _QRScannerState extends State<QRScanner> {
         alignment: Alignment.center,
         children: [
           QRView(
-            key: qrKey,
+            key: qr_Key,
             onQRViewCreated: (QRViewController controller) {
               setState(() {
                 this.controller = controller;

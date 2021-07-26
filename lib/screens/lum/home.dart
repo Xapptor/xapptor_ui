@@ -55,6 +55,7 @@ class _HomeState extends State<Home> {
       pages.add(
         ProductsList(
           vending_machine_id: qr_value,
+          allow_edit_enabled: false,
         ),
       );
       pages.add(

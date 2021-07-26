@@ -1,9 +1,10 @@
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:xapptor_logic/get_main_color_from_remote_image.dart';
+import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
+import 'package:xapptor_logic/get_remote_svg.dart';
 import 'package:xapptor_ui/models/lum/dispenser.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
-import 'package:xapptor_logic/get_temporary_svg_file.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/topbar_back_button_navigator_1.dart';
@@ -29,9 +30,8 @@ class DispenserDetails extends StatefulWidget {
 class _DispenserDetailsState extends State<DispenserDetails> {
   bool dispenser_enabled = false;
   bool enable_dispenser_edit = true;
-  Color main_color = Colors.black;
-  String base64_png = "";
-  Uint8List? image_svg_bytes = null;
+  Color main_color = Colors.grey;
+  Uint8List? svg_bytes = null;
 
   switch_button_callback(bool dispenser_enabled_new_value) {
     setState(() {
@@ -39,14 +39,10 @@ class _DispenserDetailsState extends State<DispenserDetails> {
     });
   }
 
-  update_base64_png(String new_base64_png) {
-    base64_png = new_base64_png;
-    log("base64_png: " + base64_png);
-  }
-
   check_mainColor() async {
-    image_svg_bytes = await get_temporary_svg_file(widget.product.url);
-    // main_color = await get_main_color();
+    svg_bytes = await get_remote_svg(widget.product.url);
+    main_color = await get_main_color_from_remote_svg(widget.product.url);
+    print("main_color: " + main_color.toString());
     setState(() {});
   }
 
@@ -69,7 +65,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
           children: [
             topbar_back_button_navigator_1(
               context: context,
-              background_color: color_lum_light_pink,
+              background_color: main_color,
             ),
             Expanded(
               flex: 1,
@@ -117,22 +113,25 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: FractionallySizedBox(
-                        heightFactor: 0.5,
-                        widthFactor: 0.7,
-                        child: switch_button(
-                          value: dispenser_enabled,
-                          enabled: enable_dispenser_edit,
-                          active_track_color: main_color,
-                          active_color: Colors.white,
-                          background_color: main_color,
-                          callback: switch_button_callback,
-                          border_radius: MediaQuery.of(context).size.width,
-                        ),
-                      ),
-                    ),
+                    widget.allow_edit_enabled
+                        ? Expanded(
+                            flex: 1,
+                            child: FractionallySizedBox(
+                              heightFactor: 0.5,
+                              widthFactor: 0.7,
+                              child: switch_button(
+                                value: dispenser_enabled,
+                                enabled: enable_dispenser_edit,
+                                active_track_color: main_color,
+                                active_color: Colors.white,
+                                background_color: main_color,
+                                callback: switch_button_callback,
+                                border_radius:
+                                    MediaQuery.of(context).size.width,
+                              ),
+                            ),
+                          )
+                        : Container(),
                     Expanded(
                       flex: 2,
                       child: Column(

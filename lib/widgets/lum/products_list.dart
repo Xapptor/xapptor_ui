@@ -10,9 +10,11 @@ import 'package:xapptor_ui/webview/webview.dart';
 class ProductsList extends StatefulWidget {
   const ProductsList({
     required this.vending_machine_id,
+    required this.allow_edit_enabled,
   });
 
   final String vending_machine_id;
+  final bool allow_edit_enabled;
 
   @override
   State<StatefulWidget> createState() => _ProductsListState();
@@ -195,7 +197,7 @@ class _ProductsListState extends State<ProductsList> {
                     product: product,
                     dispenser: dispenser,
                     dispenser_id: dispenser_id,
-                    allow_edit_enabled: false,
+                    allow_edit_enabled: widget.allow_edit_enabled,
                   ),
                 ),
               );
