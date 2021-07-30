@@ -31,32 +31,23 @@ class _TopbarState extends State<Topbar> {
 
   @override
   Widget build(BuildContext context) {
-    double logo_size = 70;
-
-    return widget.logo_path != null
-        ? AppBar(
-            leading:
-                !widget.has_back_button ? Container() : widget.custom_leading,
-            title: Image.asset(
+    return AppBar(
+      leading: !widget.has_back_button ? Container() : widget.custom_leading,
+      title: widget.logo_path != null
+          ? Image.asset(
               widget.logo_path!,
               alignment: Alignment.center,
               fit: BoxFit.contain,
-              height: logo_size,
-            ),
-            backgroundColor: widget.background_color,
-            elevation: 0,
-            actions: widget.actions,
-          )
-        : AppBar(
-            leading:
-                !widget.has_back_button ? Container() : widget.custom_leading,
-            title: Container(
+              height: widget.size,
+              width: widget.size,
+            )
+          : Container(
               height: widget.size,
               width: widget.size,
             ),
-            backgroundColor: widget.background_color,
-            elevation: 0,
-            actions: widget.actions,
-          );
+      backgroundColor: widget.background_color,
+      elevation: 0,
+      actions: widget.actions,
+    );
   }
 }

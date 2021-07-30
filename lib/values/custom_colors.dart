@@ -107,8 +107,9 @@ Color color_lum_green = Color(0xff41AB34);
 Color color_lum_dark_pink = Color(0xffAD358D);
 Color color_lum_light_pink = Color(0xffF465C3);
 Color color_lum_grey = Color(0xffAFAEAE);
+Color color_lum_blue = Color(0xff2C8FBE);
 
-Color color_lum_topbar = color_lum_light_pink.withOpacity(0.5);
+Color color_lum_topbar = color_lum_blue.withOpacity(0.5);
 Color color_lum_text = Colors.white;
 Color color_lum_card = Colors.transparent;
 

@@ -38,8 +38,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late SharedPreferences prefs;
-
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
+  bool auto_scroll = false;
 
   List<String> text_list = [
     "Account",
@@ -61,64 +61,69 @@ class _HomeState extends State<Home> {
   }
 
   Widget drawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              icon: new Icon(
-                Icons.close,
-                color: color_abeinstitute_dark_aqua,
+    return SafeArea(
+      child: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: new Icon(
+                  Icons.close,
+                  color: color_abeinstitute_dark_aqua,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              onPressed: () {
-                Navigator.pop(context);
+            ),
+            ListTile(
+              title: Text(text_list[0]),
+              onTap: () {
+                setState(() {
+                  auto_scroll = false;
+                  open_screen("home/account");
+                });
               },
             ),
-          ),
-          ListTile(
-            title: Text(text_list[0]),
-            onTap: () {
-              open_screen("home/account");
-            },
-          ),
-          ListTile(
-            title: Text(text_list[1]),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(text_list[2]),
-            onTap: () {
-              open_screen("home/courses");
-            },
-          ),
-          ListTile(
-            title: Text(text_list[3]),
-            onTap: () {
-              open_screen("home/buy_courses");
-            },
-          ),
-          ListTile(
-            title: Text(text_list[4]),
-            onTap: () {
-              open_screen("home/certificates_and_rewards");
-            },
-          ),
-          ListTile(
-            title: Text(text_list[5]),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text(text_list[6]),
-            onTap: () async {
-              await FirebaseAuth.instance.signOut().then((value) {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              });
-            },
-          ),
-        ],
+            ListTile(
+              title: Text(text_list[1]),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text(text_list[2]),
+              onTap: () {
+                open_screen("home/courses");
+              },
+            ),
+            ListTile(
+              title: Text(text_list[3]),
+              onTap: () {
+                open_screen("home/buy_courses");
+              },
+            ),
+            ListTile(
+              title: Text(text_list[4]),
+              onTap: () {
+                open_screen("home/certificates_and_rewards");
+              },
+            ),
+            ListTile(
+              title: Text(text_list[5]),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text(text_list[6]),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -351,178 +356,181 @@ class _HomeState extends State<Home> {
     double card_holder_elevation = 3;
     double card_holder_border_radius = 16;
 
-    return Scaffold(
-      key: scaffold_key,
-      endDrawer: drawer(),
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
-          size: app_bar_height,
-          has_back_button: false,
-          actions: widgets_action(portrait),
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        key: scaffold_key,
+        endDrawer: drawer(),
+        extendBodyBehindAppBar: true,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(app_bar_height),
+          child: Topbar(
+            background_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
+            size: app_bar_height,
+            has_back_button: false,
+            actions: widgets_action(portrait),
+            custom_leading: null,
+            logo_path: "assets/images/logo.png",
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Spacer(flex: 1),
-          Expanded(
-            flex: 5,
-            child: FractionallySizedBox(
-              heightFactor: 0.9,
-              child: WidgetsCarousel(
-                auto_scroll: true,
-                dot_colors_active: [
-                  color_abeinstitute_green,
-                  color_abeinstitute_green,
-                  color_abeinstitute_green,
-                  color_abeinstitute_green,
-                ],
-                dot_color_inactive: color_abeinstitute_ocean_blue,
-                children: <Widget>[
-                  generic_card_holder(
-                    image_path: "assets/images/traveler_2.jpg",
-                    title: "Account",
-                    subtitle: "Edit your Info",
-                    background_image_alignment: Alignment.center,
-                    icon: null,
-                    icon_background_color: null,
-                    on_pressed: () {
-                      open_screen("home/account");
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                  generic_card_holder(
-                    image_path: "assets/images/courses.jpg",
-                    title: "Courses",
-                    subtitle: "Complete the Units",
-                    background_image_alignment: Alignment.center,
-                    icon: null,
-                    icon_background_color: null,
-                    on_pressed: () {
-                      open_screen("home/courses");
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                  generic_card_holder(
-                    image_path: "assets/images/course_student_1.jpg",
-                    title: "New Courses",
-                    subtitle: "to extend your Knowledge",
-                    background_image_alignment: Alignment.center,
-                    icon: null,
-                    icon_background_color: null,
-                    on_pressed: () {
-                      open_screen("home/buy_courses");
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                  generic_card_holder(
-                    image_path: "assets/images/course_student_2.jpg",
-                    title: "Certificates",
-                    subtitle: "and Rewards",
-                    background_image_alignment: Alignment.center,
-                    icon: null,
-                    icon_background_color: null,
-                    on_pressed: () {
-                      open_screen("home/certificates_and_rewards");
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                ],
+        body: Column(
+          children: [
+            Spacer(flex: 1),
+            Expanded(
+              flex: 5,
+              child: FractionallySizedBox(
+                heightFactor: 0.9,
+                child: WidgetsCarousel(
+                  auto_scroll: auto_scroll,
+                  dot_colors_active: [
+                    color_abeinstitute_green,
+                    color_abeinstitute_green,
+                    color_abeinstitute_green,
+                    color_abeinstitute_green,
+                  ],
+                  dot_color_inactive: color_abeinstitute_ocean_blue,
+                  children: <Widget>[
+                    generic_card_holder(
+                      image_path: "assets/images/traveler_2.jpg",
+                      title: "Account",
+                      subtitle: "Edit your Info",
+                      background_image_alignment: Alignment.center,
+                      icon: null,
+                      icon_background_color: null,
+                      on_pressed: () {
+                        open_screen("home/account");
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                    generic_card_holder(
+                      image_path: "assets/images/courses.jpg",
+                      title: "Courses",
+                      subtitle: "Complete the Units",
+                      background_image_alignment: Alignment.center,
+                      icon: null,
+                      icon_background_color: null,
+                      on_pressed: () {
+                        open_screen("home/courses");
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                    generic_card_holder(
+                      image_path: "assets/images/course_student_1.jpg",
+                      title: "New Courses",
+                      subtitle: "to extend your Knowledge",
+                      background_image_alignment: Alignment.center,
+                      icon: null,
+                      icon_background_color: null,
+                      on_pressed: () {
+                        open_screen("home/buy_courses");
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                    generic_card_holder(
+                      image_path: "assets/images/course_student_2.jpg",
+                      title: "Certificates",
+                      subtitle: "and Rewards",
+                      background_image_alignment: Alignment.center,
+                      icon: null,
+                      icon_background_color: null,
+                      on_pressed: () {
+                        open_screen("home/certificates_and_rewards");
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 5,
-            child: FractionallySizedBox(
-              heightFactor: 0.9,
-              child: WidgetsCarousel(
-                auto_scroll: true,
-                dot_colors_active: [
-                  color_facebook,
-                  color_instagram,
-                  color_twitter,
-                  color_youtube,
-                ],
-                dot_color_inactive: color_abeinstitute_ocean_blue,
-                children: <Widget>[
-                  generic_card_holder(
-                    image_path: "assets/images/family.jpg",
-                    title: "Facebook",
-                    subtitle: "Official Page",
-                    background_image_alignment: Alignment.center,
-                    icon: FontAwesome.facebook,
-                    icon_background_color: color_facebook,
-                    on_pressed: () {
-                      launch_url(url_facebook_abeinstitute,
-                          url_facebook_fallback_abeinstitute);
-                      print("Something");
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                  generic_card_holder(
-                    image_path: "assets/images/traveler_1.jpg",
-                    title: "Instagram",
-                    subtitle: "Official Account",
-                    background_image_alignment: Alignment.topCenter,
-                    icon: FontAwesome.instagram,
-                    icon_background_color: color_instagram,
-                    on_pressed: () {
-                      launch_url(url_instagram_abeinstitute,
-                          url_instagram_abeinstitute);
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                  generic_card_holder(
-                    image_path: "assets/images/traveler_2.jpg",
-                    title: "Twitter",
-                    subtitle: "Official Account",
-                    background_image_alignment: Alignment.topCenter,
-                    icon: FontAwesome.twitter,
-                    icon_background_color: color_twitter,
-                    on_pressed: () {
-                      launch_url(
-                          url_twitter_abeinstitute, url_twitter_abeinstitute);
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                  generic_card_holder(
-                    image_path: "assets/images/project_demo_1.jpg",
-                    title: "Youtube",
-                    subtitle: "Official Channel",
-                    background_image_alignment: Alignment.center,
-                    icon: FontAwesome.youtube,
-                    icon_background_color: color_youtube,
-                    on_pressed: () {
-                      launch_url(
-                          url_youtube_abeinstitute, url_youtube_abeinstitute);
-                    },
-                    card_holder_elevation: card_holder_elevation,
-                    card_holder_border_radius: card_holder_border_radius,
-                    context: context,
-                  ),
-                ],
+            Expanded(
+              flex: 5,
+              child: FractionallySizedBox(
+                heightFactor: 0.9,
+                child: WidgetsCarousel(
+                  auto_scroll: auto_scroll,
+                  dot_colors_active: [
+                    color_facebook,
+                    color_instagram,
+                    color_twitter,
+                    color_youtube,
+                  ],
+                  dot_color_inactive: color_abeinstitute_ocean_blue,
+                  children: <Widget>[
+                    generic_card_holder(
+                      image_path: "assets/images/family.jpg",
+                      title: "Facebook",
+                      subtitle: "Official Page",
+                      background_image_alignment: Alignment.center,
+                      icon: FontAwesome.facebook,
+                      icon_background_color: color_facebook,
+                      on_pressed: () {
+                        launch_url(url_facebook_abeinstitute,
+                            url_facebook_fallback_abeinstitute);
+                        print("Something");
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                    generic_card_holder(
+                      image_path: "assets/images/traveler_1.jpg",
+                      title: "Instagram",
+                      subtitle: "Official Account",
+                      background_image_alignment: Alignment.topCenter,
+                      icon: FontAwesome.instagram,
+                      icon_background_color: color_instagram,
+                      on_pressed: () {
+                        launch_url(url_instagram_abeinstitute,
+                            url_instagram_abeinstitute);
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                    generic_card_holder(
+                      image_path: "assets/images/traveler_2.jpg",
+                      title: "Twitter",
+                      subtitle: "Official Account",
+                      background_image_alignment: Alignment.topCenter,
+                      icon: FontAwesome.twitter,
+                      icon_background_color: color_twitter,
+                      on_pressed: () {
+                        launch_url(
+                            url_twitter_abeinstitute, url_twitter_abeinstitute);
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                    generic_card_holder(
+                      image_path: "assets/images/project_demo_1.jpg",
+                      title: "Youtube",
+                      subtitle: "Official Channel",
+                      background_image_alignment: Alignment.center,
+                      icon: FontAwesome.youtube,
+                      icon_background_color: color_youtube,
+                      on_pressed: () {
+                        launch_url(
+                            url_youtube_abeinstitute, url_youtube_abeinstitute);
+                      },
+                      card_holder_elevation: card_holder_elevation,
+                      card_holder_border_radius: card_holder_border_radius,
+                      context: context,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

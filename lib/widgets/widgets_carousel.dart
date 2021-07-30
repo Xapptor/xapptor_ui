@@ -28,7 +28,6 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     viewportFraction: 0.3,
   );
   int total_pages = 0;
-  bool active_auto_scroll = true;
 
   auto_scroll() {
     Curve animation_curve = Curves.easeInOutCirc;
@@ -48,7 +47,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
         );
       }
 
-      if (active_auto_scroll) {
+      if (widget.auto_scroll) {
         auto_scroll();
       }
     });
