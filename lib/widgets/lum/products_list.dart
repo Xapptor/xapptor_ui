@@ -73,91 +73,75 @@ class _ProductsListState extends State<ProductsList> {
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
         itemCount: products.length ~/ 2,
         itemBuilder: (context, i) {
-          var first_index = i * 2;
-          var second_index = first_index + 1;
           return Container(
             child: Column(
               children: [
-                product_items_row(
-                  first_index,
-                  second_index,
+                product_item(
+                  products[i],
                   context,
-                  products,
                   dispensers[i],
+                  i.toString(),
                 ),
-                product_items_row(
-                  first_index,
-                  second_index,
+                product_item(
+                  products[i],
                   context,
-                  products,
                   dispensers[i],
+                  i.toString(),
                 ),
-                product_items_row(
-                  first_index,
-                  second_index,
+                product_item(
+                  products[i],
                   context,
-                  products,
                   dispensers[i],
+                  i.toString(),
                 ),
-                product_items_row(
-                  first_index,
-                  second_index,
+                product_item(
+                  products[i],
                   context,
-                  products,
                   dispensers[i],
+                  i.toString(),
                 ),
-                product_items_row(
-                  first_index,
-                  second_index,
+                product_item(
+                  products[i],
                   context,
-                  products,
                   dispensers[i],
+                  i.toString(),
+                ),
+                product_item(
+                  products[i],
+                  context,
+                  dispensers[i],
+                  i.toString(),
+                ),
+                product_item(
+                  products[i],
+                  context,
+                  dispensers[i],
+                  i.toString(),
+                ),
+                product_item(
+                  products[i],
+                  context,
+                  dispensers[i],
+                  i.toString(),
+                ),
+                product_item(
+                  products[i],
+                  context,
+                  dispensers[i],
+                  i.toString(),
+                ),
+                product_item(
+                  products[i],
+                  context,
+                  dispensers[i],
+                  i.toString(),
                 ),
               ],
             ),
           );
-
-          // return product_items_row(
-          //     first_index, second_index, context, products);
         },
-      ),
-    );
-  }
-
-  Widget product_items_row(
-    int first_index,
-    int second_index,
-    BuildContext context,
-    List<Product> products,
-    Dispenser dispenser,
-  ) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 5.8,
-      width: MediaQuery.of(context).size.width,
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: product_item(
-              products[first_index],
-              context,
-              dispensers[first_index],
-              first_index.toString(),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: product_item(
-              products[second_index],
-              context,
-              dispensers[second_index],
-              second_index.toString(),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -170,65 +154,68 @@ class _ProductsListState extends State<ProductsList> {
   ) {
     double fractional_factor = 0.9;
     double index_tag_size = 30;
-    return FractionallySizedBox(
-      heightFactor: fractional_factor,
-      widthFactor: fractional_factor,
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    5,
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      child: FractionallySizedBox(
+        heightFactor: fractional_factor,
+        widthFactor: fractional_factor,
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      5,
+                    ),
                   ),
                 ),
+                elevation: MaterialStateProperty.all<double>(5),
               ),
-              elevation: MaterialStateProperty.all<double>(5),
-            ),
-            onPressed: () {
-              print("dispenser_id: " + dispenser_id);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DispenserDetails(
-                    product: product,
-                    dispenser: dispenser,
-                    dispenser_id: dispenser_id,
-                    allow_edit_enabled: widget.allow_edit_enabled,
+              onPressed: () {
+                print("dispenser_id: " + dispenser_id);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DispenserDetails(
+                      product: product,
+                      dispenser: dispenser,
+                      dispenser_id: dispenser_id,
+                      allow_edit_enabled: widget.allow_edit_enabled,
+                    ),
                   ),
+                );
+              },
+              child: IgnorePointer(
+                child: Webview(
+                  id: "20",
+                  src: product.url,
+                  function: () {},
                 ),
-              );
-            },
-            child: IgnorePointer(
-              child: Webview(
-                id: "20",
-                src: product.url,
-                function: () {},
               ),
             ),
-          ),
-          Container(
-            height: index_tag_size,
-            width: index_tag_size,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color_lum_grey,
-              borderRadius: BorderRadius.circular(
-                1000,
+            Container(
+              height: index_tag_size,
+              width: index_tag_size,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color_lum_grey,
+                borderRadius: BorderRadius.circular(
+                  1000,
+                ),
+              ),
+              child: Text(
+                dispenser_id,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
-            child: Text(
-              dispenser_id,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
