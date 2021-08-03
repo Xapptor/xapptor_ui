@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -29,6 +31,13 @@ class _ProductsListState extends State<ProductsList> {
   String products_value = "";
 
   get_products() async {
+    products = [];
+    vending_machine_products = [];
+    dispensers = [];
+    products_values = [];
+
+    setState(() {});
+
     DocumentSnapshot vending_machine = await FirebaseFirestore.instance
         .collection("vending_machines")
         .doc(widget.vending_machine_id)
@@ -56,13 +65,14 @@ class _ProductsListState extends State<ProductsList> {
           .firstWhere((product) => product.id == current_dispenser.product_id);
 
       vending_machine_products.add(current_product);
+      print("current_product: " + current_product.url);
 
       dispensers.add(current_dispenser);
     }
 
     for (var product in products) {
       products_values.add(product.name);
-      print("products: " + product.url);
+      //print("products: " + product.url);
     }
     products_value = products_values.first;
     setState(() {});
@@ -233,16 +243,22 @@ class _ProductsListState extends State<ProductsList> {
                       ),
                       TextButton(
                         onPressed: () {
-                          //Dispenser dispenser_updated = dispensers[index];
-                          //dispenser_updated.product_id = products_value
+                          Dispenser dispenser_updated = dispensers[index];
+                          Product current_product = products.firstWhere(
+                              (product) => product.name == products_value);
 
+                          dispenser_updated.product_id = current_product.id;
                           update_item_in_array_field(
                             document_id: widget.vending_machine_id,
                             collection_id: "vending_machines",
                             field_key: "dispensers",
-                            field_value: "",
+                            field_value: dispenser_updated.to_json(),
                             index: index,
                           );
+                          Timer(Duration(milliseconds: 500), () {
+                            get_products();
+                          });
+
                           Navigator.pop(context);
                         },
                         child: Text("Aceptar"),

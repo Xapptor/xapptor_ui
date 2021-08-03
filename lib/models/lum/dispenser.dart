@@ -1,9 +1,9 @@
 class Dispenser {
-  final String product_id;
-  final bool enabled;
-  final int quantity_remaining;
+  String product_id;
+  bool enabled;
+  int quantity_remaining;
 
-  const Dispenser({
+  Dispenser({
     required this.product_id,
     required this.enabled,
     required this.quantity_remaining,
