@@ -12,13 +12,13 @@ class DispenserDetails extends StatefulWidget {
     required this.product,
     required this.dispenser,
     required this.dispenser_id,
-    required this.allow_edit_enabled,
+    required this.allow_edit,
   });
 
   final Product product;
   final Dispenser dispenser;
   final String dispenser_id;
-  final bool allow_edit_enabled;
+  final bool allow_edit;
 
   @override
   State<StatefulWidget> createState() => _DispenserDetailsState();
@@ -108,7 +108,20 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                         ),
                       ),
                     ),
-                    widget.allow_edit_enabled
+                    widget.allow_edit
+                        ? Container()
+                        : Expanded(
+                            flex: 1,
+                            child: Text(
+                              widget.product.description,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: color_lum_grey,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                    widget.allow_edit
                         ? Expanded(
                             flex: 1,
                             child: FractionallySizedBox(
@@ -127,56 +140,60 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                             ),
                           )
                         : Container(),
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "CANTIDAD DISPONIBLE",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: main_color,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                          Expanded(
+                    widget.allow_edit
+                        ? Expanded(
                             flex: 2,
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                children: [
-                                  WidgetSpan(
-                                    alignment: PlaceholderAlignment.middle,
-                                    child: Text(
-                                      widget.dispenser.quantity_remaining
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: main_color,
-                                        fontSize: 70,
-                                      ),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "CANTIDAD DISPONIBLE",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: main_color,
+                                      fontSize: 20,
                                     ),
                                   ),
-                                  WidgetSpan(
-                                    alignment: PlaceholderAlignment.middle,
-                                    child: Text(
-                                      " LITROS",
-                                      style: TextStyle(
-                                        color: color_lum_grey,
-                                        fontSize: 30,
-                                      ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          alignment:
+                                              PlaceholderAlignment.middle,
+                                          child: Text(
+                                            widget.dispenser.quantity_remaining
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: main_color,
+                                              fontSize: 70,
+                                            ),
+                                          ),
+                                        ),
+                                        WidgetSpan(
+                                          alignment:
+                                              PlaceholderAlignment.middle,
+                                          child: Text(
+                                            " LITROS",
+                                            style: TextStyle(
+                                              color: color_lum_grey,
+                                              fontSize: 30,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          )
+                        : Container(),
                     Spacer(flex: 2),
                   ],
                 ),

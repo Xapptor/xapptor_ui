@@ -247,7 +247,7 @@ class _HomeState extends State<Home> {
               : qr_scanned
                   ? ProductsList(
                       vending_machine_id: qr_value,
-                      allow_edit_enabled: false,
+                      allow_edit: false,
                     )
                   : QRScanner(
                       descriptive_text: "Escanea el código QR\nde la Máquina",
