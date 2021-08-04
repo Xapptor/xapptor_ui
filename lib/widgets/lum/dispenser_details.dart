@@ -29,9 +29,9 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   bool enable_dispenser_edit = true;
   Color main_color = Colors.grey;
 
-  switch_button_callback(bool dispenser_enabled_new_value) {
+  switch_button_callback(bool new_value) {
     setState(() {
-      dispenser_enabled = dispenser_enabled_new_value;
+      dispenser_enabled = new_value;
     });
   }
 

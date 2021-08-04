@@ -30,15 +30,6 @@ class _VendingMachinesListContainerState
     get_vending_machines();
   }
 
-  create_new_vending_machine_copy(
-      int number_of_copies, VendingMachine vending_machine) {
-    for (var i = 0; i < number_of_copies; i++) {
-      FirebaseFirestore.instance
-          .collection('vending_machines')
-          .add(vending_machine.to_json());
-    }
-  }
-
   get_vending_machines() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -81,10 +72,6 @@ class _VendingMachinesListContainerState
           );
         }
       });
-
-      // create_new_vending_machine_copy
-      //create_new_vending_machine_copy(2, vending_machines.last);
-
       setState(() {});
     });
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:xapptor_auth/generic_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_auth/user_info_view.dart';
@@ -10,7 +9,7 @@ import 'package:xapptor_ui/screens/lum/admin_analytics.dart';
 import 'package:xapptor_ui/screens/qr_scanner.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/home_container_bottom_bar.dart';
-import 'package:xapptor_ui/widgets/lum/products_list.dart';
+import 'package:xapptor_ui/widgets/lum/dispensers_list.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machines_list_container.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,14 +47,6 @@ class _HomeState extends State<Home> {
     qr_scanned = true;
     qr_value = new_qr_value;
     setState(() {});
-  }
-
-  List<Widget> get_pages() {
-    List<Widget> pages = [
-      VendingMachinesListContainer(),
-      AdminAnalytics(),
-    ];
-    return pages;
   }
 
   List<String> text_list = [
@@ -207,6 +198,8 @@ class _HomeState extends State<Home> {
 
     double app_bar_height = 65;
 
+    print("widget.user.admin: " + widget.user.admin.toString());
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -229,23 +222,21 @@ class _HomeState extends State<Home> {
               ? HomeContainerWithPagesAndBottomBar(
                   bottom_bar_color: color_lum_dark_pink,
                   icon_color: Colors.white,
-                  pages: get_pages(),
-                  icons: widget.user.admin
-                      ? [
-                          Icons.microwave,
-                          Icons.insights,
-                        ]
-                      : [
-                          FontAwesome.product_hunt,
-                          FontAwesome.adn,
-                        ],
+                  pages: [
+                    VendingMachinesListContainer(),
+                    AdminAnalytics(),
+                  ],
+                  icons: [
+                    Icons.microwave,
+                    Icons.insights,
+                  ],
                   texts: [
                     "Máquinas",
                     "Analíticas",
                   ],
                 )
               : qr_scanned
-                  ? ProductsList(
+                  ? DispensersList(
                       vending_machine_id: qr_value,
                       allow_edit: false,
                     )

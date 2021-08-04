@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/models/lum/vending_machine.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
+import 'package:xapptor_ui/models/lum/vending_machine.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/widgets/lum/dispensers_list.dart';
+import 'package:xapptor_ui/widgets/switch_button.dart';
 
 class VendingMachineDetails extends StatefulWidget {
   const VendingMachineDetails({
@@ -21,7 +23,7 @@ class VendingMachineDetails extends StatefulWidget {
 class _VendingMachineDetailsState extends State<VendingMachineDetails> {
   TextEditingController _controller_name = TextEditingController();
   bool is_editing = false;
-  bool vending_machine_is_enabled = true;
+  bool enabled = true;
 
   @override
   void dispose() {
@@ -35,9 +37,15 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     set_values();
   }
 
+  switch_button_callback(bool new_value) {
+    setState(() {
+      enabled = new_value;
+    });
+  }
+
   set_values() {
     _controller_name.text = widget.vending_machine.name;
-    vending_machine_is_enabled = widget.vending_machine.enabled;
+    enabled = widget.vending_machine.enabled;
   }
 
   show_save_data_alert_dialog({
@@ -48,7 +56,6 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("¿Deseas guardar los cambios?"),
-          //content: Text(""),
           actions: <Widget>[
             TextButton(
               child: Text("Descartar cambios"),
@@ -71,7 +78,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                     .doc(widget.vending_machine.id)
                     .update({
                   "name": _controller_name.text,
-                  "enabled": vending_machine_is_enabled,
+                  "enabled": enabled,
                 }).then((result) {
                   is_editing = false;
                   Navigator.of(context).pop();
@@ -86,228 +93,139 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
 
   @override
   Widget build(BuildContext context) {
-    double current_card_height = MediaQuery.of(context).size.height / 4;
-    double current_card_width = MediaQuery.of(context).size.width * 0.8;
-    double current_card_margin = MediaQuery.of(context).size.height * 0.015;
-    double current_card_padding = MediaQuery.of(context).size.width * 0.07;
-    double title_size = 16;
-    double subtitle_size = 14;
-    double current_opacity = 0.8;
-    double sized_box_height = MediaQuery.of(context).size.height / 16;
+    double title_size = 24;
+    double subtitle_size = 20;
+    double textfield_size = 30;
+    Color main_color = Colors.grey;
 
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Column(
-          children: [
-            SizedBox(
-              height: sized_box_height,
-            ),
-            Center(
-              child: Container(
-                height: current_card_height,
-                width: current_card_width,
-                margin: EdgeInsets.all(current_card_margin),
-                padding: EdgeInsets.all(current_card_padding),
-                decoration: BoxDecoration(
-                  color: vending_machine_is_enabled
-                      ? widget.color
-                      : Colors.grey.withOpacity(current_opacity),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+        body: Container(
+          alignment: Alignment.center,
+          child: FractionallySizedBox(
+            widthFactor: 0.7,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Spacer(flex: 3),
+                Expanded(
+                  flex: 2,
+                  child: TextField(
+                    onTap: () {
+                      //
+                    },
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: color_lum_green,
+                      fontSize: textfield_size,
+                    ),
+                    controller: _controller_name,
+                    decoration: InputDecoration(
+                      hintText: "Nombre",
+                      hintStyle: TextStyle(
+                        color: color_lum_green,
+                        fontSize: textfield_size,
+                      ),
+                    ),
+                    enabled: is_editing,
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TextField(
-                        onTap: () {
-                          //
-                        },
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        controller: _controller_name,
-                        decoration: InputDecoration(
-                          hintText: "Nombre",
-                          hintStyle: TextStyle(
-                            color: Colors.white,
+                Expanded(
+                  flex: 1,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "ID: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: color_lum_grey,
                             fontSize: subtitle_size,
                           ),
                         ),
-                        enabled: is_editing,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "ID: ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: title_size,
-                              ),
-                            ),
-                            TextSpan(
-                              text: widget.vending_machine.id,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: subtitle_size,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Habilitada: ",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: title_size,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: vending_machine_is_enabled.toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: subtitle_size,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        TextSpan(
+                          text: widget.vending_machine.id,
+                          style: TextStyle(
+                            color: color_lum_grey,
+                            fontSize: subtitle_size,
                           ),
-                          Switch(
-                            value: vending_machine_is_enabled,
-                            onChanged: is_editing
-                                ? (value) {
-                                    setState(() {
-                                      vending_machine_is_enabled = value;
-                                    });
-                                  }
-                                : null,
-                            activeTrackColor: color_lum_green,
-                            activeColor: color_lum_light_pink,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Cambio: ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: title_size,
-                              ),
-                            ),
-                            TextSpan(
-                              text: widget.vending_machine.money_change
-                                  .toString(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: subtitle_size,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\$",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: subtitle_size,
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: current_card_height * 1.8,
-                width: current_card_width,
-                margin: EdgeInsets.all(current_card_margin),
-                padding: EdgeInsets.all(current_card_padding),
-                decoration: BoxDecoration(
-                  color: vending_machine_is_enabled
-                      ? widget.color
-                      : Colors.grey.withOpacity(current_opacity),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  child: ExpansionTile(
-                    initiallyExpanded: true,
-                    trailing: Icon(
-                      Icons.coffee_maker_outlined,
-                      color: Colors.white,
+                Expanded(
+                  flex: 1,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "CAMBIO \$",
+                          style: TextStyle(
+                            //fontWeight: FontWeight.bold,
+                            color: color_lum_light_pink,
+                            fontSize: title_size,
+                          ),
+                        ),
+                        TextSpan(
+                          text: widget.vending_machine.money_change.toString(),
+                          style: TextStyle(
+                            //fontWeight: FontWeight.bold,
+                            color: color_lum_light_pink,
+                            fontSize: title_size,
+                          ),
+                        ),
+                      ],
                     ),
-                    title: Text(
-                      "Lista de Dispensadores",
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: FractionallySizedBox(
+                    heightFactor: 0.5,
+                    widthFactor: 0.7,
+                    child: switch_button(
+                      value: enabled,
+                      enabled: is_editing,
+                      active_track_color: main_color,
+                      active_color: Colors.white,
+                      background_color: main_color,
+                      callback: switch_button_callback,
+                      border_radius: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      add_new_app_screen(
+                        AppScreen(
+                          name: "home/vending_machine_details/dispensers_list",
+                          child: DispensersList(
+                            vending_machine_id: widget.vending_machine.id,
+                            allow_edit: true,
+                          ),
+                        ),
+                      );
+                      open_screen(
+                          "home/vending_machine_details/dispensers_list");
+                    },
+                    child: Text(
+                      "EDITAR DISPENSADORES",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: color_lum_green,
+                        fontSize: subtitle_size,
                       ),
                     ),
-                    children: [
-                      for (var dispenser in widget.vending_machine.dispensers)
-                        InkWell(
-                          onTap: () {
-                            add_new_app_screen(
-                              AppScreen(
-                                name:
-                                    "home/vending_machine_details/dispenser_details",
-                                // child: DispenserDetails(
-                                //   vending_machine: widget.vending_machine,
-                                //   dispenser_index: widget
-                                //       .vending_machine.dispensers
-                                //       .indexOf(dispenser),
-                                //   color: widget.color,
-                                // ),
-                                child: Container(),
-                              ),
-                            );
-                            open_screen(
-                                "home/vending_machine_details/dispenser_details");
-                          },
-                          child: Container(
-                            margin: EdgeInsets.all(current_card_margin),
-                            child: Text(
-                              "Dispensador " +
-                                  widget.vending_machine.dispensers
-                                      .indexOf(dispenser)
-                                      .toString(),
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        )
-                    ],
                   ),
                 ),
-              ),
+                Spacer(flex: 4),
+              ],
             ),
-          ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -10,8 +10,8 @@ import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/lum/dispenser_details.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 
-class ProductsList extends StatefulWidget {
-  const ProductsList({
+class DispensersList extends StatefulWidget {
+  const DispensersList({
     required this.vending_machine_id,
     required this.allow_edit,
   });
@@ -20,10 +20,10 @@ class ProductsList extends StatefulWidget {
   final bool allow_edit;
 
   @override
-  State<StatefulWidget> createState() => _ProductsListState();
+  State<StatefulWidget> createState() => _DispensersListState();
 }
 
-class _ProductsListState extends State<ProductsList> {
+class _DispensersListState extends State<DispensersList> {
   List<Product> vending_machine_products = [];
   List<Product> products = [];
   List<Dispenser> dispensers = [];
@@ -91,17 +91,19 @@ class _ProductsListState extends State<ProductsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        itemCount: vending_machine_products.length,
-        itemBuilder: (context, i) {
-          return product_item(
-            vending_machine_products[i],
-            context,
-            dispensers[i],
-            i,
-          );
-        },
+    return Scaffold(
+      body: Container(
+        child: ListView.builder(
+          itemCount: vending_machine_products.length,
+          itemBuilder: (context, i) {
+            return product_item(
+              vending_machine_products[i],
+              context,
+              dispensers[i],
+              i,
+            );
+          },
+        ),
       ),
     );
   }
@@ -166,7 +168,7 @@ class _ProductsListState extends State<ProductsList> {
                 ),
               ),
             ),
-            !widget.allow_edit
+            widget.allow_edit
                 ? Align(
                     alignment: Alignment.topRight,
                     child: IconButton(
