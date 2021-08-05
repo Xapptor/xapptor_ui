@@ -53,14 +53,16 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        background_color: main_color,
+        background_color: color_lum_blue,
         has_back_button: true,
-        actions: <Widget>[],
+        actions: [],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
+        logo_color: Colors.white,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
+        color: Colors.white,
         child: FractionallySizedBox(
           widthFactor: 0.7,
           child: Column(

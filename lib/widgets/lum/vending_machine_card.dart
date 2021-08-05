@@ -6,19 +6,18 @@ import 'package:xapptor_ui/screens/lum/vending_machine_details.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
-class VendingMachinesListCard extends StatefulWidget {
-  const VendingMachinesListCard({
+class VendingMachineCard extends StatefulWidget {
+  const VendingMachineCard({
     required this.vending_machine,
   });
 
   final VendingMachine vending_machine;
 
   @override
-  _VendingMachinesListCardState createState() =>
-      _VendingMachinesListCardState();
+  _VendingMachineCardState createState() => _VendingMachineCardState();
 }
 
-class _VendingMachinesListCardState extends State<VendingMachinesListCard> {
+class _VendingMachineCardState extends State<VendingMachineCard> {
   @override
   void initState() {
     super.initState();

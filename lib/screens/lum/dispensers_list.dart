@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,8 +6,9 @@ import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_ui/models/lum/dispenser.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_ui/widgets/lum/dispenser_details.dart';
+import 'package:xapptor_ui/screens/lum/dispenser_details.dart';
 import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/topbar.dart';
 
 class DispensersList extends StatefulWidget {
   const DispensersList({
@@ -92,6 +92,14 @@ class _DispensersListState extends State<DispensersList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TopBar(
+        background_color: color_lum_blue,
+        has_back_button: true,
+        actions: [],
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
+        logo_color: Colors.white,
+      ),
       body: Container(
         child: ListView.builder(
           itemCount: vending_machine_products.length,

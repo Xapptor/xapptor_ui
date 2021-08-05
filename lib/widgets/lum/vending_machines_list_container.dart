@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
-import 'package:xapptor_ui/widgets/lum/vending_machines_list_card.dart';
+import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 
 class VendingMachinesListContainer extends StatefulWidget {
   @override
@@ -48,7 +48,7 @@ class _VendingMachinesListContainerState
             vending_machines[vending_machines.length - 1];
 
         vending_machines_widgets.add(
-          VendingMachinesListCard(
+          VendingMachineCard(
             vending_machine: last_vending_machine,
           ),
         );
