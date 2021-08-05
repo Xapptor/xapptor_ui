@@ -13,12 +13,14 @@ class DispenserDetails extends StatefulWidget {
     required this.dispenser,
     required this.dispenser_id,
     required this.allow_edit,
+    required this.update_enabled_in_dispenser,
   });
 
   final Product product;
   final Dispenser dispenser;
-  final String dispenser_id;
+  final int dispenser_id;
   final bool allow_edit;
+  final Function(int index, bool enabled) update_enabled_in_dispenser;
 
   @override
   State<StatefulWidget> createState() => _DispenserDetailsState();
@@ -32,28 +34,35 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   switch_button_callback(bool new_value) {
     setState(() {
       dispenser_enabled = new_value;
+      widget.update_enabled_in_dispenser(
+        widget.dispenser_id,
+        dispenser_enabled,
+      );
     });
   }
 
-  check_mainColor() async {
+  check_main_color() async {
     main_color = await get_main_color_from_remote_svg(widget.product.url);
-    print("main_color: " + main_color.toString());
+    setState(() {});
+  }
+
+  check_enabled() {
+    dispenser_enabled = widget.dispenser.enabled;
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 3000), () {
-      check_mainColor();
-    });
+    check_main_color();
+    check_enabled();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        background_color: color_lum_blue,
+        background_color: main_color,
         has_back_button: true,
         actions: [],
         custom_leading: null,
@@ -96,7 +105,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
-                          widget.dispenser_id,
+                          (widget.dispenser_id + 1).toString(),
                           style: TextStyle(
                             color: main_color,
                             fontSize: 50,
@@ -124,7 +133,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                   ? Expanded(
                       flex: 1,
                       child: FractionallySizedBox(
-                        heightFactor: 0.5,
+                        heightFactor: 0.6,
                         widthFactor: 0.7,
                         child: switch_button(
                           value: dispenser_enabled,

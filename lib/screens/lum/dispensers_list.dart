@@ -151,8 +151,9 @@ class _DispensersListState extends State<DispensersList> {
                     builder: (context) => DispenserDetails(
                       product: product,
                       dispenser: dispenser,
-                      dispenser_id: (dispenser_id + 1).toString(),
+                      dispenser_id: dispenser_id,
                       allow_edit: widget.allow_edit,
+                      update_enabled_in_dispenser: update_enabled_in_dispenser,
                     ),
                   ),
                 );
@@ -253,22 +254,10 @@ class _DispensersListState extends State<DispensersList> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Dispenser dispenser_updated = dispensers[index];
-                          Product current_product = products.firstWhere(
-                              (product) => product.name == products_value);
-
-                          dispenser_updated.product_id = current_product.id;
-                          update_item_in_array_field(
-                            document_id: widget.vending_machine_id,
-                            collection_id: "vending_machines",
-                            field_key: "dispensers",
-                            field_value: dispenser_updated.to_json(),
-                            index: index,
-                          );
+                          update_product_in_dispenser(index);
                           Timer(Duration(milliseconds: 500), () {
                             get_products();
                           });
-
                           Navigator.pop(context);
                         },
                         child: Text("Aceptar"),
@@ -282,6 +271,31 @@ class _DispensersListState extends State<DispensersList> {
           ),
         );
       },
+    );
+  }
+
+  update_enabled_in_dispenser(int index, bool enabled) {
+    Dispenser dispenser_updated = dispensers[index];
+    dispenser_updated.enabled = enabled;
+    update_dispenser(dispenser_updated, index);
+  }
+
+  update_product_in_dispenser(int index) {
+    Dispenser dispenser_updated = dispensers[index];
+    Product current_product =
+        products.firstWhere((product) => product.name == products_value);
+
+    dispenser_updated.product_id = current_product.id;
+    update_dispenser(dispenser_updated, index);
+  }
+
+  update_dispenser(Dispenser dispenser, int index) {
+    update_item_in_array_field(
+      document_id: widget.vending_machine_id,
+      collection_id: "vending_machines",
+      field_key: "dispensers",
+      field_value: dispenser.to_json(),
+      index: index,
     );
   }
 }

@@ -95,7 +95,6 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     double title_size = 24;
     double subtitle_size = 20;
     double textfield_size = 30;
-    Color main_color = Colors.grey;
 
     return Scaffold(
       appBar: TopBar(
@@ -187,14 +186,14 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
               Expanded(
                 flex: 1,
                 child: FractionallySizedBox(
-                  heightFactor: 0.5,
+                  heightFactor: 0.7,
                   widthFactor: 0.7,
                   child: switch_button(
                     value: enabled,
                     enabled: is_editing,
-                    active_track_color: main_color,
+                    active_track_color: color_lum_blue,
                     active_color: Colors.white,
-                    background_color: main_color,
+                    background_color: color_lum_blue,
                     callback: switch_button_callback,
                     border_radius: MediaQuery.of(context).size.width,
                   ),
@@ -225,7 +224,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   ),
                 ),
               ),
-              Spacer(flex: 4),
+              Spacer(flex: 3),
             ],
           ),
         ),
