@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:xapptor_ui/webview/webview.dart';
 
-PreferredSizeWidget TopBar({
+AppBar TopBar({
   required Color background_color,
   required List<Widget> actions,
   required bool has_back_button,
   required Widget? custom_leading,
-  required String? logo_path,
+  String? logo_path,
+  Color? logo_color,
 }) {
   double topbar_height = 65;
-  return PreferredSize(
-    child: AppBar(
-      leading: !has_back_button ? Container() : custom_leading,
-      title: logo_path != null
-          ? Image.asset(
-              logo_path!,
-              alignment: Alignment.center,
-              fit: BoxFit.contain,
-              height: topbar_height,
-              width: topbar_height,
-            )
-          : Container(
-              height: topbar_height,
-              width: topbar_height,
-            ),
-      backgroundColor: background_color,
-      elevation: 0,
-      actions: actions,
-    ),
-    preferredSize: Size.fromHeight(topbar_height),
+  return AppBar(
+    leading: !has_back_button ? Container() : custom_leading,
+    title: logo_path != null && logo_path.isNotEmpty
+        ? logo_path.contains("https")
+            ? Container(
+                height: topbar_height,
+                width: topbar_height,
+                child: Webview(
+                  src: logo_path,
+                  id: "",
+                  function: () {},
+                ),
+              )
+            : Image.asset(
+                logo_path,
+                height: topbar_height,
+                width: topbar_height,
+                color: logo_color,
+              )
+        : Container(),
+    backgroundColor: background_color,
+    elevation: 0,
+    actions: actions,
   );
 }

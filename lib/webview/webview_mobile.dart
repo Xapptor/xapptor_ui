@@ -49,7 +49,6 @@ class _WebviewState extends State<Webview> {
           javascriptMode: JavascriptMode.unrestricted,
           navigationDelegate: (action) {
             String current_url = action.url;
-            print("Current url: $current_url");
             widget.function(current_url);
             return NavigationDecision.navigate;
           },

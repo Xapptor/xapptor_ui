@@ -52,7 +52,7 @@ class _DispensersListState extends State<DispensersList> {
       for (var snapshot_product in snapshot_products.docs) {
         products.add(Product.from_snapshot(
           snapshot_product.id,
-          snapshot_product.data() as Map<String, dynamic>,
+          snapshot_product.data(),
         ));
       }
     });

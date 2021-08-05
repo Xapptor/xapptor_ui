@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/entypo_icons.dart';
 import 'package:xapptor_auth/generic_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_auth/user_info_view.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
+import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/lum/admin_analytics.dart';
 import 'package:xapptor_ui/screens/qr_scanner.dart';
 import 'package:xapptor_ui/values/ui.dart';
-import 'package:xapptor_ui/widgets/home_container_bottom_bar.dart';
+import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/lum/dispensers_list.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machines_list_container.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -31,6 +33,22 @@ class _HomeState extends State<Home> {
   //String qr_value = "";
   bool qr_scanned = true;
   String qr_value = "B2YfHwHebSLoM8uwpNxs";
+  List<BottomBarButton> bottom_bar_buttons = [
+    BottomBarButton(
+      icon: Icons.microwave_outlined,
+      text: "Máquinas",
+      foreground_color: Colors.white,
+      background_color: color_lum_green,
+      page: VendingMachinesListContainer(),
+    ),
+    BottomBarButton(
+      icon: Entypo.chart_line,
+      text: "Analíticas",
+      foreground_color: Colors.white,
+      background_color: color_lum_blue,
+      page: AdminAnalytics(),
+    ),
+  ];
 
   @override
   void dispose() {
@@ -202,30 +220,18 @@ class _HomeState extends State<Home> {
         key: scaffold_key,
         endDrawer: drawer(),
         appBar: TopBar(
-          background_color: color_lum_grey,
+          background_color: color_lum_blue,
           has_back_button: false,
           actions: widgets_action(portrait),
           custom_leading: null,
           logo_path: "assets/images/logo.png",
+          logo_color: Colors.white,
         ),
         body: SafeArea(
           minimum: EdgeInsets.all(0.0),
           child: widget.user.admin
-              ? HomeContainerWithPagesAndBottomBar(
-                  bottom_bar_color: color_lum_dark_pink,
-                  icon_color: Colors.white,
-                  pages: [
-                    VendingMachinesListContainer(),
-                    AdminAnalytics(),
-                  ],
-                  icons: [
-                    Icons.microwave,
-                    Icons.insights,
-                  ],
-                  texts: [
-                    "Máquinas",
-                    "Analíticas",
-                  ],
+              ? BottomBarContainer(
+                  bottom_bar_buttons: bottom_bar_buttons,
                 )
               : qr_scanned
                   ? DispensersList(

@@ -51,8 +51,6 @@ class _DispenserDetailsState extends State<DispenserDetails> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-
     return Scaffold(
       appBar: TopBar(
         background_color: main_color,

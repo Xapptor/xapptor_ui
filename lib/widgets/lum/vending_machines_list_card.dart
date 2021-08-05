@@ -30,8 +30,7 @@ class _VendingMachinesListCardState extends State<VendingMachinesListCard> {
     double current_card_width = MediaQuery.of(context).size.width * 0.9;
     double name_size = 20;
     double title_size = 16;
-    double subtitle_size = 14;
-    EdgeInsets margin = EdgeInsets.all(14);
+    EdgeInsets margin = EdgeInsets.all(20);
 
     return Container(
       height: current_card_height,
@@ -62,66 +61,34 @@ class _VendingMachinesListCardState extends State<VendingMachinesListCard> {
                   Expanded(
                     flex: 7,
                     child: Center(
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: widget.vending_machine.name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: color_lum_green,
-                                fontSize: name_size,
-                              ),
-                            ),
-                          ],
+                      child: Text(
+                        widget.vending_machine.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: color_lum_green,
+                          fontSize: name_size,
                         ),
                       ),
                     ),
                   ),
                   Expanded(
                     flex: 4,
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "ID: ",
-                            style: TextStyle(
-                              color: color_lum_grey,
-                              fontSize: title_size,
-                            ),
-                          ),
-                          TextSpan(
-                            text: widget.vending_machine.id,
-                            style: TextStyle(
-                              color: color_lum_grey,
-                              fontSize: subtitle_size,
-                            ),
-                          ),
-                        ],
+                    child: Text(
+                      "ID: " + widget.vending_machine.id,
+                      style: TextStyle(
+                        color: color_lum_grey,
+                        fontSize: title_size,
                       ),
                     ),
                   ),
                   Expanded(
                     flex: 4,
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "CAMBIO \$",
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                              fontSize: title_size,
-                            ),
-                          ),
-                          TextSpan(
-                            text:
-                                widget.vending_machine.money_change.toString(),
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                              fontSize: subtitle_size,
-                            ),
-                          ),
-                        ],
+                    child: Text(
+                      "CAMBIO \$" +
+                          widget.vending_machine.money_change.toString(),
+                      style: TextStyle(
+                        color: color_lum_light_pink,
+                        fontSize: title_size,
                       ),
                     ),
                   ),
