@@ -7,8 +7,8 @@ import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/generate_certificate_html_from_values.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
-import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/topbar.dart';
 
 class CertificatesVisualizer extends StatefulWidget {
   const CertificatesVisualizer({
@@ -138,19 +138,13 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
 
   @override
   Widget build(BuildContext context) {
-    double app_bar_height = 65;
-
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: widget.topbar_color,
-          size: app_bar_height,
-          has_back_button: true,
-          actions: <Widget>[],
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
-        ),
+      appBar: TopBar(
+        background_color: widget.topbar_color,
+        has_back_button: true,
+        actions: <Widget>[],
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
       ),
       body: html_certificate != "" && !waiting_pdf_base64
           ? SafeArea(

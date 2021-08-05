@@ -143,21 +143,16 @@ class _CoursesListState extends State<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    double app_bar_height = 65;
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: widget.topbar_color,
-          size: app_bar_height,
-          has_back_button: true,
-          actions: widgets_action(portrait),
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
-        ),
+      appBar: TopBar(
+        background_color: widget.topbar_color,
+        has_back_button: true,
+        actions: widgets_action(portrait),
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
       ),
       body: courses.length > 0
           ? Align(

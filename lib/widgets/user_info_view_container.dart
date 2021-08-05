@@ -39,35 +39,31 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    double app_bar_height = 65;
 
     return WillPopScope(
       onWillPop: () async => widget.has_back_button,
       child: Scaffold(
         key: scaffold_key,
         extendBodyBehindAppBar: true,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(app_bar_height),
-          child: Topbar(
-            background_color: widget.topbar_color,
-            size: app_bar_height,
-            has_back_button: widget.has_back_button,
-            actions: <Widget>[
-              Container(
-                margin: EdgeInsets.only(right: 20),
-                width: portrait ? 100 : 200,
-                child: widget.has_language_picker
-                    ? LanguagePicker(
-                        current_language: widget.current_language!,
-                        language_picker_callback:
-                            widget.language_picker_callback!,
-                        language_picker_items_text_color: widget.text_color,
-                      )
-                    : Container(),
-              ),
-            ],
-            custom_leading: null,
-          ),
+        appBar: TopBar(
+          background_color: widget.topbar_color,
+          has_back_button: widget.has_back_button,
+          actions: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 20),
+              width: portrait ? 100 : 200,
+              child: widget.has_language_picker
+                  ? LanguagePicker(
+                      current_language: widget.current_language!,
+                      language_picker_callback:
+                          widget.language_picker_callback!,
+                      language_picker_items_text_color: widget.text_color,
+                    )
+                  : Container(),
+            ),
+          ],
+          custom_leading: null,
+          logo_path: null,
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,

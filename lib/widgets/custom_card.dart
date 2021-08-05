@@ -22,12 +22,12 @@ class CustomCard extends StatelessWidget {
 
     Color shadow_color = Colors.transparent;
     if (linear_gradient == null) {
-      shadow_color = Colors.grey;
+      shadow_color = Colors.grey.withOpacity(0.5);
     } else {
       if (linear_gradient!.colors.first == Colors.transparent) {
         shadow_color = Colors.transparent;
       } else {
-        shadow_color = Colors.grey;
+        shadow_color = Colors.grey.withOpacity(0.5);
       }
     }
 

@@ -355,20 +355,15 @@ class _ClassQuizState extends State<ClassQuiz> {
 
   @override
   Widget build(BuildContext context) {
-    double app_bar_height = 65;
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: widget.topbar_color,
-          size: app_bar_height,
-          has_back_button: true,
-          actions: widgets_action(portrait),
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
-        ),
+      appBar: TopBar(
+        background_color: widget.topbar_color,
+        has_back_button: true,
+        actions: widgets_action(portrait),
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
       ),
       body: Container(
         child: widgets_list.length == 0

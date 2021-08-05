@@ -196,25 +196,17 @@ class _HomeState extends State<Home> {
         ? 150.0
         : 300.0;
 
-    double app_bar_height = 65;
-
-    print("widget.user.admin: " + widget.user.admin.toString());
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         key: scaffold_key,
         endDrawer: drawer(),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(app_bar_height),
-          child: Topbar(
-            background_color: color_lum_grey,
-            size: app_bar_height * 0.9,
-            has_back_button: false,
-            actions: widgets_action(portrait),
-            custom_leading: null,
-            logo_path: "assets/images/logo.png",
-          ),
+        appBar: TopBar(
+          background_color: color_lum_grey,
+          has_back_button: false,
+          actions: widgets_action(portrait),
+          custom_leading: null,
+          logo_path: "assets/images/logo.png",
         ),
         body: SafeArea(
           minimum: EdgeInsets.all(0.0),

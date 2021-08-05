@@ -67,7 +67,6 @@ class _VendingMachinesListContainerState
           vending_machines_widgets.add(
             VendingMachinesListCard(
               vending_machine: last_vending_machine,
-              color: current_card_color,
             ),
           );
         }

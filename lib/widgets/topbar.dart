@@ -1,53 +1,32 @@
 import 'package:flutter/material.dart';
 
-class Topbar extends StatefulWidget {
-  const Topbar({
-    required this.background_color,
-    required this.size,
-    required this.actions,
-    required this.has_back_button,
-    required this.custom_leading,
-    this.logo_path,
-  });
-
-  final Color background_color;
-  final double size;
-  final List<Widget> actions;
-  final bool has_back_button;
-  final Widget? custom_leading;
-  final String? logo_path;
-
-  @override
-  _TopbarState createState() => _TopbarState();
-}
-
-class _TopbarState extends State<Topbar> {
-  Color current_color = Colors.white;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      leading: !widget.has_back_button ? Container() : widget.custom_leading,
-      title: widget.logo_path != null
+PreferredSizeWidget TopBar({
+  required Color background_color,
+  required List<Widget> actions,
+  required bool has_back_button,
+  required Widget? custom_leading,
+  required String? logo_path,
+}) {
+  double topbar_height = 65;
+  return PreferredSize(
+    child: AppBar(
+      leading: !has_back_button ? Container() : custom_leading,
+      title: logo_path != null
           ? Image.asset(
-              widget.logo_path!,
+              logo_path!,
               alignment: Alignment.center,
               fit: BoxFit.contain,
-              height: widget.size,
-              width: widget.size,
+              height: topbar_height,
+              width: topbar_height,
             )
           : Container(
-              height: widget.size,
-              width: widget.size,
+              height: topbar_height,
+              width: topbar_height,
             ),
-      backgroundColor: widget.background_color,
+      backgroundColor: background_color,
       elevation: 0,
-      actions: widget.actions,
-    );
-  }
+      actions: actions,
+    ),
+    preferredSize: Size.fromHeight(topbar_height),
+  );
 }

@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
-import 'package:xapptor_ui/widgets/topbar.dart';
-
 import 'certificate_visualizer.dart';
+import 'package:xapptor_ui/widgets/topbar.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
   const CertificatesAndRewards({
@@ -98,19 +97,14 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    double app_bar_height = 65;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: widget.topbar_color,
-          size: app_bar_height,
-          has_back_button: true,
-          actions: [],
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
-        ),
+      appBar: TopBar(
+        background_color: widget.topbar_color,
+        has_back_button: true,
+        actions: [],
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
       ),
       body: Column(
         children: [

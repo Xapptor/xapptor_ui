@@ -69,34 +69,29 @@ class _BuyCoursesState extends State<BuyCourses> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    double app_bar_height = 65;
 
     return Scaffold(
       key: scaffold_key,
       extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: widget.topbar_color,
-          size: app_bar_height,
-          has_back_button: true,
-          actions: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 20),
-              width: portrait ? 200 : 100,
-              child: widget.language_picker
-                  ? LanguagePicker(
-                      current_language: current_language,
-                      language_picker_callback: language_picker_callback,
-                      language_picker_items_text_color:
-                          widget.language_picker_items_text_color,
-                    )
-                  : Container(),
-            ),
-          ],
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
-        ),
+      appBar: TopBar(
+        background_color: widget.topbar_color,
+        has_back_button: true,
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            width: portrait ? 200 : 100,
+            child: widget.language_picker
+                ? LanguagePicker(
+                    current_language: current_language,
+                    language_picker_callback: language_picker_callback,
+                    language_picker_items_text_color:
+                        widget.language_picker_items_text_color,
+                  )
+                : Container(),
+          ),
+        ],
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewport_constraints) {

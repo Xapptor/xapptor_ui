@@ -287,22 +287,17 @@ class _LandingState extends State<Landing> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    double app_bar_height = 70;
 
     return Scaffold(
       key: scaffold_key,
       endDrawer: drawer(),
       extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(app_bar_height),
-        child: Topbar(
-          background_color: color_abeinstitute_dark_aqua.withOpacity(0.5),
-          size: app_bar_height,
-          has_back_button: false,
-          actions: widgets_action(portrait),
-          custom_leading: null,
-          logo_path: "assets/images/logo.png",
-        ),
+      appBar: TopBar(
+        background_color: color_abeinstitute_dark_aqua.withOpacity(0.5),
+        has_back_button: false,
+        actions: widgets_action(portrait),
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewport_constraints) {

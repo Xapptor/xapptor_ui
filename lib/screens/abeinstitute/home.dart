@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -351,7 +350,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    double app_bar_height = 65;
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     double card_holder_elevation = 3;
     double card_holder_border_radius = 16;
@@ -362,16 +360,12 @@ class _HomeState extends State<Home> {
         key: scaffold_key,
         endDrawer: drawer(),
         extendBodyBehindAppBar: true,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(app_bar_height),
-          child: Topbar(
-            background_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
-            size: app_bar_height,
-            has_back_button: false,
-            actions: widgets_action(portrait),
-            custom_leading: null,
-            logo_path: "assets/images/logo.png",
-          ),
+        appBar: TopBar(
+          background_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
+          has_back_button: false,
+          actions: widgets_action(portrait),
+          custom_leading: null,
+          logo_path: "assets/images/logo.png",
         ),
         body: Column(
           children: [

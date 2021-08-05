@@ -10,11 +10,9 @@ import 'package:xapptor_ui/widgets/switch_button.dart';
 class VendingMachineDetails extends StatefulWidget {
   const VendingMachineDetails({
     required this.vending_machine,
-    required this.color,
   });
 
   final VendingMachine vending_machine;
-  final Color color;
 
   @override
   _VendingMachineDetailsState createState() => _VendingMachineDetailsState();
@@ -139,7 +137,6 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                         TextSpan(
                           text: "ID: ",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
                             color: color_lum_grey,
                             fontSize: subtitle_size,
                           ),
