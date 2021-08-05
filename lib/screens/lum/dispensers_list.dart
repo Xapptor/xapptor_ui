@@ -168,7 +168,7 @@ class _DispensersListState extends State<DispensersList> {
             ),
             widget.allow_edit
                 ? Align(
-                    alignment: Alignment.topRight,
+                    alignment: Alignment.topLeft,
                     child: IconButton(
                       alignment: Alignment.center,
                       icon: Icon(
@@ -181,6 +181,18 @@ class _DispensersListState extends State<DispensersList> {
                     ),
                   )
                 : Container(),
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                height: 20,
+                width: 20,
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: dispenser.enabled ? Colors.green : Colors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
           ],
         ),
       ),

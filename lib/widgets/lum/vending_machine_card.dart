@@ -29,7 +29,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
     double current_card_width = MediaQuery.of(context).size.width * 0.9;
     double name_size = 20;
     double title_size = 16;
-    EdgeInsets margin = EdgeInsets.all(20);
+    EdgeInsets margin = EdgeInsets.all(10);
 
     return Container(
       height: current_card_height,
@@ -53,7 +53,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
         child: Stack(
           children: [
             Container(
-              margin: margin,
+              margin: margin * 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
