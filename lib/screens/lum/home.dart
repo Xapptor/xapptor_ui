@@ -12,7 +12,7 @@ import 'package:xapptor_ui/screens/qr_scanner.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/screens/lum/dispensers_list.dart';
-import 'package:xapptor_ui/widgets/lum/vending_machines_list_container.dart';
+import 'package:xapptor_ui/widgets/lum/vending_machines_list.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
       text: "Máquinas",
       foreground_color: Colors.white,
       background_color: color_lum_green,
-      page: VendingMachinesListContainer(),
+      page: VendingMachinesList(),
     ),
     BottomBarButton(
       icon: Entypo.chart_line,

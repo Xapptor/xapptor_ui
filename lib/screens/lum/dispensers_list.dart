@@ -8,6 +8,7 @@ import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/lum/dispenser_details.dart';
 import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
 class DispensersList extends StatefulWidget {
@@ -65,22 +66,14 @@ class _DispensersListState extends State<DispensersList> {
           .firstWhere((product) => product.id == current_dispenser.product_id);
 
       vending_machine_products.add(current_product);
-      print("current_product: " + current_product.url);
-
       dispensers.add(current_dispenser);
     }
 
     for (var product in products) {
       products_values.add(product.name);
-      //print("products: " + product.url);
     }
     products_value = products_values.first;
     setState(() {});
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -104,7 +97,7 @@ class _DispensersListState extends State<DispensersList> {
         child: ListView.builder(
           itemCount: vending_machine_products.length,
           itemBuilder: (context, i) {
-            return product_item(
+            return dispenser_item(
               vending_machine_products[i],
               context,
               dispensers[i],
@@ -116,13 +109,14 @@ class _DispensersListState extends State<DispensersList> {
     );
   }
 
-  Widget product_item(
+  Widget dispenser_item(
     Product product,
     BuildContext context,
     Dispenser dispenser,
     int dispenser_id,
   ) {
     double fractional_factor = 0.9;
+    double border_radius = 10;
     return Container(
       height: MediaQuery.of(context).size.height / 3,
       child: FractionallySizedBox(
@@ -131,19 +125,11 @@ class _DispensersListState extends State<DispensersList> {
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      5,
-                    ),
-                  ),
-                ),
-                elevation: MaterialStateProperty.all<double>(5),
-              ),
-              onPressed: () {
+            CustomCard(
+              elevation: 3,
+              border_radius: border_radius,
+              linear_gradient: null,
+              on_pressed: () {
                 print("dispenser_id: " + (dispenser_id + 1).toString());
                 Navigator.push(
                   context,
@@ -158,11 +144,14 @@ class _DispensersListState extends State<DispensersList> {
                   ),
                 );
               },
-              child: IgnorePointer(
-                child: Webview(
-                  id: "20",
-                  src: product.url,
-                  function: () {},
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(border_radius),
+                child: IgnorePointer(
+                  child: Webview(
+                    id: "20",
+                    src: product.url,
+                    function: () {},
+                  ),
                 ),
               ),
             ),

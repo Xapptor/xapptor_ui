@@ -37,7 +37,8 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
       margin: margin,
       child: CustomCard(
         elevation: 3,
-        border_radius: 5,
+        border_radius: 10,
+        linear_gradient: null,
         on_pressed: () {
           add_new_app_screen(
             AppScreen(
@@ -49,7 +50,6 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
           );
           open_screen("home/vending_machine_details");
         },
-        linear_gradient: null,
         child: Stack(
           children: [
             Container(

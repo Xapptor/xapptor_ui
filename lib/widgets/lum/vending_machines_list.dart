@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 
-class VendingMachinesListContainer extends StatefulWidget {
+class VendingMachinesList extends StatefulWidget {
   @override
-  _VendingMachinesListContainerState createState() =>
-      _VendingMachinesListContainerState();
+  _VendingMachinesListState createState() => _VendingMachinesListState();
 }
 
-class _VendingMachinesListContainerState
-    extends State<VendingMachinesListContainer> {
+class _VendingMachinesListState extends State<VendingMachinesList> {
   List<VendingMachine> vending_machines = [];
   List<Widget> vending_machines_widgets = [];
 
