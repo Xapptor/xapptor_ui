@@ -176,7 +176,12 @@ class _DispensersListState extends State<DispensersList> {
                         color: color_lum_grey,
                       ),
                       onPressed: () {
-                        show_product_picker_dialog(context, dispenser_id);
+                        setState(() {
+                          products_value = products_values[
+                              products_values.indexOf(
+                                  vending_machine_products[dispenser_id].name)];
+                          show_product_picker_dialog(context, dispenser_id);
+                        });
                       },
                     ),
                   )
@@ -256,9 +261,6 @@ class _DispensersListState extends State<DispensersList> {
                       TextButton(
                         onPressed: () {
                           update_product_in_dispenser(index);
-                          Timer(Duration(milliseconds: 500), () {
-                            get_products();
-                          });
                           Navigator.pop(context);
                         },
                         child: Text("Aceptar"),
@@ -288,6 +290,10 @@ class _DispensersListState extends State<DispensersList> {
 
     dispenser_updated.product_id = current_product.id;
     update_dispenser(dispenser_updated, index);
+
+    Timer(Duration(milliseconds: 500), () {
+      get_products();
+    });
   }
 
   update_dispenser(Dispenser dispenser, int index) {
