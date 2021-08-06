@@ -7,25 +7,17 @@ import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/generate_certificate_html_from_values.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
+import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
 class CertificatesVisualizer extends StatefulWidget {
   const CertificatesVisualizer({
-    required this.topbar_color,
-    required this.id,
-    required this.uid,
-    required this.user_name,
-    required this.course_name,
-    required this.date,
+    required this.certificate,
   });
 
-  final Color topbar_color;
-  final String id;
-  final String uid;
-  final String user_name;
-  final String course_name;
-  final String date;
+  final Certificate certificate;
 
   @override
   _CertificatesVisualizerState createState() => _CertificatesVisualizerState();
@@ -48,11 +40,11 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   bool attributes_are_for_admin = false;
 
   get_html_certificate() async {
-    html_certificate = await HtmlCertificateFromValues().generate(
-      course_name: widget.course_name,
-      user_name: widget.user_name,
-      date: widget.date,
-      id: widget.id,
+    html_certificate = await generate_html_certificate(
+      course_name: widget.certificate.course_name,
+      user_name: widget.certificate.user_name,
+      date: widget.certificate.date,
+      id: widget.certificate.id,
     );
     setState(() {});
   }
@@ -61,7 +53,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
     String base64_pdf = response.body.toString();
 
     attributes_for_user =
-        "certificate_${widget.user_name.split(" ").join("_")}_${widget.course_name.split(" ").join("_")}_${widget.id}.pdf";
+        "certificate_${widget.certificate.user_name.split(" ").join("_")}_${widget.certificate.course_name.split(" ").join("_")}_${widget.certificate.id}.pdf";
     attributes_for_admin =
         "certificate_${other_user_name.split(" ").join("_")}_${other_course_name.split(" ").join("_")}_${certificate_id_input_controller.text}.pdf";
 
@@ -75,13 +67,13 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   }
 
   check_if_is_admin() async {
-    user_is_admin = await check_if_user_is_admin(widget.uid);
+    user_is_admin = await check_if_user_is_admin(widget.certificate.user_id);
     setState(() {});
   }
 
   generate_certificate() async {
     String url_user =
-        'https://us-central1-abei-21f7c.cloudfunctions.net/createPDF?userName=${widget.user_name}&courseName=${widget.course_name}&date=${widget.date}&certificateID=${widget.id}';
+        'https://us-central1-abei-21f7c.cloudfunctions.net/createPDF?userName=${widget.certificate.user_name}&courseName=${widget.certificate.course_name}&date=${widget.certificate.date}&certificateID=${widget.certificate.id}';
     String url_admin =
         'https://us-central1-abei-21f7c.cloudfunctions.net/createPDF?userName=$other_user_name&courseName=$other_course_name&date=$other_date&certificateID=${certificate_id_input_controller.text}';
 
@@ -102,7 +94,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
         .doc(certificate_id_input_controller.text)
         .get()
         .then((DocumentSnapshot certificate_doc) async {
-      other_date = TimestampToDate().convert(certificate_doc.get("date"));
+      other_date = timestamp_to_date(certificate_doc.get("date"));
       other_user_id = certificate_doc.get("user_id");
 
       await FirebaseFirestore.instance
@@ -140,7 +132,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        background_color: widget.topbar_color,
+        background_color: color_abeinstitute_topbar,
         has_back_button: true,
         actions: <Widget>[],
         custom_leading: null,

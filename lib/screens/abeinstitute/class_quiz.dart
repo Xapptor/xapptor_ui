@@ -1,11 +1,8 @@
 import 'dart:math';
 import 'package:xapptor_auth/get_user_info.dart';
-import 'package:xapptor_logic/email_sender.dart';
 import 'package:xapptor_logic/generate_certificate_html_from_values.dart';
-import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/class_quiz_question.dart';
@@ -229,115 +226,17 @@ class _ClassQuizState extends State<ClassQuiz> {
           "units_completed": FieldValue.arrayUnion([widget.unit_id]),
         }).catchError((err) => print(err));
 
-        if (widget.last_unit) check_if_exist_certificate();
+        if (widget.last_unit)
+          check_if_exist_certificate(
+            uid,
+            widget.course_id,
+            widget.course_name,
+            context,
+          );
       }
 
       setState(() {});
     }
-  }
-
-  generate_certificate(bool exist_certificate) {
-    if (!exist_certificate) {
-      FirebaseFirestore.instance
-          .collection("certificates")
-          .add({
-            "course_id": widget.course_id,
-            "date": FieldValue.serverTimestamp(),
-            "user_id": uid,
-          })
-          .then((new_doc) => {
-                FirebaseFirestore.instance.collection("users").doc(uid).update({
-                  "certificates": FieldValue.arrayUnion([new_doc.id]),
-                }).catchError((err) => print(err)),
-                FirebaseFirestore.instance
-                    .collection('templates')
-                    .doc("certificate")
-                    .get()
-                    .then((DocumentSnapshot doc_snap) async {
-                  DocumentSnapshot new_doc_snap = await new_doc.get();
-
-                  String html_certificate_result =
-                      await HtmlCertificateFromValues().generate(
-                    course_name: widget.course_name,
-                    user_name:
-                        user_info["firstname"] + " " + user_info["lastname"],
-                    date: TimestampToDate().convert(new_doc_snap.get("date")),
-                    id: new_doc.id,
-                  );
-
-                  User user = FirebaseAuth.instance.currentUser!;
-
-                  EmailSender()
-                      .send(
-                        to: user.email!,
-                        subject:
-                            "${user_info["firstname"] + " " + user_info["lastname"]}, here is your certificate for Lean Six Sigma",
-                        text: "New Message",
-                        html: html_certificate_result,
-                      )
-                      .then((value) => {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Certificate sent! ✉️"),
-                                duration: Duration(seconds: 3),
-                              ),
-                            ),
-                          })
-                      .catchError((err) => print(err));
-                }),
-              })
-          .catchError((err) {
-            print(err);
-          });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("You already have this certificate 👍"),
-          duration: Duration(seconds: 3),
-        ),
-      );
-    }
-  }
-
-  check_if_exist_certificate() async {
-    bool user_already_has_courses_certificate = false;
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot doc_snap_user) {
-      List? certificates = doc_snap_user.get("certificates");
-
-      if (certificates == null || certificates.length == 0) {
-        generate_certificate(false);
-      } else {
-        print(certificates);
-
-        for (int i = 0; i < certificates.length; i++) {
-          FirebaseFirestore.instance
-              .collection('certificates')
-              .doc(certificates[i])
-              .get()
-              .then((DocumentSnapshot doc_snap_certificate) {
-            print(doc_snap_certificate.data);
-
-            print("course_id: " + doc_snap_certificate.get("course_id"));
-            print("widget.courseID: " + widget.course_id);
-
-            if (doc_snap_certificate.get("course_id") == widget.course_id)
-              user_already_has_courses_certificate = true;
-
-            if (i == certificates.length - 1) {
-              print("final checkIfExistCertificate: " +
-                  user_already_has_courses_certificate.toString());
-
-              generate_certificate(user_already_has_courses_certificate);
-            }
-          });
-        }
-      }
-    });
   }
 
   init_prefs() async {

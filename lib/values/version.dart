@@ -27,5 +27,5 @@ String current_software_version() {
     app_version = xapptor_version;
   }
 
-  return "xcv${xapptor_core_version}-${app_name_char}v${app_version}";
+  return "xcv$xapptor_core_version-${app_name_char}v$app_version";
 }

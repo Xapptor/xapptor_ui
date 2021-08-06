@@ -146,7 +146,6 @@ class _CoursesListState extends State<CoursesList> {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: TopBar(
         background_color: widget.topbar_color,
         has_back_button: true,

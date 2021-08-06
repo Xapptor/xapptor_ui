@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_auth/generic_user.dart';
+import 'package:xapptor_auth/xapptor_user.dart';
 
 class VendingMachinesAnalyticsContainer extends StatefulWidget {
   const VendingMachinesAnalyticsContainer({
     required this.user,
   });
 
-  final GenericUser user;
+  final XapptorUser user;
 
   @override
   _VendingMachinesAnalyticsContainerState createState() =>

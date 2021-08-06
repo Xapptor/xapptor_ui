@@ -1,4 +1,9 @@
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
+import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
+import 'package:xapptor_ui/models/bottom_bar_button.dart';
+import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/covered_container_coming_soon.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_auth/get_user_info.dart';
@@ -7,16 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
-  const CertificatesAndRewards({
-    required this.topbar_color,
-  });
-
-  final Color topbar_color;
-
   @override
   _CertificatesAndRewardsState createState() => _CertificatesAndRewardsState();
 }
@@ -27,72 +28,80 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   late SharedPreferences prefs;
 
   List certificates_id = [];
-  List<Map<String, dynamic>> certificates = <Map<String, dynamic>>[];
-
+  List<Certificate> certificates = [];
   Map<String, dynamic> user_info = {};
-
-  late String uid;
-
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-    uid = prefs.getString("uid")!;
-    get_certificates();
-  }
+  String user_id = "";
 
   get_certificates() async {
-    user_info = await get_user_info(uid);
+    user_id = FirebaseAuth.instance.currentUser!.uid;
+    user_info = await get_user_info(user_id);
+    print("user_info $user_info");
+
     certificates.clear();
-
-    print(user_info);
-
     if (user_info["certificates"] != null) {
       if (user_info["certificates"].length > 0) {
         certificates_id = List.from(user_info["certificates"]);
+        print("certificates_id $certificates_id");
 
-        print(certificates_id);
-
-        for (int i = 0; i < certificates_id.length; i++) {
-          DocumentSnapshot firestore_certificate = await FirebaseFirestore
-              .instance
+        for (var certificate_id in certificates_id) {
+          await FirebaseFirestore.instance
               .collection("certificates")
-              .doc(certificates_id[i])
-              .get();
+              .doc(certificate_id)
+              .get()
+              .then((snapshot_certificate) async {
+            Map<String, dynamic> data_certificate =
+                snapshot_certificate.data()!;
+            print("data_certificate $data_certificate");
 
-          DocumentSnapshot firestore_course = await FirebaseFirestore.instance
-              .collection("courses")
-              .doc(firestore_certificate.get("course_id"))
-              .get();
+            await FirebaseFirestore.instance
+                .collection("courses")
+                .doc(data_certificate["course_id"])
+                .get()
+                .then((snapshot_course) {
+              Map<String, dynamic> data_course = snapshot_course.data()!;
 
-          DocumentSnapshot firestore_user = await FirebaseFirestore.instance
-              .collection("users")
-              .doc(firestore_certificate.get("user_id"))
-              .get();
+              print("data_course $data_course");
 
-          print(firestore_certificate.data);
-          print(firestore_course.data);
-          print(firestore_user.data);
-
-          certificates.add({
-            "date": firestore_certificate.get("date"),
-            "course_name": firestore_course.get("name"),
-            "user_name": firestore_user.get("firstname") +
-                " " +
-                firestore_user.get("lastname"),
-            "id": certificates_id[i],
+              certificates.add(
+                Certificate(
+                  id: certificate_id,
+                  date: timestamp_to_date(data_certificate["date"]),
+                  course_name: data_course["name"],
+                  user_name:
+                      user_info["firstname"] + " " + user_info["lastname"],
+                  user_id: user_id,
+                ),
+              );
+            });
           });
         }
       }
     }
-
-    print("certificates: " + certificates.toString());
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    init_prefs();
+    get_certificates();
+    //check_all_students_certificates();
   }
+
+  // check_all_students_certificates() async {
+  //   DocumentSnapshot user = await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(widget.user.uid)
+  //       .get();
+
+  //   if (user["units_completed"] != null) {
+  //     int units_completed_length = user["units_completed"].length;
+  //     print("units_completed_length: $units_completed_length");
+  //     if (units_completed_length == 4) {
+  //       check_if_exist_certificate(widget.user.uid, "njrXMgGFkJklI3ZZONSP",
+  //           "Lean Six Sigma Yellow Belt", context);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,198 +109,124 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: widget.topbar_color,
+        background_color: color_abeinstitute_topbar,
         has_back_button: true,
         actions: [],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
-      body: Column(
-        children: [
-          Spacer(flex: 1),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Spacer(flex: 3),
-                  Expanded(
-                    flex: portrait ? 5 : 1,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        elevation: MaterialStateProperty.all<double>(0),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          current_page == 0
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            side: BorderSide(
-                              color: Theme.of(context).primaryColor,
+      body: BottomBarContainer(
+        bottom_bar_buttons: [
+          BottomBarButton(
+            icon: ModernPictograms.article_alt,
+            text: "Certificates",
+            foreground_color: Colors.white,
+            background_color: color_abeinstitute_green,
+            page: Container(
+              height: MediaQuery.of(context).size.height / 1.5,
+              child: ListView.builder(
+                itemCount: certificates.length,
+                itemBuilder: (context, i) {
+                  EdgeInsets margin = EdgeInsets.all(20);
+                  EdgeInsets padding = EdgeInsets.all(20);
+
+                  return Container(
+                    margin: margin,
+                    child: CustomCard(
+                      elevation: 3,
+                      border_radius: 10,
+                      linear_gradient: null,
+                      on_pressed: () {
+                        String certificate_id = certificates[i].id;
+                        add_new_app_screen(
+                          AppScreen(
+                            name:
+                                "home/certificates_and_rewards/certificate_$certificate_id",
+                            child: CertificatesVisualizer(
+                              certificate: certificates[i],
                             ),
+                          ),
+                        );
+                        open_screen(
+                            "home/certificates_and_rewards/certificate_$certificate_id");
+                      },
+                      child: Container(
+                        padding: padding,
+                        child: ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  style: DefaultTextStyle.of(context).style,
+                                  children: [
+                                    TextSpan(
+                                      text: certificates[i].course_name,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  style: DefaultTextStyle.of(context).style,
+                                  children: [
+                                    TextSpan(
+                                      text: 'Date: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: certificates[i].date,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'ID: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SelectableText(certificates[i].id),
+                                ],
+                              ),
+                            ],
+                          ),
+                          leading: Icon(
+                            ModernPictograms.article_alt,
+                            color: color_abeinstitute_topbar,
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        page_controller.animateToPage(0,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
-                      },
-                      child: Text(
-                        'Certificates',
-                        style: TextStyle(
-                          color: current_page == 0
-                              ? Colors.white
-                              : Theme.of(context).primaryColor,
-                        ),
-                      ),
                     ),
-                  ),
-                  Spacer(flex: 1),
-                  Expanded(
-                    flex: portrait ? 5 : 1,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        elevation: MaterialStateProperty.all<double>(0),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          current_page == 1
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            side: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        page_controller.animateToPage(1,
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
-                      },
-                      child: Text(
-                        'Rewards',
-                        style: TextStyle(
-                          color: current_page == 1
-                              ? Colors.white
-                              : Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 3),
-                ],
+                  );
+                },
               ),
             ),
           ),
-          Spacer(flex: 1),
-          Expanded(
-            flex: 7,
-            child: Stack(
-              children: <Widget>[
-                PageView(
-                  onPageChanged: (int page) {
-                    setState(() {
-                      current_page = page.toDouble();
-                    });
-                  },
-                  controller: page_controller,
-                  children: [
-                    Container(
-                      child: certificates_id.length > 0
-                          ? FractionallySizedBox(
-                              widthFactor: portrait ? 0.8 : 0.5,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 1.5,
-                                child: ListView.builder(
-                                  itemCount: certificates.length,
-                                  itemBuilder: (context, i) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        String certificate_id =
-                                            certificates[i]["id"];
-
-                                        add_new_app_screen(
-                                          AppScreen(
-                                            name:
-                                                "home/certificates_and_rewards/certificate_$certificate_id",
-                                            child: CertificatesVisualizer(
-                                              id: certificate_id,
-                                              uid: uid,
-                                              user_name: certificates[i]
-                                                  ["user_name"],
-                                              course_name: certificates[i]
-                                                  ["course_name"],
-                                              date: TimestampToDate().convert(
-                                                  certificates[i]["date"]),
-                                              topbar_color:
-                                                  color_abeinstitute_dark_aqua
-                                                      .withOpacity(0.7),
-                                            ),
-                                          ),
-                                        );
-                                        open_screen(
-                                            "home/certificates_and_rewards/certificate_$certificate_id");
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                          "Date: ${TimestampToDate().convert(certificates[i]["date"])} \nCourse Name: ${certificates[i]["course_name"]} \nCertificate ID: ${certificates[i]["id"]}",
-                                          style: TextStyle(fontSize: 18.0),
-                                        ),
-                                        leading: Icon(
-                                          Icons.account_circle,
-                                          color: Colors.lightGreen,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          : Center(
-                              child: CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ),
-                    ),
-                    CoveredContainerComingSoon(
-                      enable_cover: true,
-                      child: Container(
-                        child: Text(
-                          "",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+          BottomBarButton(
+            icon: FontAwesome5.gift,
+            text: "Rewards",
+            foreground_color: Colors.white,
+            background_color: color_abeinstitute_light_aqua,
+            page: CoveredContainerComingSoon(
+              enable_cover: true,
             ),
           ),
-          Spacer(flex: 1),
         ],
       ),
     );
   }
 }
 
-class Certificate {
-  Certificate(
+class CertificateListItem {
+  CertificateListItem(
     this.id,
     this.date,
     this.icon,

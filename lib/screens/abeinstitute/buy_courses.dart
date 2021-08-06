@@ -72,7 +72,6 @@ class _BuyCoursesState extends State<BuyCourses> {
 
     return Scaffold(
       key: scaffold_key,
-      extendBodyBehindAppBar: true,
       appBar: TopBar(
         background_color: widget.topbar_color,
         has_back_button: true,

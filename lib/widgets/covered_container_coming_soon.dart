@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class CoveredContainerComingSoon extends StatelessWidget {
   const CoveredContainerComingSoon({
-    required this.child,
+    this.child,
     required this.enable_cover,
   });
 
-  final Widget child;
+  final Widget? child;
   final bool enable_cover;
 
   @override

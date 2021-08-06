@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
-import 'package:xapptor_auth/generic_user.dart';
+import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_auth/user_info_view.dart';
 import 'package:xapptor_router/app_screen.dart';
@@ -21,7 +21,7 @@ class Home extends StatefulWidget {
     required this.user,
   });
 
-  final GenericUser user;
+  final XapptorUser user;
 
   @override
   _HomeState createState() => _HomeState();
@@ -33,22 +33,6 @@ class _HomeState extends State<Home> {
   // String qr_value = "";
   bool qr_scanned = true;
   String qr_value = "B2YfHwHebSLoM8uwpNxs";
-  List<BottomBarButton> bottom_bar_buttons = [
-    BottomBarButton(
-      icon: Icons.microwave_outlined,
-      text: "Máquinas",
-      foreground_color: Colors.white,
-      background_color: color_lum_green,
-      page: VendingMachinesList(),
-    ),
-    BottomBarButton(
-      icon: Entypo.chart_line,
-      text: "Analíticas",
-      foreground_color: Colors.white,
-      background_color: color_lum_blue,
-      page: AdminAnalytics(),
-    ),
-  ];
 
   @override
   void initState() {
@@ -73,7 +57,7 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/account",
         child: UserInfoView(
-          uid: widget.user.uid,
+          uid: widget.user.id,
           text_list: [
             "Email",
             "Confirmar email",
@@ -224,7 +208,22 @@ class _HomeState extends State<Home> {
         ),
         body: widget.user.admin
             ? BottomBarContainer(
-                bottom_bar_buttons: bottom_bar_buttons,
+                bottom_bar_buttons: [
+                  BottomBarButton(
+                    icon: Icons.microwave_outlined,
+                    text: "Máquinas",
+                    foreground_color: Colors.white,
+                    background_color: color_lum_green,
+                    page: VendingMachinesList(),
+                  ),
+                  BottomBarButton(
+                    icon: Entypo.chart_line,
+                    text: "Analíticas",
+                    foreground_color: Colors.white,
+                    background_color: color_lum_blue,
+                    page: AdminAnalytics(),
+                  ),
+                ],
               )
             : qr_scanned
                 ? DispensersList(

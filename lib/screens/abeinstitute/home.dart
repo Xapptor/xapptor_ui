@@ -7,7 +7,7 @@ import 'package:xapptor_auth/user_info_view.dart';
 import 'package:xapptor_logic/check_current_app_path.dart';
 import 'package:xapptor_logic/url_launcher.dart';
 import 'package:xapptor_translation/translate.dart';
-import 'package:xapptor_auth/generic_user.dart';
+import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
@@ -25,11 +25,11 @@ import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
 
 class Home extends StatefulWidget {
-  const Home({
+  Home({
     required this.user,
   });
 
-  final GenericUser user;
+  XapptorUser user;
 
   @override
   _HomeState createState() => _HomeState();
@@ -53,11 +53,6 @@ class _HomeState extends State<Home> {
   String current_language = "en";
 
   TranslationStream translation_stream = TranslationStream();
-
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-    prefs.setString("uid", widget.user.uid);
-  }
 
   Widget drawer() {
     return SafeArea(
@@ -243,7 +238,7 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/account",
         child: UserInfoView(
-          uid: widget.user.uid,
+          uid: widget.user.id,
           text_list: [
             "Email",
             "Confirm Email",
@@ -296,7 +291,7 @@ class _HomeState extends State<Home> {
           language_picker_items_text_color: color_abeinstitute_ocean_blue,
           language_picker: true,
           buyer_info: BuyerInfo(
-            user_id: widget.user.uid,
+            user_id: widget.user.id,
             email: widget.user.email,
           ),
           topbar_color: color_abeinstitute_green.withOpacity(0.7),
@@ -311,20 +306,15 @@ class _HomeState extends State<Home> {
       print("User is sign");
 
       String uid = auth_user.uid;
-      DocumentSnapshot user =
+      DocumentSnapshot snapshot_user =
           await FirebaseFirestore.instance.collection("users").doc(uid).get();
 
-      widget.user.uid = uid;
-      widget.user.firstname = user.get("firstname");
-      widget.user.lastname = user.get("lastname");
-      widget.user.email = auth_user.email!;
-      widget.user.birthday = user.get("birthday").toString();
-      widget.user.gender = user.get("gender");
-      widget.user.country = user.get("country");
+      widget.user = XapptorUser.from_snapshot(
+        uid,
+        snapshot_user.data() as Map<String, dynamic>,
+      );
 
       setState(() {});
-
-      init_prefs();
       add_screens();
     } else {
       print("User is not sign");
@@ -359,7 +349,6 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         key: scaffold_key,
         endDrawer: drawer(),
-        extendBodyBehindAppBar: true,
         appBar: TopBar(
           background_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
           has_back_button: false,
