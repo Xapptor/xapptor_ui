@@ -222,28 +222,25 @@ class _HomeState extends State<Home> {
           logo_path: "assets/images/logo.png",
           logo_color: Colors.white,
         ),
-        body: SafeArea(
-          minimum: EdgeInsets.all(0.0),
-          child: widget.user.admin
-              ? BottomBarContainer(
-                  bottom_bar_buttons: bottom_bar_buttons,
-                )
-              : qr_scanned
-                  ? DispensersList(
-                      vending_machine_id: qr_value,
-                      allow_edit: false,
-                      has_topbar: false,
-                    )
-                  : QRScanner(
-                      descriptive_text: "Escanea el código QR\nde la Máquina",
-                      update_qr_value: update_qr_value,
-                      border_color: color_lum_light_pink,
-                      border_radius: 4,
-                      border_length: 40,
-                      border_width: 8,
-                      cut_out_size: scan_area,
-                    ),
-        ),
+        body: widget.user.admin
+            ? BottomBarContainer(
+                bottom_bar_buttons: bottom_bar_buttons,
+              )
+            : qr_scanned
+                ? DispensersList(
+                    vending_machine_id: qr_value,
+                    allow_edit: false,
+                    has_topbar: false,
+                  )
+                : QRScanner(
+                    descriptive_text: "Escanea el código QR\nde la Máquina",
+                    update_qr_value: update_qr_value,
+                    border_color: color_lum_light_pink,
+                    border_radius: 4,
+                    border_length: 40,
+                    border_width: 8,
+                    cut_out_size: scan_area,
+                  ),
       ),
     );
   }

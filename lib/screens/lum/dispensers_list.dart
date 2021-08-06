@@ -127,46 +127,56 @@ class _DispensersListState extends State<DispensersList> {
         heightFactor: fractional_factor,
         widthFactor: fractional_factor,
         child: Stack(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.center,
           children: [
-            CustomCard(
-              elevation: 3,
-              border_radius: border_radius,
-              linear_gradient: null,
-              on_pressed: () {
-                print("dispenser_id: " + (dispenser_id + 1).toString());
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DispenserDetails(
-                      product: product,
-                      dispenser: dispenser,
-                      dispenser_id: dispenser_id,
-                      allow_edit: widget.allow_edit,
-                      update_enabled_in_dispenser: update_enabled_in_dispenser,
+            Container(
+              height: MediaQuery.of(context).size.height / 3,
+              child: CustomCard(
+                elevation: 3,
+                border_radius: border_radius,
+                linear_gradient: null,
+                on_pressed: () {
+                  print("dispenser_id: " + (dispenser_id + 1).toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DispenserDetails(
+                        product: product,
+                        dispenser: dispenser,
+                        dispenser_id: dispenser_id,
+                        allow_edit: widget.allow_edit,
+                        update_enabled_in_dispenser:
+                            update_enabled_in_dispenser,
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(border_radius),
-                child: IgnorePointer(
-                  child: Webview(
-                    id: "20",
-                    src: product.url,
-                    function: () {},
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(border_radius),
+                  child: IgnorePointer(
+                    child: FractionallySizedBox(
+                      heightFactor: 0.65,
+                      child: Webview(
+                        id: "20",
+                        src: product.url,
+                        function: () {},
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                (dispenser_id + 1).toString(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22,
-                  color: color_lum_grey,
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  (dispenser_id + 1).toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: color_lum_grey,
+                  ),
                 ),
               ),
             ),
