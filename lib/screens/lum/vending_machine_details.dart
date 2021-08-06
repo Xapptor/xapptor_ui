@@ -209,6 +209,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                         child: DispensersList(
                           vending_machine_id: widget.vending_machine.id,
                           allow_edit: true,
+                          has_topbar: true,
                         ),
                       ),
                     );

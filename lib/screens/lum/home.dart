@@ -29,8 +29,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
-  //bool qr_scanned = false;
-  //String qr_value = "";
+  // bool qr_scanned = false;
+  // String qr_value = "";
   bool qr_scanned = true;
   String qr_value = "B2YfHwHebSLoM8uwpNxs";
   List<BottomBarButton> bottom_bar_buttons = [
@@ -237,6 +237,7 @@ class _HomeState extends State<Home> {
                   ? DispensersList(
                       vending_machine_id: qr_value,
                       allow_edit: false,
+                      has_topbar: false,
                     )
                   : QRScanner(
                       descriptive_text: "Escanea el código QR\nde la Máquina",

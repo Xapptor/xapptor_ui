@@ -15,10 +15,12 @@ class DispensersList extends StatefulWidget {
   const DispensersList({
     required this.vending_machine_id,
     required this.allow_edit,
+    required this.has_topbar,
   });
 
   final String vending_machine_id;
   final bool allow_edit;
+  final bool has_topbar;
 
   @override
   State<StatefulWidget> createState() => _DispensersListState();
@@ -85,14 +87,16 @@ class _DispensersListState extends State<DispensersList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopBar(
-        background_color: color_lum_blue,
-        has_back_button: true,
-        actions: [],
-        custom_leading: null,
-        logo_path: "assets/images/logo.png",
-        logo_color: Colors.white,
-      ),
+      appBar: widget.has_topbar
+          ? TopBar(
+              background_color: color_lum_blue,
+              has_back_button: true,
+              actions: [],
+              custom_leading: null,
+              logo_path: "assets/images/logo.png",
+              logo_color: Colors.white,
+            )
+          : null,
       body: Container(
         child: ListView.builder(
           itemCount: vending_machine_products.length,
