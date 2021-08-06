@@ -98,7 +98,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: color_lum_blue,
+        background_color: color_lum_topbar,
         has_back_button: true,
         actions: [],
         custom_leading: null,

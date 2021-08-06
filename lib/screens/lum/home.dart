@@ -51,11 +51,6 @@ class _HomeState extends State<Home> {
   ];
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     add_screens();
@@ -220,7 +215,7 @@ class _HomeState extends State<Home> {
         key: scaffold_key,
         endDrawer: drawer(),
         appBar: TopBar(
-          background_color: color_lum_blue,
+          background_color: color_lum_topbar,
           has_back_button: false,
           actions: widgets_action(portrait),
           custom_leading: null,

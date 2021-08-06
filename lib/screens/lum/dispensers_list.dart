@@ -89,7 +89,7 @@ class _DispensersListState extends State<DispensersList> {
     return Scaffold(
       appBar: widget.has_topbar
           ? TopBar(
-              background_color: color_lum_blue,
+              background_color: color_lum_topbar,
               has_back_button: true,
               actions: [],
               custom_leading: null,

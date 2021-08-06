@@ -51,8 +51,10 @@ custom_background_abeinstitute_insurance(BuildContext context) {
 // Lum
 
 double card_elevation_lum = 0;
-String logo_image_path_lum =
-    "https://firebasestorage.googleapis.com/v0/b/lumapp-d8eb7.appspot.com/o/images%2Flogos%2FLOGOTIPO.svg?alt=media&token=2789476c-744f-4a5c-9ebd-3a762d7e80e2";
+// String logo_image_path_lum =
+//     "https://firebasestorage.googleapis.com/v0/b/lumapp-d8eb7.appspot.com/o/images%2Flogos%2FLOGOTIPO.svg?alt=media&token=2789476c-744f-4a5c-9ebd-3a762d7e80e2";
+String logo_image_path_lum = "assets/images/logo.png";
+
 String logo_gotas_path_lum =
     "https://firebasestorage.googleapis.com/v0/b/lumapp-d8eb7.appspot.com/o/images%2Flogos%2FGOTAS%20AV.svg?alt=media&token=01f2e344-5dfb-48d8-9deb-e0c1718d3a5b";
 bool has_language_picker_lum = false;
