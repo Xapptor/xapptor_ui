@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:universal_platform/universal_platform.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
-import 'package:xapptor_logic/generate_certificate_html_from_values.dart';
+import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';

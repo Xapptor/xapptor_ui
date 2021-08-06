@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:xapptor_auth/get_user_info.dart';
-import 'package:xapptor_logic/generate_certificate_html_from_values.dart';
+import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
