@@ -276,8 +276,6 @@ class _HomeState extends State<Home> {
           third_button_action: null,
           secret_answer_values: [],
           secret_question_values: [],
-          logo_height: logo_height_abeinstitute,
-          logo_width: logo_width_abeinstitute,
           has_back_button: true,
           text_field_background_color: null,
         ),

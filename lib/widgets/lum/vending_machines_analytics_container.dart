@@ -16,11 +16,6 @@ class VendingMachinesAnalyticsContainer extends StatefulWidget {
 class _VendingMachinesAnalyticsContainerState
     extends State<VendingMachinesAnalyticsContainer> {
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
   }

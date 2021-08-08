@@ -44,7 +44,6 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
       onWillPop: () async => widget.has_back_button,
       child: Scaffold(
         key: scaffold_key,
-        extendBodyBehindAppBar: true,
         appBar: TopBar(
           background_color: widget.topbar_color,
           has_back_button: widget.has_back_button,
@@ -67,6 +66,7 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
+          color: Colors.white,
           child: LayoutBuilder(
             builder:
                 (BuildContext context, BoxConstraints viewport_constraints) {

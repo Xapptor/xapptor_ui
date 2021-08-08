@@ -1,7 +1,7 @@
 import 'package:xapptor_ui/screens/abeinstitute/class_quiz.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/models/abeinstitute/class_unit_arguments.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';

@@ -29,10 +29,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
-  // bool qr_scanned = false;
-  // String qr_value = "";
-  bool qr_scanned = true;
-  String qr_value = "B2YfHwHebSLoM8uwpNxs";
+  bool qr_scanned = false;
+  String qr_value = "";
+  // bool qr_scanned = true;
+  // String qr_value = "B2YfHwHebSLoM8uwpNxs";
 
   @override
   void initState() {
@@ -90,8 +90,6 @@ class _HomeState extends State<Home> {
           third_button_action: null,
           secret_answer_values: [],
           secret_question_values: [],
-          logo_height: logo_height_lum,
-          logo_width: logo_width_lum,
           has_back_button: true,
           text_field_background_color: Colors.grey,
           edit_icon_use_text_field_background_color: true,

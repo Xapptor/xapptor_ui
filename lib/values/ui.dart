@@ -5,26 +5,26 @@ import 'custom_colors.dart';
 
 // General
 
-double sized_box_space = 20;
+double sized_box_space = 14;
 double outline_border_radius = 20;
 double outline_width = 3;
 double outline_padding = 15;
+double logo_height(BuildContext context) =>
+    MediaQuery.of(context).size.width * 0.3;
+double logo_width(BuildContext context) =>
+    MediaQuery.of(context).size.width * 0.6;
 
 // Abeinstitute
 
 double card_elevation_abeinstitute = 0;
 String logo_image_path_abeinstitute = "assets/images/logo.png";
 bool has_language_picker_abeinstitute = true;
-double logo_height_abeinstitute = 150;
-double logo_width_abeinstitute = 300;
 
 // Abeinstitute Insurance
 
 double card_elevation_abeinstitute_insurance = 0;
 String logo_image_path_abeinstitute_insurance = "assets/images/logo.png";
 bool has_language_picker_abeinstitute_insurance = true;
-double logo_height_abeinstitute_insurance = 150;
-double logo_width_abeinstitute_insurance = 300;
 
 custom_background_abeinstitute_insurance(BuildContext context) {
   return Container(
@@ -58,8 +58,6 @@ String logo_image_path_lum = "assets/images/logo.png";
 String logo_gotas_path_lum =
     "https://firebasestorage.googleapis.com/v0/b/lumapp-d8eb7.appspot.com/o/images%2Flogos%2FGOTAS%20AV.svg?alt=media&token=01f2e344-5dfb-48d8-9deb-e0c1718d3a5b";
 bool has_language_picker_lum = false;
-double logo_height_lum = 150;
-double logo_width_lum = 300;
 
 custom_background_lum() {
   return Stack(
