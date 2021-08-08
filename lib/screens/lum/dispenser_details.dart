@@ -136,6 +136,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                         heightFactor: 0.6,
                         widthFactor: 0.7,
                         child: switch_button(
+                          text: "HABILITADO",
                           value: dispenser_enabled,
                           enabled: enable_dispenser_edit,
                           active_track_color: main_color,

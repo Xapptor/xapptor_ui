@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget switch_button({
+  required String text,
   required bool value,
   required bool enabled,
   required Color active_track_color,
@@ -21,11 +22,11 @@ Widget switch_button({
         Expanded(
           flex: 2,
           child: Text(
-            "HABILITADO",
+            text,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 16,
             ),
           ),
         ),

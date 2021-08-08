@@ -4,11 +4,11 @@ import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/class_quiz_question.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/class_quiz_result.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ClassQuiz extends StatefulWidget {
   const ClassQuiz({
@@ -34,16 +34,11 @@ class ClassQuiz extends StatefulWidget {
 }
 
 class _ClassQuizState extends State<ClassQuiz> {
-  late SharedPreferences prefs;
-
-  String uid = "";
-
+  String user_id = "";
   Map<String, dynamic> user_info = {};
 
   String current_language = "en";
-
   TranslationStream translation_stream = TranslationStream();
-
   List<String> text_list = [
     "Lives:",
     "Validate",
@@ -51,19 +46,14 @@ class _ClassQuizState extends State<ClassQuiz> {
   ];
 
   bool quiz_passed = false;
-
   List questions_result = [];
-
   double percentage_progress = 0;
-
   int lives = 3;
 
   final PageController page_controller = PageController(initialPage: 0);
 
   int current_page = 0;
-
   List<Widget> widgets_list = <Widget>[];
-
   String html_certificate = "";
 
   language_picker_callback(String new_current_language) async {
@@ -222,13 +212,13 @@ class _ClassQuizState extends State<ClassQuiz> {
         page_controller.animateToPage(widgets_list.length - 1,
             duration: Duration(milliseconds: 800), curve: Curves.elasticOut);
 
-        FirebaseFirestore.instance.collection("users").doc(uid).update({
+        FirebaseFirestore.instance.collection("users").doc(user_id).update({
           "units_completed": FieldValue.arrayUnion([widget.unit_id]),
         }).catchError((err) => print(err));
 
         if (widget.last_unit)
           check_if_exist_certificate(
-            uid,
+            user_id,
             widget.course_id,
             widget.course_name,
             context,
@@ -239,16 +229,15 @@ class _ClassQuizState extends State<ClassQuiz> {
     }
   }
 
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-    uid = prefs.getString("uid") ?? "";
-    user_info = await get_user_info(uid);
+  set_user_info() async {
+    user_id = FirebaseAuth.instance.currentUser!.uid;
+    user_info = await get_user_info(user_id);
   }
 
   @override
   void initState() {
     super.initState();
-    init_prefs();
+    set_user_info();
     get_quiz_data(widget.unit_id);
   }
 

@@ -92,9 +92,9 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
 
   @override
   Widget build(BuildContext context) {
-    double title_size = 24;
-    double subtitle_size = 20;
-    double textfield_size = 30;
+    double textfield_size = 24;
+    double title_size = 20;
+    double subtitle_size = 18;
 
     return Scaffold(
       appBar: TopBar(
@@ -112,7 +112,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Spacer(flex: 3),
+              Spacer(flex: 4),
               Expanded(
                 flex: 2,
                 child: TextField(
@@ -186,9 +186,10 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
               Expanded(
                 flex: 1,
                 child: FractionallySizedBox(
-                  heightFactor: 0.7,
+                  heightFactor: 0.8,
                   widthFactor: 0.7,
                   child: switch_button(
+                    text: "HABILITADO",
                     value: enabled,
                     enabled: is_editing,
                     active_track_color: color_lum_blue,
@@ -200,7 +201,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: TextButton(
                   onPressed: () {
                     add_new_app_screen(
@@ -225,7 +226,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   ),
                 ),
               ),
-              Spacer(flex: 3),
+              Spacer(flex: 4),
             ],
           ),
         ),

@@ -12,6 +12,7 @@ AppBar TopBar({
   double topbar_height = 65;
   return AppBar(
     leading: !has_back_button ? Container() : custom_leading,
+    centerTitle: false,
     title: logo_path != null && logo_path.isNotEmpty
         ? logo_path.contains("https")
             ? Container(

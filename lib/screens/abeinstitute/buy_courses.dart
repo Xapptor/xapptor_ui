@@ -41,12 +41,6 @@ class _BuyCoursesState extends State<BuyCourses> {
     "Buy now",
   ];
 
-  late SharedPreferences prefs;
-
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
   update_text_list(int index, String new_text) {
     text_list[index] = new_text;
     setState(() {});
@@ -61,7 +55,6 @@ class _BuyCoursesState extends State<BuyCourses> {
   @override
   void initState() {
     super.initState();
-    init_prefs();
     translation_stream.init(text_list, update_text_list);
     translation_stream.translate();
   }

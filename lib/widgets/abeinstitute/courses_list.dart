@@ -9,6 +9,7 @@ import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/screens/abeinstitute/class_session.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CoursesList extends StatefulWidget {
   const CoursesList({
@@ -31,19 +32,10 @@ class _CoursesListState extends State<CoursesList> {
   List<String> courses_buyed = <String>[];
   List<Map<String, dynamic>> courses_and_units = <Map<String, dynamic>>[];
   List<Course> courses = <Course>[];
-
   Map<String, dynamic> user_info = {};
-  late String uid;
-
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-    uid = prefs.getString("uid")!;
-    get_courses_and_units();
-  }
 
   get_courses_and_units() async {
-    user_info = await get_user_info(uid);
-
+    user_info = await get_user_info(FirebaseAuth.instance.currentUser!.uid);
     courses.clear();
 
     if (user_info["courses_buyed"] != null) {
@@ -136,7 +128,7 @@ class _CoursesListState extends State<CoursesList> {
   @override
   void initState() {
     super.initState();
-    init_prefs();
+    get_courses_and_units();
     translation_stream.init(text_list, update_text_list);
     translation_stream.translate();
   }
