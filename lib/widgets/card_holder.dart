@@ -79,7 +79,7 @@ class _CardHolderState extends State<CardHolder> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: widget.text_color,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -88,7 +88,7 @@ class _CardHolderState extends State<CardHolder> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: widget.text_color,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                           Text(
@@ -96,7 +96,7 @@ class _CardHolderState extends State<CardHolder> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: widget.text_color,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                         ],

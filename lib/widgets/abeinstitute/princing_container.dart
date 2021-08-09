@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'pricing_container_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PricingContainer extends StatefulWidget {
   const PricingContainer({
     required this.texts,
-    required this.user_id,
-    required this.customer_email,
     required this.background_color,
     required this.title_color,
     required this.subtitle_color,
@@ -16,8 +15,6 @@ class PricingContainer extends StatefulWidget {
   });
 
   final List<String> texts;
-  final String user_id;
-  final String customer_email;
   final Color background_color;
   final Color title_color;
   final Color subtitle_color;
@@ -32,6 +29,8 @@ class PricingContainer extends StatefulWidget {
 class _PricingContainerState extends State<PricingContainer> {
   double current_page = 0;
   final PageController page_controller = PageController(initialPage: 0);
+  String user_id = "";
+  String user_email = "";
 
   List<Map<String, dynamic>> price_id_list = [
     {
@@ -65,6 +64,18 @@ class _PricingContainerState extends State<PricingContainer> {
       "course_id": "njrXMgGFkJklI3ZZONSP",
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    set_user_info();
+  }
+
+  set_user_info() async {
+    user_id = await FirebaseAuth.instance.currentUser!.uid;
+    user_email = await FirebaseAuth.instance.currentUser!.email!;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,8 +140,8 @@ class _PricingContainerState extends State<PricingContainer> {
                       coming_soon: true,
                       stripe_payment: StripePayment(
                         price_id: price_id_list[0]["id"],
-                        user_id: widget.user_id,
-                        customer_email: widget.customer_email,
+                        user_id: user_id,
+                        customer_email: user_email,
                         course_id: price_id_list[0]["course_id"],
                       ),
                     ),
@@ -152,8 +163,8 @@ class _PricingContainerState extends State<PricingContainer> {
                       coming_soon: false,
                       stripe_payment: StripePayment(
                         price_id: price_id_list[1]["id"],
-                        user_id: widget.user_id,
-                        customer_email: widget.customer_email,
+                        user_id: user_id,
+                        customer_email: user_email,
                         course_id: price_id_list[1]["course_id"],
                       ),
                     ),
@@ -173,8 +184,8 @@ class _PricingContainerState extends State<PricingContainer> {
                       coming_soon: true,
                       stripe_payment: StripePayment(
                         price_id: price_id_list[2]["id"],
-                        user_id: widget.user_id,
-                        customer_email: widget.customer_email,
+                        user_id: user_id,
+                        customer_email: user_email,
                         course_id: price_id_list[2]["course_id"],
                       ),
                     ),

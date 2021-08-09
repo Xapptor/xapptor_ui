@@ -9,10 +9,15 @@ double sized_box_space = 14;
 double outline_border_radius = 20;
 double outline_width = 3;
 double outline_padding = 15;
-double logo_height(BuildContext context) =>
-    MediaQuery.of(context).size.width * 0.3;
-double logo_width(BuildContext context) =>
-    MediaQuery.of(context).size.width * 0.6;
+double logo_height(BuildContext context) {
+  bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+  return MediaQuery.of(context).size.width * (portrait ? 0.3 : 0.1);
+}
+
+double logo_width(BuildContext context) {
+  bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+  return MediaQuery.of(context).size.width * (portrait ? 0.6 : 0.2);
+}
 
 // Abeinstitute
 

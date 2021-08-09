@@ -288,11 +288,7 @@ class _HomeState extends State<Home> {
         child: BuyCourses(
           language_picker_items_text_color: color_abeinstitute_ocean_blue,
           language_picker: true,
-          buyer_info: BuyerInfo(
-            user_id: widget.user.id,
-            email: widget.user.email,
-          ),
-          topbar_color: color_abeinstitute_green.withOpacity(0.7),
+          topbar_color: color_abeinstitute_green,
         ),
       ),
     );
@@ -340,7 +336,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     double card_holder_elevation = 3;
-    double card_holder_border_radius = 16;
+    double card_holder_border_radius = 20;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -356,9 +352,8 @@ class _HomeState extends State<Home> {
         ),
         body: Column(
           children: [
-            Spacer(flex: 1),
             Expanded(
-              flex: 5,
+              flex: 1,
               child: FractionallySizedBox(
                 heightFactor: 0.9,
                 child: WidgetsCarousel(
@@ -402,7 +397,7 @@ class _HomeState extends State<Home> {
                     generic_card_holder(
                       image_path: "assets/images/course_student_1.jpg",
                       title: "New Courses",
-                      subtitle: "to extend your Knowledge",
+                      subtitle: "Extend your Knowledge",
                       background_image_alignment: Alignment.center,
                       icon: null,
                       icon_background_color: null,
@@ -432,7 +427,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 1,
               child: FractionallySizedBox(
                 heightFactor: 0.9,
                 child: WidgetsCarousel(

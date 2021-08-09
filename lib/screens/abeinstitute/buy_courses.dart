@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
@@ -11,13 +12,11 @@ class BuyCourses extends StatefulWidget {
     required this.topbar_color,
     required this.language_picker_items_text_color,
     required this.language_picker,
-    required this.buyer_info,
   });
 
   final Color topbar_color;
   final Color language_picker_items_text_color;
   final bool language_picker;
-  final BuyerInfo buyer_info;
 
   @override
   _BuyCoursesState createState() => _BuyCoursesState();
@@ -95,8 +94,6 @@ class _BuyCoursesState extends State<BuyCourses> {
               ),
               child: PricingContainer(
                 texts: text_list.sublist(0, 8),
-                user_id: widget.buyer_info.user_id,
-                customer_email: widget.buyer_info.email,
                 background_color: Colors.blue.shade800,
                 title_color: Colors.white,
                 subtitle_color: Colors.white,
@@ -110,14 +107,4 @@ class _BuyCoursesState extends State<BuyCourses> {
       ),
     );
   }
-}
-
-class BuyerInfo {
-  final String user_id;
-  final String email;
-
-  BuyerInfo({
-    required this.user_id,
-    required this.email,
-  });
 }

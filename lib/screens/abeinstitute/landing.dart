@@ -552,8 +552,6 @@ class _LandingState extends State<Landing> {
                     ),
                     PricingContainer(
                       texts: text_list_buy,
-                      user_id: "",
-                      customer_email: "",
                       background_color: Colors.blue.shade800,
                       title_color: Colors.white,
                       subtitle_color: Colors.white,

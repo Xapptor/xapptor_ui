@@ -7,6 +7,7 @@ class CustomCard extends StatelessWidget {
     required this.border_radius,
     required this.on_pressed,
     required this.linear_gradient,
+    this.splash_color,
   });
 
   final Widget child;
@@ -14,6 +15,7 @@ class CustomCard extends StatelessWidget {
   final double? border_radius;
   final Function() on_pressed;
   final LinearGradient? linear_gradient;
+  final Color? splash_color;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,12 @@ class CustomCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: linear_gradient ??
-            LinearGradient(colors: [
-              Colors.white,
-              Colors.white,
-            ]),
+            LinearGradient(
+              colors: [
+                Colors.white,
+                Colors.white,
+              ],
+            ),
         borderRadius: BorderRadius.circular(
           border_radius ?? default_border_radius,
         ),
@@ -52,12 +56,17 @@ class CustomCard extends StatelessWidget {
           ),
         ],
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(
-          border_radius ?? default_border_radius,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(
+            border_radius ?? default_border_radius,
+          ),
+          onTap: on_pressed,
+          splashColor: splash_color ?? Colors.white.withOpacity(0.3),
+          highlightColor: Colors.transparent,
+          child: child,
         ),
-        onTap: on_pressed,
-        child: child,
       ),
     );
   }

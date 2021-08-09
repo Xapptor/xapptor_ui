@@ -106,6 +106,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double screen_height = MediaQuery.of(context).size.height;
+    double screen_width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: TopBar(
@@ -123,84 +125,79 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             foreground_color: Colors.white,
             background_color: color_abeinstitute_green,
             page: Container(
-              height: MediaQuery.of(context).size.height / 1.5,
               child: ListView.builder(
                 itemCount: certificates.length,
                 itemBuilder: (context, i) {
                   EdgeInsets margin = EdgeInsets.all(20);
-                  EdgeInsets padding = EdgeInsets.all(20);
+                  EdgeInsets padding = EdgeInsets.all(10);
 
-                  return Container(
-                    margin: margin,
-                    child: CustomCard(
-                      elevation: 3,
-                      border_radius: 10,
-                      linear_gradient: null,
-                      on_pressed: () {
-                        String certificate_id = certificates[i].id;
-                        add_new_app_screen(
-                          AppScreen(
-                            name:
-                                "home/certificates_and_rewards/certificate_$certificate_id",
-                            child: CertificatesVisualizer(
-                              certificate: certificates[i],
+                  return FractionallySizedBox(
+                    widthFactor: portrait ? 1 : 0.4,
+                    child: Container(
+                      margin: margin,
+                      child: CustomCard(
+                        elevation: 3,
+                        border_radius: 20,
+                        linear_gradient: null,
+                        on_pressed: () {
+                          String certificate_id = certificates[i].id;
+                          add_new_app_screen(
+                            AppScreen(
+                              name:
+                                  "home/certificates_and_rewards/certificate_$certificate_id",
+                              child: CertificatesVisualizer(
+                                certificate: certificates[i],
+                              ),
                             ),
-                          ),
-                        );
-                        open_screen(
-                            "home/certificates_and_rewards/certificate_$certificate_id");
-                      },
-                      child: Container(
-                        padding: padding,
-                        child: ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                  style: DefaultTextStyle.of(context).style,
-                                  children: [
-                                    TextSpan(
-                                      text: certificates[i].course_name,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  style: DefaultTextStyle.of(context).style,
-                                  children: [
-                                    TextSpan(
-                                      text: 'Date: ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: certificates[i].date,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'ID: ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                          );
+                          open_screen(
+                              "home/certificates_and_rewards/certificate_$certificate_id");
+                        },
+                        child: Container(
+                          padding: padding,
+                          child: ListTile(
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  certificates[i].course_name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SelectableText(certificates[i].id),
-                                ],
-                              ),
-                            ],
-                          ),
-                          leading: Icon(
-                            ModernPictograms.article_alt,
-                            color: color_abeinstitute_topbar,
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    style: DefaultTextStyle.of(context).style,
+                                    children: [
+                                      TextSpan(
+                                        text: 'Date: ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: certificates[i].date,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'ID: ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SelectableText(certificates[i].id),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            leading: Icon(
+                              ModernPictograms.article_alt,
+                              color: color_abeinstitute_topbar,
+                            ),
                           ),
                         ),
                       ),

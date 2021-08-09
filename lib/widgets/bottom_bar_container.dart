@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class BottomBarContainer extends StatefulWidget {
   const BottomBarContainer({
@@ -22,10 +23,10 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
     super.initState();
   }
 
-  List<List<Widget>> generate_widgets() {
+  @override
+  Widget build(BuildContext context) {
     pages = [];
     buttons = [];
-    List<List<Widget>> widgets = [];
     for (var button in widget.bottom_bar_buttons) {
       Color final_foreground_color =
           current_page == widget.bottom_bar_buttons.indexOf(button)
@@ -36,46 +37,43 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       buttons.add(
         Expanded(
           flex: 1,
-          child: Container(
-            color: button.background_color,
-            child: InkWell(
-              onTap: () {
-                int new_page_index = widget.bottom_bar_buttons.indexOf(button);
-
-                page_controller.animateToPage(
-                  new_page_index,
-                  duration: Duration(milliseconds: 150),
-                  curve: Curves.linear,
-                );
-                setState(() {});
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    button.icon,
+          child: CustomCard(
+            on_pressed: () {
+              int new_page_index = pages.indexOf(button.page);
+              page_controller.animateToPage(
+                new_page_index,
+                duration: Duration(milliseconds: 150),
+                curve: Curves.linear,
+              );
+            },
+            elevation: null,
+            border_radius: 0,
+            linear_gradient: LinearGradient(
+              colors: [
+                button.background_color,
+                button.background_color,
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  button.icon,
+                  color: final_foreground_color,
+                ),
+                Text(
+                  button.text,
+                  style: TextStyle(
                     color: final_foreground_color,
                   ),
-                  Text(
-                    button.text,
-                    style: TextStyle(
-                      color: final_foreground_color,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
       );
     }
-    widgets.add(pages);
-    widgets.add(buttons);
-    return widgets;
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
@@ -88,14 +86,14 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
                 });
               },
               controller: page_controller,
-              children: generate_widgets()[0],
+              children: pages,
             ),
           ),
           Expanded(
             flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: generate_widgets()[1],
+              children: buttons,
             ),
           ),
         ],
