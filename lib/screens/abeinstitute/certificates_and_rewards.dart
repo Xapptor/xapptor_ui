@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
@@ -44,8 +46,14 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     user_id = FirebaseAuth.instance.currentUser!.uid;
     user_info = await get_user_info(user_id);
     setState(() {});
-    get_certificates();
     check_user_courses();
+    get_certificates();
+
+    Timer(Duration(seconds: 2), () async {
+      user_id = FirebaseAuth.instance.currentUser!.uid;
+      user_info = await get_user_info(user_id);
+      get_certificates();
+    });
   }
 
   check_user_courses() {
@@ -99,12 +107,12 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                   user_id: user_id,
                 ),
               );
+              setState(() {});
             });
           });
         }
       }
     }
-    setState(() {});
   }
 
   @override
@@ -126,88 +134,96 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             text: "Certificates",
             foreground_color: Colors.white,
             background_color: color_abeinstitute_green,
-            page: Container(
-              child: ListView.builder(
-                itemCount: certificates.length,
-                itemBuilder: (context, i) {
-                  EdgeInsets margin = EdgeInsets.all(20);
-                  EdgeInsets padding = EdgeInsets.all(10);
+            page: certificates_id.isEmpty
+                ? Container(
+                    child: Center(
+                      child: Text("Certificates list is empty"),
+                    ),
+                  )
+                : Container(
+                    child: ListView.builder(
+                      itemCount: certificates.length,
+                      itemBuilder: (context, i) {
+                        EdgeInsets margin = EdgeInsets.all(20);
+                        EdgeInsets padding = EdgeInsets.all(10);
 
-                  return FractionallySizedBox(
-                    widthFactor: portrait ? 1 : 0.4,
-                    child: Container(
-                      margin: margin,
-                      child: CustomCard(
-                        elevation: 3,
-                        border_radius: 20,
-                        linear_gradient: null,
-                        on_pressed: () {
-                          String certificate_id = certificates[i].id;
-                          add_new_app_screen(
-                            AppScreen(
-                              name:
-                                  "home/certificates_and_rewards/certificate_$certificate_id",
-                              child: CertificatesVisualizer(
-                                certificate: certificates[i],
-                              ),
-                            ),
-                          );
-                          open_screen(
-                              "home/certificates_and_rewards/certificate_$certificate_id");
-                        },
-                        child: Container(
-                          padding: padding,
-                          child: ListTile(
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  certificates[i].course_name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                        return FractionallySizedBox(
+                          widthFactor: portrait ? 1 : 0.4,
+                          child: Container(
+                            margin: margin,
+                            child: CustomCard(
+                              elevation: 3,
+                              border_radius: 20,
+                              linear_gradient: null,
+                              on_pressed: () {
+                                String certificate_id = certificates[i].id;
+                                add_new_app_screen(
+                                  AppScreen(
+                                    name:
+                                        "home/certificates_and_rewards/certificate_$certificate_id",
+                                    child: CertificatesVisualizer(
+                                      certificate: certificates[i],
+                                    ),
                                   ),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    style: DefaultTextStyle.of(context).style,
+                                );
+                                open_screen(
+                                    "home/certificates_and_rewards/certificate_$certificate_id");
+                              },
+                              child: Container(
+                                padding: padding,
+                                child: ListTile(
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      TextSpan(
-                                        text: 'Date: ',
+                                      Text(
+                                        certificates[i].course_name,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      TextSpan(
-                                        text: certificates[i].date,
+                                      RichText(
+                                        text: TextSpan(
+                                          style: DefaultTextStyle.of(context)
+                                              .style,
+                                          children: [
+                                            TextSpan(
+                                              text: 'Date: ',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: certificates[i].date,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'ID: ',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SelectableText(certificates[i].id),
+                                        ],
                                       ),
                                     ],
                                   ),
+                                  leading: Icon(
+                                    ModernPictograms.article_alt,
+                                    color: color_abeinstitute_topbar,
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'ID: ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SelectableText(certificates[i].id),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            leading: Icon(
-                              ModernPictograms.article_alt,
-                              color: color_abeinstitute_topbar,
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
           ),
           BottomBarButton(
             icon: FontAwesome5.gift,
