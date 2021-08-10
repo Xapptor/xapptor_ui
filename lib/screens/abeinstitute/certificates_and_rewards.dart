@@ -1,12 +1,13 @@
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
+import 'package:xapptor_logic/generate_certificate.dart';
+import 'package:xapptor_logic/get_user_info.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/covered_container_coming_soon.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_auth/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,15 +29,41 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   late SharedPreferences prefs;
 
   List certificates_id = [];
+  List courses_id = [];
   List<Certificate> certificates = [];
   Map<String, dynamic> user_info = {};
   String user_id = "";
 
-  get_certificates() async {
+  @override
+  void initState() {
+    super.initState();
+    set_user_info();
+  }
+
+  set_user_info() async {
     user_id = FirebaseAuth.instance.currentUser!.uid;
     user_info = await get_user_info(user_id);
-    print("user_info $user_info");
+    setState(() {});
+    get_certificates();
+    check_user_courses();
+  }
 
+  check_user_courses() {
+    if (user_info["courses_buyed"] != null) {
+      if (user_info["courses_buyed"].length > 0) {
+        courses_id = List.from(user_info["courses_buyed"]);
+        for (var course_id in courses_id) {
+          check_if_course_is_completed(
+            course_id: course_id,
+            user_info: user_info,
+            context: context,
+          );
+        }
+      }
+    }
+  }
+
+  get_certificates() async {
     certificates.clear();
     if (user_info["certificates"] != null) {
       if (user_info["certificates"].length > 0) {
@@ -81,33 +108,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    get_certificates();
-    //check_all_students_certificates();
-  }
-
-  // check_all_students_certificates() async {
-  //   DocumentSnapshot user = await FirebaseFirestore.instance
-  //       .collection("users")
-  //       .doc(widget.user.uid)
-  //       .get();
-
-  //   if (user["units_completed"] != null) {
-  //     int units_completed_length = user["units_completed"].length;
-  //     print("units_completed_length: $units_completed_length");
-  //     if (units_completed_length == 4) {
-  //       check_if_exist_certificate(widget.user.uid, "njrXMgGFkJklI3ZZONSP",
-  //           "Lean Six Sigma Yellow Belt", context);
-  //     }
-  //   }
-  // }
-
-  @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    double screen_height = MediaQuery.of(context).size.height;
-    double screen_width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: TopBar(

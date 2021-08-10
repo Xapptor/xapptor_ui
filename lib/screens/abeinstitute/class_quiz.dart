@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:xapptor_auth/get_user_info.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,7 +34,6 @@ class ClassQuiz extends StatefulWidget {
 
 class _ClassQuizState extends State<ClassQuiz> {
   String user_id = "";
-  Map<String, dynamic> user_info = {};
 
   String current_language = "en";
   TranslationStream translation_stream = TranslationStream();
@@ -100,7 +98,6 @@ class _ClassQuizState extends State<ClassQuiz> {
         questions_result.add(false);
 
         List final_possible_answers = [];
-
         List current_answers = questions_object[i]["answers"];
 
         if (current_answers.length > 2) {
@@ -118,9 +115,8 @@ class _ClassQuizState extends State<ClassQuiz> {
                 questions_object[i]["correct_answer"].toString()) {
               bool random_possible_answer_already_exist = false;
 
-              for (var four_possible_answers_element
-                  in final_possible_answers) {
-                if (four_possible_answers_element == random_possible_answer)
+              for (var four_possible_answer in final_possible_answers) {
+                if (four_possible_answer == random_possible_answer)
                   random_possible_answer_already_exist = true;
               }
 
@@ -218,26 +214,19 @@ class _ClassQuizState extends State<ClassQuiz> {
 
         if (widget.last_unit)
           check_if_exist_certificate(
-            user_id,
-            widget.course_id,
-            widget.course_name,
-            context,
+            course_id: widget.course_id,
+            context: context,
+            show_has_certificate: true,
           );
       }
-
       setState(() {});
     }
-  }
-
-  set_user_info() async {
-    user_id = FirebaseAuth.instance.currentUser!.uid;
-    user_info = await get_user_info(user_id);
   }
 
   @override
   void initState() {
     super.initState();
-    set_user_info();
+    user_id = FirebaseAuth.instance.currentUser!.uid;
     get_quiz_data(widget.unit_id);
   }
 

@@ -38,7 +38,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late SharedPreferences prefs;
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
-  bool auto_scroll = false;
+  bool auto_scroll = true;
 
   List<String> text_list = [
     "Account",

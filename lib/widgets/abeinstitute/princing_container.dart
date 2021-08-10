@@ -72,8 +72,8 @@ class _PricingContainerState extends State<PricingContainer> {
   }
 
   set_user_info() async {
-    user_id = await FirebaseAuth.instance.currentUser!.uid;
-    user_email = await FirebaseAuth.instance.currentUser!.email!;
+    user_id = FirebaseAuth.instance.currentUser!.uid;
+    user_email = FirebaseAuth.instance.currentUser!.email!;
     setState(() {});
   }
 

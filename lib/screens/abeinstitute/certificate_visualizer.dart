@@ -1,4 +1,4 @@
-import 'package:xapptor_auth/check_if_user_is_admin.dart';
+import 'package:xapptor_logic/check_if_user_is_admin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

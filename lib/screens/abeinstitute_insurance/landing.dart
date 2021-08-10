@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:xapptor_auth/check_metadata_app.dart';
+import 'package:xapptor_logic/check_metadata_app.dart';
 import 'package:xapptor_logic/url_launcher.dart';
 import 'package:xapptor_ui/widgets/abeinstitute_insurance/insurance_catalog.dart';
 import 'package:xapptor_ui/widgets/contact_us_container_lead_form.dart';

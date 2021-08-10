@@ -33,6 +33,9 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     Curve animation_curve = Curves.easeInOutCirc;
     int delay_seconds = random_number_with_range(5, 9);
 
+    total_pages = widget.children.length;
+    setState(() {});
+
     Timer(Duration(seconds: delay_seconds), () {
       if (current_page < total_pages - 1) {
         page_controller.nextPage(
@@ -56,8 +59,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   @override
   void initState() {
     super.initState();
-    total_pages = widget.children.length;
-    setState(() {});
+
     if (widget.auto_scroll) auto_scroll();
   }
 
@@ -110,13 +112,6 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
                 dotHeight: 13,
                 dotWidth: 13,
               ),
-              // effect: WormEffect(
-              //   dotColor: widget.dot_color_inactive,
-              //   activeDotColor: widget.dot_colors_active[current_page.toInt()],
-              //   spacing: 20,
-              //   dotHeight: 13,
-              //   dotWidth: 13,
-              // ),
             ),
           ),
         ],

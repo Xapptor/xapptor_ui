@@ -1,5 +1,5 @@
-String xapptor_core_version = "3.0.0";
-String abeinstitute_version = "2.0.0";
+String xapptor_core_version = "3.0.1";
+String abeinstitute_version = "2.0.1";
 String abe_insurance_version = "2.0.0";
 String emissor_version = "2.0.0";
 String lum_version = "1.0.0";
