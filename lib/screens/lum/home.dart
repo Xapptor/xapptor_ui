@@ -215,7 +215,7 @@ class _HomeState extends State<Home> {
                     page: VendingMachinesList(),
                   ),
                   BottomBarButton(
-                    icon: Entypo.chart_line,
+                    icon: Icons.insights,
                     text: "Analíticas",
                     foreground_color: Colors.white,
                     background_color: color_lum_blue,

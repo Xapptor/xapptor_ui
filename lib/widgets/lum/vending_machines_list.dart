@@ -30,7 +30,7 @@ class _VendingMachinesListState extends State<VendingMachinesList> {
     await FirebaseFirestore.instance
         .collection('vending_machines')
         .where(
-          'admin',
+          'user_id',
           isEqualTo: uid,
         )
         .get()
@@ -42,12 +42,10 @@ class _VendingMachinesListState extends State<VendingMachinesList> {
             doc.data() as Map<String, dynamic>,
           ),
         );
-        VendingMachine last_vending_machine =
-            vending_machines[vending_machines.length - 1];
 
         vending_machines_widgets.add(
           VendingMachineCard(
-            vending_machine: last_vending_machine,
+            vending_machine: vending_machines.last,
           ),
         );
       });

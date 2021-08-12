@@ -13,8 +13,8 @@ class BottomBarContainer extends StatefulWidget {
 }
 
 class _BottomBarContainerState extends State<BottomBarContainer> {
-  int current_page = 0;
-  PageController page_controller = PageController(initialPage: 0);
+  int current_page = 1;
+  PageController page_controller = PageController(initialPage: 1);
   List<Widget> buttons = [];
   List<Widget> pages = [];
 
