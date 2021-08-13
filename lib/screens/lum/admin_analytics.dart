@@ -1,21 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:fluttericon/typicons_icons.dart';
+import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_ui/models/lum/payments.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-enum TimeFrame {
-  Day,
-  Week,
-  Month,
-  Year,
-  Beginning,
-}
+import 'package:xapptor_ui/widgets/timeframe_chart_functions.dart';
 
 class AdminAnalytics extends StatefulWidget {
   @override
@@ -25,35 +19,42 @@ class AdminAnalytics extends StatefulWidget {
 class _AdminAnalyticsState extends State<AdminAnalytics> {
   String user_id = "";
 
-  List<String> timeframe_values = [
+  static List<String> timeframe_values = [
     "Del último día",
     "De la última semana",
     "Del último mes",
     "Del último año",
     "Desde el inicio",
   ];
-
-  String timeframe_value = "Del último día";
-
-  TimeFrame current_timeframe = TimeFrame.Day;
+  String timeframe_value = timeframe_values[3];
+  TimeFrame current_timeframe = TimeFrame.Year;
 
   List<VendingMachine> vending_machines = [];
   List<String> vending_machine_values = [""];
   String vending_machine_value = "";
 
-  List<String> dispenser_values =
+  static List<String> dispenser_values =
       List<String>.generate(10, (i) => "Dispensador ${(i + 1)}");
-  String dispenser_value = "Dispensador 1";
+  String dispenser_value = dispenser_values.first;
 
   List<Product> products = [];
   List<String> product_values = [""];
   String product_value = "";
+
   List<Payment> payments = [];
+  List<Payment> filtered_payments = [];
+
+  List<Map<String, dynamic>> sum_of_payments_per_day = [];
 
   @override
   void initState() {
     super.initState();
     get_vending_machines();
+    // duplicate_document(
+    //   document_id: "72CkPp1jPJiaW3TqcAH4",
+    //   collection_id: "payments",
+    //   times: 3,
+    // );
   }
 
   get_vending_machines() async {
@@ -121,10 +122,102 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
             ),
           );
         });
-        print(payments.first.to_json());
-        setState(() {});
+        get_filtered_payments();
       });
     }
+  }
+
+  get_filtered_payments() {
+    filtered_payments.clear();
+    filtered_payments = payments
+        .where(
+          (payment) => payment.date.isAfter(
+            get_timeframe_date(timeframe: current_timeframe),
+          ),
+        )
+        .where(
+          (payment) =>
+              payment.vending_machine_id ==
+              vending_machines[
+                      vending_machine_values.indexOf(vending_machine_value)]
+                  .id,
+        )
+        .where(
+          (payment) =>
+              payment.dispenser ==
+              (int.parse(dispenser_value.characters.last) - 1),
+        )
+        .where(
+          (payment) =>
+              payment.product_id ==
+              products[product_values.indexOf(product_value)].id,
+        )
+        .toList();
+
+    filtered_payments.sort((a, b) => a.date.compareTo(b.date));
+    print("filtered_payments:");
+    for (var filtered_payment in filtered_payments) {
+      print(filtered_payment.to_json());
+    }
+    get_sum_of_payments();
+  }
+
+  get_sum_of_payments() {
+    sum_of_payments_per_day.clear();
+    for (var filtered_payment in filtered_payments) {
+      if (sum_of_payments_per_day.isEmpty) {
+        sum_of_payments_per_day.add({
+          "date": filtered_payment.date,
+          "amount": filtered_payment.amount,
+        });
+      } else {
+        bool payment_was_made_at_same_timeframe = false;
+
+        bool same_hour = filtered_payment.date.hour ==
+            sum_of_payments_per_day.last["date"].hour;
+
+        bool same_day = filtered_payment.date.day ==
+            sum_of_payments_per_day.last["date"].day;
+
+        bool same_month = filtered_payment.date.month ==
+            sum_of_payments_per_day.last["date"].month;
+
+        bool same_year = filtered_payment.date.year ==
+            sum_of_payments_per_day.last["date"].year;
+
+        switch (current_timeframe) {
+          case TimeFrame.Day:
+            if (same_hour && same_day && same_month && same_year)
+              payment_was_made_at_same_timeframe = true;
+            break;
+          case TimeFrame.Week:
+            if (same_day && same_month && same_year)
+              payment_was_made_at_same_timeframe = true;
+            break;
+          case TimeFrame.Month:
+            if (same_day && same_month && same_year)
+              payment_was_made_at_same_timeframe = true;
+            break;
+          case TimeFrame.Year:
+            if (same_month && same_year)
+              payment_was_made_at_same_timeframe = true;
+            break;
+          case TimeFrame.Beginning:
+            payment_was_made_at_same_timeframe = true;
+            break;
+        }
+
+        if (payment_was_made_at_same_timeframe) {
+          sum_of_payments_per_day.last["amount"] += filtered_payment.amount;
+        } else {
+          sum_of_payments_per_day.add({
+            "date": filtered_payment.date,
+            "amount": filtered_payment.amount,
+          });
+        }
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -136,23 +229,40 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
       color: Colors.white,
       child: SingleChildScrollView(
         child: FractionallySizedBox(
-          widthFactor: 0.9,
+          widthFactor: 0.85,
           child: Column(
             children: <Widget>[
               SizedBox(
                 height: sized_box_space * 3,
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Analíticas de ventas',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: color_lum_light_pink,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  Expanded(
+                    flex: 7,
+                    child: Text(
+                      'Analíticas de ventas',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: color_lum_light_pink,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                  Spacer(flex: 2),
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      onPressed: () {
+                        //
+                      },
+                      icon: Icon(
+                        Typicons.down_outline,
+                        color: color_lum_light_pink,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: sized_box_space * 2,
@@ -200,6 +310,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                   current_timeframe = TimeFrame.Beginning;
                                   break;
                               }
+                              get_filtered_payments();
                             });
                           },
                           items: timeframe_values
@@ -233,6 +344,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                           onChanged: (new_value) {
                             setState(() {
                               vending_machine_value = new_value!;
+                              get_filtered_payments();
                             });
                           },
                           items: vending_machine_values
@@ -270,6 +382,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                           onChanged: (new_value) {
                             setState(() {
                               dispenser_value = new_value!;
+                              get_filtered_payments();
                             });
                           },
                           items: dispenser_values
@@ -303,6 +416,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                           onChanged: (new_value) {
                             setState(() {
                               product_value = new_value!;
+                              get_filtered_payments();
                             });
                           },
                           items: product_values
@@ -424,88 +538,6 @@ LineChartData MainLineChart({
   );
 }
 
-double get_max_x({
-  required TimeFrame timeframe,
-}) {
-  switch (timeframe) {
-    case TimeFrame.Day:
-      return 6;
-    case TimeFrame.Week:
-      return 7;
-    case TimeFrame.Month:
-      return 4;
-    case TimeFrame.Year:
-      return 6;
-    case TimeFrame.Beginning:
-      return 12;
-  }
-}
-
-List<String> get_bottom_labels({
-  required double max_x,
-  required TimeFrame timeframe,
-}) {
-  DateTime date_now = DateTime.now();
-  List<String> bottom_labels = [];
-
-  for (var i = 0; i < max_x; i++) {
-    DateTime current_date = date_now;
-    String current_label = "";
-
-    switch (timeframe) {
-      case TimeFrame.Day:
-        current_date = DateTime(
-          date_now.year,
-          date_now.month,
-          date_now.day,
-          date_now.hour - (i * 4),
-        );
-        current_label = DateFormat("h a").format(current_date);
-        break;
-      case TimeFrame.Week:
-        current_date = DateTime(
-          date_now.year,
-          date_now.month,
-          date_now.day - i,
-        );
-        current_label = DateFormat("d").format(current_date);
-        break;
-      case TimeFrame.Month:
-        current_date = DateTime(
-          date_now.year,
-          date_now.month,
-          date_now.day - (i * 7),
-        );
-        current_label = DateFormat("d").format(current_date);
-        break;
-      case TimeFrame.Year:
-        current_date = DateTime(
-          date_now.year,
-          date_now.month - (i * 2),
-        );
-        current_label = DateFormat("MMM").format(current_date);
-        break;
-      case TimeFrame.Beginning:
-        current_date = DateTime(
-          date_now.year - i,
-        );
-        current_label = DateFormat("YY").format(current_date);
-        break;
-    }
-
-    bottom_labels.add(current_label);
-    print("current_label $current_label");
-  }
-  return List.from(bottom_labels.reversed);
-}
-
-int last_day_of_month(DateTime month) {
-  var beginning_next_month = (month.month < 12)
-      ? new DateTime(month.year, month.month + 1, 1)
-      : new DateTime(month.year + 1, 1, 1);
-  return beginning_next_month.subtract(new Duration(days: 1)).day;
-}
-
 List<LineChartBarData> linesBarData1() {
   final lineChartBarData1 = LineChartBarData(
     spots: [
@@ -519,7 +551,7 @@ List<LineChartBarData> linesBarData1() {
     ],
     isCurved: true,
     colors: [
-      const Color(0xff4af699),
+      color_lum_green,
     ],
     barWidth: 8,
     isStrokeCapRound: true,

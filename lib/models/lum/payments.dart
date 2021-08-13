@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
 
 class Payment {
   final String id;
   final int amount;
-  final String date;
+  final DateTime date;
   final int dispenser;
   final String product_id;
   final String user_id;
@@ -22,7 +23,7 @@ class Payment {
   Payment.from_snapshot(String id, Map<String, dynamic> snapshot)
       : id = id,
         amount = snapshot['amount'],
-        date = timestamp_to_date(snapshot['date']),
+        date = (snapshot['date'] as Timestamp).toDate(),
         dispenser = snapshot['dispenser'],
         product_id = snapshot['product_id'],
         user_id = snapshot['user_id'],
