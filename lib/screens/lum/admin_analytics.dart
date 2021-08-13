@@ -30,21 +30,21 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   TimeFrame current_timeframe = TimeFrame.Year;
 
   List<VendingMachine> vending_machines = [];
-  List<String> vending_machine_values = [""];
-  String vending_machine_value = "";
+  List<String> vending_machine_values = ["Todas"];
+  String vending_machine_value = "Todas";
 
   static List<String> dispenser_values =
-      List<String>.generate(10, (i) => "Dispensador ${(i + 1)}");
+      ["Todos"] + List<String>.generate(10, (i) => "Dispensador ${(i + 1)}");
   String dispenser_value = dispenser_values.first;
 
   List<Product> products = [];
-  List<String> product_values = [""];
-  String product_value = "";
+  List<String> product_values = ["Todos"];
+  String product_value = "Todos";
 
   List<Payment> payments = [];
   List<Payment> filtered_payments = [];
 
-  List<Map<String, dynamic>> sum_of_payments_per_day = [];
+  List<Map<String, dynamic>> sum_of_payments = [];
 
   @override
   void initState() {
@@ -60,6 +60,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   get_vending_machines() async {
     vending_machines.clear();
     vending_machine_values.clear();
+
+    vending_machine_values.add("Todas");
 
     user_id = FirebaseAuth.instance.currentUser!.uid;
 
@@ -88,6 +90,9 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   get_products() async {
     products.clear();
     product_values.clear();
+
+    product_values.add("Todos");
+
     await FirebaseFirestore.instance
         .collection("products")
         .get()
@@ -135,26 +140,42 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
             get_timeframe_date(timeframe: current_timeframe),
           ),
         )
-        .where(
-          (payment) =>
-              payment.vending_machine_id ==
-              vending_machines[
-                      vending_machine_values.indexOf(vending_machine_value)]
-                  .id,
-        )
-        .where(
-          (payment) =>
-              payment.dispenser ==
-              (int.parse(dispenser_value.characters.last) - 1),
-        )
-        .where(
-          (payment) =>
-              payment.product_id ==
-              products[product_values.indexOf(product_value)].id,
-        )
         .toList();
 
+    if (vending_machine_values.indexOf(vending_machine_value) != 0)
+      filtered_payments = filtered_payments
+          .where(
+            (payment) =>
+                payment.vending_machine_id ==
+                vending_machines
+                    .firstWhere((vending_machine) =>
+                        vending_machine.name == vending_machine_value)
+                    .id,
+          )
+          .toList();
+
+    if (dispenser_values.indexOf(dispenser_value) != 0)
+      filtered_payments = filtered_payments
+          .where(
+            (payment) =>
+                payment.dispenser ==
+                (int.parse(dispenser_value.characters.last) - 1),
+          )
+          .toList();
+
+    if (product_values.indexOf(product_value) != 0)
+      filtered_payments = filtered_payments
+          .where(
+            (payment) =>
+                payment.product_id ==
+                products
+                    .firstWhere((product) => product.name == product_value)
+                    .id,
+          )
+          .toList();
+
     filtered_payments.sort((a, b) => a.date.compareTo(b.date));
+
     print("filtered_payments:");
     for (var filtered_payment in filtered_payments) {
       print(filtered_payment.to_json());
@@ -163,27 +184,27 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   }
 
   get_sum_of_payments() {
-    sum_of_payments_per_day.clear();
+    sum_of_payments.clear();
     for (var filtered_payment in filtered_payments) {
-      if (sum_of_payments_per_day.isEmpty) {
-        sum_of_payments_per_day.add({
+      if (sum_of_payments.isEmpty) {
+        sum_of_payments.add({
           "date": filtered_payment.date,
           "amount": filtered_payment.amount,
         });
       } else {
         bool payment_was_made_at_same_timeframe = false;
 
-        bool same_hour = filtered_payment.date.hour ==
-            sum_of_payments_per_day.last["date"].hour;
+        bool same_hour =
+            filtered_payment.date.hour == sum_of_payments.last["date"].hour;
 
-        bool same_day = filtered_payment.date.day ==
-            sum_of_payments_per_day.last["date"].day;
+        bool same_day =
+            filtered_payment.date.day == sum_of_payments.last["date"].day;
 
-        bool same_month = filtered_payment.date.month ==
-            sum_of_payments_per_day.last["date"].month;
+        bool same_month =
+            filtered_payment.date.month == sum_of_payments.last["date"].month;
 
-        bool same_year = filtered_payment.date.year ==
-            sum_of_payments_per_day.last["date"].year;
+        bool same_year =
+            filtered_payment.date.year == sum_of_payments.last["date"].year;
 
         switch (current_timeframe) {
           case TimeFrame.Day:
@@ -208,9 +229,9 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
         }
 
         if (payment_was_made_at_same_timeframe) {
-          sum_of_payments_per_day.last["amount"] += filtered_payment.amount;
+          sum_of_payments.last["amount"] += filtered_payment.amount;
         } else {
-          sum_of_payments_per_day.add({
+          sum_of_payments.add({
             "date": filtered_payment.date,
             "amount": filtered_payment.amount,
           });
@@ -225,243 +246,272 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
 
-    return Container(
-      color: Colors.white,
-      child: SingleChildScrollView(
-        child: FractionallySizedBox(
-          widthFactor: 0.85,
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: sized_box_space * 3,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 7,
-                    child: Text(
-                      'Analíticas de ventas',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: color_lum_light_pink,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 2),
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      onPressed: () {
-                        //
-                      },
-                      icon: Icon(
-                        Typicons.down_outline,
-                        color: color_lum_light_pink,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: sized_box_space * 2,
-              ),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: DropdownButton<String>(
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: color_lum_light_pink,
-                          ),
-                          value: timeframe_value,
-                          iconSize: 24,
-                          elevation: 16,
-                          isExpanded: true,
-                          style: TextStyle(
-                            color: color_lum_light_pink,
-                          ),
-                          underline: Container(
-                            height: 1,
-                            color: color_lum_light_pink,
-                          ),
-                          onChanged: (new_value) {
-                            setState(() {
-                              timeframe_value = new_value!;
-                              switch (
-                                  timeframe_values.indexOf(timeframe_value)) {
-                                case 0:
-                                  current_timeframe = TimeFrame.Day;
-                                  break;
-                                case 1:
-                                  current_timeframe = TimeFrame.Week;
-                                  break;
-                                case 2:
-                                  current_timeframe = TimeFrame.Month;
-                                  break;
-                                case 3:
-                                  current_timeframe = TimeFrame.Year;
-                                  break;
-                                case 4:
-                                  current_timeframe = TimeFrame.Beginning;
-                                  break;
-                              }
-                              get_filtered_payments();
-                            });
-                          },
-                          items: timeframe_values
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Spacer(flex: 1),
-                      Expanded(
-                        flex: 10,
-                        child: DropdownButton<String>(
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: color_lum_light_pink,
-                          ),
-                          value: vending_machine_value,
-                          iconSize: 24,
-                          elevation: 16,
-                          isExpanded: true,
-                          style: TextStyle(
-                            color: color_lum_light_pink,
-                          ),
-                          underline: Container(
-                            height: 1,
-                            color: color_lum_light_pink,
-                          ),
-                          onChanged: (new_value) {
-                            setState(() {
-                              vending_machine_value = new_value!;
-                              get_filtered_payments();
-                            });
-                          },
-                          items: vending_machine_values
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: DropdownButton<String>(
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: color_lum_light_pink,
-                          ),
-                          value: dispenser_value,
-                          iconSize: 24,
-                          elevation: 16,
-                          isExpanded: true,
-                          style: TextStyle(
-                            color: color_lum_light_pink,
-                          ),
-                          underline: Container(
-                            height: 1,
-                            color: color_lum_light_pink,
-                          ),
-                          onChanged: (new_value) {
-                            setState(() {
-                              dispenser_value = new_value!;
-                              get_filtered_payments();
-                            });
-                          },
-                          items: dispenser_values
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      Spacer(flex: 1),
-                      Expanded(
-                        flex: 10,
-                        child: DropdownButton<String>(
-                          icon: Icon(
-                            Icons.arrow_drop_down,
-                            color: color_lum_light_pink,
-                          ),
-                          value: product_value,
-                          iconSize: 24,
-                          elevation: 16,
-                          isExpanded: true,
-                          style: TextStyle(
-                            color: color_lum_light_pink,
-                          ),
-                          underline: Container(
-                            height: 1,
-                            color: color_lum_light_pink,
-                          ),
-                          onChanged: (new_value) {
-                            setState(() {
-                              product_value = new_value!;
-                              get_filtered_payments();
-                            });
-                          },
-                          items: product_values
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: sized_box_space * 2,
-              ),
-              Container(
-                height: screen_height / 3,
-                width: screen_width,
-                child: LineChart(
-                  MainLineChart(timeframe: current_timeframe),
-                  swapAnimationDuration: const Duration(milliseconds: 250),
+    if (sum_of_payments.isEmpty) {
+      return Container(
+        color: Colors.red,
+      );
+    } else {
+      List filtered_sum_of_payments = sum_of_payments;
+      filtered_sum_of_payments
+          .sort((a, b) => a["amount"].compareTo(b["amount"]));
+      double max_y = filtered_sum_of_payments.last["amount"] * 1.3;
+
+      return Container(
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: FractionallySizedBox(
+            widthFactor: 0.85,
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: sized_box_space * 3,
                 ),
-              ),
-              SizedBox(
-                height: sized_box_space,
-              ),
-            ],
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: Text(
+                        'Analíticas de ventas',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: color_lum_light_pink,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Spacer(flex: 2),
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          //
+                        },
+                        icon: Icon(
+                          Typicons.down_outline,
+                          color: color_lum_light_pink,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: sized_box_space * 2,
+                ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: DropdownButton<String>(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: color_lum_light_pink,
+                            ),
+                            value: timeframe_value,
+                            iconSize: 24,
+                            elevation: 16,
+                            isExpanded: true,
+                            style: TextStyle(
+                              color: color_lum_light_pink,
+                            ),
+                            underline: Container(
+                              height: 1,
+                              color: color_lum_light_pink,
+                            ),
+                            onChanged: (new_value) {
+                              setState(() {
+                                timeframe_value = new_value!;
+                                switch (
+                                    timeframe_values.indexOf(timeframe_value)) {
+                                  case 0:
+                                    current_timeframe = TimeFrame.Day;
+                                    break;
+                                  case 1:
+                                    current_timeframe = TimeFrame.Week;
+                                    break;
+                                  case 2:
+                                    current_timeframe = TimeFrame.Month;
+                                    break;
+                                  case 3:
+                                    current_timeframe = TimeFrame.Year;
+                                    break;
+                                  case 4:
+                                    current_timeframe = TimeFrame.Beginning;
+                                    break;
+                                }
+                                get_filtered_payments();
+                              });
+                            },
+                            items: timeframe_values
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        Spacer(flex: 1),
+                        Expanded(
+                          flex: 10,
+                          child: DropdownButton<String>(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: color_lum_light_pink,
+                            ),
+                            value: vending_machine_value,
+                            iconSize: 24,
+                            elevation: 16,
+                            isExpanded: true,
+                            style: TextStyle(
+                              color: color_lum_light_pink,
+                            ),
+                            underline: Container(
+                              height: 1,
+                              color: color_lum_light_pink,
+                            ),
+                            onChanged: (new_value) {
+                              setState(() {
+                                vending_machine_value = new_value!;
+                                get_filtered_payments();
+                              });
+                            },
+                            items: vending_machine_values
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: DropdownButton<String>(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: color_lum_light_pink,
+                            ),
+                            value: dispenser_value,
+                            iconSize: 24,
+                            elevation: 16,
+                            isExpanded: true,
+                            style: TextStyle(
+                              color: color_lum_light_pink,
+                            ),
+                            underline: Container(
+                              height: 1,
+                              color: color_lum_light_pink,
+                            ),
+                            onChanged: (new_value) {
+                              setState(() {
+                                dispenser_value = new_value!;
+                                get_filtered_payments();
+                              });
+                            },
+                            items: dispenser_values
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        Spacer(flex: 1),
+                        Expanded(
+                          flex: 10,
+                          child: DropdownButton<String>(
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: color_lum_light_pink,
+                            ),
+                            value: product_value,
+                            iconSize: 24,
+                            elevation: 16,
+                            isExpanded: true,
+                            style: TextStyle(
+                              color: color_lum_light_pink,
+                            ),
+                            underline: Container(
+                              height: 1,
+                              color: color_lum_light_pink,
+                            ),
+                            onChanged: (new_value) {
+                              setState(() {
+                                product_value = new_value!;
+                                get_filtered_payments();
+                              });
+                            },
+                            items: product_values
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: sized_box_space * 2,
+                ),
+                Container(
+                  height: screen_height / 3,
+                  width: screen_width,
+                  child: LineChart(
+                    MainLineChart(
+                      timeframe: current_timeframe,
+                      max_y: max_y,
+                      sum_of_payments: sum_of_payments,
+                    ),
+                    swapAnimationDuration: const Duration(milliseconds: 250),
+                  ),
+                ),
+                SizedBox(
+                  height: sized_box_space,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 
 LineChartData MainLineChart({
   required TimeFrame timeframe,
+  required double max_y,
+  required List<Map<String, dynamic>> sum_of_payments,
 }) {
   double max_x = get_max_x(timeframe: timeframe);
+
   List<String> bottom_labels = get_bottom_labels(
     max_x: max_x,
     timeframe: timeframe,
   );
+
+  List<FlSpot> spots = [];
+
+  for (var sum_of_payment in sum_of_payments) {
+    spots.add(
+      FlSpot(
+        sum_of_payments.indexOf(sum_of_payment).toDouble(),
+        sum_of_payment["amount"].toDouble(),
+      ),
+    );
+  }
 
   return LineChartData(
     lineTouchData: LineTouchData(
@@ -498,18 +548,18 @@ LineChartData MainLineChart({
         getTitles: (value) {
           switch (value.toInt()) {
             case 1:
-              return '1m';
+              return '${(max_y / 4) * 1} \$';
             case 2:
-              return '2m';
+              return '${(max_y / 4) * 2} \$';
             case 3:
-              return '3m';
+              return '${(max_y / 4) * 3} \$';
             case 4:
-              return '5m';
+              return '${(max_y / 4) * 4} \$';
           }
           return '';
         },
         margin: 8,
-        reservedSize: 0,
+        reservedSize: 10,
       ),
     ),
     borderData: FlBorderData(
@@ -532,23 +582,17 @@ LineChartData MainLineChart({
     ),
     minX: 0,
     maxX: max_x,
-    maxY: 4,
     minY: 0,
-    lineBarsData: linesBarData1(),
+    maxY: max_y,
+    lineBarsData: linesBarData1(spots: spots),
   );
 }
 
-List<LineChartBarData> linesBarData1() {
+List<LineChartBarData> linesBarData1({
+  required List<FlSpot> spots,
+}) {
   final lineChartBarData1 = LineChartBarData(
-    spots: [
-      FlSpot(1, 1),
-      FlSpot(3, 1.5),
-      FlSpot(5, 1.4),
-      FlSpot(7, 3.4),
-      FlSpot(10, 2),
-      FlSpot(12, 2.2),
-      FlSpot(13, 1.8),
-    ],
+    spots: spots,
     isCurved: true,
     colors: [
       color_lum_green,
