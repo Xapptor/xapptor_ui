@@ -53,7 +53,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     // duplicate_document(
     //   document_id: "72CkPp1jPJiaW3TqcAH4",
     //   collection_id: "payments",
-    //   times: 3,
+    //   times: 0,
     // );
   }
 
@@ -260,7 +260,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
         color: Colors.white,
         child: SingleChildScrollView(
           child: FractionallySizedBox(
-            widthFactor: 0.85,
+            widthFactor: 0.8,
             child: Column(
               children: <Widget>[
                 SizedBox(
@@ -495,19 +495,59 @@ LineChartData MainLineChart({
   required double max_y,
   required List<Map<String, dynamic>> sum_of_payments,
 }) {
+  sum_of_payments.sort((a, b) => a["date"].compareTo(b["date"]));
+  sum_of_payments.forEach((element) => print("sum_of_payments $element"));
+
   double max_x = get_max_x(timeframe: timeframe);
+  print("max_x $max_x");
 
   List<String> bottom_labels = get_bottom_labels(
-    max_x: max_x,
+    max_x: max_x + 1,
     timeframe: timeframe,
   );
+
+  print(bottom_labels);
 
   List<FlSpot> spots = [];
 
   for (var sum_of_payment in sum_of_payments) {
+    DateTime current_date = sum_of_payment["date"] as DateTime;
+    print("current_date $current_date");
+
+    Duration date_diference = DateTime.now().difference(current_date);
+    print("date_diference ${date_diference}");
+
+    double date_diference_result = 0;
+    switch (timeframe) {
+      case TimeFrame.Day:
+        date_diference_result = date_diference.inHours.toDouble();
+        break;
+      case TimeFrame.Week:
+        date_diference_result = date_diference.inDays.toDouble();
+
+        break;
+      case TimeFrame.Month:
+        date_diference_result = date_diference.inDays.toDouble();
+
+        break;
+      case TimeFrame.Year:
+        date_diference_result = date_diference.inDays / 30;
+
+        break;
+      case TimeFrame.Beginning:
+        date_diference_result = date_diference.inDays.toDouble();
+
+        break;
+    }
+
+    print("date_diference_result $date_diference_result");
+
+    double result = max_x - (date_diference_result / 2);
+    print("result $result");
+
     spots.add(
       FlSpot(
-        sum_of_payments.indexOf(sum_of_payment).toDouble(),
+        result,
         sum_of_payment["amount"].toDouble(),
       ),
     );
@@ -535,7 +575,12 @@ LineChartData MainLineChart({
         ),
         margin: 10,
         getTitles: (value) {
-          return bottom_labels[value.toInt()];
+          print("this value $value");
+          if (value <= max_x) {
+            return bottom_labels[value.toInt()];
+          } else {
+            return "";
+          }
         },
       ),
       leftTitles: SideTitles(
@@ -546,20 +591,36 @@ LineChartData MainLineChart({
           fontSize: 14,
         ),
         getTitles: (value) {
-          switch (value.toInt()) {
-            case 1:
-              return '${(max_y / 4) * 1} \$';
-            case 2:
-              return '${(max_y / 4) * 2} \$';
-            case 3:
-              return '${(max_y / 4) * 3} \$';
-            case 4:
-              return '${(max_y / 4) * 4} \$';
+          double max_y_chunk = max_y / 4;
+
+          String max_y_chunk_string = max_y_chunk.toInt().toString();
+
+          int max_y_chunk_last_digit = int.parse(max_y_chunk_string.characters
+              .toList()[max_y_chunk_string.length - 1]);
+
+          if (max_y_chunk % 5 != 0) {
+            max_y_chunk += 5 - max_y_chunk_last_digit;
           }
-          return '';
+
+          String label = "";
+
+          if (value > 999) {
+            label = "${value.toInt() / 1000}k \$";
+          } else {
+            label = "${value.toInt()} \$";
+          }
+
+          if ((value == max_y_chunk * 1) ||
+              (value == max_y_chunk * 2) ||
+              (value == max_y_chunk * 3) ||
+              (value == max_y_chunk * 4)) {
+            return label;
+          } else {
+            return "";
+          }
         },
         margin: 8,
-        reservedSize: 10,
+        reservedSize: 30,
       ),
     ),
     borderData: FlBorderData(
@@ -584,29 +645,22 @@ LineChartData MainLineChart({
     maxX: max_x,
     minY: 0,
     maxY: max_y,
-    lineBarsData: linesBarData1(spots: spots),
-  );
-}
-
-List<LineChartBarData> linesBarData1({
-  required List<FlSpot> spots,
-}) {
-  final lineChartBarData1 = LineChartBarData(
-    spots: spots,
-    isCurved: true,
-    colors: [
-      color_lum_green,
+    lineBarsData: [
+      LineChartBarData(
+        spots: spots,
+        isCurved: false,
+        colors: [
+          color_lum_green,
+        ],
+        barWidth: 8,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        belowBarData: BarAreaData(
+          show: false,
+        ),
+      )
     ],
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(
-      show: false,
-    ),
   );
-  return [
-    lineChartBarData1,
-  ];
 }
