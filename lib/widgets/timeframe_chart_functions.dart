@@ -10,23 +10,25 @@ enum TimeFrame {
 
 double get_max_x({
   required TimeFrame timeframe,
+  required int first_year,
 }) {
   switch (timeframe) {
     case TimeFrame.Day:
-      return 6;
+      return 24;
     case TimeFrame.Week:
       return 7;
     case TimeFrame.Month:
-      return 4;
+      return 30;
     case TimeFrame.Year:
-      return 6;
-    case TimeFrame.Beginning:
       return 12;
+    case TimeFrame.Beginning:
+      return 3;
   }
 }
 
 DateTime get_timeframe_date({
   required TimeFrame timeframe,
+  required int first_year,
 }) {
   DateTime date_now = DateTime.now();
   switch (timeframe) {
@@ -57,7 +59,7 @@ DateTime get_timeframe_date({
 
     case TimeFrame.Beginning:
       return DateTime(
-        date_now.year - 20,
+        date_now.year - first_year,
       );
   }
 }
@@ -79,7 +81,7 @@ List<String> get_bottom_labels({
           date_now.year,
           date_now.month,
           date_now.day,
-          date_now.hour - (i * 4),
+          date_now.hour - i,
         );
         current_label = DateFormat("h a").format(current_date);
         break;
@@ -95,14 +97,14 @@ List<String> get_bottom_labels({
         current_date = DateTime(
           date_now.year,
           date_now.month,
-          date_now.day - (i * 7),
+          date_now.day - i,
         );
         current_label = DateFormat("d").format(current_date);
         break;
       case TimeFrame.Year:
         current_date = DateTime(
           date_now.year,
-          date_now.month - (i * 2),
+          date_now.month - i,
         );
         current_label = DateFormat("MMM").format(current_date);
         break;
@@ -110,7 +112,7 @@ List<String> get_bottom_labels({
         current_date = DateTime(
           date_now.year - i,
         );
-        current_label = DateFormat("YY").format(current_date);
+        current_label = DateFormat("y").format(current_date);
         break;
     }
 

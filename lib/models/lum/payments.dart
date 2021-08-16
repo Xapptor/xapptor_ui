@@ -40,3 +40,13 @@ class Payment {
     };
   }
 }
+
+List<Map<String, dynamic>> payment_list_to_json_list(List<Payment> payments) {
+  List<Map<String, dynamic>> json_list = [];
+
+  payments.forEach((payment) {
+    json_list.add(payment.to_json());
+  });
+
+  return json_list;
+}

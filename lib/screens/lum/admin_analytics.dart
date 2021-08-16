@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
+import 'package:xapptor_logic/random_number_with_range.dart';
 import 'package:xapptor_ui/models/lum/payments.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
@@ -51,8 +53,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     super.initState();
     get_vending_machines();
     // duplicate_document(
-    //   document_id: "72CkPp1jPJiaW3TqcAH4",
-    //   collection_id: "payments",
+    //   document_id: "",
+    //   collection_id: "vending_machines",
     //   times: 0,
     // );
   }
@@ -134,10 +136,15 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
 
   get_filtered_payments() {
     filtered_payments.clear();
+    payments.sort((a, b) => a.date.compareTo(b.date));
+
     filtered_payments = payments
         .where(
           (payment) => payment.date.isAfter(
-            get_timeframe_date(timeframe: current_timeframe),
+            get_timeframe_date(
+              timeframe: current_timeframe,
+              first_year: payments.first.date.year,
+            ),
           ),
         )
         .toList();
@@ -155,13 +162,12 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
           .toList();
 
     if (dispenser_values.indexOf(dispenser_value) != 0)
-      filtered_payments = filtered_payments
-          .where(
-            (payment) =>
-                payment.dispenser ==
-                (int.parse(dispenser_value.characters.last) - 1),
-          )
-          .toList();
+      filtered_payments = filtered_payments.where((payment) {
+        int dispenser_value_number = dispenser_value.characters.last == "0"
+            ? 9
+            : (int.parse(dispenser_value.characters.last) - 1);
+        return payment.dispenser == dispenser_value_number;
+      }).toList();
 
     if (product_values.indexOf(product_value) != 0)
       filtered_payments = filtered_payments
@@ -180,10 +186,10 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     for (var filtered_payment in filtered_payments) {
       print(filtered_payment.to_json());
     }
-    get_sum_of_payments();
+    get_sum_of_payments_by_timeframe();
   }
 
-  get_sum_of_payments() {
+  get_sum_of_payments_by_timeframe() {
     sum_of_payments.clear();
     for (var filtered_payment in filtered_payments) {
       if (sum_of_payments.isEmpty) {
@@ -224,7 +230,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
               payment_was_made_at_same_timeframe = true;
             break;
           case TimeFrame.Beginning:
-            payment_was_made_at_same_timeframe = true;
+            if (same_year) payment_was_made_at_same_timeframe = true;
             break;
         }
 
@@ -246,267 +252,369 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
 
-    if (sum_of_payments.isEmpty) {
-      return Container(
-        color: Colors.red,
-      );
-    } else {
+    double max_y = 0;
+
+    if (sum_of_payments.isNotEmpty) {
       List filtered_sum_of_payments = sum_of_payments;
       filtered_sum_of_payments
           .sort((a, b) => a["amount"].compareTo(b["amount"]));
-      double max_y = filtered_sum_of_payments.last["amount"] * 1.3;
+      max_y = filtered_sum_of_payments.last["amount"] * 1.3;
+    }
 
-      return Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: FractionallySizedBox(
-            widthFactor: 0.8,
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: sized_box_space * 3,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 7,
-                      child: Text(
-                        'Analíticas de ventas',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: color_lum_light_pink,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+    print("max_y $max_y");
+
+    return Container(
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: FractionallySizedBox(
+          widthFactor: 0.75,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: sized_box_space * 3,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 7,
+                    child: Text(
+                      'Analíticas de ventas',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: color_lum_blue,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Spacer(flex: 2),
-                    Expanded(
-                      flex: 1,
-                      child: IconButton(
-                        onPressed: () {
-                          //
-                        },
-                        icon: Icon(
-                          Typicons.down_outline,
-                          color: color_lum_light_pink,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: sized_box_space * 2,
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 10,
-                          child: DropdownButton<String>(
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: color_lum_light_pink,
-                            ),
-                            value: timeframe_value,
-                            iconSize: 24,
-                            elevation: 16,
-                            isExpanded: true,
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                            ),
-                            underline: Container(
-                              height: 1,
-                              color: color_lum_light_pink,
-                            ),
-                            onChanged: (new_value) {
-                              setState(() {
-                                timeframe_value = new_value!;
-                                switch (
-                                    timeframe_values.indexOf(timeframe_value)) {
-                                  case 0:
-                                    current_timeframe = TimeFrame.Day;
-                                    break;
-                                  case 1:
-                                    current_timeframe = TimeFrame.Week;
-                                    break;
-                                  case 2:
-                                    current_timeframe = TimeFrame.Month;
-                                    break;
-                                  case 3:
-                                    current_timeframe = TimeFrame.Year;
-                                    break;
-                                  case 4:
-                                    current_timeframe = TimeFrame.Beginning;
-                                    break;
-                                }
-                                get_filtered_payments();
-                              });
-                            },
-                            items: timeframe_values
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Spacer(flex: 1),
-                        Expanded(
-                          flex: 10,
-                          child: DropdownButton<String>(
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: color_lum_light_pink,
-                            ),
-                            value: vending_machine_value,
-                            iconSize: 24,
-                            elevation: 16,
-                            isExpanded: true,
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                            ),
-                            underline: Container(
-                              height: 1,
-                              color: color_lum_light_pink,
-                            ),
-                            onChanged: (new_value) {
-                              setState(() {
-                                vending_machine_value = new_value!;
-                                get_filtered_payments();
-                              });
-                            },
-                            items: vending_machine_values
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          flex: 10,
-                          child: DropdownButton<String>(
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: color_lum_light_pink,
-                            ),
-                            value: dispenser_value,
-                            iconSize: 24,
-                            elevation: 16,
-                            isExpanded: true,
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                            ),
-                            underline: Container(
-                              height: 1,
-                              color: color_lum_light_pink,
-                            ),
-                            onChanged: (new_value) {
-                              setState(() {
-                                dispenser_value = new_value!;
-                                get_filtered_payments();
-                              });
-                            },
-                            items: dispenser_values
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Spacer(flex: 1),
-                        Expanded(
-                          flex: 10,
-                          child: DropdownButton<String>(
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: color_lum_light_pink,
-                            ),
-                            value: product_value,
-                            iconSize: 24,
-                            elevation: 16,
-                            isExpanded: true,
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                            ),
-                            underline: Container(
-                              height: 1,
-                              color: color_lum_light_pink,
-                            ),
-                            onChanged: (new_value) {
-                              setState(() {
-                                product_value = new_value!;
-                                get_filtered_payments();
-                              });
-                            },
-                            items: product_values
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: sized_box_space * 2,
-                ),
-                Container(
-                  height: screen_height / 3,
-                  width: screen_width,
-                  child: LineChart(
-                    MainLineChart(
-                      timeframe: current_timeframe,
-                      max_y: max_y,
-                      sum_of_payments: sum_of_payments,
-                    ),
-                    swapAnimationDuration: const Duration(milliseconds: 250),
                   ),
-                ),
-                SizedBox(
-                  height: sized_box_space,
-                ),
-              ],
-            ),
+                  Spacer(flex: 2),
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      onPressed: () {
+                        //
+                      },
+                      icon: Icon(
+                        Typicons.down_outline,
+                        color: color_lum_blue,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: sized_box_space * 2,
+              ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 10,
+                        child: DropdownButton<String>(
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: color_lum_blue,
+                          ),
+                          value: timeframe_value,
+                          iconSize: 24,
+                          elevation: 16,
+                          isExpanded: true,
+                          style: TextStyle(
+                            color: color_lum_blue,
+                          ),
+                          underline: Container(
+                            height: 1,
+                            color: color_lum_blue,
+                          ),
+                          onChanged: (new_value) {
+                            setState(() {
+                              timeframe_value = new_value!;
+                              switch (
+                                  timeframe_values.indexOf(timeframe_value)) {
+                                case 0:
+                                  current_timeframe = TimeFrame.Day;
+                                  break;
+                                case 1:
+                                  current_timeframe = TimeFrame.Week;
+                                  break;
+                                case 2:
+                                  current_timeframe = TimeFrame.Month;
+                                  break;
+                                case 3:
+                                  current_timeframe = TimeFrame.Year;
+                                  break;
+                                case 4:
+                                  current_timeframe = TimeFrame.Beginning;
+                                  break;
+                              }
+                              get_filtered_payments();
+                            });
+                          },
+                          items: timeframe_values
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      Expanded(
+                        flex: 10,
+                        child: DropdownButton<String>(
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: color_lum_blue,
+                          ),
+                          value: vending_machine_value,
+                          iconSize: 24,
+                          elevation: 16,
+                          isExpanded: true,
+                          style: TextStyle(
+                            color: color_lum_blue,
+                          ),
+                          underline: Container(
+                            height: 1,
+                            color: color_lum_blue,
+                          ),
+                          onChanged: (new_value) {
+                            setState(() {
+                              vending_machine_value = new_value!;
+                              get_filtered_payments();
+                            });
+                          },
+                          items: vending_machine_values
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        flex: 10,
+                        child: DropdownButton<String>(
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: color_lum_blue,
+                          ),
+                          value: dispenser_value,
+                          iconSize: 24,
+                          elevation: 16,
+                          isExpanded: true,
+                          style: TextStyle(
+                            color: color_lum_blue,
+                          ),
+                          underline: Container(
+                            height: 1,
+                            color: color_lum_blue,
+                          ),
+                          onChanged: (new_value) {
+                            setState(() {
+                              dispenser_value = new_value!;
+                              get_filtered_payments();
+                            });
+                          },
+                          items: dispenser_values
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      Expanded(
+                        flex: 10,
+                        child: DropdownButton<String>(
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: color_lum_blue,
+                          ),
+                          value: product_value,
+                          iconSize: 24,
+                          elevation: 16,
+                          isExpanded: true,
+                          style: TextStyle(
+                            color: color_lum_blue,
+                          ),
+                          underline: Container(
+                            height: 1,
+                            color: color_lum_blue,
+                          ),
+                          onChanged: (new_value) {
+                            setState(() {
+                              product_value = new_value!;
+                              get_filtered_payments();
+                            });
+                          },
+                          items: product_values
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              payments.isNotEmpty
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          height: sized_box_space * 2,
+                        ),
+                        Container(
+                          height: screen_height / 3,
+                          width: screen_width,
+                          child: main_line_chart(
+                            current_timeframe: current_timeframe,
+                            max_y: max_y,
+                            sum_of_payments: sum_of_payments,
+                          ),
+                        ),
+                        FractionallySizedBox(
+                          widthFactor: 0.8,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: sized_box_space * 6,
+                              ),
+                              Text(
+                                'Ventas por Máquina',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: color_lum_blue,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: sized_box_space,
+                              ),
+                              Container(
+                                height: screen_height / 3,
+                                width: screen_width,
+                                child: payments_pie_chart_by_parameter(
+                                  payments: payment_list_to_json_list(payments),
+                                  parameter: "vending_machine_id",
+                                  same_background_color: true,
+                                ),
+                              ),
+                              SizedBox(
+                                height: sized_box_space * 4,
+                              ),
+                              Text(
+                                'Ventas por Dispensador',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: color_lum_blue,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: sized_box_space,
+                              ),
+                              Container(
+                                height: screen_height / 3,
+                                width: screen_width,
+                                child: payments_pie_chart_by_parameter(
+                                  payments: payment_list_to_json_list(payments),
+                                  parameter: "dispenser",
+                                  same_background_color: false,
+                                ),
+                              ),
+                              SizedBox(
+                                height: sized_box_space * 4,
+                              ),
+                              Text(
+                                'Ventas por Producto',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: color_lum_blue,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: sized_box_space,
+                              ),
+                              Container(
+                                height: screen_height / 3,
+                                width: screen_width,
+                                child: payments_pie_chart_by_parameter(
+                                  payments: payment_list_to_json_list(payments),
+                                  parameter: "product_id",
+                                  same_background_color: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              SizedBox(
+                height: sized_box_space * 2,
+              ),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 }
 
-LineChartData MainLineChart({
-  required TimeFrame timeframe,
+LineChart main_line_chart({
+  required TimeFrame current_timeframe,
   required double max_y,
   required List<Map<String, dynamic>> sum_of_payments,
 }) {
   sum_of_payments.sort((a, b) => a["date"].compareTo(b["date"]));
   sum_of_payments.forEach((element) => print("sum_of_payments $element"));
 
-  double max_x = get_max_x(timeframe: timeframe);
+  double max_x = get_max_x(
+    timeframe: current_timeframe,
+    first_year: (sum_of_payments.first["date"] as DateTime).year,
+  );
   print("max_x $max_x");
 
-  List<String> bottom_labels = get_bottom_labels(
-    max_x: max_x + 1,
-    timeframe: timeframe,
+  List<String> original_bottom_labels = get_bottom_labels(
+    max_x: current_timeframe != TimeFrame.Beginning ? max_x + 1 : max_x,
+    timeframe: current_timeframe,
   );
 
-  print(bottom_labels);
+  int original_bottom_labels_length = original_bottom_labels.length;
+  int original_bottom_labels_length_quarter =
+      (original_bottom_labels_length / 4).round();
+
+  List<String> current_bottom_labels = [];
+
+  for (var i = 0; i < original_bottom_labels_length; i++) {
+    if (i == original_bottom_labels_length_quarter * 0 ||
+        i == original_bottom_labels_length_quarter * 1 ||
+        i == original_bottom_labels_length_quarter * 2 ||
+        i == original_bottom_labels_length_quarter * 3) {
+      current_bottom_labels.add(original_bottom_labels[i]);
+    } else {
+      current_bottom_labels.add("");
+    }
+  }
+
+  print(current_bottom_labels);
 
   List<FlSpot> spots = [];
 
@@ -518,31 +626,31 @@ LineChartData MainLineChart({
     print("date_diference ${date_diference}");
 
     double date_diference_result = 0;
-    switch (timeframe) {
+    switch (current_timeframe) {
       case TimeFrame.Day:
         date_diference_result = date_diference.inHours.toDouble();
         break;
+
       case TimeFrame.Week:
         date_diference_result = date_diference.inDays.toDouble();
-
         break;
+
       case TimeFrame.Month:
         date_diference_result = date_diference.inDays.toDouble();
-
         break;
+
       case TimeFrame.Year:
-        date_diference_result = date_diference.inDays / 30;
-
+        date_diference_result = date_diference.inDays.toDouble() / 30;
         break;
-      case TimeFrame.Beginning:
-        date_diference_result = date_diference.inDays.toDouble();
 
+      case TimeFrame.Beginning:
+        date_diference_result = date_diference.inDays.toDouble() / 365;
         break;
     }
 
     print("date_diference_result $date_diference_result");
 
-    double result = max_x - (date_diference_result / 2);
+    double result = max_x - date_diference_result;
     print("result $result");
 
     spots.add(
@@ -553,114 +661,280 @@ LineChartData MainLineChart({
     );
   }
 
-  return LineChartData(
-    lineTouchData: LineTouchData(
-      touchTooltipData: LineTouchTooltipData(
-        tooltipBgColor: Colors.blue.withOpacity(0.8),
+  return LineChart(
+    LineChartData(
+      lineTouchData: LineTouchData(
+        touchTooltipData: LineTouchTooltipData(
+          tooltipBgColor: color_lum_blue.withOpacity(0.8),
+        ),
+        touchCallback: (LineTouchResponse touchResponse) {},
+        handleBuiltInTouches: true,
       ),
-      touchCallback: (LineTouchResponse touchResponse) {},
-      handleBuiltInTouches: true,
-    ),
-    gridData: FlGridData(
-      show: true,
-    ),
-    titlesData: FlTitlesData(
-      bottomTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 0,
-        getTextStyles: (value) => const TextStyle(
-          color: Color(0xff72719b),
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-        margin: 10,
-        getTitles: (value) {
-          print("this value $value");
-          if (value <= max_x) {
-            return bottom_labels[value.toInt()];
-          } else {
-            return "";
-          }
-        },
+      gridData: FlGridData(
+        show: true,
       ),
-      leftTitles: SideTitles(
-        showTitles: true,
-        getTextStyles: (value) => const TextStyle(
-          color: Color(0xff75729e),
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
+      titlesData: FlTitlesData(
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 0,
+          getTextStyles: (value) => TextStyle(
+            color: color_lum_blue,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+          margin: 10,
+          getTitles: (value) {
+            print("this value $value");
+            if (value <= current_bottom_labels.length - 1) {
+              return current_bottom_labels[value.toInt()];
+            } else {
+              return "";
+            }
+          },
         ),
-        getTitles: (value) {
-          double max_y_chunk = max_y / 4;
+        leftTitles: SideTitles(
+          showTitles: true,
+          getTextStyles: (value) => TextStyle(
+            color: color_lum_blue,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+          getTitles: (value) {
+            String label = "";
 
-          String max_y_chunk_string = max_y_chunk.toInt().toString();
+            if (value > 999) {
+              label = "${(value / 1000).round()}k \$";
+            } else {
+              label = "${value.toInt()} \$";
+            }
 
-          int max_y_chunk_last_digit = int.parse(max_y_chunk_string.characters
-              .toList()[max_y_chunk_string.length - 1]);
-
-          if (max_y_chunk % 5 != 0) {
-            max_y_chunk += 5 - max_y_chunk_last_digit;
-          }
-
-          String label = "";
-
-          if (value > 999) {
-            label = "${value.toInt() / 1000}k \$";
-          } else {
-            label = "${value.toInt()} \$";
-          }
-
-          if ((value == max_y_chunk * 1) ||
-              (value == max_y_chunk * 2) ||
-              (value == max_y_chunk * 3) ||
-              (value == max_y_chunk * 4)) {
-            return label;
-          } else {
-            return "";
-          }
-        },
-        margin: 8,
-        reservedSize: 30,
+            if (max_y < 201) {
+              if (value == 0 ||
+                  value == 50 ||
+                  value == 100 ||
+                  value == 150 ||
+                  value == 200) {
+                return label;
+              } else {
+                return "";
+              }
+            } else if (max_y > 200 && max_y < 1001) {
+              if (value == 0 ||
+                  value == 100 ||
+                  value == 200 ||
+                  value == 300 ||
+                  value == 400 ||
+                  value == 500 ||
+                  value == 600 ||
+                  value == 700 ||
+                  value == 800 ||
+                  value == 900 ||
+                  value == 1000) {
+                return label;
+              } else {
+                return "";
+              }
+            } else if (max_y > 1000 && max_y < 2001) {
+              if (value == 0 ||
+                  value == 500 ||
+                  value == 1000 ||
+                  value == 1500 ||
+                  value == 2000) {
+                return label;
+              } else {
+                return "";
+              }
+            } else {
+              if (value == 0 ||
+                  value == 1000 ||
+                  value == 2000 ||
+                  value == 3000 ||
+                  value == 4000 ||
+                  value == 5000 ||
+                  value == 6000 ||
+                  value == 7000 ||
+                  value == 8000 ||
+                  value == 9000 ||
+                  value == 10000) {
+                return label;
+              } else {
+                return "";
+              }
+            }
+          },
+          margin: 8,
+          reservedSize: 30,
+        ),
       ),
-    ),
-    borderData: FlBorderData(
-      show: true,
-      border: const Border(
-        bottom: BorderSide(
-          color: Color(0xff4e4965),
-          width: 4,
-        ),
-        left: BorderSide(
-          color: Colors.transparent,
-        ),
-        right: BorderSide(
-          color: Colors.transparent,
-        ),
-        top: BorderSide(
-          color: Colors.transparent,
+      borderData: FlBorderData(
+        show: true,
+        border: Border(
+          bottom: BorderSide(
+            color: color_lum_blue,
+            width: 4,
+          ),
+          left: BorderSide(
+            color: Colors.transparent,
+          ),
+          right: BorderSide(
+            color: Colors.transparent,
+          ),
+          top: BorderSide(
+            color: Colors.transparent,
+          ),
         ),
       ),
+      minX: 0,
+      maxX: max_x,
+      minY: 0,
+      maxY: max_y,
+      lineBarsData: [
+        LineChartBarData(
+          spots: spots,
+          isCurved: false,
+          colors: [
+            color_lum_blue,
+          ],
+          barWidth: 8,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: false,
+          ),
+        )
+      ],
     ),
-    minX: 0,
-    maxX: max_x,
-    minY: 0,
-    maxY: max_y,
-    lineBarsData: [
-      LineChartBarData(
-        spots: spots,
-        isCurved: false,
-        colors: [
-          color_lum_green,
-        ],
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: false,
-        ),
-      )
-    ],
+    swapAnimationDuration: const Duration(milliseconds: 250),
   );
+}
+
+Widget payments_pie_chart_by_parameter({
+  required List<Map<String, dynamic>> payments,
+  required String parameter,
+  required bool same_background_color,
+}) {
+  return FutureBuilder<List<PieChartSectionData>>(
+    future: get_pie_chart_sections(
+      payments: payments,
+      parameter: parameter,
+      same_background_color: same_background_color,
+    ),
+    builder: (BuildContext context,
+        AsyncSnapshot<List<PieChartSectionData>> snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(
+          child: Text('Please wait its loading...'),
+        );
+      } else {
+        if (snapshot.hasError)
+          return Center(
+            child: Text('Error'),
+          );
+        else
+          return PieChart(
+            PieChartData(
+              sections: snapshot.data,
+              startDegreeOffset: 0,
+            ),
+          );
+      }
+    },
+  );
+}
+
+Future<List<PieChartSectionData>> get_pie_chart_sections({
+  required List<Map<String, dynamic>> payments,
+  required String parameter,
+  required bool same_background_color,
+}) async {
+  List<Map<String, dynamic>> sum_of_payments_by_parameter =
+      get_sum_of_payments_by_parameter(
+    payments: payments,
+    parameter: parameter,
+  );
+
+  List<PieChartSectionData> pie_chart_sections = [];
+
+  int total_amount_in_sales = 0;
+
+  for (var payments_by_parameter in sum_of_payments_by_parameter) {
+    total_amount_in_sales += payments_by_parameter["amount"] as int;
+  }
+
+  for (var payments_by_parameter in sum_of_payments_by_parameter) {
+    Color random_color =
+        Colors.primaries[Random().nextInt(Colors.primaries.length)];
+
+    double payments_by_parameter_percentage =
+        ((payments_by_parameter["amount"] as int) * 100) /
+            total_amount_in_sales;
+
+    String title = "";
+    if (parameter == "dispenser") {
+      title = (payments_by_parameter[parameter] + 1).toString();
+    } else {
+      String id = payments_by_parameter[parameter];
+
+      String collection_name =
+          parameter.substring(0, parameter.indexOf("_id")) + "s";
+
+      print("collection_name $collection_name");
+
+      await FirebaseFirestore.instance
+          .collection(collection_name)
+          .doc(id)
+          .get()
+          .then((DocumentSnapshot snapshot) {
+        Map<String, dynamic> snapshot_data =
+            snapshot.data() as Map<String, dynamic>;
+        title = snapshot_data["name"];
+      });
+    }
+
+    pie_chart_sections.add(
+      PieChartSectionData(
+        color: random_color,
+        value: payments_by_parameter_percentage,
+        title: title,
+        titleStyle: TextStyle(
+          color: Colors.white,
+          backgroundColor:
+              same_background_color ? random_color : Colors.transparent,
+        ),
+      ),
+    );
+  }
+  return pie_chart_sections;
+}
+
+List<Map<String, dynamic>> get_sum_of_payments_by_parameter({
+  required List<Map<String, dynamic>> payments,
+  required String parameter,
+}) {
+  payments.sort((a, b) => a[parameter].compareTo(b[parameter]));
+
+  List<Map<String, dynamic>> sum_of_payments = [];
+  for (var payment in payments) {
+    if (sum_of_payments.isEmpty) {
+      sum_of_payments.add({
+        parameter: payment[parameter],
+        "amount": payment["amount"],
+      });
+    } else {
+      bool current_parameter_is_same_as_past =
+          payment[parameter] == sum_of_payments.last[parameter];
+
+      if (current_parameter_is_same_as_past) {
+        sum_of_payments.last["amount"] += payment["amount"];
+      } else {
+        sum_of_payments.add({
+          parameter: payment[parameter],
+          "amount": payment["amount"],
+        });
+      }
+    }
+  }
+  return sum_of_payments;
 }

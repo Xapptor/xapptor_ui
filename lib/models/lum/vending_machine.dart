@@ -45,3 +45,14 @@ class VendingMachine {
     };
   }
 }
+
+List<Map<String, dynamic>> vending_machine_list_to_json_list(
+    List<VendingMachine> vending_machines) {
+  List<Map<String, dynamic>> json_list = [];
+
+  vending_machines.forEach((product) {
+    json_list.add(product.to_json());
+  });
+
+  return json_list;
+}

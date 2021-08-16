@@ -29,3 +29,13 @@ class Product {
     };
   }
 }
+
+List<Map<String, dynamic>> product_list_to_json_list(List<Product> products) {
+  List<Map<String, dynamic>> json_list = [];
+
+  products.forEach((product) {
+    json_list.add(product.to_json());
+  });
+
+  return json_list;
+}
