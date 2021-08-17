@@ -35,16 +35,16 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   TimeFrame current_timeframe = TimeFrame.Year;
 
   List<VendingMachine> vending_machines = [];
-  List<String> vending_machine_values = ["Todas"];
-  String vending_machine_value = "Todas";
+  List<String> vending_machine_values = ["Máquinas"];
+  String vending_machine_value = "Máquinas";
 
-  static List<String> dispenser_values =
-      ["Todos"] + List<String>.generate(10, (i) => "Dispensador ${(i + 1)}");
+  static List<String> dispenser_values = ["Dispensadores"] +
+      List<String>.generate(10, (i) => "Dispensador ${(i + 1)}");
   String dispenser_value = dispenser_values.first;
 
   List<Product> products = [];
-  List<String> product_values = ["Todos"];
-  String product_value = "Todos";
+  List<String> product_values = ["Prodcutos"];
+  String product_value = "Prodcutos";
 
   List<Payment> payments = [];
   List<Payment> filtered_payments = [];
@@ -66,7 +66,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     vending_machines.clear();
     vending_machine_values.clear();
 
-    vending_machine_values.add("Todas");
+    vending_machine_values.add("Máquinas");
 
     user_id = FirebaseAuth.instance.currentUser!.uid;
 
@@ -96,7 +96,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     products.clear();
     product_values.clear();
 
-    product_values.add("Todos");
+    product_values.add("Productos");
 
     await FirebaseFirestore.instance
         .collection("products")
@@ -184,11 +184,6 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
           .toList();
 
     filtered_payments.sort((a, b) => a.date.compareTo(b.date));
-
-    print("filtered_payments:");
-    for (var filtered_payment in filtered_payments) {
-      print(filtered_payment.to_json());
-    }
     get_sum_of_payments_by_timeframe();
   }
 
@@ -348,8 +343,6 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
           .sort((a, b) => a["amount"].compareTo(b["amount"]));
       max_y = filtered_sum_of_payments.last["amount"] * 1.3;
     }
-
-    print("max_y $max_y");
 
     return Container(
       color: Colors.white,
@@ -670,13 +663,13 @@ LineChart main_line_chart({
   required List<Map<String, dynamic>> sum_of_payments,
 }) {
   sum_of_payments.sort((a, b) => a["date"].compareTo(b["date"]));
-  sum_of_payments.forEach((element) => print("sum_of_payments $element"));
 
-  double max_x = get_max_x(
-    timeframe: current_timeframe,
-    first_year: (sum_of_payments.first["date"] as DateTime).year,
-  );
-  print("max_x $max_x");
+  double max_x = sum_of_payments.length > 0
+      ? get_max_x(
+          timeframe: current_timeframe,
+          first_year: (sum_of_payments.first["date"] as DateTime).year,
+        )
+      : 0;
 
   List<String> original_bottom_labels = get_bottom_labels(
     max_x: current_timeframe != TimeFrame.Beginning ? max_x + 1 : max_x,
@@ -700,16 +693,12 @@ LineChart main_line_chart({
     }
   }
 
-  print(current_bottom_labels);
-
   List<FlSpot> spots = [];
 
   for (var sum_of_payment in sum_of_payments) {
     DateTime current_date = sum_of_payment["date"] as DateTime;
-    print("current_date $current_date");
 
     Duration date_diference = DateTime.now().difference(current_date);
-    print("date_diference ${date_diference}");
 
     double date_diference_result = 0;
     switch (current_timeframe) {
@@ -734,15 +723,21 @@ LineChart main_line_chart({
         break;
     }
 
-    print("date_diference_result $date_diference_result");
-
     double result = max_x - date_diference_result;
-    print("result $result");
 
     spots.add(
       FlSpot(
         result,
         sum_of_payment["amount"].toDouble(),
+      ),
+    );
+  }
+
+  if (spots.length == 1) {
+    spots.add(
+      FlSpot(
+        spots.last.x,
+        spots.last.y + 0.5,
       ),
     );
   }
@@ -770,7 +765,6 @@ LineChart main_line_chart({
           ),
           margin: 10,
           getTitles: (value) {
-            print("this value $value");
             if (value <= current_bottom_labels.length - 1) {
               return current_bottom_labels[value.toInt()];
             } else {
@@ -965,8 +959,6 @@ Future<List<PieChartSectionData>> get_pie_chart_sections({
 
       String collection_name =
           parameter.substring(0, parameter.indexOf("_id")) + "s";
-
-      print("collection_name $collection_name");
 
       await FirebaseFirestore.instance
           .collection(collection_name)

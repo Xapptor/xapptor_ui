@@ -117,7 +117,6 @@ List<String> get_bottom_labels({
     }
 
     bottom_labels.add(current_label);
-    print("current_label $current_label");
   }
   return List.from(bottom_labels.reversed);
 }
