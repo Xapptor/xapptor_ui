@@ -58,8 +58,9 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
         "certificate_${other_user_name.split(" ").join("_")}_${other_course_name.split(" ").join("_")}_${certificate_id_input_controller.text}.pdf";
 
     FileDownloader.save(
-      base64_pdf,
-      attributes_are_for_admin ? attributes_for_admin : attributes_for_user,
+      base64_string: base64_pdf,
+      file_name:
+          attributes_are_for_admin ? attributes_for_admin : attributes_for_user,
     );
 
     waiting_pdf_base64 = false;

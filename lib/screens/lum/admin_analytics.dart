@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
+import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
-import 'package:xapptor_logic/random_number_with_range.dart';
 import 'package:xapptor_ui/models/lum/payments.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
@@ -247,6 +250,91 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     setState(() {});
   }
 
+  download_excel_file() async {
+    SnackBar snackBar = SnackBar(
+      content: Text("Descargando..."),
+      duration: Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    final xlsio.Workbook workbook = new xlsio.Workbook();
+    final xlsio.Worksheet sheet = workbook.worksheets[0];
+
+    List<String> titles = [
+      "ID DE PAGO",
+      "MONTO",
+      "NOMBRE DE MÁQUINA",
+      "ID DE MÁQUINA",
+      "ID DE DISPENSADOR",
+      "ID DE PRODUCTO",
+      "ID DE USUARIO",
+      "FECHA",
+      "HORA",
+    ];
+
+    for (var i = 0; i < titles.length; i++) {
+      String current_cell_position = "${String.fromCharCode(65 + i)}1";
+      sheet.getRangeByName(current_cell_position).setText(titles[i]);
+    }
+
+    int current_row_number = 2;
+
+    for (var filtred_payment in filtered_payments) {
+      await FirebaseFirestore.instance
+          .collection('vending_machines')
+          .doc(filtred_payment.vending_machine_id)
+          .get()
+          .then((DocumentSnapshot snapshot) {
+        VendingMachine vending_machine = VendingMachine.from_snapshot(
+          snapshot.id,
+          snapshot.data() as Map<String, dynamic>,
+        );
+
+        String current_date =
+            DateFormat("ddMMyyyy").format(filtred_payment.date);
+        String current_date_hour = DateFormat.Hm().format(filtred_payment.date);
+
+        List<String> cell_values = [
+          filtred_payment.id,
+          filtred_payment.amount.toString(),
+          vending_machine.name,
+          filtred_payment.vending_machine_id,
+          filtred_payment.dispenser.toString(),
+          filtred_payment.product_id,
+          filtred_payment.user_id,
+          current_date,
+          current_date_hour
+        ];
+
+        for (var i = 0; i < cell_values.length; i++) {
+          String current_cell_position =
+              '${String.fromCharCode(65 + i)}$current_row_number';
+          sheet.getRangeByName(current_cell_position).setText(cell_values[i]);
+        }
+
+        current_row_number++;
+      });
+    }
+
+    for (var i = 0; i < titles.length; i++) {
+      sheet.autoFitColumn(i + 1);
+    }
+
+    String file_name = "pagos_lum_" + DateTime.now().toString() + ".xlsx";
+    file_name = file_name
+        .replaceAll(":", "_")
+        .replaceAll("-", "_")
+        .replaceAll(" ", "_")
+        .replaceFirst(".", "_");
+
+    FileDownloader.save(
+      base64_string: base64Encode(workbook.saveAsStream()),
+      file_name: file_name,
+    );
+
+    workbook.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screen_height = MediaQuery.of(context).size.height;
@@ -291,9 +379,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                   Expanded(
                     flex: 1,
                     child: IconButton(
-                      onPressed: () {
-                        //
-                      },
+                      onPressed: download_excel_file,
                       icon: Icon(
                         Typicons.down_outline,
                         color: color_lum_blue,
@@ -486,7 +572,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                           ),
                         ),
                         FractionallySizedBox(
-                          widthFactor: 0.8,
+                          widthFactor: 0.75,
                           child: Column(
                             children: [
                               SizedBox(
