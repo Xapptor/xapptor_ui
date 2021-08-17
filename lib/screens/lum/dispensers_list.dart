@@ -136,7 +136,6 @@ class _DispensersListState extends State<DispensersList> {
                 border_radius: border_radius,
                 linear_gradient: null,
                 on_pressed: () {
-                  print("dispenser_id: " + (dispenser_id + 1).toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(

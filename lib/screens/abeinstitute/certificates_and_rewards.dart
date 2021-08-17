@@ -76,7 +76,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     if (user_info["certificates"] != null) {
       if (user_info["certificates"].length > 0) {
         certificates_id = List.from(user_info["certificates"]);
-        print("certificates_id $certificates_id");
 
         for (var certificate_id in certificates_id) {
           await FirebaseFirestore.instance
@@ -86,7 +85,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
               .then((snapshot_certificate) async {
             Map<String, dynamic> data_certificate =
                 snapshot_certificate.data()!;
-            print("data_certificate $data_certificate");
 
             await FirebaseFirestore.instance
                 .collection("courses")
@@ -94,8 +92,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                 .get()
                 .then((snapshot_course) {
               Map<String, dynamic> data_course = snapshot_course.data()!;
-
-              print("data_course $data_course");
 
               certificates.add(
                 Certificate(

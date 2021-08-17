@@ -450,7 +450,6 @@ class _HomeState extends State<Home> {
                       on_pressed: () {
                         launch_url(url_facebook_abeinstitute,
                             url_facebook_fallback_abeinstitute);
-                        print("Something");
                       },
                       card_holder_elevation: card_holder_elevation,
                       card_holder_border_radius: card_holder_border_radius,

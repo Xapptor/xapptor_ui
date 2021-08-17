@@ -151,8 +151,6 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
               bool answer_is_correct =
                   text_list[current_index + 3] == text_list[2];
 
-              print("answer_is_correct: " + answer_is_correct.toString());
-
               widget.class_quiz
                   .get_next_question(answer_is_correct, widget.question_id);
             },

@@ -41,7 +41,6 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
           ),
         ),
         onPressed: () {
-          print(widget.answer_text);
           widget.class_quiz_question.current_index = widget.index;
           widget.class_quiz_question.setState(() {});
         },

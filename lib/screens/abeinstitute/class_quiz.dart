@@ -103,8 +103,6 @@ class _ClassQuizState extends State<ClassQuiz> {
         if (current_answers.length > 2) {
           while (final_possible_answers.length <
               (current_answers.length == 3 ? 2 : 3)) {
-            print(final_possible_answers);
-
             final random = new Random();
 
             String random_possible_answer =

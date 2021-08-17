@@ -38,7 +38,6 @@ class PricingContainerItem extends StatefulWidget {
 
 class _PricingContainerItemState extends State<PricingContainerItem> {
   when_webview_loaded(String url) {
-    print("webview url: " + url);
     if (!UniversalPlatform.isWeb) {
       if (url.contains("checkout.stripe.com")) {
         setState(() {
