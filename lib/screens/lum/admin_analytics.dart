@@ -286,7 +286,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
         );
 
         String current_date =
-            DateFormat("ddMMyyyy").format(filtred_payment.date);
+            DateFormat("dd/MM/yyyy").format(filtred_payment.date);
         String current_date_hour = DateFormat.Hm().format(filtred_payment.date);
 
         List<String> cell_values = [
