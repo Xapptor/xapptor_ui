@@ -43,11 +43,12 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   String dispenser_value = dispenser_values.first;
 
   List<Product> products = [];
-  List<String> product_values = ["Prodcutos"];
-  String product_value = "Prodcutos";
+  List<String> product_values = ["Productos"];
+  String product_value = "Productos";
 
   List<Payment> payments = [];
   List<Payment> filtered_payments = [];
+  List<Payment> filtered_payments_by_vending_machine = [];
 
   List<Map<String, dynamic>> sum_of_payments = [];
 
@@ -132,7 +133,9 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
             ),
           );
         });
-        get_filtered_payments();
+        if (vending_machine == vending_machines.last) {
+          get_filtered_payments();
+        }
       });
     }
   }
@@ -152,7 +155,9 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
         )
         .toList();
 
-    if (vending_machine_values.indexOf(vending_machine_value) != 0)
+    filtered_payments_by_vending_machine = payments;
+
+    if (vending_machine_values.indexOf(vending_machine_value) != 0) {
       filtered_payments = filtered_payments
           .where(
             (payment) =>
@@ -163,6 +168,18 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                     .id,
           )
           .toList();
+
+      filtered_payments_by_vending_machine = payments
+          .where(
+            (payment) =>
+                payment.vending_machine_id ==
+                vending_machines
+                    .firstWhere((vending_machine) =>
+                        vending_machine.name == vending_machine_value)
+                    .id,
+          )
+          .toList();
+    }
 
     if (dispenser_values.indexOf(dispenser_value) != 0)
       filtered_payments = filtered_payments.where((payment) {
@@ -588,6 +605,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                 width: screen_width,
                                 child: payments_pie_chart_by_parameter(
                                   payments: payment_list_to_json_list(payments),
+                                  filtered_payments_by_vending_machine: null,
                                   parameter: "vending_machine_id",
                                   same_background_color: true,
                                 ),
@@ -612,6 +630,9 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                 width: screen_width,
                                 child: payments_pie_chart_by_parameter(
                                   payments: payment_list_to_json_list(payments),
+                                  filtered_payments_by_vending_machine:
+                                      payment_list_to_json_list(
+                                          filtered_payments_by_vending_machine),
                                   parameter: "dispenser",
                                   same_background_color: false,
                                 ),
@@ -636,6 +657,9 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                 width: screen_width,
                                 child: payments_pie_chart_by_parameter(
                                   payments: payment_list_to_json_list(payments),
+                                  filtered_payments_by_vending_machine:
+                                      payment_list_to_json_list(
+                                          filtered_payments_by_vending_machine),
                                   parameter: "product_id",
                                   same_background_color: true,
                                 ),
@@ -892,12 +916,18 @@ LineChart main_line_chart({
 
 Widget payments_pie_chart_by_parameter({
   required List<Map<String, dynamic>> payments,
+  required List<Map<String, dynamic>>? filtered_payments_by_vending_machine,
   required String parameter,
   required bool same_background_color,
 }) {
+  print(
+      "filtered_payments_by_vending_machine $filtered_payments_by_vending_machine");
+
   return FutureBuilder<List<PieChartSectionData>>(
     future: get_pie_chart_sections(
-      payments: payments,
+      payments: filtered_payments_by_vending_machine != null
+          ? filtered_payments_by_vending_machine
+          : payments,
       parameter: parameter,
       same_background_color: same_background_color,
     ),
@@ -945,7 +975,7 @@ Future<List<PieChartSectionData>> get_pie_chart_sections({
 
   for (var payments_by_parameter in sum_of_payments_by_parameter) {
     Color random_color =
-        Colors.primaries[Random().nextInt(Colors.primaries.length)];
+        Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 
     double payments_by_parameter_percentage =
         ((payments_by_parameter["amount"] as int) * 100) /
