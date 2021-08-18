@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
@@ -5,22 +7,33 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 class BottomBarContainer extends StatefulWidget {
   const BottomBarContainer({
     required this.bottom_bar_buttons,
+    required this.initial_page,
   });
   final List<BottomBarButton> bottom_bar_buttons;
+  final int initial_page;
 
   @override
   _BottomBarContainerState createState() => _BottomBarContainerState();
 }
 
 class _BottomBarContainerState extends State<BottomBarContainer> {
-  int current_page = 1;
-  PageController page_controller = PageController(initialPage: 1);
+  int current_page = 0;
+  PageController page_controller = PageController(initialPage: 0);
   List<Widget> buttons = [];
   List<Widget> pages = [];
 
   @override
   void initState() {
     super.initState();
+    update_current_page();
+  }
+
+  update_current_page() {
+    Timer(Duration(milliseconds: 500), () {
+      current_page = widget.initial_page;
+      page_controller.jumpToPage(current_page);
+      setState(() {});
+    });
   }
 
   @override

@@ -223,6 +223,7 @@ class _HomeState extends State<Home> {
         ),
         body: widget.user.admin
             ? BottomBarContainer(
+                initial_page: 0,
                 bottom_bar_buttons: [
                   BottomBarButton(
                     icon: Icons.microwave_outlined,

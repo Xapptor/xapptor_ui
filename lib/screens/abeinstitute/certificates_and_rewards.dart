@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
@@ -124,6 +123,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         logo_path: "assets/images/logo.png",
       ),
       body: BottomBarContainer(
+        initial_page: 0,
         bottom_bar_buttons: [
           BottomBarButton(
             icon: ModernPictograms.article_alt,
