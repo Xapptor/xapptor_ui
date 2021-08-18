@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
 
   List<String> text_list = [
     "Cuenta",
+    "Productos",
     "Configuración",
     "Cerrar sesión",
   ];
@@ -162,6 +163,22 @@ class _HomeState extends State<Home> {
               title: Text(text_list[0]),
               onTap: () {
                 open_screen("home/account");
+              },
+            ),
+            ListTile(
+              title: Text(text_list[1]),
+              onTap: () {
+                add_new_app_screen(
+                  AppScreen(
+                    name: "home/products_list",
+                    child: DispensersList(
+                      vending_machine_id: null,
+                      allow_edit: false,
+                      has_topbar: true,
+                    ),
+                  ),
+                );
+                open_screen("home/products_list");
               },
             ),
             ListTile(

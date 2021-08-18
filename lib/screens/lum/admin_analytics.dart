@@ -278,6 +278,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
       "NOMBRE DE MÁQUINA",
       "ID DE MÁQUINA",
       "ID DE DISPENSADOR",
+      "NOMBRE DE PRODUCTO",
       "ID DE PRODUCTO",
       "ID DE USUARIO",
       "FECHA",
@@ -296,35 +297,47 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
           .collection('vending_machines')
           .doc(filtred_payment.vending_machine_id)
           .get()
-          .then((DocumentSnapshot snapshot) {
+          .then((DocumentSnapshot vending_machine_snapshot) async {
         VendingMachine vending_machine = VendingMachine.from_snapshot(
-          snapshot.id,
-          snapshot.data() as Map<String, dynamic>,
+          vending_machine_snapshot.id,
+          vending_machine_snapshot.data() as Map<String, dynamic>,
         );
 
         String current_date =
             DateFormat("dd/MM/yyyy").format(filtred_payment.date);
         String current_date_hour = DateFormat.Hm().format(filtred_payment.date);
 
-        List<String> cell_values = [
-          filtred_payment.id,
-          filtred_payment.amount.toString(),
-          vending_machine.name,
-          filtred_payment.vending_machine_id,
-          filtred_payment.dispenser.toString(),
-          filtred_payment.product_id,
-          filtred_payment.user_id,
-          current_date,
-          current_date_hour
-        ];
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(filtred_payment.product_id)
+            .get()
+            .then((DocumentSnapshot product_snapshot) {
+          Product product = Product.from_snapshot(
+            product_snapshot.id,
+            product_snapshot.data() as Map<String, dynamic>,
+          );
 
-        for (var i = 0; i < cell_values.length; i++) {
-          String current_cell_position =
-              '${String.fromCharCode(65 + i)}$current_row_number';
-          sheet.getRangeByName(current_cell_position).setText(cell_values[i]);
-        }
+          List<String> cell_values = [
+            filtred_payment.id,
+            filtred_payment.amount.toString(),
+            vending_machine.name,
+            filtred_payment.vending_machine_id,
+            filtred_payment.dispenser.toString(),
+            product.name,
+            filtred_payment.product_id,
+            filtred_payment.user_id,
+            current_date,
+            current_date_hour
+          ];
 
-        current_row_number++;
+          for (var i = 0; i < cell_values.length; i++) {
+            String current_cell_position =
+                '${String.fromCharCode(65 + i)}$current_row_number';
+            sheet.getRangeByName(current_cell_position).setText(cell_values[i]);
+          }
+
+          current_row_number++;
+        });
       });
     }
 
@@ -351,6 +364,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
   Widget build(BuildContext context) {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
+    double title_size = 20;
+    double subtitle_size = 16;
 
     double max_y = 0;
 
@@ -374,13 +389,13 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
               Row(
                 children: [
                   Expanded(
-                    flex: 7,
+                    flex: 8,
                     child: Text(
                       'Analíticas de ventas',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: color_lum_blue,
-                        fontSize: 24,
+                        fontSize: title_size,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -392,7 +407,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                       onPressed: download_excel_file,
                       icon: Icon(
                         Typicons.down_outline,
-                        color: color_lum_blue,
+                        color: color_lum_green,
                       ),
                     ),
                   ),
@@ -590,10 +605,10 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                               ),
                               Text(
                                 'Ventas por Máquina',
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: color_lum_blue,
-                                  fontSize: 22,
+                                  fontSize: subtitle_size,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -615,10 +630,10 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                               ),
                               Text(
                                 'Ventas por Dispensador',
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: color_lum_blue,
-                                  fontSize: 22,
+                                  fontSize: subtitle_size,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -642,10 +657,10 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                               ),
                               Text(
                                 'Ventas por Producto',
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: color_lum_blue,
-                                  fontSize: 22,
+                                  fontSize: subtitle_size,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -764,13 +779,30 @@ LineChart main_line_chart({
         spots.last.y + 0.5,
       ),
     );
+  } else if (spots.isEmpty) {
+    max_y = 50;
+    spots.add(
+      FlSpot(
+        max_x,
+        0,
+      ),
+    );
+  }
+
+  for (var i = 0; i < spots.length; i++) {
+    if (spots[i].x < 0) {
+      spots[i] = FlSpot(
+        0,
+        spots[i].y,
+      );
+    }
   }
 
   return LineChart(
     LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: color_lum_blue.withOpacity(0.8),
+          tooltipBgColor: color_lum_green.withOpacity(0.5),
         ),
         touchCallback: (LineTouchResponse touchResponse) {},
         handleBuiltInTouches: true,
@@ -785,7 +817,7 @@ LineChart main_line_chart({
           getTextStyles: (value) => TextStyle(
             color: color_lum_blue,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 14,
           ),
           margin: 10,
           getTitles: (value) {
@@ -799,17 +831,17 @@ LineChart main_line_chart({
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => TextStyle(
-            color: color_lum_blue,
+            color: color_lum_green,
             fontWeight: FontWeight.bold,
-            fontSize: 14,
+            fontSize: 13,
           ),
           getTitles: (value) {
             String label = "";
 
             if (value > 999) {
-              label = "${(value / 1000).round()}k \$";
+              label = "\$${(value / 1000).round()}k";
             } else {
-              label = "${value.toInt()} \$";
+              label = "\$${value.toInt()}";
             }
 
             if (max_y < 201) {
@@ -824,15 +856,10 @@ LineChart main_line_chart({
               }
             } else if (max_y > 200 && max_y < 1001) {
               if (value == 0 ||
-                  value == 100 ||
                   value == 200 ||
-                  value == 300 ||
                   value == 400 ||
-                  value == 500 ||
                   value == 600 ||
-                  value == 700 ||
                   value == 800 ||
-                  value == 900 ||
                   value == 1000) {
                 return label;
               } else {
@@ -866,7 +893,7 @@ LineChart main_line_chart({
               }
             }
           },
-          margin: 8,
+          margin: 10,
           reservedSize: 30,
         ),
       ),
@@ -895,22 +922,40 @@ LineChart main_line_chart({
       lineBarsData: [
         LineChartBarData(
           spots: spots,
-          isCurved: false,
+          isCurved: true,
+          curveSmoothness: 0.15,
           colors: [
-            color_lum_blue,
+            color_lum_blue.withOpacity(0.7),
           ],
-          barWidth: 8,
+          barWidth: 6,
           isStrokeCapRound: true,
           dotData: FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
+            colors: [
+              color_lum_green.withOpacity(0.3),
+              color_lum_blue.withOpacity(0.3),
+            ],
+            gradientFrom: Offset(0, 0),
+            gradientTo: Offset(0, 1),
+            gradientColorStops: [
+              0.2,
+              1.0,
+            ],
+            spotsLine: BarAreaSpotsLine(
+              show: true,
+              flLineStyle: FlLine(
+                color: color_lum_blue.withOpacity(0.3),
+                strokeWidth: 4,
+              ),
+            ),
           ),
         )
       ],
     ),
-    swapAnimationDuration: const Duration(milliseconds: 250),
+    swapAnimationDuration: const Duration(milliseconds: 200),
   );
 }
 
@@ -920,9 +965,6 @@ Widget payments_pie_chart_by_parameter({
   required String parameter,
   required bool same_background_color,
 }) {
-  print(
-      "filtered_payments_by_vending_machine $filtered_payments_by_vending_machine");
-
   return FutureBuilder<List<PieChartSectionData>>(
     future: get_pie_chart_sections(
       payments: filtered_payments_by_vending_machine != null

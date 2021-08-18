@@ -18,7 +18,7 @@ class DispensersList extends StatefulWidget {
     required this.has_topbar,
   });
 
-  final String vending_machine_id;
+  final String? vending_machine_id;
   final bool allow_edit;
   final bool has_topbar;
 
@@ -311,7 +311,7 @@ class _DispensersListState extends State<DispensersList> {
 
   update_dispenser(Dispenser dispenser, int index) {
     update_item_in_array_field(
-      document_id: widget.vending_machine_id,
+      document_id: widget.vending_machine_id!,
       collection_id: "vending_machines",
       field_key: "dispensers",
       field_value: dispenser.to_json(),
