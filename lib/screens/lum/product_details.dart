@@ -1,243 +1,306 @@
-// import 'package:flutter/material.dart';
-// import 'package:xapptor_ui/values/custom_colors.dart';
-// import 'package:xapptor_ui/widgets/topbar.dart';
+import 'dart:io';
 
-// class EditProduct extends StatefulWidget {
-//   @override
-//   _EditProductState createState() => _EditProductState();
-// }
+import 'package:flutter/material.dart';
+import 'package:xapptor_ui/models/lum/product.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/values/ui.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart' as file_picker;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-// class _EditProductState extends State<EditProduct> {
-//   TextEditingController _controller_name = TextEditingController();
-//   bool is_editing = false;
-//   bool enabled = true;
+class ProductDetails extends StatefulWidget {
+  const ProductDetails({
+    required this.product,
+  });
 
-//   @override
-//   void dispose() {
-//     _controller_name.dispose();
-//     super.dispose();
-//   }
+  final Product? product;
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     set_values();
-//   }
+  @override
+  _ProductDetailsState createState() => _ProductDetailsState();
+}
 
-//   switch_button_callback(bool new_value) {
-//     setState(() {
-//       enabled = new_value;
-//     });
-//   }
+class _ProductDetailsState extends State<ProductDetails> {
+  TextEditingController _controller_name = TextEditingController();
+  TextEditingController _controller_description = TextEditingController();
+  TextEditingController _controller_price = TextEditingController();
+  bool is_editing = false;
+  String url = "";
+  File? current_image_file = null;
 
-//   set_values() {
-//     _controller_name.text = widget.vending_machine.name;
-//     enabled = widget.vending_machine.enabled;
-//   }
+  @override
+  void dispose() {
+    _controller_name.dispose();
+    super.dispose();
+  }
 
-//   show_save_data_alert_dialog({
-//     required BuildContext context,
-//   }) async {
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: Text("¿Deseas guardar los cambios?"),
-//           actions: <Widget>[
-//             TextButton(
-//               child: Text("Descartar cambios"),
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//             TextButton(
-//               child: Text("Cancelar"),
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//             TextButton(
-//               child: Text("Aceptar"),
-//               onPressed: () async {
-//                 FirebaseFirestore.instance
-//                     .collection("vending_machines")
-//                     .doc(widget.vending_machine.id)
-//                     .update({
-//                   "name": _controller_name.text,
-//                   "enabled": enabled,
-//                 }).then((result) {
-//                   is_editing = false;
-//                   Navigator.of(context).pop();
-//                 });
-//               },
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
+  @override
+  void initState() {
+    super.initState();
+    set_values();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-//     double textfield_size = 24;
-//     double title_size = 20;
-//     double subtitle_size = 18;
+  set_values() {
+    _controller_name.text = widget.product?.name ?? "";
+    _controller_price.text = widget.product?.price.toString() ?? "";
+    _controller_description.text = widget.product?.description ?? "";
+    url = widget.product?.url ?? "";
+  }
 
-//     return Scaffold(
-//       appBar: TopBar(
-//         background_color: color_lum_topbar,
-//         has_back_button: true,
-//         actions: [],
-//         custom_leading: null,
-//         logo_path: "assets/images/logo.png",
-//         logo_color: Colors.white,
-//       ),
-//       body: Container(
-//         alignment: Alignment.center,
-//         child: FractionallySizedBox(
-//           widthFactor: 0.7,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               Spacer(flex: 4),
-//               Expanded(
-//                 flex: 2,
-//                 child: TextField(
-//                   onTap: () {
-//                     //
-//                   },
-//                   textAlign: TextAlign.center,
-//                   style: TextStyle(
-//                     color: color_lum_green,
-//                     fontSize: textfield_size,
-//                   ),
-//                   controller: _controller_name,
-//                   decoration: InputDecoration(
-//                     hintText: "Nombre",
-//                     hintStyle: TextStyle(
-//                       color: color_lum_green,
-//                       fontSize: textfield_size,
-//                     ),
-//                   ),
-//                   enabled: is_editing,
-//                 ),
-//               ),
-//               Expanded(
-//                 flex: 1,
-//                 child: RichText(
-//                   text: TextSpan(
-//                     children: [
-//                       TextSpan(
-//                         text: "ID: ",
-//                         style: TextStyle(
-//                           color: color_lum_grey,
-//                           fontSize: subtitle_size,
-//                         ),
-//                       ),
-//                       TextSpan(
-//                         text: widget.vending_machine.id,
-//                         style: TextStyle(
-//                           color: color_lum_grey,
-//                           fontSize: subtitle_size,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 flex: 1,
-//                 child: RichText(
-//                   text: TextSpan(
-//                     children: [
-//                       TextSpan(
-//                         text: "CAMBIO \$",
-//                         style: TextStyle(
-//                           //fontWeight: FontWeight.bold,
-//                           color: color_lum_light_pink,
-//                           fontSize: title_size,
-//                         ),
-//                       ),
-//                       TextSpan(
-//                         text: widget.vending_machine.money_change.toString(),
-//                         style: TextStyle(
-//                           //fontWeight: FontWeight.bold,
-//                           color: color_lum_light_pink,
-//                           fontSize: title_size,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 flex: 1,
-//                 child: FractionallySizedBox(
-//                   heightFactor: 0.8,
-//                   widthFactor: 0.7,
-//                   child: switch_button(
-//                     text: "HABILITADO",
-//                     value: enabled,
-//                     enabled: is_editing,
-//                     active_track_color: color_lum_blue,
-//                     active_color: Colors.white,
-//                     background_color: color_lum_blue,
-//                     callback: switch_button_callback,
-//                     border_radius: MediaQuery.of(context).size.width,
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 flex: 2,
-//                 child: TextButton(
-//                   onPressed: () {
-//                     add_new_app_screen(
-//                       AppScreen(
-//                         name: "home/vending_machine_details/dispensers_list",
-//                         child: DispensersList(
-//                           vending_machine_id: widget.vending_machine.id,
-//                           allow_edit: true,
-//                           has_topbar: true,
-//                         ),
-//                       ),
-//                     );
-//                     open_screen("home/vending_machine_details/dispensers_list");
-//                   },
-//                   child: Text(
-//                     "EDITAR DISPENSADORES",
-//                     textAlign: TextAlign.center,
-//                     style: TextStyle(
-//                       color: color_lum_green,
-//                       fontSize: subtitle_size,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Spacer(flex: 4),
-//             ],
-//           ),
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           setState(() {
-//             if (is_editing) {
-//               show_save_data_alert_dialog(
-//                 context: context,
-//               );
-//             } else {
-//               is_editing = true;
-//             }
-//           });
-//         },
-//         backgroundColor: color_lum_green,
-//         child: Icon(
-//           is_editing ? Icons.done : Icons.edit,
-//           color: Colors.white,
-//         ),
-//       ),
-//     );
-//   }
-// }
+  show_save_data_alert_dialog({
+    required BuildContext context,
+  }) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("¿Deseas guardar los cambios?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Descartar cambios"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Cancelar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Aceptar"),
+              onPressed: () async {
+                if (url == null) {
+                  SnackBar snackBar = SnackBar(
+                    content: Text("Debes subir una imágen"),
+                    duration: Duration(seconds: 2),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                } else {
+                  if (widget.product == null) {
+                    try {
+                      await firebase_storage.FirebaseStorage.instance
+                          .ref('uploads/file-to-upload.png')
+                          .putFile(current_image_file!)
+                          .then((firebase_storage.TaskSnapshot task_snapshot) {
+                        FirebaseFirestore.instance.collection("products").add({
+                          "name": _controller_name.text,
+                          "description": _controller_description.text,
+                          "price": int.parse(_controller_price.text),
+                          "url": task_snapshot.,
+                        }).then((result) {
+                          is_editing = false;
+                          Navigator.of(context).pop();
+                        });
+                      });
+                    } catch (e) {
+                      print("Error: $e");
+                    }
+                  } else {
+                    FirebaseFirestore.instance
+                        .collection("products")
+                        .doc(widget.product!.id)
+                        .update({
+                      "name": _controller_name.text,
+                      "description": _controller_description.text,
+                      "price": int.parse(_controller_price.text),
+                    }).then((result) {
+                      is_editing = false;
+                      Navigator.of(context).pop();
+                    });
+                  }
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  open_file_picker() async {
+    file_picker.FilePickerResult? result =
+        await file_picker.FilePicker.platform.pickFiles(
+      type: file_picker.FileType.custom,
+      allowedExtensions: ['svg'],
+    );
+
+    if (result != null) {
+      current_image_file = File(result.files.first.path!);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double textfield_size = 18;
+    double title_size = 18;
+    double subtitle_size = 16;
+
+    return Scaffold(
+      appBar: TopBar(
+        background_color: color_lum_topbar,
+        has_back_button: true,
+        actions: [],
+        custom_leading: null,
+        logo_path: "assets/images/logo.png",
+        logo_color: Colors.white,
+      ),
+      body: Container(
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: FractionallySizedBox(
+              widthFactor: 0.7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: sized_box_space * 4,
+                  ),
+                  TextField(
+                    onTap: () {
+                      //
+                    },
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: color_lum_green,
+                      fontSize: textfield_size,
+                    ),
+                    controller: _controller_name,
+                    decoration: InputDecoration(
+                      hintText: "Nombre",
+                      hintStyle: TextStyle(
+                        color: color_lum_green,
+                        fontSize: textfield_size,
+                      ),
+                    ),
+                    enabled: is_editing,
+                  ),
+                  SizedBox(
+                    height: sized_box_space * 2,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "\$",
+                          style: TextStyle(
+                            color: color_lum_blue,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: TextField(
+                          onTap: () {
+                            //
+                          },
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: color_lum_blue,
+                            fontSize: textfield_size,
+                          ),
+                          controller: _controller_price,
+                          decoration: InputDecoration(
+                            hintText: "Precio",
+                            hintStyle: TextStyle(
+                              color: color_lum_blue,
+                              fontSize: textfield_size,
+                            ),
+                          ),
+                          enabled: is_editing,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      Expanded(
+                        flex: 16,
+                        child: CustomCard(
+                          child: Container(
+                            alignment: Alignment.center,
+                            //margin: EdgeInsets.all(6),
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              "Subir nueva imágen SVG",
+                              style: TextStyle(
+                                color: color_lum_blue,
+                              ),
+                            ),
+                          ),
+                          elevation: 6,
+                          border_radius: 10,
+                          on_pressed: () {
+                            open_file_picker();
+                          },
+                          linear_gradient: LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Colors.white,
+                            ],
+                          ),
+                          splash_color: color_lum_blue.withOpacity(0.3),
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                    ],
+                  ),
+                  SizedBox(
+                    height: sized_box_space * 2,
+                  ),
+                  TextField(
+                    onTap: () {
+                      //
+                    },
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: color_lum_blue,
+                      fontSize: textfield_size,
+                    ),
+                    controller: _controller_description,
+                    decoration: InputDecoration(
+                      hintText: "Descripción",
+                      hintStyle: TextStyle(
+                        color: color_lum_blue,
+                        fontSize: textfield_size,
+                      ),
+                    ),
+                    enabled: is_editing,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                  ),
+                  SizedBox(
+                    height: sized_box_space * 4,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            if (is_editing) {
+              show_save_data_alert_dialog(
+                context: context,
+              );
+            } else {
+              is_editing = true;
+            }
+          });
+        },
+        backgroundColor: color_lum_green,
+        child: Icon(
+          is_editing ? Icons.done : Icons.edit,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
