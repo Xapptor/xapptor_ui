@@ -11,7 +11,7 @@ import 'package:xapptor_ui/screens/lum/admin_analytics.dart';
 import 'package:xapptor_ui/screens/qr_scanner.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
-import 'package:xapptor_ui/screens/lum/dispensers_list.dart';
+import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machines_list.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -97,6 +97,18 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+
+    add_new_app_screen(
+      AppScreen(
+        name: "home/products",
+        child: ProductList(
+          vending_machine_id: null,
+          allow_edit: true,
+          has_topbar: true,
+          for_dispensers: false,
+        ),
+      ),
+    );
   }
 
   List<Widget> widgets_action(bool portrait) {
@@ -168,25 +180,15 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text(text_list[1]),
               onTap: () {
-                add_new_app_screen(
-                  AppScreen(
-                    name: "home/products_list",
-                    child: DispensersList(
-                      vending_machine_id: null,
-                      allow_edit: false,
-                      has_topbar: true,
-                    ),
-                  ),
-                );
-                open_screen("home/products_list");
+                open_screen("home/products");
               },
             ),
             ListTile(
-              title: Text(text_list[1]),
+              title: Text(text_list[2]),
               onTap: () {},
             ),
             ListTile(
-              title: Text(text_list[2]),
+              title: Text(text_list[3]),
               onTap: () async {
                 await FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pop(context);
@@ -242,10 +244,11 @@ class _HomeState extends State<Home> {
                 ],
               )
             : qr_scanned
-                ? DispensersList(
+                ? ProductList(
                     vending_machine_id: qr_value,
                     allow_edit: false,
                     has_topbar: false,
+                    for_dispensers: true,
                   )
                 : QRScanner(
                     descriptive_text: "Escanea el código QR\nde la Máquina",

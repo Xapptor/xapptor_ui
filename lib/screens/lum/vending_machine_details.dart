@@ -4,7 +4,7 @@ import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_ui/screens/lum/dispensers_list.dart';
+import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
@@ -207,10 +207,11 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                     add_new_app_screen(
                       AppScreen(
                         name: "home/vending_machine_details/dispensers_list",
-                        child: DispensersList(
+                        child: ProductList(
                           vending_machine_id: widget.vending_machine.id,
                           allow_edit: true,
                           has_topbar: true,
+                          for_dispensers: true,
                         ),
                       ),
                     );

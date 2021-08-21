@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
+import 'package:xapptor_router/app_screen.dart';
+import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/lum/dispenser.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
@@ -10,23 +12,27 @@ import 'package:xapptor_ui/screens/lum/dispenser_details.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'product_details.dart';
 
-class DispensersList extends StatefulWidget {
-  const DispensersList({
+class ProductList extends StatefulWidget {
+  const ProductList({
     required this.vending_machine_id,
     required this.allow_edit,
     required this.has_topbar,
+    required this.for_dispensers,
   });
 
   final String? vending_machine_id;
   final bool allow_edit;
   final bool has_topbar;
+  final bool for_dispensers;
 
   @override
-  State<StatefulWidget> createState() => _DispensersListState();
+  State<StatefulWidget> createState() => _ProductListState();
 }
 
-class _DispensersListState extends State<DispensersList> {
+class _ProductListState extends State<ProductList> {
   List<Product> vending_machine_products = [];
   List<Product> products = [];
   List<Dispenser> dispensers = [];
@@ -41,41 +47,43 @@ class _DispensersListState extends State<DispensersList> {
 
     setState(() {});
 
-    DocumentSnapshot vending_machine = await FirebaseFirestore.instance
-        .collection("vending_machines")
-        .doc(widget.vending_machine_id)
-        .get();
-
-    List vending_machine_dispensers = vending_machine["dispensers"];
-
     await FirebaseFirestore.instance
         .collection("products")
         .get()
-        .then((snapshot_products) {
+        .then((snapshot_products) async {
       for (var snapshot_product in snapshot_products.docs) {
         products.add(Product.from_snapshot(
           snapshot_product.id,
           snapshot_product.data(),
         ));
       }
+
+      if (widget.for_dispensers) {
+        DocumentSnapshot vending_machine = await FirebaseFirestore.instance
+            .collection("vending_machines")
+            .doc(widget.vending_machine_id)
+            .get();
+
+        List vending_machine_dispensers = vending_machine["dispensers"];
+
+        for (var dispenser in vending_machine_dispensers) {
+          Dispenser current_dispenser =
+              Dispenser.from_snapshot(dispenser as Map<String, dynamic>);
+
+          Product current_product = products.firstWhere(
+              (product) => product.id == current_dispenser.product_id);
+
+          vending_machine_products.add(current_product);
+          dispensers.add(current_dispenser);
+        }
+
+        for (var product in products) {
+          products_values.add(product.name);
+        }
+        products_value = products_values.first;
+      }
+      setState(() {});
     });
-
-    for (var dispenser in vending_machine_dispensers) {
-      Dispenser current_dispenser =
-          Dispenser.from_snapshot(dispenser as Map<String, dynamic>);
-
-      Product current_product = products
-          .firstWhere((product) => product.id == current_dispenser.product_id);
-
-      vending_machine_products.add(current_product);
-      dispensers.add(current_dispenser);
-    }
-
-    for (var product in products) {
-      products_values.add(product.name);
-    }
-    products_value = products_values.first;
-    setState(() {});
   }
 
   @override
@@ -99,27 +107,49 @@ class _DispensersListState extends State<DispensersList> {
           : null,
       body: Container(
         child: ListView.builder(
-          itemCount: vending_machine_products.length,
+          itemCount: widget.for_dispensers
+              ? vending_machine_products.length
+              : products.length,
           itemBuilder: (context, i) {
-            return dispenser_item(
-              vending_machine_products[i],
-              context,
-              dispensers[i],
-              i,
+            return dispenser_and_product_item(
+              product: widget.for_dispensers
+                  ? vending_machine_products[i]
+                  : products[i],
+              context: context,
+              dispenser: widget.for_dispensers ? dispensers[i] : null,
+              dispenser_id: i,
             );
           },
         ),
       ),
+      floatingActionButton: widget.for_dispensers
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () {
+                add_new_app_screen(
+                  AppScreen(
+                    name: "home/products/details",
+                    child: ProductDetails(
+                      product: null,
+                    ),
+                  ),
+                );
+                open_screen("home/products/details");
+              },
+              label: Text("Agregar Producto"),
+              icon: Icon(Icons.add),
+              backgroundColor: color_lum_blue,
+            ),
     );
   }
 
-  Widget dispenser_item(
-    Product product,
-    BuildContext context,
-    Dispenser dispenser,
-    int dispenser_id,
-  ) {
-    double fractional_factor = 0.9;
+  Widget dispenser_and_product_item({
+    required Product product,
+    required BuildContext context,
+    required Dispenser? dispenser,
+    required int dispenser_id,
+  }) {
+    double fractional_factor = 0.85;
     double border_radius = 10;
     return Container(
       height: MediaQuery.of(context).size.height / 3,
@@ -136,19 +166,21 @@ class _DispensersListState extends State<DispensersList> {
                 border_radius: border_radius,
                 linear_gradient: null,
                 on_pressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DispenserDetails(
-                        product: product,
-                        dispenser: dispenser,
-                        dispenser_id: dispenser_id,
-                        allow_edit: widget.allow_edit,
-                        update_enabled_in_dispenser:
-                            update_enabled_in_dispenser,
+                  if (dispenser != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DispenserDetails(
+                          product: product,
+                          dispenser: dispenser,
+                          dispenser_id: dispenser_id,
+                          allow_edit: widget.allow_edit,
+                          update_enabled_in_dispenser:
+                              update_enabled_in_dispenser,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(border_radius),
@@ -189,12 +221,42 @@ class _DispensersListState extends State<DispensersList> {
                         color: color_lum_grey,
                       ),
                       onPressed: () {
-                        setState(() {
-                          products_value = products_values[
-                              products_values.indexOf(
-                                  vending_machine_products[dispenser_id].name)];
-                          show_product_picker_dialog(context, dispenser_id);
-                        });
+                        if (widget.for_dispensers) {
+                          setState(() {
+                            products_value = products_values[products_values
+                                .indexOf(vending_machine_products[dispenser_id]
+                                    .name)];
+                            show_product_picker_dialog(context, dispenser_id);
+                          });
+                        } else {
+                          add_new_app_screen(
+                            AppScreen(
+                              name: "home/products/details",
+                              child: ProductDetails(
+                                product: product,
+                              ),
+                            ),
+                          );
+                          open_screen("home/products/details");
+                        }
+                      },
+                    ),
+                  )
+                : Container(),
+            !widget.for_dispensers
+                ? Align(
+                    alignment: Alignment.bottomLeft,
+                    child: IconButton(
+                      alignment: Alignment.center,
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        show_delete_product_dialog(
+                          context,
+                          product.url,
+                        );
                       },
                     ),
                   )
@@ -206,7 +268,11 @@ class _DispensersListState extends State<DispensersList> {
                 width: 20,
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: dispenser.enabled ? Colors.green : Colors.red,
+                  color: dispenser != null
+                      ? dispenser.enabled
+                          ? Colors.green
+                          : Colors.red
+                      : Colors.transparent,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -214,6 +280,56 @@ class _DispensersListState extends State<DispensersList> {
           ],
         ),
       ),
+    );
+  }
+
+  show_delete_product_dialog(BuildContext context, String product_url) async {
+    double sized_box_height = 10;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: StatefulBuilder(
+            builder: (
+              BuildContext context,
+              StateSetter setState,
+            ) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: sized_box_height),
+                  Text(
+                    "¿Eliminar este producto?",
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: sized_box_height),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancelar"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          FirebaseStorage.instance
+                              .refFromURL(product_url)
+                              .delete();
+                          Navigator.pop(context);
+                        },
+                        child: Text("Aceptar"),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: sized_box_height),
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 
