@@ -186,7 +186,7 @@ class _ProductListState extends State<ProductList> {
                   borderRadius: BorderRadius.circular(border_radius),
                   child: IgnorePointer(
                     child: FractionallySizedBox(
-                      heightFactor: 0.65,
+                      heightFactor: 0.6,
                       child: Webview(
                         id: "20",
                         src: product.url,
@@ -258,6 +258,22 @@ class _ProductListState extends State<ProductList> {
                           product.url,
                         );
                       },
+                    ),
+                  )
+                : Container(),
+            !widget.for_dispensers
+                ? Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: 18,
+                      ),
+                      child: Text(
+                        product.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   )
                 : Container(),

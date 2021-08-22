@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
@@ -27,7 +26,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   TextEditingController _controller_price = TextEditingController();
   bool is_editing = false;
   String url = "";
-  File? current_image_file = null;
+  String current_image_file_base64 = "";
+  String current_image_file_name = "";
+  String upload_image_button_label = "Subir imágen SVG";
 
   @override
   void dispose() {
@@ -73,45 +74,48 @@ class _ProductDetailsState extends State<ProductDetails> {
             TextButton(
               child: Text("Aceptar"),
               onPressed: () async {
-                if (url == null) {
-                  SnackBar snackBar = SnackBar(
-                    content: Text("Debes subir una imágen"),
-                    duration: Duration(seconds: 2),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                } else {
-                  if (widget.product == null) {
+                if (widget.product == null) {
+                  if (current_image_file_base64 == "") {
+                    SnackBar snackBar = SnackBar(
+                      content: Text("Debes subir una imágen"),
+                      duration: Duration(seconds: 2),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } else {
                     try {
                       await firebase_storage.FirebaseStorage.instance
-                          .ref('uploads/file-to-upload.png')
-                          .putFile(current_image_file!)
-                          .then((firebase_storage.TaskSnapshot task_snapshot) {
+                          .ref('images/products/$current_image_file_name')
+                          .putString(current_image_file_base64,
+                              format: firebase_storage.PutStringFormat.dataUrl)
+                          .then((firebase_storage.TaskSnapshot
+                              task_snapshot) async {
                         FirebaseFirestore.instance.collection("products").add({
                           "name": _controller_name.text,
                           "description": _controller_description.text,
                           "price": int.parse(_controller_price.text),
-                          "url": task_snapshot.,
+                          "url": await task_snapshot.ref.getDownloadURL(),
                         }).then((result) {
                           is_editing = false;
+                          Navigator.of(context).pop();
                           Navigator.of(context).pop();
                         });
                       });
                     } catch (e) {
                       print("Error: $e");
                     }
-                  } else {
-                    FirebaseFirestore.instance
-                        .collection("products")
-                        .doc(widget.product!.id)
-                        .update({
-                      "name": _controller_name.text,
-                      "description": _controller_description.text,
-                      "price": int.parse(_controller_price.text),
-                    }).then((result) {
-                      is_editing = false;
-                      Navigator.of(context).pop();
-                    });
                   }
+                } else {
+                  FirebaseFirestore.instance
+                      .collection("products")
+                      .doc(widget.product!.id)
+                      .update({
+                    "name": _controller_name.text,
+                    "description": _controller_description.text,
+                    "price": int.parse(_controller_price.text),
+                  }).then((result) {
+                    is_editing = false;
+                    Navigator.of(context).pop();
+                  });
                 }
               },
             ),
@@ -129,7 +133,11 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
 
     if (result != null) {
-      current_image_file = File(result.files.first.path!);
+      current_image_file_base64 =
+          "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
+      current_image_file_name = result.files.first.name;
+      upload_image_button_label = current_image_file_name;
+      setState(() {});
     }
   }
 
@@ -227,7 +235,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             //margin: EdgeInsets.all(6),
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              "Subir nueva imágen SVG",
+                              upload_image_button_label,
                               style: TextStyle(
                                 color: color_lum_blue,
                               ),
@@ -236,7 +244,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           elevation: 6,
                           border_radius: 10,
                           on_pressed: () {
-                            open_file_picker();
+                            if (is_editing) {
+                              open_file_picker();
+                            }
                           },
                           linear_gradient: LinearGradient(
                             colors: [
