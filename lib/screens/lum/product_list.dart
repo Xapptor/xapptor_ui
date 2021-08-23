@@ -170,42 +170,30 @@ class _ProductListState extends State<ProductList> {
                 border_radius: border_radius,
                 linear_gradient: null,
                 on_pressed: () {
-                  if (widget.for_dispensers) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DispenserDetails(
-                          product: product,
-                          dispenser: dispenser!,
-                          dispenser_id: dispenser_id,
-                          allow_edit: widget.allow_edit,
-                          update_enabled_in_dispenser:
-                              update_enabled_in_dispenser,
-                        ),
-                      ),
-                    );
-                  } else {
-                    add_new_app_screen(
-                      AppScreen(
-                        name: "home/products/details",
-                        child: ProductDetails(
-                          product: product,
-                          is_editing: false,
-                        ),
-                      ),
-                    );
-                    open_screen("home/products/details");
-                  }
+                  open_details(
+                    dispenser: dispenser,
+                    product: product,
+                    dispenser_id: dispenser_id,
+                  );
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(border_radius),
-                  child: IgnorePointer(
-                    child: FractionallySizedBox(
-                      heightFactor: 0.6,
-                      child: Webview(
-                        id: Uuid().v4(),
-                        src: product.url,
-                        function: () {},
+                  child: GestureDetector(
+                    onTap: () {
+                      open_details(
+                        dispenser: dispenser,
+                        product: product,
+                        dispenser_id: dispenser_id,
+                      );
+                    },
+                    child: AbsorbPointer(
+                      child: FractionallySizedBox(
+                        heightFactor: 0.6,
+                        child: Webview(
+                          id: Uuid().v4(),
+                          src: product.url,
+                          function: () {},
+                        ),
                       ),
                     ),
                   ),
@@ -300,6 +288,38 @@ class _ProductListState extends State<ProductList> {
         ),
       ),
     );
+  }
+
+  open_details({
+    required Product product,
+    required Dispenser? dispenser,
+    required int dispenser_id,
+  }) {
+    if (widget.for_dispensers) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DispenserDetails(
+            product: product,
+            dispenser: dispenser!,
+            dispenser_id: dispenser_id,
+            allow_edit: widget.allow_edit,
+            update_enabled_in_dispenser: update_enabled_in_dispenser,
+          ),
+        ),
+      );
+    } else {
+      add_new_app_screen(
+        AppScreen(
+          name: "home/products/details",
+          child: ProductDetails(
+            product: product,
+            is_editing: false,
+          ),
+        ),
+      );
+      open_screen("home/products/details");
+    }
   }
 
   show_delete_product_dialog(BuildContext context, Product product) async {

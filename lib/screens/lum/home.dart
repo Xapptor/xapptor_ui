@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_auth/user_info_view.dart';
@@ -145,9 +146,11 @@ class _HomeState extends State<Home> {
                 Tooltip(
                   message: text_list[1],
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      open_screen("home/products");
+                    },
                     child: Icon(
-                      Icons.settings,
+                      Typicons.box,
                       color: Colors.white,
                     ),
                   ),
