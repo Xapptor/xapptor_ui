@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
 import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_auth/user_info_view.dart';
@@ -15,6 +14,8 @@ import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machines_list.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import '../privacy_policy.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -49,11 +50,11 @@ class _HomeState extends State<Home> {
   List<String> text_list = [
     "Cuenta",
     "Productos",
-    "Configuración",
+    "Políticas de Privacidad",
     "Cerrar sesión",
   ];
 
-  add_screens() {
+  add_screens() async {
     add_new_app_screen(
       AppScreen(
         name: "home/account",
@@ -106,6 +107,18 @@ class _HomeState extends State<Home> {
           allow_edit: true,
           has_topbar: true,
           for_dispensers: false,
+        ),
+      ),
+    );
+
+    add_new_app_screen(
+      AppScreen(
+        name: "home/privacy_policy",
+        child: PrivacyPolicy(
+          // src: UniversalPlatform.isWeb
+          //     ? await rootBundle.loadString("assets/privacy_policy.html")
+          //     : "app.franquiciaslum.com/privacy_policy",
+          src: await rootBundle.loadString("assets/privacy_policy.html"),
         ),
       ),
     );
@@ -185,7 +198,9 @@ class _HomeState extends State<Home> {
             ),
             ListTile(
               title: Text(text_list[2]),
-              onTap: () {},
+              onTap: () {
+                open_screen("home/privacy_policy");
+              },
             ),
             ListTile(
               title: Text(text_list[3]),
