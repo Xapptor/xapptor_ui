@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';

@@ -25,90 +25,92 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
 
   @override
   Widget build(BuildContext context) {
-    double current_card_height = MediaQuery.of(context).size.height / 5;
-    double current_card_width = MediaQuery.of(context).size.width * 0.9;
+    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double current_card_height = MediaQuery.of(context).size.height / 4;
     double name_size = 20;
     double title_size = 16;
     EdgeInsets margin = EdgeInsets.all(10);
 
-    return Container(
-      height: current_card_height,
-      width: current_card_width,
-      margin: margin,
-      child: CustomCard(
-        elevation: 3,
-        border_radius: 10,
-        linear_gradient: null,
-        on_pressed: () {
-          add_new_app_screen(
-            AppScreen(
-              name: "home/vending_machine_details",
-              child: VendingMachineDetails(
-                vending_machine: widget.vending_machine,
+    return FractionallySizedBox(
+      widthFactor: portrait ? 0.85 : 0.3,
+      child: Container(
+        height: current_card_height,
+        margin: margin,
+        child: CustomCard(
+          elevation: 3,
+          border_radius: 10,
+          linear_gradient: null,
+          on_pressed: () {
+            add_new_app_screen(
+              AppScreen(
+                name: "home/vending_machine_details",
+                child: VendingMachineDetails(
+                  vending_machine: widget.vending_machine,
+                ),
               ),
-            ),
-          );
-          open_screen("home/vending_machine_details");
-        },
-        child: Stack(
-          children: [
-            Container(
-              margin: margin * 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 7,
-                    child: Center(
-                      child: Text(
-                        widget.vending_machine.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: color_lum_green,
-                          fontSize: name_size,
+            );
+            open_screen("home/vending_machine_details");
+          },
+          child: Stack(
+            children: [
+              Container(
+                margin: margin * 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: Center(
+                        child: Text(
+                          widget.vending_machine.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: color_lum_green,
+                            fontSize: name_size,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Text(
-                      "ID: " + widget.vending_machine.id,
-                      style: TextStyle(
-                        color: color_lum_grey,
-                        fontSize: title_size,
+                    Expanded(
+                      flex: 4,
+                      child: Text(
+                        "ID: " + widget.vending_machine.id,
+                        style: TextStyle(
+                          color: color_lum_grey,
+                          fontSize: title_size,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Text(
-                      "CAMBIO \$" +
-                          widget.vending_machine.money_change.toString(),
-                      style: TextStyle(
-                        color: color_lum_light_pink,
-                        fontSize: title_size,
+                    Expanded(
+                      flex: 4,
+                      child: Text(
+                        "CAMBIO \$" +
+                            widget.vending_machine.money_change.toString(),
+                        style: TextStyle(
+                          color: color_lum_light_pink,
+                          fontSize: title_size,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                height: 20,
-                width: 20,
-                margin: margin,
-                decoration: BoxDecoration(
-                  color: widget.vending_machine.enabled
-                      ? Colors.green
-                      : Colors.red,
-                  shape: BoxShape.circle,
+                  ],
                 ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  margin: margin,
+                  decoration: BoxDecoration(
+                    color: widget.vending_machine.enabled
+                        ? Colors.green
+                        : Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

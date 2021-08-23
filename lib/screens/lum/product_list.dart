@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
@@ -150,13 +151,15 @@ class _ProductListState extends State<ProductList> {
     required Dispenser? dispenser,
     required int dispenser_id,
   }) {
+    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     double fractional_factor = 0.85;
     double border_radius = 10;
     return Container(
       height: MediaQuery.of(context).size.height / 3,
       child: FractionallySizedBox(
         heightFactor: fractional_factor,
-        widthFactor: fractional_factor,
+        widthFactor: portrait ? fractional_factor : 0.3,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -200,7 +203,7 @@ class _ProductListState extends State<ProductList> {
                     child: FractionallySizedBox(
                       heightFactor: 0.6,
                       child: Webview(
-                        id: "20",
+                        id: Uuid().v4(),
                         src: product.url,
                         function: () {},
                       ),

@@ -95,6 +95,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     double textfield_size = 24;
     double title_size = 20;
     double subtitle_size = 18;
+    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
       appBar: TopBar(
@@ -108,7 +109,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
       body: Container(
         alignment: Alignment.center,
         child: FractionallySizedBox(
-          widthFactor: 0.7,
+          widthFactor: portrait ? 0.7 : 0.2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

@@ -199,7 +199,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             child: FractionallySizedBox(
-              widthFactor: 0.7,
+              widthFactor: portrait ? 0.7 : 0.2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
