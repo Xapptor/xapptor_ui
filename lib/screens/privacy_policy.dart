@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -31,7 +32,7 @@ class PrivacyPolicy extends StatelessWidget {
                 color: Colors.white,
                 child: Webview(
                   src: src,
-                  id: "",
+                  id: Uuid().v4(),
                   function: () {},
                 ),
               ),

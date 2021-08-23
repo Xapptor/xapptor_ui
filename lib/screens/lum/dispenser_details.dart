@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
 import 'package:xapptor_ui/models/lum/dispenser.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
@@ -60,6 +61,8 @@ class _DispenserDetailsState extends State<DispenserDetails> {
 
   @override
   Widget build(BuildContext context) {
+    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: TopBar(
         background_color: main_color,
@@ -73,14 +76,14 @@ class _DispenserDetailsState extends State<DispenserDetails> {
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: FractionallySizedBox(
-          widthFactor: 0.7,
+          widthFactor: portrait ? 0.7 : 0.2,
           child: Column(
             children: [
               Spacer(flex: 1),
               Expanded(
                 flex: 3,
                 child: Webview(
-                  id: "20",
+                  id: Uuid().v4(),
                   src: widget.product.url,
                   function: () {},
                 ),

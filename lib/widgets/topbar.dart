@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 
 AppBar TopBar({
@@ -20,7 +21,7 @@ AppBar TopBar({
                 width: topbar_height,
                 child: Webview(
                   src: logo_path,
-                  id: "",
+                  id: Uuid().v4(),
                   function: () {},
                 ),
               )

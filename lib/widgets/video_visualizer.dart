@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 
 class WebVideoVisualizer extends StatelessWidget {
@@ -14,7 +15,7 @@ class WebVideoVisualizer extends StatelessWidget {
       body: Container(
         child: Webview(
           src: src,
-          id: "",
+          id: Uuid().v4(),
           function: () {},
         ),
       ),
