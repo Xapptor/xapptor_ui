@@ -143,18 +143,20 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Tooltip(
-                  message: text_list[1],
-                  child: TextButton(
-                    onPressed: () {
-                      open_screen("home/products");
-                    },
-                    child: Icon(
-                      Typicons.box,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                widget.user.owner
+                    ? Tooltip(
+                        message: text_list[1],
+                        child: TextButton(
+                          onPressed: () {
+                            open_screen("home/products");
+                          },
+                          child: Icon(
+                            Typicons.box,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
       IconButton(
@@ -193,12 +195,14 @@ class _HomeState extends State<Home> {
                 open_screen("home/account");
               },
             ),
-            ListTile(
-              title: Text(text_list[1]),
-              onTap: () {
-                open_screen("home/products");
-              },
-            ),
+            widget.user.owner
+                ? ListTile(
+                    title: Text(text_list[1]),
+                    onTap: () {
+                      open_screen("home/products");
+                    },
+                  )
+                : Container(),
             ListTile(
               title: Text(text_list[2]),
               onTap: () {
