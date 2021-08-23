@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
@@ -12,9 +13,11 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
     required this.product,
+    required this.is_editing,
   });
 
   final Product? product;
+  final bool is_editing;
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -47,6 +50,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     _controller_price.text = widget.product?.price.toString() ?? "";
     _controller_description.text = widget.product?.description ?? "";
     url = widget.product?.url ?? "";
+    is_editing = widget.is_editing;
+    setState(() {});
   }
 
   show_save_data_alert_dialog({
@@ -73,56 +78,85 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             TextButton(
               child: Text("Aceptar"),
-              onPressed: () async {
-                if (widget.product == null) {
-                  if (current_image_file_base64 == "") {
-                    SnackBar snackBar = SnackBar(
-                      content: Text("Debes subir una imágen"),
-                      duration: Duration(seconds: 2),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else {
-                    try {
-                      await firebase_storage.FirebaseStorage.instance
-                          .ref('images/products/$current_image_file_name')
-                          .putString(current_image_file_base64,
-                              format: firebase_storage.PutStringFormat.dataUrl)
-                          .then((firebase_storage.TaskSnapshot
-                              task_snapshot) async {
-                        FirebaseFirestore.instance.collection("products").add({
-                          "name": _controller_name.text,
-                          "description": _controller_description.text,
-                          "price": int.parse(_controller_price.text),
-                          "url": await task_snapshot.ref.getDownloadURL(),
-                        }).then((result) {
-                          is_editing = false;
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        });
-                      });
-                    } catch (e) {
-                      print("Error: $e");
-                    }
-                  }
-                } else {
-                  FirebaseFirestore.instance
-                      .collection("products")
-                      .doc(widget.product!.id)
-                      .update({
-                    "name": _controller_name.text,
-                    "description": _controller_description.text,
-                    "price": int.parse(_controller_price.text),
-                  }).then((result) {
-                    is_editing = false;
-                    Navigator.of(context).pop();
-                  });
-                }
-              },
+              onPressed: save_product_changes,
             ),
           ],
         );
       },
     );
+  }
+
+  save_product_changes() async {
+    if (widget.product == null) {
+      if (current_image_file_base64 == "") {
+        SnackBar snackBar = SnackBar(
+          content: Text("Debes subir una imágen"),
+          duration: Duration(seconds: 2),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        try {
+          await firebase_storage.FirebaseStorage.instance
+              .ref('images/products/$current_image_file_name')
+              .putString(current_image_file_base64,
+                  format: firebase_storage.PutStringFormat.dataUrl)
+              .then((firebase_storage.TaskSnapshot task_snapshot) async {
+            FirebaseFirestore.instance.collection("products").add({
+              "name": _controller_name.text,
+              "description": _controller_description.text,
+              "price": int.parse(_controller_price.text),
+              "url": await task_snapshot.ref.getDownloadURL(),
+            }).then((result) {
+              is_editing = false;
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            });
+          });
+        } catch (e) {
+          print("Error: $e");
+        }
+      }
+    } else {
+      if (current_image_file_base64 != "") {
+        await firebase_storage.FirebaseStorage.instance
+            .refFromURL(widget.product!.url)
+            .delete()
+            .then((value) async {
+          await firebase_storage.FirebaseStorage.instance
+              .ref('images/products/$current_image_file_name')
+              .putString(current_image_file_base64,
+                  format: firebase_storage.PutStringFormat.dataUrl)
+              .then((firebase_storage.TaskSnapshot task_snapshot) async {
+            FirebaseFirestore.instance
+                .collection("products")
+                .doc(widget.product!.id)
+                .update({
+              "name": _controller_name.text,
+              "description": _controller_description.text,
+              "price": int.parse(_controller_price.text),
+              "url": await task_snapshot.ref.getDownloadURL(),
+            }).then((result) {
+              is_editing = false;
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            });
+          });
+        });
+      } else {
+        FirebaseFirestore.instance
+            .collection("products")
+            .doc(widget.product!.id)
+            .update({
+          "name": _controller_name.text,
+          "description": _controller_description.text,
+          "price": int.parse(_controller_price.text),
+        }).then((result) {
+          is_editing = false;
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        });
+      }
+    }
   }
 
   open_file_picker() async {
@@ -133,8 +167,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
 
     if (result != null) {
+      File file_picked = File(result.files.first.path!);
+      String file_picked_base64 = base64Encode(await file_picked.readAsBytes());
       current_image_file_base64 =
-          "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
+          "data:image/svg+xml;base64,$file_picked_base64";
       current_image_file_name = result.files.first.name;
       upload_image_button_label = current_image_file_name;
       setState(() {});

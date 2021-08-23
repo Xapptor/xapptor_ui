@@ -131,6 +131,7 @@ class _ProductListState extends State<ProductList> {
                     name: "home/products/details",
                     child: ProductDetails(
                       product: null,
+                      is_editing: true,
                     ),
                   ),
                 );
@@ -166,13 +167,13 @@ class _ProductListState extends State<ProductList> {
                 border_radius: border_radius,
                 linear_gradient: null,
                 on_pressed: () {
-                  if (dispenser != null) {
+                  if (widget.for_dispensers) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DispenserDetails(
                           product: product,
-                          dispenser: dispenser,
+                          dispenser: dispenser!,
                           dispenser_id: dispenser_id,
                           allow_edit: widget.allow_edit,
                           update_enabled_in_dispenser:
@@ -180,6 +181,17 @@ class _ProductListState extends State<ProductList> {
                         ),
                       ),
                     );
+                  } else {
+                    add_new_app_screen(
+                      AppScreen(
+                        name: "home/products/details",
+                        child: ProductDetails(
+                          product: product,
+                          is_editing: false,
+                        ),
+                      ),
+                    );
+                    open_screen("home/products/details");
                   }
                 },
                 child: ClipRRect(
@@ -211,7 +223,7 @@ class _ProductListState extends State<ProductList> {
                 ),
               ),
             ),
-            widget.allow_edit
+            widget.allow_edit && widget.for_dispensers
                 ? Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
@@ -221,24 +233,12 @@ class _ProductListState extends State<ProductList> {
                         color: color_lum_grey,
                       ),
                       onPressed: () {
-                        if (widget.for_dispensers) {
-                          setState(() {
-                            products_value = products_values[products_values
-                                .indexOf(vending_machine_products[dispenser_id]
-                                    .name)];
-                            show_product_picker_dialog(context, dispenser_id);
-                          });
-                        } else {
-                          add_new_app_screen(
-                            AppScreen(
-                              name: "home/products/details",
-                              child: ProductDetails(
-                                product: product,
-                              ),
-                            ),
-                          );
-                          open_screen("home/products/details");
-                        }
+                        setState(() {
+                          products_value = products_values[
+                              products_values.indexOf(
+                                  vending_machine_products[dispenser_id].name)];
+                          show_product_picker_dialog(context, dispenser_id);
+                        });
                       },
                     ),
                   )
@@ -255,7 +255,7 @@ class _ProductListState extends State<ProductList> {
                       onPressed: () {
                         show_delete_product_dialog(
                           context,
-                          product.url,
+                          product,
                         );
                       },
                     ),
@@ -299,7 +299,7 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
-  show_delete_product_dialog(BuildContext context, String product_url) async {
+  show_delete_product_dialog(BuildContext context, Product product) async {
     double sized_box_height = 10;
     showDialog(
       context: context,
@@ -329,11 +329,21 @@ class _ProductListState extends State<ProductList> {
                         child: Text("Cancelar"),
                       ),
                       TextButton(
-                        onPressed: () {
-                          FirebaseStorage.instance
-                              .refFromURL(product_url)
-                              .delete();
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          await FirebaseStorage.instance
+                              .refFromURL(product.url)
+                              .delete()
+                              .then((value) async {
+                            await FirebaseFirestore.instance
+                                .collection("products")
+                                .doc(product.id)
+                                .delete()
+                                .then((value) {
+                              get_products();
+
+                              Navigator.pop(context);
+                            });
+                          });
                         },
                         child: Text("Aceptar"),
                       ),
