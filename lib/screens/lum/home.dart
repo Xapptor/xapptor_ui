@@ -293,8 +293,8 @@ class _HomeState extends State<Home> {
                     cut_out_size: MediaQuery.of(context).size.width * 0.65,
                     button_linear_gradient: LinearGradient(
                       colors: [
-                        color_lum_blue.withOpacity(0.1),
-                        color_lum_green.withOpacity(0.1),
+                        color_lum_blue.withOpacity(0.4),
+                        color_lum_green.withOpacity(0.4),
                       ],
                     ),
                   ),

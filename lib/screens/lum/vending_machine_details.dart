@@ -5,6 +5,7 @@ import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/lum/product_list.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
@@ -96,6 +97,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     double title_size = 20;
     double subtitle_size = 18;
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double screen_width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: TopBar(
@@ -202,28 +204,45 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                 ),
               ),
               Expanded(
-                flex: 2,
-                child: TextButton(
-                  onPressed: () {
-                    add_new_app_screen(
-                      AppScreen(
-                        name: "home/vending_machine_details/dispensers_list",
-                        child: ProductList(
-                          vending_machine_id: widget.vending_machine.id,
-                          allow_edit: true,
-                          has_topbar: true,
-                          for_dispensers: true,
+                flex: 1,
+                child: FractionallySizedBox(
+                  heightFactor: 0.8,
+                  widthFactor: 0.7,
+                  child: Container(
+                    child: CustomCard(
+                      child: Text(
+                        "EDITAR DISPENSADORES",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    );
-                    open_screen("home/vending_machine_details/dispensers_list");
-                  },
-                  child: Text(
-                    "EDITAR DISPENSADORES",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: color_lum_green,
-                      fontSize: subtitle_size,
+                      elevation: null,
+                      border_radius: MediaQuery.of(context).size.width,
+                      on_pressed: () {
+                        add_new_app_screen(
+                          AppScreen(
+                            name:
+                                "home/vending_machine_details/dispensers_list",
+                            child: ProductList(
+                              vending_machine_id: widget.vending_machine.id,
+                              allow_edit: true,
+                              has_topbar: true,
+                              for_dispensers: true,
+                            ),
+                          ),
+                        );
+                        open_screen(
+                            "home/vending_machine_details/dispensers_list");
+                      },
+                      linear_gradient: LinearGradient(
+                        colors: [
+                          color_lum_blue.withOpacity(0.4),
+                          color_lum_green.withOpacity(0.4),
+                        ],
+                      ),
                     ),
                   ),
                 ),
