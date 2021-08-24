@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
@@ -8,6 +9,7 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart' as file_picker;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:universal_platform/universal_platform.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -159,21 +161,38 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   open_file_picker() async {
-    await file_picker.FilePicker.platform
-        .pickFiles(
-      type: file_picker.FileType.custom,
-      allowedExtensions: ['svg'],
-      withData: true,
-    )
-        .then((file_picker.FilePickerResult? result) async {
-      if (result != null) {
-        current_image_file_base64 =
-            "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
-        current_image_file_name = result.files.first.name;
-        upload_image_button_label = current_image_file_name;
-        setState(() {});
+    bool call_file_picker = true;
+
+    if (UniversalPlatform.isWeb) {
+      call_file_picker = true;
+    } else {
+      if (await Permission.storage.request().isDenied ||
+          await Permission.storage.request().isPermanentlyDenied) {
+        call_file_picker = false;
+      } else {
+        call_file_picker = true;
       }
-    });
+    }
+
+    if (!call_file_picker) {
+      openAppSettings();
+    } else {
+      await file_picker.FilePicker.platform
+          .pickFiles(
+        type: file_picker.FileType.custom,
+        allowedExtensions: ['svg'],
+        withData: true,
+      )
+          .then((file_picker.FilePickerResult? result) async {
+        if (result != null) {
+          current_image_file_base64 =
+              "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
+          current_image_file_name = result.files.first.name;
+          upload_image_button_label = current_image_file_name;
+          setState(() {});
+        }
+      });
+    }
   }
 
   @override

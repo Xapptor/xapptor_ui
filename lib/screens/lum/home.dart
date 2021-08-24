@@ -18,6 +18,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../privacy_policy.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -43,10 +44,25 @@ class _HomeState extends State<Home> {
     add_screens();
   }
 
-  update_qr_value(String new_qr_value) {
-    qr_scanned = true;
-    qr_value = new_qr_value;
-    setState(() {});
+  update_qr_value(String new_qr_value) async {
+    DocumentSnapshot vending_machine_snapshot = await FirebaseFirestore.instance
+        .collection("vending_machines")
+        .doc(new_qr_value)
+        .get();
+
+    bool exist_vending_machine = vending_machine_snapshot.data() != null;
+
+    if (exist_vending_machine) {
+      qr_scanned = true;
+      qr_value = new_qr_value;
+      setState(() {});
+    } else {
+      SnackBar snackBar = SnackBar(
+        content: Text("Debes ingresar un código válido"),
+        duration: Duration(seconds: 2),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   List<String> text_list = [
@@ -281,6 +297,10 @@ class _HomeState extends State<Home> {
                     border_length: 40,
                     border_width: 8,
                     cut_out_size: scan_area,
+                    button_linear_gradient: LinearGradient(colors: [
+                      color_lum_blue.withOpacity(0.1),
+                      color_lum_green.withOpacity(0.1),
+                    ]),
                   ),
       ),
     );
