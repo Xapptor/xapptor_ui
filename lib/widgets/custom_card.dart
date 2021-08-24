@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
@@ -56,17 +57,24 @@ class CustomCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(
-            border_radius ?? default_border_radius,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          child,
+          Material(
+            color: Colors.transparent,
+            child: PointerInterceptor(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(
+                  border_radius ?? default_border_radius,
+                ),
+                onTap: on_pressed,
+                splashColor: splash_color ?? Colors.white.withOpacity(0.3),
+                highlightColor: Colors.transparent,
+              ),
+            ),
           ),
-          onTap: on_pressed,
-          splashColor: splash_color ?? Colors.white.withOpacity(0.3),
-          highlightColor: Colors.transparent,
-          child: child,
-        ),
+        ],
       ),
     );
   }

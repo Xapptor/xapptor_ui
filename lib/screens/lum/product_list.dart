@@ -15,6 +15,7 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'product_details.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({
@@ -180,12 +181,10 @@ class _ProductListState extends State<ProductList> {
                   borderRadius: BorderRadius.circular(border_radius),
                   child: FractionallySizedBox(
                     heightFactor: 0.6,
-                    child: AbsorbPointer(
-                      child: Webview(
-                        id: Uuid().v4(),
-                        src: product.url,
-                        function: () {},
-                      ),
+                    child: Webview(
+                      id: Uuid().v4(),
+                      src: product.url,
+                      function: () {},
                     ),
                   ),
                 ),
@@ -205,7 +204,7 @@ class _ProductListState extends State<ProductList> {
                 ),
               ),
             ),
-            widget.allow_edit
+            widget.allow_edit && widget.for_dispensers
                 ? Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
@@ -215,20 +214,12 @@ class _ProductListState extends State<ProductList> {
                         color: color_lum_grey,
                       ),
                       onPressed: () {
-                        if (widget.for_dispensers) {
-                          setState(() {
-                            products_value = products_values[products_values
-                                .indexOf(vending_machine_products[dispenser_id]
-                                    .name)];
-                            show_product_picker_dialog(context, dispenser_id);
-                          });
-                        } else {
-                          open_details(
-                            dispenser: dispenser,
-                            product: product,
-                            dispenser_id: dispenser_id,
-                          );
-                        }
+                        setState(() {
+                          products_value = products_values[
+                              products_values.indexOf(
+                                  vending_machine_products[dispenser_id].name)];
+                          show_product_picker_dialog(context, dispenser_id);
+                        });
                       },
                     ),
                   )
@@ -386,68 +377,70 @@ class _ProductListState extends State<ProductList> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: StatefulBuilder(
-            builder: (
-              BuildContext context,
-              StateSetter setState,
-            ) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: sized_box_height),
-                  Text(
-                    "Selecciona el producto para este dispensador",
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: sized_box_height),
-                  DropdownButton<String>(
-                    value: products_value,
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(
-                      color: Colors.black,
+        return PointerInterceptor(
+          child: AlertDialog(
+            content: StatefulBuilder(
+              builder: (
+                BuildContext context,
+                StateSetter setState,
+              ) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: sized_box_height),
+                    Text(
+                      "Selecciona el producto para este dispensador",
+                      textAlign: TextAlign.center,
                     ),
-                    underline: Container(
-                      height: 1,
-                      color: Colors.black,
+                    SizedBox(height: sized_box_height),
+                    DropdownButton<String>(
+                      value: products_value,
+                      iconSize: 24,
+                      elevation: 16,
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      underline: Container(
+                        height: 1,
+                        color: Colors.black,
+                      ),
+                      onChanged: (new_value) {
+                        setState(() {
+                          products_value = new_value!;
+                        });
+                      },
+                      items: products_values
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    onChanged: (new_value) {
-                      setState(() {
-                        products_value = new_value!;
-                      });
-                    },
-                    items: products_values
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: sized_box_height),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text("Cancelar"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          update_product_in_dispenser(index);
-                          Navigator.pop(context);
-                        },
-                        child: Text("Aceptar"),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: sized_box_height),
-                ],
-              );
-            },
+                    SizedBox(height: sized_box_height),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Cancelar"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            update_product_in_dispenser(index);
+                            Navigator.pop(context);
+                          },
+                          child: Text("Aceptar"),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: sized_box_height),
+                  ],
+                );
+              },
+            ),
           ),
         );
       },

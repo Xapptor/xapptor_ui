@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'topbar.dart';
 import 'language_picker.dart';
 
@@ -68,8 +69,10 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
           height: MediaQuery.of(context).size.height,
           color: Colors.white,
           child: LayoutBuilder(
-            builder:
-                (BuildContext context, BoxConstraints viewport_constraints) {
+            builder: (
+              BuildContext context,
+              BoxConstraints viewport_constraints,
+            ) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
@@ -83,11 +86,13 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
                             Container(
                               color: Colors.white,
                             ),
-                        Container(
-                          color: widget.custom_background != null
-                              ? Colors.transparent
-                              : Colors.white,
-                          child: widget.child,
+                        PointerInterceptor(
+                          child: Container(
+                            color: widget.custom_background != null
+                                ? Colors.transparent
+                                : Colors.white,
+                            child: widget.child,
+                          ),
                         ),
                       ],
                     ),
