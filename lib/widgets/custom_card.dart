@@ -61,9 +61,9 @@ class CustomCard extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           child,
-          Material(
-            color: Colors.transparent,
-            child: PointerInterceptor(
+          PointerInterceptor(
+            child: Material(
+              color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(
                   border_radius ?? default_border_radius,

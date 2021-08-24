@@ -161,9 +161,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   open_file_picker() async {
     await file_picker.FilePicker.platform
         .pickFiles(
-            type: file_picker.FileType.custom,
-            allowedExtensions: ['svg'],
-            withData: true)
+      type: file_picker.FileType.custom,
+      allowedExtensions: ['svg'],
+      withData: true,
+    )
         .then((file_picker.FilePickerResult? result) async {
       if (result != null) {
         current_image_file_base64 =
@@ -179,8 +180,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     double textfield_size = 18;
-    double title_size = 18;
-    double subtitle_size = 16;
 
     return Scaffold(
       appBar: TopBar(
@@ -226,73 +225,75 @@ class _ProductDetailsState extends State<ProductDetails> {
                   SizedBox(
                     height: sized_box_space * 2,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "\$",
-                          style: TextStyle(
-                            color: color_lum_blue,
+                  Container(
+                    height: 40,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "\$",
+                            style: TextStyle(
+                              color: color_lum_blue,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: TextField(
-                          onTap: () {
-                            //
-                          },
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: color_lum_blue,
-                            fontSize: textfield_size,
-                          ),
-                          controller: _controller_price,
-                          decoration: InputDecoration(
-                            hintText: "Precio",
-                            hintStyle: TextStyle(
+                        Expanded(
+                          flex: 6,
+                          child: TextField(
+                            onTap: () {
+                              //
+                            },
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
                               color: color_lum_blue,
                               fontSize: textfield_size,
                             ),
-                          ),
-                          enabled: is_editing,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                      Spacer(flex: 1),
-                      Expanded(
-                        flex: 16,
-                        child: CustomCard(
-                          child: Container(
-                            alignment: Alignment.center,
-                            //margin: EdgeInsets.all(6),
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              upload_image_button_label,
-                              style: TextStyle(
+                            controller: _controller_price,
+                            decoration: InputDecoration(
+                              hintText: "Precio",
+                              hintStyle: TextStyle(
                                 color: color_lum_blue,
+                                fontSize: textfield_size,
                               ),
                             ),
+                            enabled: is_editing,
+                            keyboardType: TextInputType.number,
                           ),
-                          elevation: 6,
-                          border_radius: 10,
-                          on_pressed: () {
-                            if (is_editing) {
-                              open_file_picker();
-                            }
-                          },
-                          linear_gradient: LinearGradient(
-                            colors: [
-                              Colors.white,
-                              Colors.white,
-                            ],
-                          ),
-                          splash_color: color_lum_blue.withOpacity(0.3),
                         ),
-                      ),
-                      Spacer(flex: 1),
-                    ],
+                        Spacer(flex: 1),
+                        Expanded(
+                          flex: 16,
+                          child: CustomCard(
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.all(10),
+                              child: Text(
+                                upload_image_button_label,
+                                style: TextStyle(
+                                  color: color_lum_blue,
+                                ),
+                              ),
+                            ),
+                            elevation: 6,
+                            border_radius: 10,
+                            on_pressed: () {
+                              if (is_editing) {
+                                open_file_picker();
+                              }
+                            },
+                            linear_gradient: LinearGradient(
+                              colors: [
+                                Colors.white,
+                                Colors.white,
+                              ],
+                            ),
+                            splash_color: color_lum_blue.withOpacity(0.3),
+                          ),
+                        ),
+                        Spacer(flex: 1),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: sized_box_space * 2,
