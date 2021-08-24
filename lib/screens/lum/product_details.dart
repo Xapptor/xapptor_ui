@@ -5,11 +5,11 @@ import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_ui/widgets/check_permission.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart' as file_picker;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:universal_platform/universal_platform.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -160,39 +160,31 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
   }
 
-  open_file_picker() async {
-    bool call_file_picker = true;
+  open_file_picker(BuildContext context) async {
+    bool permission_granted = await check_permission(
+      context: context,
+      message:
+          "Debes dar permiso al almacenamiento para la selección de imágen",
+      message_no: "Cancelar",
+      message_yes: "Aceptar",
+      permission_type: Permission.storage,
+    );
 
-    if (UniversalPlatform.isWeb) {
-      call_file_picker = true;
-    } else {
-      if (await Permission.storage.request().isDenied ||
-          await Permission.storage.request().isPermanentlyDenied) {
-        call_file_picker = false;
-      } else {
-        call_file_picker = true;
+    await file_picker.FilePicker.platform
+        .pickFiles(
+      type: file_picker.FileType.custom,
+      allowedExtensions: ['svg'],
+      withData: true,
+    )
+        .then((file_picker.FilePickerResult? result) async {
+      if (result != null) {
+        current_image_file_base64 =
+            "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
+        current_image_file_name = result.files.first.name;
+        upload_image_button_label = current_image_file_name;
+        setState(() {});
       }
-    }
-
-    if (!call_file_picker) {
-      openAppSettings();
-    } else {
-      await file_picker.FilePicker.platform
-          .pickFiles(
-        type: file_picker.FileType.custom,
-        allowedExtensions: ['svg'],
-        withData: true,
-      )
-          .then((file_picker.FilePickerResult? result) async {
-        if (result != null) {
-          current_image_file_base64 =
-              "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
-          current_image_file_name = result.files.first.name;
-          upload_image_button_label = current_image_file_name;
-          setState(() {});
-        }
-      });
-    }
+    });
   }
 
   @override
@@ -298,7 +290,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             border_radius: 10,
                             on_pressed: () {
                               if (is_editing) {
-                                open_file_picker();
+                                open_file_picker(context);
                               }
                             },
                             linear_gradient: LinearGradient(
@@ -307,7 +299,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 Colors.white,
                               ],
                             ),
-                            splash_color: color_lum_blue.withOpacity(0.3),
+                            splash_color: is_editing
+                                ? color_lum_blue.withOpacity(0.3)
+                                : null,
                           ),
                         ),
                         Spacer(flex: 1),

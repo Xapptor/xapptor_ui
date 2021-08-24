@@ -297,6 +297,10 @@ class _HomeState extends State<Home> {
                         color_lum_green.withOpacity(0.4),
                       ],
                     ),
+                    permission_message:
+                        "Debes dar permiso a la cámara para la captura de códigos QR",
+                    permission_message_no: "Cancelar",
+                    permission_message_yes: "Aceptar",
                   ),
       ),
     );

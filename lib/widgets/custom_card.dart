@@ -70,7 +70,7 @@ class CustomCard extends StatelessWidget {
                   border_radius ?? default_border_radius,
                 ),
                 onTap: on_pressed,
-                splashColor: splash_color ?? Colors.white.withOpacity(0.3),
+                splashColor: splash_color ?? Colors.transparent,
                 highlightColor: Colors.transparent,
               ),
             ),

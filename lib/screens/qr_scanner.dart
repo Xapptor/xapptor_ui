@@ -6,6 +6,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_ui/widgets/check_permission.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({
@@ -17,6 +18,9 @@ class QRScanner extends StatefulWidget {
     required this.border_width,
     required this.cut_out_size,
     required this.button_linear_gradient,
+    required this.permission_message,
+    required this.permission_message_no,
+    required this.permission_message_yes,
   });
 
   final String descriptive_text;
@@ -27,6 +31,9 @@ class QRScanner extends StatefulWidget {
   final double border_width;
   final double cut_out_size;
   final LinearGradient? button_linear_gradient;
+  final String permission_message;
+  final String permission_message_no;
+  final String permission_message_yes;
 
   @override
   State<StatefulWidget> createState() => _QRScannerState();
@@ -59,15 +66,13 @@ class _QRScannerState extends State<QRScanner> {
   @override
   void initState() {
     super.initState();
-    check_camera_permission();
-  }
-
-  check_camera_permission() async {
-    if (!UniversalPlatform.isWeb) {
-      if (await Permission.camera.request().isDenied) {
-        openAppSettings();
-      }
-    }
+    check_permission(
+      context: context,
+      message: widget.permission_message,
+      message_no: widget.permission_message_no,
+      message_yes: widget.permission_message_yes,
+      permission_type: Permission.camera,
+    );
   }
 
   @override
