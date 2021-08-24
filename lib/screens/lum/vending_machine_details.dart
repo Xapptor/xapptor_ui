@@ -211,11 +211,11 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   child: Container(
                     child: CustomCard(
                       child: Text(
-                        "EDITAR DISPENSADORES",
+                        "DISPENSADORES",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
