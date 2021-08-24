@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
@@ -160,21 +159,20 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   open_file_picker() async {
-    file_picker.FilePickerResult? result =
-        await file_picker.FilePicker.platform.pickFiles(
-      type: file_picker.FileType.custom,
-      allowedExtensions: ['svg'],
-    );
-
-    if (result != null) {
-      File file_picked = File(result.files.first.path!);
-      String file_picked_base64 = base64Encode(await file_picked.readAsBytes());
-      current_image_file_base64 =
-          "data:image/svg+xml;base64,$file_picked_base64";
-      current_image_file_name = result.files.first.name;
-      upload_image_button_label = current_image_file_name;
-      setState(() {});
-    }
+    await file_picker.FilePicker.platform
+        .pickFiles(
+            type: file_picker.FileType.custom,
+            allowedExtensions: ['svg'],
+            withData: true)
+        .then((file_picker.FilePickerResult? result) async {
+      if (result != null) {
+        current_image_file_base64 =
+            "data:image/svg+xml;base64,${base64Encode(result.files.first.bytes!)}";
+        current_image_file_name = result.files.first.name;
+        upload_image_button_label = current_image_file_name;
+        setState(() {});
+      }
+    });
   }
 
   @override
