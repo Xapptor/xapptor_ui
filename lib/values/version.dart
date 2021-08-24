@@ -7,33 +7,24 @@ String xapptor_version = "1.0.0";
 CurrentApp current_app = CurrentApp.Abeinstitute;
 
 String current_software_version() {
-  String app_name_char = "";
   String app_version = "";
 
   if (current_app == CurrentApp.Abeinstitute) {
-    app_name_char = "a";
     app_version = abeinstitute_version;
-  } else if (current_app == CurrentApp.AbeinstituteInsurance) {
-    app_name_char = "ai";
+  } else if (current_app == CurrentApp.Abeinsurance) {
     app_version = abe_insurance_version;
-  } else if (current_app == CurrentApp.Emissor) {
-    app_name_char = "e";
-    app_version = emissor_version;
   } else if (current_app == CurrentApp.Lum) {
-    app_name_char = "l";
     app_version = lum_version;
   } else if (current_app == CurrentApp.Xapptor) {
-    app_name_char = "x";
     app_version = xapptor_version;
   }
 
-  return "xcv$xapptor_core_version-${app_name_char}v$app_version";
+  return "Xapptor Core $xapptor_core_version - App $app_version";
 }
 
 enum CurrentApp {
   Abeinstitute,
-  AbeinstituteInsurance,
+  Abeinsurance,
   Lum,
-  Emissor,
   Xapptor,
 }

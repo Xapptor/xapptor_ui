@@ -244,10 +244,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    var scan_area = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 150.0
-        : 300.0;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -296,7 +292,7 @@ class _HomeState extends State<Home> {
                     border_radius: 4,
                     border_length: 40,
                     border_width: 8,
-                    cut_out_size: scan_area,
+                    cut_out_size: MediaQuery.of(context).size.width * 0.65,
                     button_linear_gradient: LinearGradient(colors: [
                       color_lum_blue.withOpacity(0.1),
                       color_lum_green.withOpacity(0.1),

@@ -64,8 +64,7 @@ class _QRScannerState extends State<QRScanner> {
 
   check_camera_permission() async {
     if (!UniversalPlatform.isWeb) {
-      if (await Permission.camera.request().isDenied ||
-          await Permission.camera.request().isPermanentlyDenied) {
+      if (await Permission.camera.request().isDenied) {
         openAppSettings();
       }
     }

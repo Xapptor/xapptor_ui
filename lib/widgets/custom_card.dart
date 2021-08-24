@@ -65,6 +65,7 @@ class CustomCard extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
+                splashFactory: InkRipple.splashFactory,
                 borderRadius: BorderRadius.circular(
                   border_radius ?? default_border_radius,
                 ),

@@ -10,11 +10,9 @@ import 'package:xapptor_ui/widgets/contact_us_container.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/values/urls.dart';
-import 'package:xapptor_ui/values/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_ui/widgets/introduction_container.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
-import 'package:xapptor_ui/widgets/made_by_container.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/widgets/why_us_container.dart';
 
@@ -579,12 +577,6 @@ class _LandingState extends State<Landing> {
                         Colors.black.withOpacity(0.6),
                         Colors.black.withOpacity(0.6),
                       ],
-                    ),
-                    MadeByContainer(
-                      text:
-                          "Made in collaboration by Javier Garcia and Xapptor ${current_software_version()}",
-                      text_color: Colors.white,
-                      background_color: color_abeinstitute_green,
                     ),
                   ],
                 ),

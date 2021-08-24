@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'topbar.dart';
-import 'language_picker.dart';
+import 'package:xapptor_auth/user_info_form_type.dart';
+import 'package:xapptor_ui/widgets/made_with_container.dart';
+import '../widgets/topbar.dart';
+import '../widgets/language_picker.dart';
 
 class UserInfoViewContainer extends StatefulWidget {
   const UserInfoViewContainer({
@@ -13,6 +15,7 @@ class UserInfoViewContainer extends StatefulWidget {
     required this.has_language_picker,
     required this.custom_background,
     required this.has_back_button,
+    required this.user_info_form_type,
   });
 
   final String? current_language;
@@ -23,6 +26,7 @@ class UserInfoViewContainer extends StatefulWidget {
   final bool has_language_picker;
   final Widget? custom_background;
   final bool has_back_button;
+  final UserInfoFormType user_info_form_type;
 
   @override
   _UserInfoViewContainerState createState() => _UserInfoViewContainerState();
@@ -68,38 +72,54 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
         body: Container(
           height: MediaQuery.of(context).size.height,
           color: Colors.white,
-          child: LayoutBuilder(
-            builder: (
-              BuildContext context,
-              BoxConstraints viewport_constraints,
-            ) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: viewport_constraints.minHeight,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        widget.custom_background ??
-                            Container(
-                              color: Colors.white,
-                            ),
-                        PointerInterceptor(
-                          child: Container(
-                            color: widget.custom_background != null
-                                ? Colors.transparent
-                                : Colors.white,
-                            child: widget.child,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: LayoutBuilder(
+                  builder: (
+                    BuildContext context,
+                    BoxConstraints viewport_constraints,
+                  ) {
+                    return SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: viewport_constraints.minHeight,
+                        ),
+                        child: IntrinsicHeight(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              widget.custom_background ??
+                                  Container(
+                                    color: Colors.white,
+                                  ),
+                              PointerInterceptor(
+                                child: Container(
+                                  color: widget.custom_background != null
+                                      ? Colors.transparent
+                                      : Colors.white,
+                                  child: widget.child,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+              is_login(widget.user_info_form_type)
+                  ? Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MadeWithContainer(
+                        text_color: Colors.white,
+                        background_color: widget.topbar_color,
+                      ),
+                    )
+                  : Container(),
+            ],
           ),
         ),
       ),
