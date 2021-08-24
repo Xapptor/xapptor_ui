@@ -178,22 +178,13 @@ class _ProductListState extends State<ProductList> {
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(border_radius),
-                  child: GestureDetector(
-                    onTap: () {
-                      open_details(
-                        dispenser: dispenser,
-                        product: product,
-                        dispenser_id: dispenser_id,
-                      );
-                    },
+                  child: FractionallySizedBox(
+                    heightFactor: 0.6,
                     child: AbsorbPointer(
-                      child: FractionallySizedBox(
-                        heightFactor: 0.6,
-                        child: Webview(
-                          id: Uuid().v4(),
-                          src: product.url,
-                          function: () {},
-                        ),
+                      child: Webview(
+                        id: Uuid().v4(),
+                        src: product.url,
+                        function: () {},
                       ),
                     ),
                   ),
@@ -214,7 +205,7 @@ class _ProductListState extends State<ProductList> {
                 ),
               ),
             ),
-            widget.allow_edit && widget.for_dispensers
+            widget.allow_edit
                 ? Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
@@ -224,12 +215,20 @@ class _ProductListState extends State<ProductList> {
                         color: color_lum_grey,
                       ),
                       onPressed: () {
-                        setState(() {
-                          products_value = products_values[
-                              products_values.indexOf(
-                                  vending_machine_products[dispenser_id].name)];
-                          show_product_picker_dialog(context, dispenser_id);
-                        });
+                        if (widget.for_dispensers) {
+                          setState(() {
+                            products_value = products_values[products_values
+                                .indexOf(vending_machine_products[dispenser_id]
+                                    .name)];
+                            show_product_picker_dialog(context, dispenser_id);
+                          });
+                        } else {
+                          open_details(
+                            dispenser: dispenser,
+                            product: product,
+                            dispenser_id: dispenser_id,
+                          );
+                        }
                       },
                     ),
                   )

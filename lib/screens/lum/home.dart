@@ -15,8 +15,9 @@ import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machines_list.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import '../privacy_policy.dart';
+import 'package:universal_platform/universal_platform.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class Home extends StatefulWidget {
   const Home({
@@ -116,10 +117,10 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/privacy_policy",
         child: PrivacyPolicy(
-          // src: UniversalPlatform.isWeb
-          //     ? await rootBundle.loadString("assets/privacy_policy.html")
-          //     : "app.franquiciaslum.com/privacy_policy",
-          src: await rootBundle.loadString("assets/privacy_policy.html"),
+          src: UniversalPlatform.isWeb
+              ? await rootBundle.loadString("assets/privacy_policy.html")
+              : "https://app.franquiciaslum.com/#/privacy_policy",
+          use_topbar: true,
         ),
       ),
     );
