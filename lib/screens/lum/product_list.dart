@@ -35,11 +35,16 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  ScrollController _scroll_controller = ScrollController();
   List<Product> vending_machine_products = [];
   List<Product> products = [];
   List<Dispenser> dispensers = [];
   List<String> products_values = [];
   String products_value = "";
+
+  move_scroll_controller_to_bottom() {
+    _scroll_controller.jumpTo(_scroll_controller.position.maxScrollExtent);
+  }
 
   get_products() async {
     products = [];
@@ -89,6 +94,12 @@ class _ProductListState extends State<ProductList> {
   }
 
   @override
+  void dispose() {
+    _scroll_controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     get_products();
@@ -109,6 +120,7 @@ class _ProductListState extends State<ProductList> {
           : null,
       body: Container(
         child: ListView.builder(
+          controller: _scroll_controller,
           itemCount: widget.for_dispensers
               ? vending_machine_products.length
               : products.length,
@@ -134,6 +146,7 @@ class _ProductListState extends State<ProductList> {
                     child: ProductDetails(
                       product: null,
                       is_editing: true,
+                      save_callback: move_scroll_controller_to_bottom,
                     ),
                   ),
                 );
@@ -305,6 +318,7 @@ class _ProductListState extends State<ProductList> {
           child: ProductDetails(
             product: product,
             is_editing: false,
+            save_callback: null,
           ),
         ),
       );
@@ -343,17 +357,20 @@ class _ProductListState extends State<ProductList> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          await FirebaseStorage.instance
-                              .refFromURL(product.url)
+                          await FirebaseFirestore.instance
+                              .collection("products")
+                              .doc(product.id)
                               .delete()
                               .then((value) async {
-                            await FirebaseFirestore.instance
-                                .collection("products")
-                                .doc(product.id)
+                            await FirebaseStorage.instance
+                                .refFromURL(product.url)
                                 .delete()
-                                .then((value) {
+                                .then((value) async {
                               get_products();
-
+                              Navigator.pop(context);
+                            }).onError((error, stackTrace) {
+                              print(error);
+                              get_products();
                               Navigator.pop(context);
                             });
                           });

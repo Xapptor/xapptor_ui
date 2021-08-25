@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,10 +16,12 @@ class ProductDetails extends StatefulWidget {
   const ProductDetails({
     required this.product,
     required this.is_editing,
+    required this.save_callback,
   });
 
   final Product? product;
   final bool is_editing;
+  final Function? save_callback;
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -90,6 +93,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   save_product_changes() async {
     if (widget.product == null) {
       if (current_image_file_base64 == "") {
+        Navigator.of(context).pop();
         SnackBar snackBar = SnackBar(
           content: Text("Debes subir una imágen"),
           duration: Duration(seconds: 2),
@@ -102,13 +106,38 @@ class _ProductDetailsState extends State<ProductDetails> {
               .putString(current_image_file_base64,
                   format: firebase_storage.PutStringFormat.dataUrl)
               .then((firebase_storage.TaskSnapshot task_snapshot) async {
-            FirebaseFirestore.instance.collection("products").add({
+            String products_length_text = "";
+
+            await FirebaseFirestore.instance
+                .collection("products")
+                .get()
+                .then((collection_snapshot) {
+              products_length_text = (collection_snapshot.size + 1).toString();
+            });
+
+            while (products_length_text.length < 3) {
+              products_length_text = "0" + products_length_text;
+            }
+
+            String new_product_id = "zzzzzzzzzzzzzzzzz" + products_length_text;
+
+            FirebaseFirestore.instance
+                .collection("products")
+                .doc(new_product_id)
+                .set({
               "name": _controller_name.text,
               "description": _controller_description.text,
               "price": int.parse(_controller_price.text),
               "url": await task_snapshot.ref.getDownloadURL(),
             }).then((result) {
               is_editing = false;
+
+              if (widget.save_callback != null) {
+                Timer(Duration(milliseconds: 300), () {
+                  widget.save_callback!();
+                });
+              }
+
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             });
