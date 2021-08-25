@@ -14,6 +14,8 @@ class MadeWithContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double view_padding_bottom = MediaQuery.of(context).viewPadding.bottom;
+
     return GestureDetector(
       onTap: () async {
         // String url = "https://xapptor.com";
@@ -21,17 +23,21 @@ class MadeWithContainer extends StatelessWidget {
         //   url,
         // );
       },
-      child: Container(
-        alignment: Alignment.center,
-        height: 22,
-        color: background_color,
-        child: Text(
-          current_software_version(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: text_color,
-            fontWeight: FontWeight.bold,
-            fontSize: 10,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          height: view_padding_bottom + (view_padding_bottom > 0 ? 10 : 30),
+          width: MediaQuery.of(context).size.width,
+          color: background_color,
+          padding: EdgeInsets.only(top: 10),
+          child: Text(
+            current_software_version(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: text_color,
+              fontWeight: FontWeight.bold,
+              fontSize: 10,
+            ),
           ),
         ),
       ),

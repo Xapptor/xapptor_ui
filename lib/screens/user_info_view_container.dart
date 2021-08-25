@@ -111,12 +111,9 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
                 ),
               ),
               is_login(widget.user_info_form_type)
-                  ? Align(
-                      alignment: Alignment.bottomCenter,
-                      child: MadeWithContainer(
-                        text_color: Colors.white,
-                        background_color: widget.topbar_color,
-                      ),
+                  ? MadeWithContainer(
+                      text_color: Colors.white,
+                      background_color: widget.topbar_color,
                     )
                   : Container(),
             ],
