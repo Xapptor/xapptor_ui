@@ -219,7 +219,6 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      elevation: null,
                       border_radius: MediaQuery.of(context).size.width,
                       on_pressed: () {
                         add_new_app_screen(

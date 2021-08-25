@@ -27,13 +27,33 @@ class CardHolder extends StatefulWidget {
   _CardHolderState createState() => _CardHolderState();
 }
 
-class _CardHolderState extends State<CardHolder> {
+class _CardHolderState extends State<CardHolder>
+    with SingleTickerProviderStateMixin {
   double top_card_margin = 0;
   double margin_effect = 0;
+
+  Duration animation_duration = Duration(milliseconds: 150);
+  double card_elevation = 6;
+  late Animation<double> back_card_animation;
+  late AnimationController back_card_controller;
+
+  @override
+  void dispose() {
+    back_card_controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
+    back_card_controller =
+        AnimationController(duration: animation_duration, vsync: this);
+    back_card_animation =
+        Tween<double>(begin: widget.elevation, end: card_elevation)
+            .animate(back_card_controller)
+              ..addListener(() {
+                setState(() {});
+              });
   }
 
   @override
@@ -44,10 +64,12 @@ class _CardHolderState extends State<CardHolder> {
           onEnter: (PointerEvent details) {
             top_card_margin =
                 (constraints.maxHeight / 3.5) + (constraints.maxHeight / 8);
+            back_card_controller.forward();
             setState(() {});
           },
           onExit: (PointerEvent details) {
             top_card_margin = (constraints.maxHeight / 3.5);
+            back_card_controller.reverse();
             setState(() {});
           },
           child: Container(
@@ -63,10 +85,11 @@ class _CardHolderState extends State<CardHolder> {
                   ),
                   child: CustomCard(
                     on_pressed: widget.on_pressed,
-                    elevation: widget.elevation,
+                    elevation: back_card_animation.value,
                     border_radius: widget.border_radius,
                     linear_gradient: null,
                     child: Container(
+                      width: constraints.maxWidth,
                       padding: EdgeInsets.only(
                         left: 15,
                       ),

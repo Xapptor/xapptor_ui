@@ -161,9 +161,9 @@ class _ProductListState extends State<ProductList> {
     required int dispenser_id,
   }) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-
     double fractional_factor = 0.85;
     double border_radius = 10;
+
     return Container(
       height: MediaQuery.of(context).size.height / 3,
       child: FractionallySizedBox(
@@ -175,6 +175,7 @@ class _ProductListState extends State<ProductList> {
             Container(
               height: MediaQuery.of(context).size.height / 3,
               child: CustomCard(
+                use_pointer_interceptor: true,
                 elevation: 3,
                 border_radius: border_radius,
                 linear_gradient: null,

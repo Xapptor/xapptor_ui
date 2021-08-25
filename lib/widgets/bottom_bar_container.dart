@@ -61,7 +61,6 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
                 curve: Curves.linear,
               );
             },
-            elevation: null,
             border_radius: 0,
             linear_gradient: LinearGradient(
               colors: [

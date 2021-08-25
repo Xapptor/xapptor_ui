@@ -121,7 +121,6 @@ class _QRScannerState extends State<QRScanner> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        elevation: null,
                         border_radius: MediaQuery.of(context).size.width,
                         on_pressed: () {
                           if (_controller_vending_machine_id.text != "") {

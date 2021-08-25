@@ -4,23 +4,24 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 class CustomCard extends StatelessWidget {
   const CustomCard({
     required this.child,
-    required this.elevation,
+    this.elevation = 2,
     required this.border_radius,
     required this.on_pressed,
     required this.linear_gradient,
     this.splash_color,
+    this.use_pointer_interceptor = false,
   });
 
   final Widget child;
-  final double? elevation;
+  final double elevation;
   final double? border_radius;
   final Function() on_pressed;
   final LinearGradient? linear_gradient;
   final Color? splash_color;
+  final bool use_pointer_interceptor;
 
   @override
   Widget build(BuildContext context) {
-    double default_elevation = 2;
     double default_border_radius = 30;
 
     Color shadow_color = Colors.transparent;
@@ -33,6 +34,18 @@ class CustomCard extends StatelessWidget {
         shadow_color = Colors.grey.withOpacity(0.5);
       }
     }
+    Widget ink_well_widget = Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashFactory: InkRipple.splashFactory,
+        borderRadius: BorderRadius.circular(
+          border_radius ?? default_border_radius,
+        ),
+        onTap: on_pressed,
+        splashColor: splash_color ?? Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -50,10 +63,10 @@ class CustomCard extends StatelessWidget {
           BoxShadow(
             color: shadow_color,
             offset: Offset(
-              elevation ?? default_elevation,
-              elevation ?? default_elevation,
+              elevation,
+              elevation,
             ),
-            blurRadius: elevation ?? default_elevation,
+            blurRadius: elevation,
           ),
         ],
       ),
@@ -61,20 +74,11 @@ class CustomCard extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           child,
-          PointerInterceptor(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                splashFactory: InkRipple.splashFactory,
-                borderRadius: BorderRadius.circular(
-                  border_radius ?? default_border_radius,
-                ),
-                onTap: on_pressed,
-                splashColor: splash_color ?? Colors.transparent,
-                highlightColor: Colors.transparent,
-              ),
-            ),
-          ),
+          use_pointer_interceptor
+              ? PointerInterceptor(
+                  child: ink_well_widget,
+                )
+              : ink_well_widget,
         ],
       ),
     );
