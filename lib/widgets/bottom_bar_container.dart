@@ -37,6 +37,9 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
 
   @override
   Widget build(BuildContext context) {
+    double view_padding_bottom = MediaQuery.of(context).viewPadding.bottom;
+    bool has_view_padding_bottom = view_padding_bottom > 0;
+
     pages = [];
     buttons = [];
     for (var button in widget.bottom_bar_buttons) {
@@ -66,20 +69,24 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
                 button.background_color,
               ],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  button.icon,
-                  color: final_foreground_color,
-                ),
-                Text(
-                  button.text,
-                  style: TextStyle(
+            child: Container(
+              padding:
+                  EdgeInsets.only(bottom: has_view_padding_bottom ? 10 : 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    button.icon,
                     color: final_foreground_color,
                   ),
-                ),
-              ],
+                  Text(
+                    button.text,
+                    style: TextStyle(
+                      color: final_foreground_color,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -90,7 +97,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       child: Column(
         children: [
           Expanded(
-            flex: 11,
+            flex: has_view_padding_bottom ? 28 : 11,
             child: PageView(
               onPageChanged: (int page) {
                 setState(() {
@@ -102,7 +109,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: has_view_padding_bottom ? 3 : 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: buttons,
