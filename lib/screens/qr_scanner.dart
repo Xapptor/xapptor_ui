@@ -99,7 +99,7 @@ class _QRScannerState extends State<QRScanner> {
                       ),
                       controller: _controller_vending_machine_id,
                       decoration: InputDecoration(
-                        hintText: "Vending Machine ID",
+                        hintText: "Ingresa tu código",
                         hintStyle: TextStyle(
                           color: color_lum_green,
                           fontSize: 18,
