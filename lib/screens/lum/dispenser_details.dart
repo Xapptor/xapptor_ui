@@ -81,7 +81,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
             children: [
               Spacer(flex: 1),
               Expanded(
-                flex: 3,
+                flex: widget.allow_edit ? 1 : 2,
                 child: Webview(
                   id: Uuid().v4(),
                   src: widget.product.url,
@@ -119,19 +119,19 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                   ),
                 ),
               ),
-              widget.allow_edit
-                  ? Container()
-                  : Expanded(
-                      flex: 1,
-                      child: Text(
-                        widget.product.description,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: color_lum_grey,
-                          fontSize: 18,
-                        ),
-                      ),
+              Expanded(
+                flex: 3,
+                child: SingleChildScrollView(
+                  child: Text(
+                    widget.product.description,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: color_lum_grey,
+                      fontSize: 18,
                     ),
+                  ),
+                ),
+              ),
               widget.allow_edit
                   ? Expanded(
                       flex: 1,
@@ -203,7 +203,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                       ),
                     )
                   : Container(),
-              Spacer(flex: 2),
+              Spacer(flex: 1),
             ],
           ),
         ),
