@@ -42,10 +42,6 @@ class _ProductListState extends State<ProductList> {
   List<String> products_values = [];
   String products_value = "";
 
-  move_scroll_controller_to_bottom() {
-    _scroll_controller.jumpTo(_scroll_controller.position.maxScrollExtent);
-  }
-
   get_products() async {
     products = [];
     vending_machine_products = [];
@@ -146,7 +142,6 @@ class _ProductListState extends State<ProductList> {
                     child: ProductDetails(
                       product: null,
                       is_editing: true,
-                      save_callback: move_scroll_controller_to_bottom,
                     ),
                   ),
                 );
@@ -318,7 +313,6 @@ class _ProductListState extends State<ProductList> {
           child: ProductDetails(
             product: product,
             is_editing: false,
-            save_callback: null,
           ),
         ),
       );

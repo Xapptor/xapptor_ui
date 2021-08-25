@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,12 +15,10 @@ class ProductDetails extends StatefulWidget {
   const ProductDetails({
     required this.product,
     required this.is_editing,
-    required this.save_callback,
   });
 
   final Product? product;
   final bool is_editing;
-  final Function? save_callback;
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -131,13 +128,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               "url": await task_snapshot.ref.getDownloadURL(),
             }).then((result) {
               is_editing = false;
-
-              if (widget.save_callback != null) {
-                Timer(Duration(milliseconds: 300), () {
-                  widget.save_callback!();
-                });
-              }
-
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             });
