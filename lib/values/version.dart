@@ -1,7 +1,7 @@
 String xapptor_core_version = "3.0.2";
-String abeinstitute_version = "2.0.1";
+String abeinstitute_version = "2.0.2";
 String abe_insurance_version = "2.0.0";
-String lum_version = "1.0.0";
+String lum_version = "1.0.1";
 String xapptor_version = "1.0.0";
 CurrentApp current_app = CurrentApp.Abeinstitute;
 
