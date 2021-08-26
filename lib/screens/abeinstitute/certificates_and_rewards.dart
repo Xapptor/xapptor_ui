@@ -113,6 +113,9 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double screen_height = MediaQuery.of(context).size.height;
+    EdgeInsets margin = EdgeInsets.all(20);
+    EdgeInsets padding = EdgeInsets.all(10);
 
     return Scaffold(
       appBar: TopBar(
@@ -133,21 +136,21 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             page: certificates_id.isEmpty
                 ? Container(
                     child: Center(
-                      child: Text("Certificates list is empty"),
+                      child: Text("You don't have any certificate"),
                     ),
                   )
                 : Container(
                     child: ListView.builder(
                       itemCount: certificates.length,
                       itemBuilder: (context, i) {
-                        EdgeInsets margin = EdgeInsets.all(20);
-                        EdgeInsets padding = EdgeInsets.all(10);
-
                         return FractionallySizedBox(
                           widthFactor: portrait ? 1 : 0.4,
                           child: Container(
+                            height: screen_height / 10,
                             margin: margin,
                             child: CustomCard(
+                              splash_color: color_abeinstitute_light_aqua
+                                  .withOpacity(0.2),
                               elevation: 3,
                               border_radius: 20,
                               on_pressed: () {
