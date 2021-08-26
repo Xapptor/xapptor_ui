@@ -35,7 +35,7 @@ class CardHolder extends StatefulWidget {
 }
 
 class _CardHolderState extends State<CardHolder> {
-  double size_multiplier = 0.9;
+  double size_multiplier = 0.85;
   Duration animation_duration = Duration(milliseconds: 100);
 
   @override
@@ -54,7 +54,7 @@ class _CardHolderState extends State<CardHolder> {
             setState(() {});
           },
           onExit: (PointerEvent details) {
-            size_multiplier = 0.9;
+            size_multiplier = 0.85;
             widget.is_focused = false;
             setState(() {});
           },
@@ -65,6 +65,8 @@ class _CardHolderState extends State<CardHolder> {
               children: <Widget>[
                 AnimatedContainer(
                   duration: animation_duration,
+                  height: constraints.maxHeight *
+                      (widget.is_focused ? 1 : size_multiplier),
                   width: constraints.maxWidth *
                       (widget.is_focused ? 1 : size_multiplier),
                   child: CustomCard(
