@@ -150,7 +150,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                             child: CustomCard(
                               elevation: 3,
                               border_radius: 20,
-                              linear_gradient: null,
                               on_pressed: () {
                                 String certificate_id = certificates[i].id;
                                 add_new_app_screen(

@@ -9,12 +9,14 @@ class WidgetsCarousel extends StatefulWidget {
     required this.dot_color_inactive,
     required this.children,
     required this.auto_scroll,
+    required this.update_current_page,
   });
 
   final List<Color> dot_colors_active;
   final Color dot_color_inactive;
   final List<Widget> children;
   final bool auto_scroll;
+  final Function(int current_page) update_current_page;
 
   @override
   _WidgetsCarouselState createState() => _WidgetsCarouselState();
@@ -22,7 +24,7 @@ class WidgetsCarousel extends StatefulWidget {
 
 class _WidgetsCarouselState extends State<WidgetsCarousel> {
   int current_offset = 0;
-  double current_page = 1;
+  int current_page = 1;
   PageController page_controller = PageController(
     initialPage: 1,
     viewportFraction: 0.3,
@@ -64,6 +66,12 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    page_controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
@@ -85,7 +93,8 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
                 itemCount: widget.children.length,
                 onPageChanged: (int page) {
                   setState(() {
-                    current_page = page.toDouble();
+                    current_page = page;
+                    widget.update_current_page(page);
                   });
                 },
                 itemBuilder: (

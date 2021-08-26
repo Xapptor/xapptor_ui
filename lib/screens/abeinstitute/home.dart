@@ -10,12 +10,12 @@ import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/widgets/card_holder.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/values/urls.dart';
 import 'package:xapptor_ui/screens/abeinstitute/buy_courses.dart';
-import 'package:xapptor_ui/widgets/generic_card_holder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -332,11 +332,34 @@ class _HomeState extends State<Home> {
     check_payment_result(context);
   }
 
+  int first_current_page = 1;
+  int second_current_page = 1;
+
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    double card_holder_elevation = 3;
-    double card_holder_border_radius = 20;
+    double elevation = 3;
+    double border_radius = 20;
+
+    bool is_focused_1 = false;
+    bool is_focused_2 = false;
+    bool is_focused_3 = false;
+    bool is_focused_4 = false;
+    bool is_focused_5 = false;
+    bool is_focused_6 = false;
+    bool is_focused_7 = false;
+    bool is_focused_8 = false;
+
+    if (!UniversalPlatform.isWeb) {
+      is_focused_1 = first_current_page == 0;
+      is_focused_2 = first_current_page == 1;
+      is_focused_3 = first_current_page == 2;
+      is_focused_4 = first_current_page == 3;
+      is_focused_5 = second_current_page == 0;
+      is_focused_6 = second_current_page == 1;
+      is_focused_7 = second_current_page == 2;
+      is_focused_8 = second_current_page == 3;
+    }
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -357,6 +380,10 @@ class _HomeState extends State<Home> {
               child: FractionallySizedBox(
                 heightFactor: 0.9,
                 child: WidgetsCarousel(
+                  update_current_page: (current_page) {
+                    first_current_page = current_page;
+                    setState(() {});
+                  },
                   auto_scroll: auto_scroll,
                   dot_colors_active: [
                     color_abeinstitute_green,
@@ -366,7 +393,7 @@ class _HomeState extends State<Home> {
                   ],
                   dot_color_inactive: color_abeinstitute_ocean_blue,
                   children: <Widget>[
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/traveler_2.jpg",
                       title: "Account",
                       subtitle: "Edit your Info",
@@ -376,11 +403,11 @@ class _HomeState extends State<Home> {
                       on_pressed: () {
                         open_screen("home/account");
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_1,
                     ),
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/courses.jpg",
                       title: "Courses",
                       subtitle: "Complete the Units",
@@ -390,11 +417,11 @@ class _HomeState extends State<Home> {
                       on_pressed: () {
                         open_screen("home/courses");
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_2,
                     ),
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/course_student_1.jpg",
                       title: "New Courses",
                       subtitle: "Extend your Knowledge",
@@ -404,11 +431,11 @@ class _HomeState extends State<Home> {
                       on_pressed: () {
                         open_screen("home/buy_courses");
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_3,
                     ),
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/course_student_2.jpg",
                       title: "Certificates",
                       subtitle: "and Rewards",
@@ -418,9 +445,9 @@ class _HomeState extends State<Home> {
                       on_pressed: () {
                         open_screen("home/certificates_and_rewards");
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_4,
                     ),
                   ],
                 ),
@@ -431,6 +458,10 @@ class _HomeState extends State<Home> {
               child: FractionallySizedBox(
                 heightFactor: 0.9,
                 child: WidgetsCarousel(
+                  update_current_page: (current_page) {
+                    second_current_page = current_page;
+                    setState(() {});
+                  },
                   auto_scroll: auto_scroll,
                   dot_colors_active: [
                     color_facebook,
@@ -440,7 +471,7 @@ class _HomeState extends State<Home> {
                   ],
                   dot_color_inactive: color_abeinstitute_ocean_blue,
                   children: <Widget>[
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/family.jpg",
                       title: "Facebook",
                       subtitle: "Official Page",
@@ -451,11 +482,11 @@ class _HomeState extends State<Home> {
                         launch_url(url_facebook_abeinstitute,
                             url_facebook_fallback_abeinstitute);
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_5,
                     ),
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/traveler_1.jpg",
                       title: "Instagram",
                       subtitle: "Official Account",
@@ -466,11 +497,11 @@ class _HomeState extends State<Home> {
                         launch_url(url_instagram_abeinstitute,
                             url_instagram_abeinstitute);
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_6,
                     ),
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/traveler_2.jpg",
                       title: "Twitter",
                       subtitle: "Official Account",
@@ -481,11 +512,11 @@ class _HomeState extends State<Home> {
                         launch_url(
                             url_twitter_abeinstitute, url_twitter_abeinstitute);
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_7,
                     ),
-                    generic_card_holder(
+                    CardHolder(
                       image_path: "assets/images/project_demo_1.jpg",
                       title: "Youtube",
                       subtitle: "Official Channel",
@@ -496,9 +527,9 @@ class _HomeState extends State<Home> {
                         launch_url(
                             url_youtube_abeinstitute, url_youtube_abeinstitute);
                       },
-                      card_holder_elevation: card_holder_elevation,
-                      card_holder_border_radius: card_holder_border_radius,
-                      context: context,
+                      elevation: elevation,
+                      border_radius: border_radius,
+                      is_focused: is_focused_8,
                     ),
                   ],
                 ),

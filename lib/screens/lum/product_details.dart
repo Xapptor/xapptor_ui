@@ -318,9 +318,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 Colors.white,
                               ],
                             ),
-                            splash_color: is_editing
-                                ? color_lum_blue.withOpacity(0.3)
-                                : null,
+                            splash_color: color_lum_blue
+                                .withOpacity(is_editing ? 0.3 : 0),
                           ),
                         ),
                         Spacer(flex: 1),

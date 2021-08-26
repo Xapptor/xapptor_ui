@@ -30,7 +30,7 @@ class QRScanner extends StatefulWidget {
   final double border_length;
   final double border_width;
   final double cut_out_size;
-  final LinearGradient? button_linear_gradient;
+  final LinearGradient button_linear_gradient;
   final String permission_message;
   final String permission_message_no;
   final String permission_message_yes;

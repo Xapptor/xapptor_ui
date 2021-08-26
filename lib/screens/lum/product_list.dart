@@ -178,7 +178,6 @@ class _ProductListState extends State<ProductList> {
                 use_pointer_interceptor: true,
                 elevation: 3,
                 border_radius: border_radius,
-                linear_gradient: null,
                 on_pressed: () {
                   open_details(
                     dispenser: dispenser,

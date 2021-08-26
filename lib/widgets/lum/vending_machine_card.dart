@@ -39,7 +39,6 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
         child: CustomCard(
           elevation: 3,
           border_radius: 10,
-          linear_gradient: null,
           on_pressed: () {
             add_new_app_screen(
               AppScreen(

@@ -1,59 +1,46 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'custom_card.dart';
 
 class CardHolder extends StatefulWidget {
-  const CardHolder({
-    required this.child,
-    required this.title,
-    required this.subtitle,
-    required this.text,
-    required this.text_color,
+  CardHolder({
     required this.on_pressed,
-    required this.elevation,
-    required this.border_radius,
+    this.title = "",
+    this.subtitle = "",
+    this.text = "",
+    this.text_color = Colors.black,
+    this.image_path = "",
+    this.background_image_alignment = Alignment.center,
+    this.icon,
+    this.icon_background_color = Colors.blue,
+    this.elevation = 3,
+    this.border_radius = 20,
+    this.is_focused = false,
   });
 
-  final Widget child;
+  final Function() on_pressed;
   final String title;
   final String subtitle;
   final String text;
   final Color text_color;
-  final Function() on_pressed;
+  final String image_path;
+  final Alignment background_image_alignment;
+  final IconData? icon;
+  final Color? icon_background_color;
   final double elevation;
   final double border_radius;
+  bool is_focused;
 
   @override
   _CardHolderState createState() => _CardHolderState();
 }
 
-class _CardHolderState extends State<CardHolder>
-    with SingleTickerProviderStateMixin {
-  double top_card_margin = 0;
-  double margin_effect = 0;
-
-  Duration animation_duration = Duration(milliseconds: 150);
-  double card_elevation = 6;
-  late Animation<double> back_card_animation;
-  late AnimationController back_card_controller;
-
-  @override
-  void dispose() {
-    back_card_controller.dispose();
-    super.dispose();
-  }
+class _CardHolderState extends State<CardHolder> {
+  double size_multiplier = 0.9;
+  Duration animation_duration = Duration(milliseconds: 100);
 
   @override
   void initState() {
     super.initState();
-    back_card_controller =
-        AnimationController(duration: animation_duration, vsync: this);
-    back_card_animation =
-        Tween<double>(begin: widget.elevation, end: card_elevation)
-            .animate(back_card_controller)
-              ..addListener(() {
-                setState(() {});
-              });
   }
 
   @override
@@ -62,32 +49,29 @@ class _CardHolderState extends State<CardHolder>
       builder: (BuildContext context, BoxConstraints constraints) {
         return MouseRegion(
           onEnter: (PointerEvent details) {
-            top_card_margin =
-                (constraints.maxHeight / 3.5) + (constraints.maxHeight / 8);
-            back_card_controller.forward();
+            size_multiplier = 1;
+            widget.is_focused = true;
             setState(() {});
           },
           onExit: (PointerEvent details) {
-            top_card_margin = (constraints.maxHeight / 3.5);
-            back_card_controller.reverse();
+            size_multiplier = 0.9;
+            widget.is_focused = false;
             setState(() {});
           },
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(20),
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                Container(
-                  width: constraints.maxWidth,
-                  margin: EdgeInsets.only(
-                    left: margin_effect,
-                    right: margin_effect,
-                  ),
+                AnimatedContainer(
+                  duration: animation_duration,
+                  width: constraints.maxWidth *
+                      (widget.is_focused ? 1 : size_multiplier),
                   child: CustomCard(
+                    animation_duration: animation_duration,
                     on_pressed: widget.on_pressed,
-                    elevation: back_card_animation.value,
+                    elevation: widget.is_focused ? 12 : widget.elevation,
                     border_radius: widget.border_radius,
-                    linear_gradient: null,
                     child: Container(
                       width: constraints.maxWidth,
                       padding: EdgeInsets.only(
@@ -127,22 +111,58 @@ class _CardHolderState extends State<CardHolder>
                     ),
                   ),
                 ),
-                AnimatedContainer(
-                  height: constraints.maxHeight / 2,
-                  width: constraints.maxWidth,
-                  margin: EdgeInsets.only(
-                    bottom: top_card_margin != 0
-                        ? top_card_margin
-                        : (constraints.maxHeight / 3.5),
-                  ),
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.linear,
-                  child: CustomCard(
-                    on_pressed: widget.on_pressed,
-                    elevation: 0,
-                    border_radius: widget.border_radius,
-                    linear_gradient: null,
-                    child: widget.child,
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: AnimatedContainer(
+                    height: (constraints.maxHeight / 2),
+                    width: constraints.maxWidth *
+                        (widget.is_focused ? 1 : size_multiplier),
+                    duration: animation_duration,
+                    curve: Curves.linear,
+                    child: CustomCard(
+                      on_pressed: widget.on_pressed,
+                      elevation: 0,
+                      border_radius: widget.border_radius,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                widget.border_radius,
+                              ),
+                              image: DecorationImage(
+                                alignment: widget.background_image_alignment,
+                                fit: BoxFit.cover,
+                                image: widget.image_path.contains("http")
+                                    ? Image.network(widget.image_path).image
+                                    : AssetImage(
+                                        widget.image_path,
+                                      ),
+                              ),
+                            ),
+                          ),
+                          widget.icon != null
+                              ? Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.height,
+                                  decoration: BoxDecoration(
+                                    color: widget.icon_background_color,
+                                    borderRadius: BorderRadius.circular(
+                                      widget.border_radius,
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    widget.icon,
+                                    color: Colors.white.withOpacity(1.0),
+                                    size:
+                                        MediaQuery.of(context).size.height / 20,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
