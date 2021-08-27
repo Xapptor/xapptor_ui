@@ -8,7 +8,7 @@ class WidgetsCarousel extends StatefulWidget {
     required this.dot_colors_active,
     required this.dot_color_inactive,
     required this.children,
-    required this.auto_scroll,
+    this.auto_scroll = false,
     required this.update_current_page,
   });
 
@@ -30,13 +30,10 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     viewportFraction: 0.3,
   );
   int total_pages = 0;
+  Curve animation_curve = Curves.easeInOutCirc;
 
   auto_scroll() {
-    Curve animation_curve = Curves.easeInOutCirc;
     int delay_seconds = random_number_with_range(5, 9);
-
-    total_pages = widget.children.length;
-    setState(() {});
 
     Timer(Duration(seconds: delay_seconds), () {
       if (current_page < total_pages - 1) {
@@ -61,6 +58,8 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   @override
   void initState() {
     super.initState();
+    total_pages = widget.children.length;
+    setState(() {});
 
     if (widget.auto_scroll) auto_scroll();
   }

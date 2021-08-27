@@ -22,13 +22,11 @@ double logo_width(BuildContext context) {
 
 // Abeinstitute
 
-double card_elevation_abeinstitute = 0;
 String logo_image_path_abeinstitute = "assets/images/logo.png";
 bool has_language_picker_abeinstitute = true;
 
 // Abeinstitute Insurance
 
-double card_elevation_abeinstitute_insurance = 0;
 String logo_image_path_abeinstitute_insurance = "assets/images/logo.png";
 bool has_language_picker_abeinstitute_insurance = true;
 
@@ -56,7 +54,6 @@ custom_background_abeinstitute_insurance(BuildContext context) {
 
 // Lum
 
-double card_elevation_lum = 0;
 // String logo_image_path_lum =
 //     "https://firebasestorage.googleapis.com/v0/b/lumapp-d8eb7.appspot.com/o/images%2Flogos%2FLOGOTIPO.svg?alt=media&token=2789476c-744f-4a5c-9ebd-3a762d7e80e2";
 String logo_image_path_lum = "assets/images/logo.png";
