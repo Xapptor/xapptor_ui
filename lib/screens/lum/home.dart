@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:xapptor_auth/xapptor_user.dart';
@@ -17,7 +19,8 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../privacy_policy.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart'
+    show Clipboard, ClipboardData, rootBundle;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
@@ -40,6 +43,29 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     add_screens();
+    display_greeting();
+  }
+
+  display_greeting() {
+    SnackBar snackBar = SnackBar(
+      content: Text(
+          "${widget.user.gender == "Hombre" ? "Bienvenido" : "Bienvenida"} ${widget.user.firstname}"),
+      duration: Duration(seconds: 3),
+    );
+
+    Timer(Duration(seconds: 1), () {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
+  }
+
+  copy_user_id_to_clipboard() async {
+    await Clipboard.setData(ClipboardData(text: widget.user.id)).then((value) {
+      SnackBar snackBar = SnackBar(
+        content: Text("ID de usuario copiado"),
+        duration: Duration(seconds: 1),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
   }
 
   update_qr_value(String new_qr_value) async {
@@ -189,49 +215,90 @@ class _HomeState extends State<Home> {
   Widget drawer() {
     return SafeArea(
       child: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                icon: new Icon(
-                  Icons.close,
-                  color: color_abeinstitute_dark_aqua,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+        child: Column(
+          children: [
+            Expanded(
+              flex: 20,
+              child: ListView(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: new Icon(
+                        Icons.close,
+                        color: color_abeinstitute_dark_aqua,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(text_list[0]),
+                    onTap: () {
+                      open_screen("home/account");
+                    },
+                  ),
+                  widget.user.owner
+                      ? ListTile(
+                          title: Text(text_list[1]),
+                          onTap: () {
+                            open_screen("home/products");
+                          },
+                        )
+                      : Container(),
+                  ListTile(
+                    title: Text(text_list[2]),
+                    onTap: () {
+                      open_screen("home/privacy_policy");
+                    },
+                  ),
+                  ListTile(
+                    title: Text(text_list[3]),
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut().then((value) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-            ListTile(
-              title: Text(text_list[0]),
-              onTap: () {
-                open_screen("home/account");
-              },
-            ),
-            widget.user.owner
-                ? ListTile(
-                    title: Text(text_list[1]),
-                    onTap: () {
-                      open_screen("home/products");
+            Expanded(
+              flex: 1,
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    title: RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Text(
+                              "ID usuario ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          WidgetSpan(
+                            child: Text(
+                              widget.user.id,
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () async {
+                      copy_user_id_to_clipboard();
                     },
-                  )
-                : Container(),
-            ListTile(
-              title: Text(text_list[2]),
-              onTap: () {
-                open_screen("home/privacy_policy");
-              },
-            ),
-            ListTile(
-              title: Text(text_list[3]),
-              onTap: () async {
-                await FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                });
-              },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

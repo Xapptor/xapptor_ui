@@ -144,6 +144,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                           enabled: enable_dispenser_edit,
                           active_track_color: main_color,
                           active_color: Colors.white,
+                          inactive_color: Colors.white,
                           background_color: main_color,
                           callback: switch_button_callback,
                           border_radius: MediaQuery.of(context).size.width,

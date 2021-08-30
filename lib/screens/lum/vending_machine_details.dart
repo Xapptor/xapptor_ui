@@ -37,9 +37,14 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     set_values();
   }
 
-  switch_button_callback(bool new_value) {
-    setState(() {
-      enabled = new_value;
+  switch_button_callback(bool new_value) async {
+    await FirebaseFirestore.instance
+        .collection("vending_machines")
+        .doc(widget.vending_machine.id)
+        .update({"enabled": new_value}).then((value) {
+      setState(() {
+        enabled = new_value;
+      });
     });
   }
 
@@ -192,11 +197,12 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   heightFactor: 0.8,
                   widthFactor: 0.7,
                   child: switch_button(
-                    text: "HABILITADO",
+                    text: enabled ? "HABILITADO" : "DESHABILITADO",
                     value: enabled,
                     enabled: is_editing,
-                    active_track_color: color_lum_blue,
-                    active_color: Colors.white,
+                    active_track_color: color_lum_blue.withOpacity(0.5),
+                    active_color: Colors.lightGreen,
+                    inactive_color: !is_editing ? Colors.grey : Colors.red,
                     background_color: color_lum_blue,
                     callback: switch_button_callback,
                     border_radius: MediaQuery.of(context).size.width,

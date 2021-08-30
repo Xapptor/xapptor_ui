@@ -6,6 +6,7 @@ Widget switch_button({
   required bool enabled,
   required Color active_track_color,
   required Color active_color,
+  required Color inactive_color,
   required Color background_color,
   required Function(bool) callback,
   required double border_radius,
@@ -19,20 +20,21 @@ Widget switch_button({
     ),
     child: Row(
       children: [
+        Spacer(flex: 1),
         Expanded(
-          flex: 2,
+          flex: 9,
           child: Text(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: 4,
           child: Switch(
             value: value,
             onChanged: enabled
@@ -40,10 +42,13 @@ Widget switch_button({
                     callback(new_value);
                   }
                 : null,
-            activeTrackColor: active_track_color,
+            activeTrackColor: Colors.grey.withOpacity(0.5),
+            inactiveTrackColor: Colors.grey.withOpacity(0.5),
             activeColor: active_color,
+            inactiveThumbColor: inactive_color,
           ),
         ),
+        Spacer(flex: 2),
       ],
     ),
   );
