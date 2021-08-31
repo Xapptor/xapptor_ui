@@ -424,7 +424,7 @@ class _HomeState extends State<Home> {
                     permission_message_no: "Cancelar",
                     permission_message_yes: "Aceptar",
                   ),
-        floatingActionButton: current_page == 0
+        floatingActionButton: widget.user.owner && current_page == 0
             ? Container(
                 padding: EdgeInsets.only(
                   left: 30,
