@@ -126,6 +126,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         logo_path: "assets/images/logo.png",
       ),
       body: BottomBarContainer(
+        current_page_callback: (int i) {},
         initial_page: 0,
         bottom_bar_buttons: [
           BottomBarButton(

@@ -38,6 +38,8 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
   bool qr_scanned = false;
   String qr_value = "";
+  bool global_vending_machines = false;
+  int current_page = 0;
 
   @override
   void initState() {
@@ -306,6 +308,11 @@ class _HomeState extends State<Home> {
     );
   }
 
+  update_current_page(int new_value) {
+    current_page = new_value;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
@@ -325,6 +332,7 @@ class _HomeState extends State<Home> {
         ),
         body: widget.user.admin
             ? BottomBarContainer(
+                current_page_callback: update_current_page,
                 initial_page: 0,
                 bottom_bar_buttons: [
                   BottomBarButton(
@@ -332,7 +340,9 @@ class _HomeState extends State<Home> {
                     text: "Máquinas",
                     foreground_color: Colors.white,
                     background_color: color_lum_green,
-                    page: VendingMachinesList(),
+                    page: VendingMachinesList(
+                      global_vending_machines: global_vending_machines,
+                    ),
                   ),
                   BottomBarButton(
                     icon: Icons.insights,
@@ -369,27 +379,48 @@ class _HomeState extends State<Home> {
                     permission_message_no: "Cancelar",
                     permission_message_yes: "Aceptar",
                   ),
-        floatingActionButton: Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height / 14,
-          ),
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              add_new_app_screen(
-                AppScreen(
-                  name: "home/vending_machine_details",
-                  child: VendingMachineDetails(
-                    vending_machine: null,
-                  ),
+        floatingActionButton: current_page == 0
+            ? Container(
+                padding: EdgeInsets.only(
+                  left: 30,
+                  bottom: MediaQuery.of(context).size.height / 14,
                 ),
-              );
-              open_screen("home/vending_machine_details");
-            },
-            label: Text("Agregar Máquina"),
-            icon: Icon(Icons.add),
-            backgroundColor: color_lum_blue,
-          ),
-        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FloatingActionButton(
+                      heroTag: null,
+                      onPressed: () {
+                        global_vending_machines = !global_vending_machines;
+                      },
+                      child: Icon(
+                        global_vending_machines
+                            ? Icons.public
+                            : Icons.account_circle_outlined,
+                      ),
+                      backgroundColor: color_lum_blue,
+                    ),
+                    FloatingActionButton.extended(
+                      heroTag: null,
+                      onPressed: () {
+                        add_new_app_screen(
+                          AppScreen(
+                            name: "home/vending_machine_details",
+                            child: VendingMachineDetails(
+                              vending_machine: null,
+                            ),
+                          ),
+                        );
+                        open_screen("home/vending_machine_details");
+                      },
+                      label: Text("Agregar Máquina"),
+                      icon: Icon(Icons.add),
+                      backgroundColor: color_lum_blue,
+                    ),
+                  ],
+                ),
+              )
+            : null,
       ),
     );
   }

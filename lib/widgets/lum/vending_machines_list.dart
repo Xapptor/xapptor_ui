@@ -5,6 +5,12 @@ import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 
 class VendingMachinesList extends StatefulWidget {
+  const VendingMachinesList({
+    required this.global_vending_machines,
+  });
+
+  final bool global_vending_machines;
+
   @override
   _VendingMachinesListState createState() => _VendingMachinesListState();
 }
@@ -30,31 +36,37 @@ class _VendingMachinesListState extends State<VendingMachinesList> {
     vending_machines_widgets.clear();
     vending_machines.clear();
 
-    await FirebaseFirestore.instance
-        .collection('vending_machines')
-        .where(
-          'user_id',
-          isEqualTo: uid,
-        )
-        .get()
-        .then((QuerySnapshot query_snapshot) {
-      query_snapshot.docs.forEach((DocumentSnapshot doc) {
-        vending_machines.add(
-          VendingMachine.from_snapshot(
-            doc.id,
-            doc.data() as Map<String, dynamic>,
-          ),
-        );
+    QuerySnapshot collection_snapshot;
 
-        vending_machines_widgets.add(
-          VendingMachineCard(
-            vending_machine: vending_machines.last,
-            remove_vending_machine_callback: get_vending_machines,
-          ),
-        );
-      });
-      setState(() {});
+    if (widget.global_vending_machines) {
+      collection_snapshot =
+          await FirebaseFirestore.instance.collection('vending_machines').get();
+    } else {
+      collection_snapshot = await FirebaseFirestore.instance
+          .collection('vending_machines')
+          .where(
+            'user_id',
+            isEqualTo: uid,
+          )
+          .get();
+    }
+
+    collection_snapshot.docs.forEach((DocumentSnapshot doc) {
+      vending_machines.add(
+        VendingMachine.from_snapshot(
+          doc.id,
+          doc.data() as Map<String, dynamic>,
+        ),
+      );
+
+      vending_machines_widgets.add(
+        VendingMachineCard(
+          vending_machine: vending_machines.last,
+          remove_vending_machine_callback: get_vending_machines,
+        ),
+      );
     });
+    setState(() {});
   }
 
   @override

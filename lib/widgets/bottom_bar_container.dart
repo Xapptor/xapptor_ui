@@ -7,9 +7,11 @@ class BottomBarContainer extends StatefulWidget {
   const BottomBarContainer({
     required this.bottom_bar_buttons,
     required this.initial_page,
+    required this.current_page_callback,
   });
   final List<BottomBarButton> bottom_bar_buttons;
   final int initial_page;
+  final Function(int i) current_page_callback;
 
   @override
   _BottomBarContainerState createState() => _BottomBarContainerState();
@@ -101,6 +103,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
               onPageChanged: (int page) {
                 setState(() {
                   current_page = page;
+                  widget.current_page_callback(current_page);
                 });
               },
               controller: page_controller,

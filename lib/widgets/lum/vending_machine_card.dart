@@ -104,33 +104,43 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              height: 20,
-              width: 20,
-              margin: margin,
-              decoration: BoxDecoration(
-                color:
-                    widget.vending_machine.enabled ? Colors.green : Colors.red,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: IconButton(
+          Container(
+            height: current_card_height,
+            margin: margin,
+            child: Stack(
               alignment: Alignment.center,
-              icon: Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-              onPressed: () {
-                show_delete_vending_machine_dialog(
-                  context,
-                  widget.vending_machine.id,
-                );
-              },
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    margin: margin,
+                    decoration: BoxDecoration(
+                      color: widget.vending_machine.enabled
+                          ? Colors.green
+                          : Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: IconButton(
+                    alignment: Alignment.center,
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      show_delete_vending_machine_dialog(
+                        context,
+                        widget.vending_machine.id,
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -171,7 +181,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                       TextButton(
                         onPressed: () async {
                           await FirebaseFirestore.instance
-                              .collection("products")
+                              .collection("vending_machines")
                               .doc(vending_machine_id)
                               .delete()
                               .then((value) async {
