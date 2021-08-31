@@ -340,7 +340,7 @@ class _HomeState extends State<Home> {
           .get();
     }
 
-    collection_snapshot.docs.forEach((DocumentSnapshot doc) {
+    collection_snapshot.docs.forEach((DocumentSnapshot doc) async {
       vending_machines.add(
         VendingMachine.from_snapshot(
           doc.id,
@@ -348,14 +348,32 @@ class _HomeState extends State<Home> {
         ),
       );
 
-      vending_machines_widgets.add(
-        VendingMachineCard(
-          vending_machine: vending_machines.last,
-          remove_vending_machine_callback: get_vending_machines,
-        ),
-      );
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(doc.get("user_id"))
+          .get()
+          .then((user_snapshot) {
+        XapptorUser vending_machine_user = XapptorUser.from_snapshot(
+          user_snapshot.id,
+          user_snapshot.data() as Map<String, dynamic>,
+        );
+
+        String vending_machine_user_name = global_vending_machines
+            ? (vending_machine_user.firstname +
+                " " +
+                vending_machine_user.lastname)
+            : "";
+
+        vending_machines_widgets.add(
+          VendingMachineCard(
+            vending_machine: vending_machines.last,
+            remove_vending_machine_callback: get_vending_machines,
+            owner_name: vending_machine_user_name,
+          ),
+        );
+        setState(() {});
+      });
     });
-    setState(() {});
   }
 
   @override

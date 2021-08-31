@@ -239,6 +239,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     },
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       color: color_lum_green,
                       fontSize: textfield_size,
                     ),

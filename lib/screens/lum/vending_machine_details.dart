@@ -170,6 +170,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   },
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     color: color_lum_green,
                     fontSize: textfield_size,
                   ),
@@ -193,6 +194,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                         },
                         textAlign: TextAlign.center,
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           color: color_lum_green,
                           fontSize: textfield_size,
                         ),

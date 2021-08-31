@@ -2,7 +2,7 @@ import 'package:xapptor_ui/models/lum/dispenser.dart';
 
 class VendingMachine {
   final String id;
-  final String admin;
+  final String user_id;
   final List<Dispenser> dispensers;
   final bool enabled;
   final int money_change;
@@ -10,7 +10,7 @@ class VendingMachine {
 
   const VendingMachine({
     required this.id,
-    required this.admin,
+    required this.user_id,
     required this.dispensers,
     required this.enabled,
     required this.money_change,
@@ -19,7 +19,7 @@ class VendingMachine {
 
   VendingMachine.from_snapshot(String id, Map<String, dynamic> snapshot)
       : id = id,
-        admin = snapshot['admin'],
+        user_id = snapshot['admin'],
         dispensers = List<Dispenser>.from(
           snapshot['dispensers'].map((dispenser) {
             return Dispenser.from_snapshot(dispenser);
@@ -37,7 +37,7 @@ class VendingMachine {
     });
 
     return {
-      'admin': admin,
+      'admin': user_id,
       'dispensers': map_dispenser_list,
       'enabled': enabled,
       'money_change': money_change,

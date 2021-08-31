@@ -11,10 +11,12 @@ class VendingMachineCard extends StatefulWidget {
   const VendingMachineCard({
     required this.vending_machine,
     required this.remove_vending_machine_callback,
+    required this.owner_name,
   });
 
   final VendingMachine vending_machine;
   final Function remove_vending_machine_callback;
+  final String owner_name;
 
   @override
   _VendingMachineCardState createState() => _VendingMachineCardState();
@@ -30,7 +32,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     double current_card_height = MediaQuery.of(context).size.height / 4;
-    double name_size = 20;
+    double name_size = 22;
     double title_size = 16;
     EdgeInsets margin = EdgeInsets.all(10);
 
@@ -57,51 +59,67 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                 );
                 open_screen("home/vending_machine_details");
               },
-              child: Stack(
-                children: [
-                  Container(
-                    margin: margin * 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 7,
-                          child: Center(
+              child: Container(
+                margin: margin * 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 12,
+                      child: Center(
+                        child: Text(
+                          widget.vending_machine.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: color_lum_green,
+                            fontSize: name_size,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        "ID: " + widget.vending_machine.id,
+                        style: TextStyle(
+                          color: color_lum_grey,
+                          fontSize: title_size,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
                             child: Text(
-                              widget.vending_machine.name,
+                              "CAMBIO \$" +
+                                  widget.vending_machine.money_change
+                                      .toString(),
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: color_lum_green,
-                                fontSize: name_size,
+                                color: color_lum_blue,
+                                fontSize: title_size,
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Text(
-                            "ID: " + widget.vending_machine.id,
-                            style: TextStyle(
-                              color: color_lum_grey,
-                              fontSize: title_size,
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              widget.owner_name,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: color_lum_blue,
+                                fontSize: title_size,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Text(
-                            "CAMBIO \$" +
-                                widget.vending_machine.money_change.toString(),
-                            style: TextStyle(
-                              color: color_lum_light_pink,
-                              fontSize: title_size,
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,8 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/models/lum/vending_machine.dart';
-import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 
 class VendingMachinesList extends StatefulWidget {
   const VendingMachinesList({
