@@ -7,12 +7,14 @@ import 'package:xapptor_auth/user_info_view.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
+import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/lum/admin_analytics.dart';
 import 'package:xapptor_ui/screens/qr_scanner.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/screens/lum/product_list.dart';
+import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machines_list.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,6 +48,7 @@ class _HomeState extends State<Home> {
     super.initState();
     add_screens();
     display_greeting();
+    get_vending_machines();
   }
 
   display_greeting() {
@@ -62,6 +65,7 @@ class _HomeState extends State<Home> {
 
   copy_user_id_to_clipboard() async {
     await Clipboard.setData(ClipboardData(text: widget.user.id)).then((value) {
+      Navigator.pop(context);
       SnackBar snackBar = SnackBar(
         content: Text("ID de usuario copiado"),
         duration: Duration(seconds: 1),
@@ -313,6 +317,47 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
+  List<VendingMachine> vending_machines = [];
+  List<Widget> vending_machines_widgets = [];
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+
+  get_vending_machines() async {
+    vending_machines_widgets.clear();
+    vending_machines.clear();
+
+    QuerySnapshot collection_snapshot;
+
+    if (global_vending_machines) {
+      collection_snapshot =
+          await FirebaseFirestore.instance.collection('vending_machines').get();
+    } else {
+      collection_snapshot = await FirebaseFirestore.instance
+          .collection('vending_machines')
+          .where(
+            'user_id',
+            isEqualTo: uid,
+          )
+          .get();
+    }
+
+    collection_snapshot.docs.forEach((DocumentSnapshot doc) {
+      vending_machines.add(
+        VendingMachine.from_snapshot(
+          doc.id,
+          doc.data() as Map<String, dynamic>,
+        ),
+      );
+
+      vending_machines_widgets.add(
+        VendingMachineCard(
+          vending_machine: vending_machines.last,
+          remove_vending_machine_callback: get_vending_machines,
+        ),
+      );
+    });
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
@@ -341,7 +386,7 @@ class _HomeState extends State<Home> {
                     foreground_color: Colors.white,
                     background_color: color_lum_green,
                     page: VendingMachinesList(
-                      global_vending_machines: global_vending_machines,
+                      vending_machines_widgets: vending_machines_widgets,
                     ),
                   ),
                   BottomBarButton(
@@ -389,9 +434,14 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FloatingActionButton(
+                      tooltip: global_vending_machines
+                          ? "Máquinas Globales"
+                          : "Máquinas Propias",
                       heroTag: null,
                       onPressed: () {
                         global_vending_machines = !global_vending_machines;
+                        setState(() {});
+                        get_vending_machines();
                       },
                       child: Icon(
                         global_vending_machines

@@ -6,72 +6,24 @@ import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 
 class VendingMachinesList extends StatefulWidget {
   const VendingMachinesList({
-    required this.global_vending_machines,
+    required this.vending_machines_widgets,
   });
 
-  final bool global_vending_machines;
+  final List<Widget> vending_machines_widgets;
 
   @override
   _VendingMachinesListState createState() => _VendingMachinesListState();
 }
 
 class _VendingMachinesListState extends State<VendingMachinesList> {
-  List<VendingMachine> vending_machines = [];
-  List<Widget> vending_machines_widgets = [];
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
-    get_vending_machines();
-  }
-
-  get_vending_machines() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    vending_machines_widgets.clear();
-    vending_machines.clear();
-
-    QuerySnapshot collection_snapshot;
-
-    if (widget.global_vending_machines) {
-      collection_snapshot =
-          await FirebaseFirestore.instance.collection('vending_machines').get();
-    } else {
-      collection_snapshot = await FirebaseFirestore.instance
-          .collection('vending_machines')
-          .where(
-            'user_id',
-            isEqualTo: uid,
-          )
-          .get();
-    }
-
-    collection_snapshot.docs.forEach((DocumentSnapshot doc) {
-      vending_machines.add(
-        VendingMachine.from_snapshot(
-          doc.id,
-          doc.data() as Map<String, dynamic>,
-        ),
-      );
-
-      vending_machines_widgets.add(
-        VendingMachineCard(
-          vending_machine: vending_machines.last,
-          remove_vending_machine_callback: get_vending_machines,
-        ),
-      );
-    });
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return vending_machines_widgets.length == 0
+    return widget.vending_machines_widgets.length == 0
         ? Container(
             child: Center(
               child: Text(
@@ -82,7 +34,7 @@ class _VendingMachinesListState extends State<VendingMachinesList> {
           )
         : SingleChildScrollView(
             child: Column(
-              children: vending_machines_widgets,
+              children: widget.vending_machines_widgets,
             ),
           );
   }

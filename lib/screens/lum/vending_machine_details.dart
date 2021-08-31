@@ -187,27 +187,24 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
               widget.vending_machine == null
                   ? Expanded(
                       flex: 2,
-                      child: Expanded(
-                        flex: 2,
-                        child: TextField(
-                          onTap: () {
-                            //
-                          },
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                      child: TextField(
+                        onTap: () {
+                          //
+                        },
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: color_lum_green,
+                          fontSize: textfield_size,
+                        ),
+                        controller: _controller_user_id,
+                        decoration: InputDecoration(
+                          hintText: "ID de usuario",
+                          hintStyle: TextStyle(
                             color: color_lum_green,
                             fontSize: textfield_size,
                           ),
-                          controller: _controller_user_id,
-                          decoration: InputDecoration(
-                            hintText: "ID de usuario",
-                            hintStyle: TextStyle(
-                              color: color_lum_green,
-                              fontSize: textfield_size,
-                            ),
-                          ),
-                          enabled: is_editing,
                         ),
+                        enabled: is_editing,
                       ),
                     )
                   : Expanded(

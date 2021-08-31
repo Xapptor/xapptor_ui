@@ -175,6 +175,7 @@ class _ProductListState extends State<ProductList> {
             Container(
               height: MediaQuery.of(context).size.height / 3,
               child: CustomCard(
+                splash_color: color_lum_blue.withOpacity(0.2),
                 use_pointer_interceptor: true,
                 elevation: 3,
                 border_radius: border_radius,

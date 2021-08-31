@@ -43,6 +43,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
             height: current_card_height,
             margin: margin,
             child: CustomCard(
+              splash_color: color_lum_blue.withOpacity(0.2),
               elevation: 3,
               border_radius: 10,
               on_pressed: () {
@@ -125,7 +126,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomLeft,
+                  alignment: Alignment.topLeft,
                   child: IconButton(
                     alignment: Alignment.center,
                     icon: Icon(
