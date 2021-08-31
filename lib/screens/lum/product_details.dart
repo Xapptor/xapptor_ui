@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:uuid/uuid.dart';
+import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
 import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
+import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -33,6 +36,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   String current_image_file_base64 = "";
   String current_image_file_name = "";
   String upload_image_button_label = "Subir imágen SVG";
+  Color main_color = Colors.grey;
 
   @override
   void dispose() {
@@ -44,6 +48,14 @@ class _ProductDetailsState extends State<ProductDetails> {
   void initState() {
     super.initState();
     set_values();
+    check_main_color();
+  }
+
+  check_main_color() async {
+    if (widget.product != null) {
+      main_color = await get_main_color_from_remote_svg(widget.product!.url);
+      setState(() {});
+    }
   }
 
   set_values() {
@@ -209,11 +221,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    double screen_height = MediaQuery.of(context).size.height;
+    double screen_width = MediaQuery.of(context).size.width;
     double textfield_size = 18;
 
     return Scaffold(
       appBar: TopBar(
-        background_color: color_lum_topbar,
+        background_color: main_color,
         has_back_button: true,
         actions: [],
         custom_leading: null,
@@ -233,6 +247,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                   SizedBox(
                     height: sized_box_space * 4,
                   ),
+                  widget.product == null
+                      ? Container()
+                      : Container(
+                          height: screen_height / 3,
+                          width: screen_height / 3,
+                          child: Webview(
+                            id: Uuid().v4(),
+                            src: widget.product!.url,
+                            function: () {},
+                          ),
+                        ),
                   TextField(
                     onTap: () {
                       //
@@ -372,7 +397,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             }
           });
         },
-        backgroundColor: color_lum_green,
+        backgroundColor: main_color,
         child: Icon(
           is_editing ? Icons.done : Icons.edit,
           color: Colors.white,
