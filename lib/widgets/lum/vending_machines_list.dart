@@ -27,6 +27,9 @@ class _VendingMachinesListState extends State<VendingMachinesList> {
   get_vending_machines() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
+    vending_machines_widgets.clear();
+    vending_machines.clear();
+
     await FirebaseFirestore.instance
         .collection('vending_machines')
         .where(
@@ -46,6 +49,7 @@ class _VendingMachinesListState extends State<VendingMachinesList> {
         vending_machines_widgets.add(
           VendingMachineCard(
             vending_machine: vending_machines.last,
+            remove_vending_machine_callback: get_vending_machines,
           ),
         );
       });

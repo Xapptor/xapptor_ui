@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:xapptor_auth/xapptor_user.dart';
@@ -22,6 +21,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter/services.dart'
     show Clipboard, ClipboardData, rootBundle;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'vending_machine_details.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
     SnackBar snackBar = SnackBar(
       content: Text(
           "${widget.user.gender == "Hombre" ? "Bienvenido" : "Bienvenida"} ${widget.user.firstname}"),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
     );
 
     Timer(Duration(seconds: 1), () {
@@ -369,6 +369,27 @@ class _HomeState extends State<Home> {
                     permission_message_no: "Cancelar",
                     permission_message_yes: "Aceptar",
                   ),
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height / 14,
+          ),
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              add_new_app_screen(
+                AppScreen(
+                  name: "home/vending_machine_details",
+                  child: VendingMachineDetails(
+                    vending_machine: null,
+                  ),
+                ),
+              );
+              open_screen("home/vending_machine_details");
+            },
+            label: Text("Agregar Máquina"),
+            icon: Icon(Icons.add),
+            backgroundColor: color_lum_blue,
+          ),
+        ),
       ),
     );
   }
