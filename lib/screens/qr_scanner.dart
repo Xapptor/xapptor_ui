@@ -84,7 +84,7 @@ class _QRScannerState extends State<QRScanner> {
       body: UniversalPlatform.isWeb
           ? Center(
               child: FractionallySizedBox(
-                widthFactor: 0.2,
+                widthFactor: portrait ? 0.7 : 0.2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
