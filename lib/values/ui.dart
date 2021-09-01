@@ -87,26 +87,48 @@ custom_background_lum() {
   );
 }
 
+// RichText t_and_c_and_pp_text_lum = RichText(
+//   text: TextSpan(
+//     children: [
+//       TextSpan(
+//         text: 'Acepto los ',
+//         style: TextStyle(color: color_lum_text),
+//       ),
+//       TextSpan(
+//         text: 'términos y condiciones de uso',
+//         style: TextStyle(
+//           color: color_lum_text,
+//           fontWeight: FontWeight.bold,
+//         ),
+//         recognizer: TapGestureRecognizer()
+//           ..onTap = () {
+//             launch("https://app.franquiciaslum.com/#/privacy_policy");
+//           },
+//       ),
+//       TextSpan(
+//         text: ' y las ',
+//         style: TextStyle(color: color_lum_text),
+//       ),
+//       TextSpan(
+//         text: 'políticas de privacidad.',
+//         style: TextStyle(
+//           color: color_lum_text,
+//           fontWeight: FontWeight.bold,
+//         ),
+//         recognizer: TapGestureRecognizer()
+//           ..onTap = () {
+//             launch("https://app.franquiciaslum.com/#/privacy_policy");
+//           },
+//       ),
+//     ],
+//   ),
+// );
+
 RichText t_and_c_and_pp_text_lum = RichText(
   text: TextSpan(
     children: [
       TextSpan(
-        text: 'Acepto los ',
-        style: TextStyle(color: color_lum_text),
-      ),
-      TextSpan(
-        text: 'términos y condiciones de uso',
-        style: TextStyle(
-          color: color_lum_text,
-          fontWeight: FontWeight.bold,
-        ),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            launch("https://app.franquiciaslum.com/#/privacy_policy");
-          },
-      ),
-      TextSpan(
-        text: ' y las ',
+        text: 'Acepto las ',
         style: TextStyle(color: color_lum_text),
       ),
       TextSpan(
