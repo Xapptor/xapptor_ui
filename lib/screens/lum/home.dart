@@ -15,7 +15,6 @@ import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
-import 'package:xapptor_ui/widgets/lum/vending_machines_list.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../privacy_policy.dart';
@@ -320,11 +319,13 @@ class _HomeState extends State<Home> {
 
   List<VendingMachine> vending_machines = [];
   List<Widget> vending_machines_widgets = [];
+  List<String> vending_machine_owner_names = [];
   String uid = FirebaseAuth.instance.currentUser!.uid;
 
   get_vending_machines() async {
     vending_machines_widgets.clear();
     vending_machines.clear();
+    vending_machine_owner_names.clear();
 
     QuerySnapshot collection_snapshot;
 
@@ -341,14 +342,9 @@ class _HomeState extends State<Home> {
           .get();
     }
 
-    collection_snapshot.docs.forEach((DocumentSnapshot doc) async {
-      vending_machines.add(
-        VendingMachine.from_snapshot(
-          doc.id,
-          doc.data() as Map<String, dynamic>,
-        ),
-      );
+    int collection_snapshot_counter = 0;
 
+    collection_snapshot.docs.forEach((DocumentSnapshot doc) async {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(doc.get("user_id"))
@@ -359,20 +355,32 @@ class _HomeState extends State<Home> {
           user_snapshot.data() as Map<String, dynamic>,
         );
 
-        String vending_machine_user_name = global_vending_machines
+        vending_machine_owner_names.add(global_vending_machines
             ? (vending_machine_user.firstname +
                 " " +
                 vending_machine_user.lastname)
-            : "";
+            : "");
+
+        vending_machines.add(
+          VendingMachine.from_snapshot(
+            doc.id,
+            doc.data() as Map<String, dynamic>,
+          ),
+        );
 
         vending_machines_widgets.add(
           VendingMachineCard(
             vending_machine: vending_machines.last,
             remove_vending_machine_callback: get_vending_machines,
-            owner_name: vending_machine_user_name,
+            owner_name: vending_machine_owner_names.last,
           ),
         );
-        setState(() {});
+
+        collection_snapshot_counter++;
+
+        if (collection_snapshot_counter == collection_snapshot.docs.length) {
+          setState(() {});
+        }
       });
     });
   }
@@ -404,9 +412,20 @@ class _HomeState extends State<Home> {
                     text: "Máquinas",
                     foreground_color: Colors.white,
                     background_color: color_lum_green,
-                    page: VendingMachinesList(
-                      vending_machines_widgets: vending_machines_widgets,
-                    ),
+                    page: vending_machines_widgets.length == 0
+                        ? Container(
+                            child: Center(
+                              child: Text(
+                                "No tienes ninguna máquina expendedora",
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                            ),
+                          )
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: vending_machines_widgets,
+                            ),
+                          ),
                   ),
                   BottomBarButton(
                     icon: Icons.insights,

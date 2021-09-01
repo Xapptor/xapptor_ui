@@ -101,10 +101,13 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   save_product_changes() async {
     if (widget.product == null) {
-      if (current_image_file_base64 == "") {
+      if (current_image_file_base64.isEmpty ||
+          _controller_name.text.isEmpty ||
+          _controller_description.text.isEmpty ||
+          _controller_price.text.isEmpty) {
         Navigator.of(context).pop();
         SnackBar snackBar = SnackBar(
-          content: Text("Debes subir una imágen"),
+          content: Text("Debes llenar todos los campos"),
           duration: Duration(seconds: 2),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);

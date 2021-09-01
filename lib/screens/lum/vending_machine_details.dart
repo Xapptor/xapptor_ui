@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
-import 'package:xapptor_ui/models/lum/product.dart';
 import 'package:xapptor_ui/models/lum/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/lum/product_list.dart';
@@ -54,7 +53,9 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
   set_values() {
     if (widget.vending_machine != null) {
       _controller_name.text = widget.vending_machine!.name;
+      _controller_user_id.text = widget.vending_machine!.user_id;
       enabled = widget.vending_machine!.enabled;
+      setState(() {});
     } else {
       is_editing = true;
     }
@@ -85,50 +86,62 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
             TextButton(
               child: Text("Aceptar"),
               onPressed: () async {
-                if (widget.vending_machine != null) {
-                  FirebaseFirestore.instance
-                      .collection("vending_machines")
-                      .doc(widget.vending_machine!.id)
-                      .update({
-                    "name": _controller_name.text,
-                    "enabled": enabled,
-                  }).then((result) {
-                    is_editing = false;
-                    Navigator.of(context).pop();
-                  });
-                } else {
-                  await FirebaseFirestore.instance
-                      .collection("products")
-                      .get()
-                      .then((collection) async {
-                    await FirebaseFirestore.instance
+                if (_controller_name.text.isNotEmpty &&
+                    _controller_user_id.text.isNotEmpty) {
+                  if (widget.vending_machine != null) {
+                    FirebaseFirestore.instance
                         .collection("vending_machines")
-                        .add({
+                        .doc(widget.vending_machine!.id)
+                        .update({
                       "name": _controller_name.text,
-                      "enabled": false,
-                      "money_change": 0,
                       "user_id": _controller_user_id.text,
-                      "dispensers": [
-                        {
-                          "enabled": true,
-                          "product_id": collection.docs.first.id,
-                          "quantity_remaining": 1,
-                        },
-                      ],
+                      "enabled": enabled,
                     }).then((result) {
-                      duplicate_item_in_array_field(
-                          document_id: result.id,
-                          collection_id: "vending_machines",
-                          field_key: "dispensers",
-                          index: 0,
-                          times: 9,
-                          callback: () {
-                            is_editing = false;
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                          });
+                      is_editing = false;
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     });
-                  });
+                  } else {
+                    await FirebaseFirestore.instance
+                        .collection("products")
+                        .get()
+                        .then((collection) async {
+                      await FirebaseFirestore.instance
+                          .collection("vending_machines")
+                          .add({
+                        "name": _controller_name.text,
+                        "enabled": false,
+                        "money_change": 0,
+                        "user_id": _controller_user_id.text,
+                        "dispensers": [
+                          {
+                            "enabled": true,
+                            "product_id": collection.docs.first.id,
+                            "quantity_remaining": 1,
+                          },
+                        ],
+                      }).then((result) {
+                        duplicate_item_in_array_field(
+                            document_id: result.id,
+                            collection_id: "vending_machines",
+                            field_key: "dispensers",
+                            index: 0,
+                            times: 9,
+                            callback: () {
+                              is_editing = false;
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            });
+                      });
+                    });
+                  }
+                } else {
+                  Navigator.of(context).pop();
+                  SnackBar snackBar = SnackBar(
+                    content: Text("Debes llenar todos los campos"),
+                    duration: Duration(seconds: 2),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
             ),
@@ -185,58 +198,36 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   enabled: is_editing,
                 ),
               ),
+              Expanded(
+                flex: 2,
+                child: TextField(
+                  onTap: () {
+                    //
+                  },
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: color_lum_green,
+                    fontSize: textfield_size,
+                  ),
+                  controller: _controller_user_id,
+                  decoration: InputDecoration(
+                    hintText: "ID de usuario",
+                    hintStyle: TextStyle(
+                      color: color_lum_green,
+                      fontSize: textfield_size,
+                    ),
+                  ),
+                  enabled: is_editing,
+                ),
+              ),
               widget.vending_machine == null
-                  ? Expanded(
-                      flex: 2,
-                      child: TextField(
-                        onTap: () {
-                          //
-                        },
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: color_lum_green,
-                          fontSize: textfield_size,
-                        ),
-                        controller: _controller_user_id,
-                        decoration: InputDecoration(
-                          hintText: "ID de usuario",
-                          hintStyle: TextStyle(
-                            color: color_lum_green,
-                            fontSize: textfield_size,
-                          ),
-                        ),
-                        enabled: is_editing,
-                      ),
-                    )
+                  ? Container()
                   : Expanded(
-                      flex: 4,
+                      flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "ID: ",
-                                    style: TextStyle(
-                                      color: color_lum_grey,
-                                      fontSize: subtitle_size,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: widget.vending_machine!.id,
-                                    style: TextStyle(
-                                      color: color_lum_grey,
-                                      fontSize: subtitle_size,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                           Expanded(
                             flex: 1,
                             child: RichText(

@@ -19,7 +19,7 @@ class VendingMachine {
 
   VendingMachine.from_snapshot(String id, Map<String, dynamic> snapshot)
       : id = id,
-        user_id = snapshot['admin'],
+        user_id = snapshot['user_id'],
         dispensers = List<Dispenser>.from(
           snapshot['dispensers'].map((dispenser) {
             return Dispenser.from_snapshot(dispenser);
