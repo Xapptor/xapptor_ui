@@ -23,6 +23,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   Home({
@@ -249,6 +250,7 @@ class _HomeState extends State<Home> {
             "Enter your date of birth",
             "Save",
           ],
+          t_and_c_and_pp_text: RichText(text: TextSpan()),
           gender_values: [
             'Male',
             'Female',

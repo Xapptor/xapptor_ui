@@ -118,6 +118,7 @@ class _HomeState extends State<Home> {
             "Ingresa la fecha de tu nacimiento",
             "Guardar",
           ],
+          t_and_c_and_pp_text: t_and_c_and_pp_text_lum,
           gender_values: [
             'Hombre',
             'Mujer',
