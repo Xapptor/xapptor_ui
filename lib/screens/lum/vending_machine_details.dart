@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
@@ -63,7 +64,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
 
   show_save_data_alert_dialog({
     required BuildContext context,
-  }) async {
+  }) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -86,69 +87,89 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
             TextButton(
               child: Text("Aceptar"),
               onPressed: () async {
-                if (_controller_name.text.isNotEmpty &&
-                    _controller_user_id.text.isNotEmpty) {
-                  if (widget.vending_machine != null) {
-                    FirebaseFirestore.instance
-                        .collection("vending_machines")
-                        .doc(widget.vending_machine!.id)
-                        .update({
-                      "name": _controller_name.text,
-                      "user_id": _controller_user_id.text,
-                      "enabled": enabled,
-                    }).then((result) {
-                      is_editing = false;
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    });
-                  } else {
-                    await FirebaseFirestore.instance
-                        .collection("products")
-                        .get()
-                        .then((collection) async {
-                      await FirebaseFirestore.instance
-                          .collection("vending_machines")
-                          .add({
-                        "name": _controller_name.text,
-                        "enabled": false,
-                        "money_change": 0,
-                        "user_id": _controller_user_id.text,
-                        "dispensers": [
-                          {
-                            "enabled": true,
-                            "product_id": collection.docs.first.id,
-                            "quantity_remaining": 1,
-                          },
-                        ],
-                      }).then((result) {
-                        duplicate_item_in_array_field(
-                            document_id: result.id,
-                            collection_id: "vending_machines",
-                            field_key: "dispensers",
-                            index: 0,
-                            times: 9,
-                            callback: () {
-                              is_editing = false;
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            });
-                      });
-                    });
-                  }
-                } else {
-                  Navigator.of(context).pop();
-                  SnackBar snackBar = SnackBar(
-                    content: Text("Debes llenar todos los campos"),
-                    duration: Duration(seconds: 2),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
+                check_vending_machine_data();
               },
             ),
           ],
         );
       },
     );
+  }
+
+  check_vending_machine_data() async {
+    if (_controller_name.text.isNotEmpty &&
+        _controller_user_id.text.isNotEmpty) {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(_controller_user_id.text)
+          .get()
+          .then((user_snapshot) async {
+        var user_snapshot_data = user_snapshot.data();
+        if (user_snapshot_data != null) {
+          if (widget.vending_machine != null) {
+            FirebaseFirestore.instance
+                .collection("vending_machines")
+                .doc(widget.vending_machine!.id)
+                .update({
+              "name": _controller_name.text,
+              "user_id": _controller_user_id.text,
+              "enabled": enabled,
+            }).then((result) {
+              is_editing = false;
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            });
+          } else {
+            await FirebaseFirestore.instance
+                .collection("products")
+                .get()
+                .then((collection) async {
+              await FirebaseFirestore.instance
+                  .collection("vending_machines")
+                  .add({
+                "name": _controller_name.text,
+                "enabled": false,
+                "money_change": 0,
+                "user_id": _controller_user_id.text,
+                "dispensers": [
+                  {
+                    "enabled": true,
+                    "product_id": collection.docs.first.id,
+                    "quantity_remaining": 1,
+                  },
+                ],
+              }).then((result) {
+                duplicate_item_in_array_field(
+                    document_id: result.id,
+                    collection_id: "vending_machines",
+                    field_key: "dispensers",
+                    index: 0,
+                    times: 9,
+                    callback: () {
+                      is_editing = false;
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    });
+              });
+            });
+          }
+        } else {
+          Navigator.of(context).pop();
+          SnackBar snackBar = SnackBar(
+            content: Text("Debes ingresar un ID de usuario válido"),
+            duration: Duration(seconds: 2),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
+    } else {
+      Navigator.of(context).pop();
+      SnackBar snackBar = SnackBar(
+        content: Text("Debes llenar todos los campos"),
+        duration: Duration(seconds: 2),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   @override

@@ -224,7 +224,7 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Expanded(
-              flex: 20,
+              flex: 18,
               child: ListView(
                 children: <Widget>[
                   Align(
