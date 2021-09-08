@@ -56,9 +56,9 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   }
 
   check_user_courses() {
-    if (user_info["courses_buyed"] != null) {
-      if (user_info["courses_buyed"].length > 0) {
-        courses_id = List.from(user_info["courses_buyed"]);
+    if (user_info["courses_acquired"] != null) {
+      if (user_info["courses_acquired"].length > 0) {
+        courses_id = List.from(user_info["courses_acquired"]);
         for (var course_id in courses_id) {
           check_if_course_is_completed(
             course_id: course_id,

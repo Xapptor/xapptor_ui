@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
 
+// Color FIlters
+
+ColorFilter color_filter_invert = ColorFilter.matrix(
+  [
+    //R  G   B    A  Const
+    -1, 0, 0, 0, 255, //
+    0, -1, 0, 0, 255, //
+    0, 0, -1, 0, 255, //
+    0, 0, 0, 1, 0, //
+  ],
+);
+
 // Social Media
 Color color_facebook = Color(0xff1877f2);
 Color color_instagram = Color(0xffc32aa3);

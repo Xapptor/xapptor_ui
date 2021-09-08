@@ -290,7 +290,6 @@ class _HomeState extends State<Home> {
         child: BuyCourses(
           language_picker_items_text_color: color_abeinstitute_ocean_blue,
           language_picker: true,
-          topbar_color: color_abeinstitute_green,
         ),
       ),
     );
@@ -352,7 +351,7 @@ class _HomeState extends State<Home> {
     bool is_focused_7 = false;
     bool is_focused_8 = false;
 
-    if (!UniversalPlatform.isWeb) {
+    if (!UniversalPlatform.isWeb || portrait) {
       is_focused_1 = first_current_page == 0;
       is_focused_2 = first_current_page == 1;
       is_focused_3 = first_current_page == 2;

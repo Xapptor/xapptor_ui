@@ -66,8 +66,8 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
 
   @override
   void dispose() {
-    super.dispose();
     page_controller.dispose();
+    super.dispose();
   }
 
   @override

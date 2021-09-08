@@ -72,9 +72,11 @@ class _PricingContainerState extends State<PricingContainer> {
   }
 
   set_user_info() async {
-    user_id = FirebaseAuth.instance.currentUser!.uid;
-    user_email = FirebaseAuth.instance.currentUser!.email!;
-    setState(() {});
+    if (FirebaseAuth.instance.currentUser != null) {
+      user_id = FirebaseAuth.instance.currentUser!.uid;
+      user_email = FirebaseAuth.instance.currentUser!.email!;
+      setState(() {});
+    }
   }
 
   @override
@@ -100,7 +102,6 @@ class _PricingContainerState extends State<PricingContainer> {
                 style: TextStyle(
                   color: widget.title_color,
                   fontSize: 40,
-                  //fontWeight: FontWeight.bold,
                 ),
               ),
             ),

@@ -1,11 +1,15 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class DownloadAppsContainer extends StatefulWidget {
   const DownloadAppsContainer({
     required this.texts,
     required this.background_image,
     required this.background_color,
+    required this.button_background_color,
     required this.title_color,
     required this.subtitle_color,
     required this.image_1,
@@ -17,6 +21,7 @@ class DownloadAppsContainer extends StatefulWidget {
   final List<String> texts;
   final String background_image;
   final Color background_color;
+  final Color button_background_color;
   final Color title_color;
   final Color subtitle_color;
   final String image_1;
@@ -31,6 +36,7 @@ class DownloadAppsContainer extends StatefulWidget {
 class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
   double current_page = 0;
   final PageController page_controller = PageController(initialPage: 0);
+  double icon_size_factor = 0.5;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +74,6 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 style: TextStyle(
                   color: widget.subtitle_color,
                   fontSize: 22,
-                  //fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -134,7 +139,6 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                               style: TextStyle(
                                 color: widget.subtitle_color,
                                 fontSize: 22,
-                                //fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -191,7 +195,6 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                             style: TextStyle(
                               color: widget.subtitle_color,
                               fontSize: 22,
-                              //fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -202,55 +205,28 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                   Spacer(flex: 1),
                   Expanded(
                     flex: portrait ? 6 : 4,
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 8,
-                          child: TextButton(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text("Coming soon 👍"),
-                                duration: Duration(seconds: 1),
-                              ));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                image: DecorationImage(
-                                  fit: BoxFit.fitHeight,
-                                  image: AssetImage(
-                                    'assets/images/mobile_stores/google_badge_en.png',
-                                  ),
-                                ),
-                              ),
+                    child: FractionallySizedBox(
+                      heightFactor: 0.7,
+                      widthFactor: 0.7,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 4,
+                            child: download_button(
+                              download_url: widget.android_url,
+                              image_path: 'assets/images/logo_android.png',
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 6,
-                          child: TextButton(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text("Coming soon 👍"),
-                                duration: Duration(seconds: 1),
-                              ));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                image: DecorationImage(
-                                  fit: BoxFit.fitHeight,
-                                  image: AssetImage(
-                                    'assets/images/mobile_stores/apple_badge_en.png',
-                                  ),
-                                ),
-                              ),
+                          Spacer(flex: 1),
+                          Expanded(
+                            flex: 4,
+                            child: download_button(
+                              download_url: widget.ios_url,
+                              image_path: 'assets/images/logo_apple.png',
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Spacer(flex: 2),
@@ -259,6 +235,44 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
             ),
             portrait ? Container() : Spacer(flex: 1),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget download_button({
+    required download_url,
+    required image_path,
+  }) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: CustomCard(
+        splash_color: widget.button_background_color.withOpacity(0.3),
+        linear_gradient: LinearGradient(
+          colors: [
+            Colors.grey,
+            widget.button_background_color,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        on_pressed: () {
+          launch(download_url);
+        },
+        child: FractionallySizedBox(
+          heightFactor: icon_size_factor,
+          widthFactor: icon_size_factor,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                colorFilter: color_filter_invert,
+                fit: BoxFit.contain,
+                image: AssetImage(
+                  image_path,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

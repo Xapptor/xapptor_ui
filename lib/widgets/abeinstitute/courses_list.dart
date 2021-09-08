@@ -29,7 +29,7 @@ class CoursesList extends StatefulWidget {
 class _CoursesListState extends State<CoursesList> {
   late SharedPreferences prefs;
 
-  List<String> courses_buyed = <String>[];
+  List<String> courses_acquired = <String>[];
   List<Map<String, dynamic>> courses_and_units = <Map<String, dynamic>>[];
   List<Course> courses = <Course>[];
   Map<String, dynamic> user_info = {};
@@ -38,14 +38,14 @@ class _CoursesListState extends State<CoursesList> {
     user_info = await get_user_info(FirebaseAuth.instance.currentUser!.uid);
     courses.clear();
 
-    if (user_info["courses_buyed"] != null) {
-      if (user_info["courses_buyed"].length > 0) {
-        courses_buyed = List.from(user_info["courses_buyed"]);
+    if (user_info["courses_acquired"] != null) {
+      if (user_info["courses_acquired"].length > 0) {
+        courses_acquired = List.from(user_info["courses_acquired"]);
 
-        for (int i = 0; i < courses_buyed.length; i++) {
+        for (int i = 0; i < courses_acquired.length; i++) {
           DocumentSnapshot firestore_course = await FirebaseFirestore.instance
               .collection("courses")
-              .doc(courses_buyed[i])
+              .doc(courses_acquired[i])
               .get();
 
           List<String> units = List.from(firestore_course.get("units"));
@@ -70,7 +70,7 @@ class _CoursesListState extends State<CoursesList> {
 
           courses.add(
             Course(
-              courses_buyed[i],
+              courses_acquired[i],
               firestore_course.get("name"),
               units_name,
               Icons.check_circle_outline,

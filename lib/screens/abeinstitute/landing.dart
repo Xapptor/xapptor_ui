@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:xapptor_auth/check_login.dart';
 import 'package:xapptor_logic/check_metadata_app.dart';
+import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/download_apps_container.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
@@ -304,6 +306,37 @@ class _LandingState extends State<Landing> {
     super.dispose();
   }
 
+  delete_corrupted_certificates() async {
+    int certificates_counter = 0;
+    int certificates_corrupted_counter = 0;
+
+    await FirebaseFirestore.instance
+        .collection("certificates")
+        .get()
+        .then((collection) {
+      collection.docs.forEach((certificate) async {
+        certificates_counter++;
+
+        var certificate_data = certificate.data();
+        DocumentSnapshot user = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(certificate_data["user_id"])
+            .get();
+        if (!user.exists) {
+          certificates_corrupted_counter++;
+          print(
+              "id: ${certificate.id} user_id: ${certificate_data["user_id"]}");
+          certificate.reference.delete();
+        }
+      });
+
+      Timer(Duration(milliseconds: 800), () {
+        print("certificates_counter $certificates_counter");
+        print("certificates_corrupted_counter $certificates_corrupted_counter");
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -503,87 +536,94 @@ class _LandingState extends State<Landing> {
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewport_constraints) {
-          return SingleChildScrollView(
-            controller: scroll_controller,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewport_constraints.minHeight,
-              ),
-              child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    IntroductionContainer(
-                      texts: text_list_introduction,
-                      text_color: Colors.white,
-                      background_image:
-                          "assets/images/introduction_container.jpg",
-                      logo_image: "assets/images/logo.png",
-                      scroll_icon: Icons.keyboard_arrow_down,
-                      scroll_icon_color: Colors.orangeAccent,
-                      height: MediaQuery.of(context).size.height,
-                    ),
-                    WhyUsContainer(
-                      texts: text_list_why_us,
-                      background_color: Colors.white,
-                      characteristic_icon_1: Icons.shutter_speed,
-                      characteristic_icon_2: Icons.message,
-                      characteristic_icon_3: Icons.compare,
-                      characteristic_icon_color_1: Colors.orangeAccent,
-                      characteristic_icon_color_2: Colors.lightBlueAccent,
-                      characteristic_icon_color_3: Colors.redAccent,
-                      title_color: Colors.black,
-                      subtitle_color: Colors.grey,
-                      background_image: '',
-                    ),
-                    DownloadAppsContainer(
-                      texts: text_list_download,
-                      title_color: Colors.black,
-                      subtitle_color: Colors.grey,
-                      image_1: 'assets/images/traveler_2.jpg',
-                      image_2: 'assets/images/traveler_1.jpg',
-                      android_url: "https://play.google.com/store/apps",
-                      ios_url: "https://www.apple.com/ios/app-store/",
-                      background_image: "",
-                      background_color: Colors.white,
-                    ),
-                    PricingContainer(
-                      texts: text_list_buy,
-                      background_color: Colors.blue.shade800,
-                      title_color: Colors.white,
-                      subtitle_color: Colors.white,
-                      image_1: 'assets/images/student_1.jpg',
-                      image_2: 'assets/images/student_2.jpg',
-                      image_3: 'assets/images/family.jpg',
-                    ),
-                    ContactUsContainer(
-                      texts: text_list_contact_us,
-                      landing_class: this,
-                      icon_color: color_abeinstitute_ocean_blue,
-                      container_background_image:
-                          "assets/images/background_building.jpg",
-                      facebook_url: url_facebook_abeinstitute,
-                      facebook_url_fallback: url_facebook_fallback_abeinstitute,
-                      youtube_url: url_youtube_abeinstitute,
-                      instagram_url: url_instagram_abeinstitute,
-                      twitter_url: url_twitter_abeinstitute,
-                      email: "community-mgmt@abeinstitute.com",
-                      feedback_message: "✉️ Message sent! 👍",
-                      card_background_image: "",
-                      container_background_color: Colors.white,
-                      card_background_color: Colors.white,
-                      linear_gradient_colors: [
-                        Colors.black.withOpacity(0.6),
-                        Colors.black.withOpacity(0.6),
-                      ],
-                    ),
-                  ],
+      body: Container(
+        color: Colors.white,
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewport_constraints) {
+            return SingleChildScrollView(
+              controller: scroll_controller,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewport_constraints.minHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      IntroductionContainer(
+                        texts: text_list_introduction,
+                        text_color: Colors.white,
+                        background_image:
+                            "assets/images/introduction_container.jpg",
+                        logo_image: "assets/images/logo.png",
+                        scroll_icon: Icons.keyboard_arrow_down,
+                        scroll_icon_color: Colors.orangeAccent,
+                        height: MediaQuery.of(context).size.height,
+                      ),
+                      WhyUsContainer(
+                        texts: text_list_why_us,
+                        background_color: Colors.white,
+                        characteristic_icon_1: Icons.shutter_speed,
+                        characteristic_icon_2: Icons.message,
+                        characteristic_icon_3: Icons.compare,
+                        characteristic_icon_color_1: Colors.orangeAccent,
+                        characteristic_icon_color_2: Colors.lightBlueAccent,
+                        characteristic_icon_color_3: Colors.redAccent,
+                        title_color: Colors.black,
+                        subtitle_color: Colors.grey,
+                        background_image: '',
+                      ),
+                      DownloadAppsContainer(
+                        texts: text_list_download,
+                        title_color: Colors.black,
+                        subtitle_color: Colors.grey,
+                        image_1: 'assets/images/traveler_2.jpg',
+                        image_2: 'assets/images/traveler_1.jpg',
+                        android_url:
+                            "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=a83fe9a6-8b09-4dea-b280-6217ce1ffbcb",
+                        ios_url:
+                            "itms-services://?action=download-manifest&url=https://www.abeinstitute.com/manifest.plist",
+                        background_image: "",
+                        background_color: Colors.white,
+                        button_background_color: color_abeinstitute_ocean_blue,
+                      ),
+                      PricingContainer(
+                        texts: text_list_buy,
+                        background_color: Colors.blue.shade800,
+                        title_color: Colors.white,
+                        subtitle_color: Colors.white,
+                        image_1: 'assets/images/student_1.jpg',
+                        image_2: 'assets/images/student_2.jpg',
+                        image_3: 'assets/images/family.jpg',
+                      ),
+                      ContactUsContainer(
+                        texts: text_list_contact_us,
+                        landing_class: this,
+                        icon_color: color_abeinstitute_ocean_blue,
+                        container_background_image:
+                            "assets/images/background_building.jpg",
+                        facebook_url: url_facebook_abeinstitute,
+                        facebook_url_fallback:
+                            url_facebook_fallback_abeinstitute,
+                        youtube_url: url_youtube_abeinstitute,
+                        instagram_url: url_instagram_abeinstitute,
+                        twitter_url: url_twitter_abeinstitute,
+                        email: "community-mgmt@abeinstitute.com",
+                        feedback_message: "✉️ Message sent! 👍",
+                        card_background_image: "",
+                        container_background_color: Colors.white,
+                        card_background_color: Colors.white,
+                        linear_gradient_colors: [
+                          Colors.black.withOpacity(0.6),
+                          Colors.black.withOpacity(0.6),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
