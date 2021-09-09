@@ -27,13 +27,16 @@ class IntroductionContainer extends StatefulWidget {
 }
 
 class IntroductionContainerState extends State<IntroductionContainer> {
-  bool lower_the_icon = false;
+  bool lower_the_icon = true;
 
   @override
   void initState() {
     super.initState();
+    init_animation();
+  }
 
-    Timer(Duration(milliseconds: 100), () {
+  init_animation() {
+    Timer(Duration(seconds: 3), () {
       lower_the_icon = !lower_the_icon;
       setState(() {});
     });
@@ -64,12 +67,12 @@ class IntroductionContainerState extends State<IntroductionContainer> {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Spacer(flex: 14),
+                    Spacer(flex: 10),
                     widget.logo_image != null &&
                             (widget.texts.length > 1 ||
                                 (widget.texts.length == 1 && !portrait))
                         ? Expanded(
-                            flex: 16,
+                            flex: 12,
                             child: Container(
                               //width: portrait ? 200 : 400,
                               decoration: BoxDecoration(
@@ -85,7 +88,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                         : Spacer(flex: 14),
                     Spacer(flex: 1),
                     Expanded(
-                      flex: portrait ? 14 : 5,
+                      flex: portrait ? 12 : 5,
                       child: FractionallySizedBox(
                         widthFactor: portrait ? 0.9 : 1,
                         child: Column(
@@ -140,19 +143,25 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                       ),
                     ),
                     Expanded(
-                      flex: 4,
+                      flex: 5,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           AnimatedPositioned(
-                            duration: Duration(milliseconds: 600),
+                            duration: Duration(milliseconds: 300),
                             top: lower_the_icon ? 0 : 30,
-                            bottom: lower_the_icon ? 30 : 0,
                             width: MediaQuery.of(context).size.width,
-                            curve: Curves.easeInOut,
+                            curve: Curves.ease,
                             onEnd: () {
-                              lower_the_icon = !lower_the_icon;
-                              setState(() {});
+                              if (lower_the_icon) {
+                                Timer(Duration(seconds: 1), () {
+                                  lower_the_icon = !lower_the_icon;
+                                  setState(() {});
+                                });
+                              } else {
+                                lower_the_icon = !lower_the_icon;
+                                setState(() {});
+                              }
                             },
                             child: Icon(
                               widget.scroll_icon,

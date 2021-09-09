@@ -186,16 +186,6 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                Tooltip(
-                  message: text_list[4],
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.book_online_outlined,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
               ],
             ),
       IconButton(

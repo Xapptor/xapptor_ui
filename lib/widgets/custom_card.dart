@@ -16,6 +16,7 @@ class CustomCard extends StatefulWidget {
     this.splash_color = Colors.transparent,
     this.use_pointer_interceptor = false,
     this.animation_duration = const Duration(milliseconds: 100),
+    this.shape = BoxShape.rectangle,
   });
 
   final Widget child;
@@ -26,6 +27,7 @@ class CustomCard extends StatefulWidget {
   final Color splash_color;
   final bool use_pointer_interceptor;
   final Duration animation_duration;
+  final BoxShape shape;
 
   @override
   _CustomCardState createState() => _CustomCardState();
@@ -56,10 +58,13 @@ class _CustomCardState extends State<CustomCard> {
     return AnimatedContainer(
       duration: widget.animation_duration,
       decoration: BoxDecoration(
+        shape: widget.shape,
         gradient: widget.linear_gradient,
-        borderRadius: BorderRadius.circular(
-          widget.border_radius,
-        ),
+        borderRadius: widget.shape != BoxShape.circle
+            ? BorderRadius.circular(
+                widget.border_radius,
+              )
+            : null,
         boxShadow: [
           BoxShadow(
             color: shadow_color,

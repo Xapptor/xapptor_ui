@@ -100,7 +100,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
         widthFactor: portrait ? 0.8 : 1,
         child: Column(
           children: <Widget>[
-            portrait ? Container() : Spacer(flex: 1),
+            Spacer(flex: 1),
             Expanded(
               flex: 2,
               child: AutoSizeText(
@@ -247,12 +247,8 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
         splash_color: widget.button_background_color.first.withOpacity(0.3),
         linear_gradient: LinearGradient(
           colors: widget.button_background_color,
-          stops: [
-            0.0,
-            0.7,
-          ],
           begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          end: Alignment.bottomCenter,
         ),
         on_pressed: () {
           launch(download_url);

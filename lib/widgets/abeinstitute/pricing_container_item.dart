@@ -112,7 +112,7 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 1,
+      heightFactor: 0.9,
       child: CoveredContainerComingSoon(
         enable_cover: widget.coming_soon,
         child: Card(

@@ -4,6 +4,8 @@ import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'custom_card.dart';
+
 class ContactUsContainer extends StatefulWidget {
   const ContactUsContainer({
     required this.texts,
@@ -315,7 +317,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                 Spacer(flex: 1),
                                 Expanded(
                                   flex: 3,
-                                  child: Text(
+                                  child: SelectableText(
                                     widget.texts[7],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -335,7 +337,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                 Spacer(flex: 1),
                                 Expanded(
                                   flex: 2,
-                                  child: Text(
+                                  child: SelectableText(
                                     widget.texts[8],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -355,7 +357,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                 Spacer(flex: 1),
                                 Expanded(
                                   flex: 4,
-                                  child: Text(
+                                  child: SelectableText(
                                     widget.texts[9],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -373,69 +375,53 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                       widget.facebook_url != null
                                           ? Expanded(
                                               flex: 5,
-                                              child: IconButton(
-                                                onPressed: () async {
-                                                  launch_url(
-                                                    widget.facebook_url!,
-                                                    widget
-                                                        .facebook_url_fallback!,
-                                                  );
-                                                },
-                                                icon: Icon(
-                                                  FontAwesome.facebook_squared,
-                                                  color: widget.icon_color,
-                                                ),
+                                              child: custom_icon_button(
+                                                urls: [
+                                                  widget.facebook_url!,
+                                                  widget.facebook_url_fallback!
+                                                ],
+                                                icon: FontAwesome
+                                                    .facebook_squared,
+                                                icon_color: widget.icon_color,
                                               ),
                                             )
                                           : Container(),
                                       widget.youtube_url != null
                                           ? Expanded(
                                               flex: 5,
-                                              child: IconButton(
-                                                onPressed: () async {
-                                                  launch_url(
-                                                    widget.youtube_url!,
-                                                    widget.youtube_url!,
-                                                  );
-                                                },
-                                                icon: Icon(
-                                                  FontAwesome.youtube_play,
-                                                  color: widget.icon_color,
-                                                ),
+                                              child: custom_icon_button(
+                                                urls: [
+                                                  widget.youtube_url!,
+                                                  widget.youtube_url!
+                                                ],
+                                                icon: FontAwesome.youtube_play,
+                                                icon_color: widget.icon_color,
                                               ),
                                             )
                                           : Container(),
                                       widget.instagram_url != null
                                           ? Expanded(
                                               flex: 5,
-                                              child: IconButton(
-                                                onPressed: () async {
-                                                  launch_url(
-                                                    widget.instagram_url!,
-                                                    widget.instagram_url!,
-                                                  );
-                                                },
-                                                icon: Icon(
-                                                  FontAwesome.instagram,
-                                                  color: widget.icon_color,
-                                                ),
+                                              child: custom_icon_button(
+                                                urls: [
+                                                  widget.instagram_url!,
+                                                  widget.instagram_url!
+                                                ],
+                                                icon: FontAwesome.instagram,
+                                                icon_color: widget.icon_color,
                                               ),
                                             )
                                           : Container(),
                                       widget.twitter_url != null
                                           ? Expanded(
                                               flex: 5,
-                                              child: IconButton(
-                                                onPressed: () async {
-                                                  launch_url(
-                                                    widget.twitter_url!,
-                                                    widget.twitter_url!,
-                                                  );
-                                                },
-                                                icon: Icon(
-                                                  FontAwesome.twitter,
-                                                  color: widget.icon_color,
-                                                ),
+                                              child: custom_icon_button(
+                                                urls: [
+                                                  widget.twitter_url!,
+                                                  widget.twitter_url!
+                                                ],
+                                                icon: FontAwesome.twitter,
+                                                icon_color: widget.icon_color,
                                               ),
                                             )
                                           : Container(),
@@ -461,4 +447,31 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
       ),
     );
   }
+}
+
+Widget custom_icon_button({
+  required List<String> urls,
+  required IconData icon,
+  required Color icon_color,
+}) {
+  return CustomCard(
+    splash_color: icon_color.withOpacity(0.3),
+    linear_gradient: LinearGradient(
+      colors: [
+        Colors.transparent,
+        Colors.transparent,
+      ],
+    ),
+    on_pressed: () async {
+      launch_url(
+        urls[0],
+        urls[1],
+      );
+    },
+    child: Icon(
+      icon,
+      color: icon_color,
+    ),
+    shape: BoxShape.circle,
+  );
 }

@@ -206,30 +206,31 @@ class _LandingState extends State<Landing> {
 
   animate_scroll_position({required int index, required bool pop}) {
     double current_scroll_position = 0;
+    current_scroll_position = MediaQuery.of(context).size.height;
 
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       switch (index) {
         case 0:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 1;
+            //
           }
           break;
 
         case 1:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 4.0;
+            current_scroll_position *= 4.2;
           }
           break;
 
         case 2:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 6.15;
+            current_scroll_position *= 6.2;
           }
           break;
 
         case 3:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 9.4;
+            current_scroll_position *= 9.4;
           }
           break;
       }
@@ -237,25 +238,25 @@ class _LandingState extends State<Landing> {
       switch (index) {
         case 0:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 1;
+            //
           }
           break;
 
         case 1:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 2;
+            current_scroll_position *= 2;
           }
           break;
 
         case 2:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 3;
+            current_scroll_position *= 3;
           }
           break;
 
         case 3:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 4;
+            current_scroll_position *= 4;
           }
           break;
       }
