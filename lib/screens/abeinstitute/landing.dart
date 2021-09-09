@@ -341,7 +341,6 @@ class _LandingState extends State<Landing> {
   void initState() {
     super.initState();
     check_metadata_app();
-    check_login();
 
     translation_stream_menu.init(text_list_menu, update_text_list_menu);
     translation_stream_menu.translate();
