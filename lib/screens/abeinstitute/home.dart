@@ -43,11 +43,10 @@ class _HomeState extends State<Home> {
 
   List<String> text_list = [
     "Account",
-    "Notifications",
     "My courses",
     "Buy courses",
     "Certificates and Rewards",
-    "Settings",
+    "Privacy Policy",
     "Logout",
   ];
 
@@ -84,32 +83,28 @@ class _HomeState extends State<Home> {
             ),
             ListTile(
               title: Text(text_list[1]),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text(text_list[2]),
               onTap: () {
                 open_screen("home/courses");
               },
             ),
             ListTile(
-              title: Text(text_list[3]),
+              title: Text(text_list[2]),
               onTap: () {
                 open_screen("home/buy_courses");
               },
             ),
             ListTile(
-              title: Text(text_list[4]),
+              title: Text(text_list[3]),
               onTap: () {
                 open_screen("home/certificates_and_rewards");
               },
             ),
             ListTile(
-              title: Text(text_list[5]),
+              title: Text(text_list[4]),
               onTap: () {},
             ),
             ListTile(
-              title: Text(text_list[6]),
+              title: Text(text_list[5]),
               onTap: () async {
                 await FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pop(context);
@@ -158,16 +153,6 @@ class _HomeState extends State<Home> {
                 Tooltip(
                   message: text_list[1],
                   child: TextButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Tooltip(
-                  message: text_list[2],
-                  child: TextButton(
                     onPressed: () {
                       open_screen("home/courses");
                     },
@@ -178,7 +163,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Tooltip(
-                  message: text_list[3],
+                  message: text_list[2],
                   child: TextButton(
                     onPressed: () {
                       open_screen("home/buy_courses");
@@ -190,7 +175,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Tooltip(
-                  message: text_list[4],
+                  message: text_list[3],
                   child: TextButton(
                     onPressed: () {
                       open_screen("home/certificates_and_rewards");
@@ -202,11 +187,11 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Tooltip(
-                  message: text_list[5],
+                  message: text_list[4],
                   child: TextButton(
                     onPressed: () {},
                     child: Icon(
-                      Icons.settings,
+                      Icons.book_online_outlined,
                       color: Colors.white,
                     ),
                   ),

@@ -230,7 +230,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 ],
               ),
             ),
-            portrait ? Container() : Spacer(flex: 1),
+            portrait ? Container() : Spacer(flex: 2),
           ],
         ),
       ),

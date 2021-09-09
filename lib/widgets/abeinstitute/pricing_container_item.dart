@@ -112,15 +112,16 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 0.9,
+      heightFactor: 1,
       child: CoveredContainerComingSoon(
         enable_cover: widget.coming_soon,
         child: Card(
+          margin: EdgeInsets.all(0),
           elevation: 5,
           child: BackgroundImageWithGradientColor(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            box_fit: BoxFit.fitHeight,
+            box_fit: BoxFit.cover,
             background_image_path: widget.image_url,
             linear_gradient: LinearGradient(
                 begin: FractionalOffset.topCenter,

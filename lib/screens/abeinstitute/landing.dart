@@ -47,7 +47,6 @@ class _LandingState extends State<Landing> {
 
   List<String> text_list_menu = [
     "About",
-    "Benefits",
     "Download",
     "Pricing",
     "Contact",
@@ -212,7 +211,7 @@ class _LandingState extends State<Landing> {
       switch (index) {
         case 0:
           {
-            current_scroll_position = MediaQuery.of(context).size.height * 0.95;
+            current_scroll_position = MediaQuery.of(context).size.height * 1;
           }
           break;
 
@@ -392,36 +391,32 @@ class _LandingState extends State<Landing> {
               animate_scroll_position(index: 0, pop: true);
             },
           ),
-          /*ListTile(
-            title: Text(textList[1]),
-            onTap: () {},
-          ),*/
           ListTile(
-            title: Text(text_list_menu[2]),
+            title: Text(text_list_menu[1]),
             onTap: () {
               animate_scroll_position(index: 1, pop: true);
             },
           ),
           ListTile(
-            title: Text(text_list_menu[3]),
+            title: Text(text_list_menu[2]),
             onTap: () {
               animate_scroll_position(index: 2, pop: true);
             },
           ),
           ListTile(
-            title: Text(text_list_menu[4]),
+            title: Text(text_list_menu[3]),
             onTap: () {
               animate_scroll_position(index: 3, pop: true);
             },
           ),
           ListTile(
-            title: Text(text_list_menu[5]),
+            title: Text(text_list_menu[4]),
             onTap: () {
               open_screen("login");
             },
           ),
           ListTile(
-            title: Text(text_list_menu[6]),
+            title: Text(text_list_menu[5]),
             onTap: () {
               open_screen("register");
             },
@@ -463,41 +458,33 @@ class _LandingState extends State<Landing> {
                   },
                   child: custom_text(text_list_menu[0]),
                 ),
-                /*FlatButton(
-                  onPressed: () {
-                    */ /*widget.pageController.animateToPage(2,
-                              duration: Duration(milliseconds: 900),
-                              curve: Curves.linear);*/ /*
-                  },
-                  child: customText(textList[1]),
-                ),*/
                 TextButton(
                   onPressed: () {
                     animate_scroll_position(index: 1, pop: false);
                   },
                   style: Theme.of(context).textButtonTheme.style,
-                  child: custom_text(text_list_menu[2]),
+                  child: custom_text(text_list_menu[1]),
                 ),
                 TextButton(
                   onPressed: () {
                     animate_scroll_position(index: 2, pop: false);
                   },
                   style: Theme.of(context).textButtonTheme.style,
-                  child: custom_text(text_list_menu[3]),
+                  child: custom_text(text_list_menu[2]),
                 ),
                 TextButton(
                   onPressed: () {
                     animate_scroll_position(index: 3, pop: false);
                   },
                   style: Theme.of(context).textButtonTheme.style,
-                  child: custom_text(text_list_menu[4]),
+                  child: custom_text(text_list_menu[3]),
                 ),
                 TextButton(
                   onPressed: () {
                     open_screen("login");
                   },
                   style: Theme.of(context).textButtonTheme.style,
-                  child: custom_text(text_list_menu[5]),
+                  child: custom_text(text_list_menu[4]),
                 ),
               ],
             ),
@@ -528,7 +515,6 @@ class _LandingState extends State<Landing> {
     return Scaffold(
       key: scaffold_key,
       endDrawer: drawer(),
-      extendBodyBehindAppBar: true,
       appBar: TopBar(
         background_color: color_abeinstitute_topbar,
         has_back_button: false,

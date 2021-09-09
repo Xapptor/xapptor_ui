@@ -121,7 +121,7 @@ class _PricingContainerState extends State<PricingContainer> {
             ),
           ),
           Expanded(
-            flex: portrait ? 42 : 12,
+            flex: portrait ? 42 : 10,
             child: FractionallySizedBox(
               widthFactor: 0.8,
               child: Flex(
@@ -195,6 +195,7 @@ class _PricingContainerState extends State<PricingContainer> {
               ),
             ),
           ),
+          portrait ? Container() : Spacer(flex: 2),
         ],
       ),
     );
