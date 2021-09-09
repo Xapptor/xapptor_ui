@@ -84,7 +84,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -284,7 +283,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 12,
-                                                    //fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                               ),
@@ -323,7 +321,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
-                                      //fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -344,7 +341,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
-                                      //fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -365,7 +361,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
-                                      //fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),

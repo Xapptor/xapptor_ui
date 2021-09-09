@@ -364,7 +364,6 @@ class _LandingState extends State<Landing> {
     translation_stream_contact_us.translate();
 
     init_prefs();
-    //autoScroll();
     //checkCheckoutSessionID();
   }
 
