@@ -291,7 +291,7 @@ class _LandingState extends State<Landing> {
       endDrawer: drawer(),
       extendBodyBehindAppBar: true,
       appBar: TopBar(
-        background_color: color_abeinstitute_dark_aqua.withOpacity(0.5),
+        background_color: color_abeinstitute_topbar,
         has_back_button: false,
         actions: widgets_action(portrait),
         custom_leading: null,

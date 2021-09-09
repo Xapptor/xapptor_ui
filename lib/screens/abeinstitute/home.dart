@@ -368,7 +368,7 @@ class _HomeState extends State<Home> {
         key: scaffold_key,
         endDrawer: drawer(),
         appBar: TopBar(
-          background_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
+          background_color: color_abeinstitute_topbar,
           has_back_button: false,
           actions: widgets_action(portrait),
           custom_leading: null,

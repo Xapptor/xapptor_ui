@@ -8,7 +8,6 @@ class DownloadAppsContainer extends StatefulWidget {
   const DownloadAppsContainer({
     required this.texts,
     required this.background_image,
-    required this.background_color,
     required this.button_background_color,
     required this.title_color,
     required this.subtitle_color,
@@ -20,8 +19,7 @@ class DownloadAppsContainer extends StatefulWidget {
 
   final List<String> texts;
   final String background_image;
-  final Color background_color;
-  final Color button_background_color;
+  final List<Color> button_background_color;
   final Color title_color;
   final Color subtitle_color;
   final String image_1;
@@ -94,7 +92,6 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 ),
               )
             : null,
-        color: widget.background_color,
       ),
       height: portrait
           ? (MediaQuery.of(context).size.height * 2)
@@ -247,14 +244,15 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
     return AspectRatio(
       aspectRatio: 1,
       child: CustomCard(
-        splash_color: widget.button_background_color.withOpacity(0.3),
+        splash_color: widget.button_background_color.first.withOpacity(0.3),
         linear_gradient: LinearGradient(
-          colors: [
-            Colors.grey,
-            widget.button_background_color,
+          colors: widget.button_background_color,
+          stops: [
+            0.0,
+            0.7,
           ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
         on_pressed: () {
           launch(download_url);

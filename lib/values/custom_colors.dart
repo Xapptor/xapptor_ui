@@ -26,7 +26,7 @@ Color color_abeinstitute_light_aqua = Color(0xff53AAC5);
 Color color_abeinstitute_ocean_blue = Color(0xff52A0D2);
 Color color_abeinstitute_background_grey = Color(0xffEEEEEE);
 
-Color color_abeinstitute_topbar = color_abeinstitute_dark_aqua.withOpacity(0.5);
+Color color_abeinstitute_topbar = color_abeinstitute_ocean_blue;
 Color color_abeinstitute_text = color_abeinstitute_dark_aqua;
 Color color_abeinstitute_card = Colors.transparent;
 

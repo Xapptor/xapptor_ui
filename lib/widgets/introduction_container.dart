@@ -64,12 +64,12 @@ class IntroductionContainerState extends State<IntroductionContainer> {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    Spacer(flex: 16),
+                    Spacer(flex: 14),
                     widget.logo_image != null &&
                             (widget.texts.length > 1 ||
                                 (widget.texts.length == 1 && !portrait))
                         ? Expanded(
-                            flex: 18,
+                            flex: 16,
                             child: Container(
                               //width: portrait ? 200 : 400,
                               decoration: BoxDecoration(
@@ -85,14 +85,14 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                         : Spacer(flex: 14),
                     Spacer(flex: 1),
                     Expanded(
-                      flex: portrait ? 12 : 5,
+                      flex: portrait ? 14 : 5,
                       child: FractionallySizedBox(
                         widthFactor: portrait ? 0.9 : 1,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
-                              flex: portrait ? 4 : 12,
+                              flex: portrait ? 6 : 12,
                               child: SelectableText(
                                 widget.texts[0],
                                 toolbarOptions: ToolbarOptions(

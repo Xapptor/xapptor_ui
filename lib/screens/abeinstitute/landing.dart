@@ -530,7 +530,7 @@ class _LandingState extends State<Landing> {
       endDrawer: drawer(),
       extendBodyBehindAppBar: true,
       appBar: TopBar(
-        background_color: color_abeinstitute_dark_aqua.withOpacity(0.5),
+        background_color: color_abeinstitute_topbar,
         has_back_button: false,
         actions: widgets_action(portrait),
         custom_leading: null,
@@ -583,8 +583,10 @@ class _LandingState extends State<Landing> {
                         ios_url:
                             "itms-services://?action=download-manifest&url=https://www.abeinstitute.com/manifest.plist",
                         background_image: "",
-                        background_color: Colors.white,
-                        button_background_color: color_abeinstitute_ocean_blue,
+                        button_background_color: [
+                          color_abeinstitute_background_grey,
+                          color_abeinstitute_ocean_blue,
+                        ],
                       ),
                       PricingContainer(
                         texts: text_list_buy,

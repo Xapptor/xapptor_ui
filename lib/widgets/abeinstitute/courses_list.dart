@@ -13,12 +13,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class CoursesList extends StatefulWidget {
   const CoursesList({
-    required this.topbar_color,
     required this.language_picker_items_text_color,
     required this.language_picker,
   });
 
-  final Color topbar_color;
   final Color language_picker_items_text_color;
   final bool language_picker;
 
@@ -139,7 +137,7 @@ class _CoursesListState extends State<CoursesList> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: widget.topbar_color,
+        background_color: color_abeinstitute_topbar,
         has_back_button: true,
         actions: widgets_action(portrait),
         custom_leading: null,
@@ -271,7 +269,6 @@ open_class_session({
         unit_id: unit_id,
         language_picker_items_text_color: language_picker_items_text_color,
         language_picker: language_picker,
-        topbar_color: color_abeinstitute_dark_aqua.withOpacity(0.7),
       ),
     ),
   );

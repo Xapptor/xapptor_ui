@@ -6,13 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:uuid/uuid.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 
 class ClassSession extends StatefulWidget {
   const ClassSession({
-    required this.topbar_color,
     required this.course_id,
     required this.course_name,
     required this.unit_id,
@@ -20,7 +20,6 @@ class ClassSession extends StatefulWidget {
     required this.language_picker,
   });
 
-  final Color topbar_color;
   final String course_id;
   final String course_name;
   final String unit_id;
@@ -161,7 +160,7 @@ class _ClassSessionState extends State<ClassSession> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: widget.topbar_color,
+        background_color: color_abeinstitute_topbar,
         has_back_button: true,
         actions: widgets_action(portrait),
         custom_leading: IconButton(
@@ -275,7 +274,6 @@ class _ClassSessionState extends State<ClassSession> {
                                   language_picker_items_text_color:
                                       widget.language_picker_items_text_color,
                                   language_picker: widget.language_picker,
-                                  topbar_color: widget.topbar_color,
                                 ),
                               ),
                             );
