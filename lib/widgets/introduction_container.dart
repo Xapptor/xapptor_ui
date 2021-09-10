@@ -46,138 +46,139 @@ class IntroductionContainerState extends State<IntroductionContainer> {
   Widget build(BuildContext context) {
     bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
-    return BackgroundImageWithGradientColor(
+    return Container(
       height: widget.height,
       width: MediaQuery.of(context).size.width,
-      box_fit: BoxFit.cover,
-      background_image_path: widget.background_image,
-      linear_gradient: LinearGradient(
-        begin: FractionalOffset.centerLeft,
-        end: FractionalOffset.centerRight,
-        colors: [
-          Colors.lightBlueAccent.withOpacity(0.0),
-          Colors.blue.withOpacity(0.0),
-        ],
-        stops: [0.0, 1.0],
-      ),
-      child: Center(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    Spacer(flex: 10),
-                    widget.logo_image != null &&
-                            (widget.texts.length > 1 ||
-                                (widget.texts.length == 1 && !portrait))
-                        ? Expanded(
-                            flex: 12,
-                            child: Container(
-                              //width: portrait ? 200 : 400,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.fitHeight,
-                                  image: AssetImage(
-                                    widget.logo_image!,
+      child: BackgroundImageWithGradientColor(
+        box_fit: BoxFit.cover,
+        background_image_path: widget.background_image,
+        linear_gradient: LinearGradient(
+          begin: FractionalOffset.centerLeft,
+          end: FractionalOffset.centerRight,
+          colors: [
+            Colors.lightBlueAccent.withOpacity(0.0),
+            Colors.blue.withOpacity(0.0),
+          ],
+          stops: [0.0, 1.0],
+        ),
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                child: Center(
+                  child: Column(
+                    children: <Widget>[
+                      Spacer(flex: 10),
+                      widget.logo_image != null &&
+                              (widget.texts.length > 1 ||
+                                  (widget.texts.length == 1 && !portrait))
+                          ? Expanded(
+                              flex: 12,
+                              child: Container(
+                                //width: portrait ? 200 : 400,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.fitHeight,
+                                    image: AssetImage(
+                                      widget.logo_image!,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                        : Spacer(flex: 14),
-                    Spacer(flex: 1),
-                    Expanded(
-                      flex: portrait ? 12 : 5,
-                      child: FractionallySizedBox(
-                        widthFactor: portrait ? 0.9 : 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              flex: portrait ? 6 : 12,
-                              child: SelectableText(
-                                widget.texts[0],
-                                toolbarOptions: ToolbarOptions(
-                                  copy: true,
-                                  paste: true,
-                                  selectAll: true,
-                                ),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: widget.text_color,
-                                  fontSize: portrait
-                                      ? widget.texts.length > 1
-                                          ? 28
-                                          : 20
-                                      : widget.texts.length > 1
-                                          ? 36
-                                          : 24,
-                                  fontWeight: FontWeight.bold,
+                            )
+                          : Spacer(flex: 14),
+                      Spacer(flex: 1),
+                      Expanded(
+                        flex: portrait ? 12 : 5,
+                        child: FractionallySizedBox(
+                          widthFactor: portrait ? 0.9 : 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                flex: portrait ? 6 : 12,
+                                child: SelectableText(
+                                  widget.texts[0],
+                                  toolbarOptions: ToolbarOptions(
+                                    copy: true,
+                                    paste: true,
+                                    selectAll: true,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: widget.text_color,
+                                    fontSize: portrait
+                                        ? widget.texts.length > 1
+                                            ? 28
+                                            : 20
+                                        : widget.texts.length > 1
+                                            ? 36
+                                            : 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
+                              widget.texts.length > 1
+                                  ? Spacer(flex: 2)
+                                  : Container(),
+                              widget.texts.length > 1
+                                  ? Expanded(
+                                      flex: portrait ? 4 : 10,
+                                      child: SelectableText(
+                                        widget.texts[1],
+                                        toolbarOptions: ToolbarOptions(
+                                          copy: true,
+                                          paste: true,
+                                          selectAll: true,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: widget.text_color,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            AnimatedPositioned(
+                              duration: Duration(milliseconds: 300),
+                              top: lower_the_icon ? 0 : 30,
+                              width: MediaQuery.of(context).size.width,
+                              curve: Curves.ease,
+                              onEnd: () {
+                                if (lower_the_icon) {
+                                  Timer(Duration(seconds: 1), () {
+                                    lower_the_icon = !lower_the_icon;
+                                    setState(() {});
+                                  });
+                                } else {
+                                  lower_the_icon = !lower_the_icon;
+                                  setState(() {});
+                                }
+                              },
+                              child: Icon(
+                                widget.scroll_icon,
+                                color: widget.scroll_icon_color,
+                                size: 40,
+                              ),
                             ),
-                            widget.texts.length > 1
-                                ? Spacer(flex: 2)
-                                : Container(),
-                            widget.texts.length > 1
-                                ? Expanded(
-                                    flex: portrait ? 4 : 10,
-                                    child: SelectableText(
-                                      widget.texts[1],
-                                      toolbarOptions: ToolbarOptions(
-                                        copy: true,
-                                        paste: true,
-                                        selectAll: true,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: widget.text_color,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
                           ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          AnimatedPositioned(
-                            duration: Duration(milliseconds: 300),
-                            top: lower_the_icon ? 0 : 30,
-                            width: MediaQuery.of(context).size.width,
-                            curve: Curves.ease,
-                            onEnd: () {
-                              if (lower_the_icon) {
-                                Timer(Duration(seconds: 1), () {
-                                  lower_the_icon = !lower_the_icon;
-                                  setState(() {});
-                                });
-                              } else {
-                                lower_the_icon = !lower_the_icon;
-                                setState(() {});
-                              }
-                            },
-                            child: Icon(
-                              widget.scroll_icon,
-                              color: widget.scroll_icon_color,
-                              size: 40,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Spacer(flex: 3),
-                  ],
+                      Spacer(flex: 3),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            /*Container(
+              /*Container(
               color: Colors.transparent,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -185,7 +186,8 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                 painter: CurvePainter(),
               ),
             ),*/
-          ],
+            ],
+          ),
         ),
       ),
     );

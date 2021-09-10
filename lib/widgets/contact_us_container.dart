@@ -3,7 +3,6 @@ import 'package:xapptor_logic/url_launcher.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'custom_card.dart';
 
 class ContactUsContainer extends StatefulWidget {
@@ -23,6 +22,7 @@ class ContactUsContainer extends StatefulWidget {
     required this.email,
     required this.feedback_message,
     required this.linear_gradient_colors,
+    this.border_radius = 0,
   });
 
   final List<String> texts;
@@ -40,6 +40,7 @@ class ContactUsContainer extends StatefulWidget {
   final String email;
   final String feedback_message;
   final List<Color> linear_gradient_colors;
+  final double border_radius;
 
   @override
   _ContactUsContainerState createState() => _ContactUsContainerState();
@@ -61,10 +62,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
           : (MediaQuery.of(context).size.height),
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(
-        height: portrait
-            ? (MediaQuery.of(context).size.height * 1.8)
-            : (MediaQuery.of(context).size.height),
-        width: MediaQuery.of(context).size.width,
         box_fit: BoxFit.cover,
         background_image_path: widget.container_background_image,
         linear_gradient: LinearGradient(
@@ -112,6 +109,9 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                   elevation: 5,
                   semanticContainer: true,
                   color: widget.card_background_color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(widget.border_radius),
+                  ),
                   child: Container(
                     decoration: BoxDecoration(
                       image: widget.card_background_image.isNotEmpty
@@ -123,6 +123,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                             )
                           : null,
                       color: widget.card_background_color,
+                      borderRadius: BorderRadius.circular(widget.border_radius),
                     ),
                     child: FractionallySizedBox(
                       widthFactor: portrait ? 0.8 : 1,

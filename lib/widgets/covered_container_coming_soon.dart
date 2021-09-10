@@ -4,10 +4,12 @@ class CoveredContainerComingSoon extends StatelessWidget {
   const CoveredContainerComingSoon({
     this.child,
     required this.enable_cover,
+    this.border_radius = 0,
   });
 
   final Widget? child;
   final bool enable_cover;
+  final double border_radius;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,10 @@ class CoveredContainerComingSoon extends StatelessWidget {
         enable_cover
             ? Center(
                 child: Container(
-                  color: Colors.grey.shade500.withOpacity(0.7),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(border_radius),
+                    color: Colors.grey.shade500.withOpacity(0.7),
+                  ),
                   child: AbsorbPointer(
                     absorbing: true,
                     child: Center(

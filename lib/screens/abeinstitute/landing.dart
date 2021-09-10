@@ -603,6 +603,7 @@ class _LandingState extends State<Landing> {
                           Colors.black.withOpacity(0.6),
                           Colors.black.withOpacity(0.6),
                         ],
+                        border_radius: 10,
                       ),
                     ],
                   ),

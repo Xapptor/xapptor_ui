@@ -20,7 +20,7 @@ class CustomCard extends StatefulWidget {
   });
 
   final Widget child;
-  final Function() on_pressed;
+  final Function()? on_pressed;
   final double elevation;
   final double border_radius;
   final LinearGradient linear_gradient;

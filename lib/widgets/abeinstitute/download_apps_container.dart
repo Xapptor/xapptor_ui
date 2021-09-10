@@ -44,10 +44,13 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
       Spacer(flex: 2),
       Expanded(
         flex: portrait ? 6 : 4,
-        child: Card(
+        child: CustomCard(
           elevation: 5,
+          border_radius: 10,
+          on_pressed: null,
           child: Container(
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                 fit: BoxFit.fitWidth,
                 image: AssetImage(
@@ -146,10 +149,13 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                     Spacer(flex: 1),
                     Expanded(
                       flex: portrait ? 6 : 4,
-                      child: Card(
+                      child: CustomCard(
                         elevation: 5,
+                        border_radius: 10,
+                        on_pressed: null,
                         child: Container(
                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
                               fit: BoxFit.fitWidth,
                               image: AssetImage(

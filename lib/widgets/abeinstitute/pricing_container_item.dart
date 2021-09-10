@@ -6,6 +6,7 @@ import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:xapptor_ui/widgets/covered_container_coming_soon.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class PricingContainerItem extends StatefulWidget {
   const PricingContainerItem({
@@ -37,6 +38,8 @@ class PricingContainerItem extends StatefulWidget {
 }
 
 class _PricingContainerItemState extends State<PricingContainerItem> {
+  double border_radius = 10;
+
   when_webview_loaded(String url) {
     if (!UniversalPlatform.isWeb) {
       if (url.contains("checkout.stripe.com")) {
@@ -67,7 +70,7 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
         ),
         decoration: BoxDecoration(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(border_radius),
           border: Border.all(
             color: Colors.white,
           ),
@@ -114,13 +117,16 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
     return FractionallySizedBox(
       heightFactor: 0.9,
       child: CoveredContainerComingSoon(
+        border_radius: border_radius,
         enable_cover: widget.coming_soon,
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(border_radius),
+          ),
           margin: EdgeInsets.all(0),
           elevation: 5,
           child: BackgroundImageWithGradientColor(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            border_radius: border_radius,
             box_fit: BoxFit.cover,
             background_image_path: widget.image_url,
             linear_gradient: LinearGradient(
@@ -134,85 +140,83 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
                   0.8,
                   1.0
                 ]),
-            child: Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Spacer(flex: 18),
-                    Text(
-                      widget.title,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: widget.text_color,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                      ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Spacer(flex: 18),
+                  Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: widget.text_color,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
                     ),
-                    Spacer(flex: 1),
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: widget.description.substring(0, 2),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: widget.text_color,
-                              fontSize: 36,
-                            ),
+                  ),
+                  Spacer(flex: 1),
+                  RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: widget.description.substring(0, 2),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: widget.text_color,
+                            fontSize: 36,
                           ),
-                          TextSpan(
-                            text: widget.description.substring(
-                              2,
-                              widget.description.length,
-                            ),
-                            style: TextStyle(
-                              color: widget.text_color,
-                              fontSize: 36,
-                            ),
+                        ),
+                        TextSpan(
+                          text: widget.description.substring(
+                            2,
+                            widget.description.length,
                           ),
-                        ],
-                      ),
+                          style: TextStyle(
+                            color: widget.text_color,
+                            fontSize: 36,
+                          ),
+                        ),
+                      ],
                     ),
-                    Spacer(flex: 1),
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: widget.characteristics.substring(0, 1),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: widget.text_color,
-                              fontSize: 24,
-                            ),
+                  ),
+                  Spacer(flex: 1),
+                  RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: widget.characteristics.substring(0, 1),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: widget.text_color,
+                            fontSize: 24,
                           ),
-                          TextSpan(
-                            text: widget.characteristics.substring(
-                              1,
-                              widget.characteristics.length,
-                            ),
-                            style: TextStyle(
-                              color: widget.text_color,
-                              fontSize: 24,
-                            ),
+                        ),
+                        TextSpan(
+                          text: widget.characteristics.substring(
+                            1,
+                            widget.characteristics.length,
                           ),
-                        ],
-                      ),
+                          style: TextStyle(
+                            color: widget.text_color,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
                     ),
-                    Spacer(flex: 1),
-                    Expanded(
-                      flex: 3,
-                      child: FractionallySizedBox(
-                        widthFactor: 0.5,
-                        child: buy_now_button(),
-                      ),
+                  ),
+                  Spacer(flex: 1),
+                  Expanded(
+                    flex: 3,
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: buy_now_button(),
                     ),
-                    Spacer(flex: 2),
-                  ],
-                ),
+                  ),
+                  Spacer(flex: 2),
+                ],
               ),
             ),
           ),
