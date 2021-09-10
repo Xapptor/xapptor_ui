@@ -140,7 +140,7 @@ class _ClassSessionState extends State<ClassSession> {
   void initState() {
     super.initState();
     set_texts_and_video_url();
-    Timer(Duration(milliseconds: 500), () {
+    Timer(Duration(milliseconds: 1000), () {
       show_webview = true;
       setState(() {});
     });

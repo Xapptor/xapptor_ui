@@ -2,7 +2,6 @@ import 'package:xapptor_translation/translate.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'class_quiz_answer_item.dart';
 
 class ClassQuizQuestion extends StatefulWidget {
@@ -131,7 +130,9 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                     FractionallySizedBox(
                   widthFactor: portrait ? 0.8 : 0.65,
                   child: ClassQuizAnswerItem(
-                    answer_text: text_list[index + 3],
+                    answer_text: text_list.length >= (index + 4)
+                        ? text_list[index + 3]
+                        : "",
                     index: index,
                     class_quiz_question: this,
                     selected: current_index == index,
