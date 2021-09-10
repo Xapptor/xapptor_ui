@@ -31,11 +31,12 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   );
   int total_pages = 0;
   Curve animation_curve = Curves.easeInOutCirc;
+  late Timer timer;
 
   auto_scroll() {
     int delay_seconds = random_number_with_range(5, 9);
 
-    Timer(Duration(seconds: delay_seconds), () {
+    timer = Timer(Duration(seconds: delay_seconds), () {
       if (current_page < total_pages - 1) {
         page_controller.nextPage(
           duration: Duration(milliseconds: 900),
@@ -67,6 +68,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   @override
   void dispose() {
     page_controller.dispose();
+    timer.cancel();
     super.dispose();
   }
 

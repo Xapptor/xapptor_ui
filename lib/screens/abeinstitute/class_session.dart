@@ -1,10 +1,10 @@
+import 'dart:async';
 import 'package:xapptor_ui/screens/abeinstitute/class_quiz.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/models/abeinstitute/class_unit_arguments.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:universal_platform/universal_platform.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
@@ -48,25 +48,25 @@ class _ClassSessionState extends State<ClassSession> {
   String class_session_html = "class_session";
   bool last_unit = false;
 
+  bool show_webview = false;
+
   update_text_list(int index, String new_text) {
     text_list[index] = new_text;
     setState(() {});
   }
 
   String generate_video_url_for_current_platform(String original_url) {
-    if (UniversalPlatform.isWeb) {
-      String new_url =
-          "https://www.abeinstitute.com/#/video${original_url.substring(original_url.lastIndexOf("/"), original_url.length)}";
-      return new_url;
-    } else {
-      String new_url =
-          "https://www.abeinstitute.com/#/video${original_url.substring(original_url.lastIndexOf("/"), original_url.length)}";
-      return new_url;
-    }
+    String new_url = "";
+    String video_id = original_url.substring(
+      original_url.lastIndexOf("/"),
+      original_url.length,
+    );
+    new_url = "https://www.abeinstitute.com/#/video$video_id";
+    return new_url;
   }
 
-  get_class_texts() async {
-    await FirebaseFirestore.instance
+  set_texts_and_video_url() {
+    FirebaseFirestore.instance
         .collection('units')
         .doc(widget.unit_id)
         .get()
@@ -76,20 +76,20 @@ class _ClassSessionState extends State<ClassSession> {
         doc_snap.get("subtitle"),
         doc_snap.get("description"),
         doc_snap.get("recomendation"),
-        "Class session",
+        "Start Quiz",
       ];
 
       video_url = generate_video_url_for_current_platform(
-          doc_snap.get("video_urls")[current_language]);
+          doc_snap.get("video_urls")[
+              (current_language == "en" || current_language == "es")
+                  ? current_language
+                  : "en"]);
 
       last_unit = doc_snap.get('last_unit');
-
       setState(() {});
 
       translation_stream.init(text_list, update_text_list);
       translation_stream.translate();
-
-      return null;
     });
   }
 
@@ -97,18 +97,6 @@ class _ClassSessionState extends State<ClassSession> {
     current_language = new_current_language;
     translation_stream.translate();
     setState(() {});
-
-    await FirebaseFirestore.instance
-        .collection('units')
-        .doc(widget.unit_id)
-        .get()
-        .then((DocumentSnapshot doc_snap) {
-      video_url = generate_video_url_for_current_platform(
-          doc_snap.get("video_urls")[current_language]);
-
-      setState(() {});
-      return null;
-    });
   }
 
   List<Widget> widgets_action(bool portrait) {
@@ -151,7 +139,11 @@ class _ClassSessionState extends State<ClassSession> {
   @override
   void initState() {
     super.initState();
-    get_class_texts();
+    set_texts_and_video_url();
+    Timer(Duration(milliseconds: 500), () {
+      show_webview = true;
+      setState(() {});
+    });
   }
 
   @override
@@ -218,46 +210,45 @@ class _ClassSessionState extends State<ClassSession> {
                           flex: 2,
                           child: Container(
                             width: portrait ? 300 : 500,
-                            child: AutoSizeText(
+                            child: SelectableText(
                               text_list[2],
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
-                              minFontSize: 12,
-                              maxLines: 4,
-                              overflow: TextOverflow.clip,
                             ),
                           ),
                         ),
+                        show_webview
+                            ? Expanded(
+                                flex: 5,
+                                child: Container(
+                                  width: portrait ? double.infinity : 700,
+                                  child: Webview(
+                                    src: video_url,
+                                    id: Uuid().v4(),
+                                    function: () {},
+                                  ),
+                                ),
+                              )
+                            : Container(),
                         Expanded(
-                          flex: 5,
-                          child: Container(
-                            width: portrait ? double.infinity : 700,
-                            child: Webview(
-                              src: video_url,
-                              id: Uuid().v4(),
-                              function: () {},
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Container(
                             width: portrait ? 300 : 500,
-                            child: AutoSizeText(
-                              text_list[3],
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              minFontSize: 12,
-                              maxLines: 3,
-                              overflow: TextOverflow.clip,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SelectableText(
+                                  text_list[3],
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -278,7 +269,7 @@ class _ClassSessionState extends State<ClassSession> {
                               ),
                             );
                           },
-                          child: Text('Start Quiz'),
+                          child: Text(text_list[4]),
                         ),
                         Spacer(flex: 1),
                       ],

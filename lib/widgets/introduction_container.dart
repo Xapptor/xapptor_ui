@@ -108,7 +108,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                                   color: widget.text_color,
                                   fontSize: portrait
                                       ? widget.texts.length > 1
-                                          ? 32
+                                          ? 28
                                           : 20
                                       : widget.texts.length > 1
                                           ? 36

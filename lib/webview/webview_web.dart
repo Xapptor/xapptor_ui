@@ -46,8 +46,8 @@ class _WebviewState extends State<Webview> {
       (int view_id) => _iframe_element,
     );
 
-    //_iframeElement.height = '500';
-    //_iframeElement.width = '500';
+    _iframe_element.style.height = '100%';
+    _iframe_element.style.width = '100%';
 
     if (widget.src.toUpperCase().contains("HTML")) {
       current_src = """
