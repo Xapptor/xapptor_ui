@@ -27,6 +27,28 @@ double logo_width(BuildContext context) {
 String logo_image_path_abeinstitute = "assets/images/logo.png";
 bool has_language_picker_abeinstitute = true;
 
+RichText tc_and_pp_text_abeinstitute = RichText(
+  text: TextSpan(
+    children: [
+      TextSpan(
+        text: 'I accept the ',
+        style: TextStyle(color: color_abeinstitute_text),
+      ),
+      TextSpan(
+        text: 'privacy policies.',
+        style: TextStyle(
+          color: color_abeinstitute_text,
+          fontWeight: FontWeight.bold,
+        ),
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            launch("https://www.abeinstitute.com/#/privacy_policy");
+          },
+      ),
+    ],
+  ),
+);
+
 // Abeinstitute Insurance
 
 String logo_image_path_abeinstitute_insurance = "assets/images/logo.png";
@@ -124,7 +146,7 @@ custom_background_lum() {
 //   ),
 // );
 
-RichText t_and_c_and_pp_text_lum = RichText(
+RichText tc_and_pp_text_lum = RichText(
   text: TextSpan(
     children: [
       TextSpan(

@@ -224,7 +224,7 @@ class _HomeState extends State<Home> {
             "Enter your date of birth",
             "Save",
           ],
-          t_and_c_and_pp_text: RichText(text: TextSpan()),
+          tc_and_pp_text: RichText(text: TextSpan()),
           gender_values: [
             'Male',
             'Female',
