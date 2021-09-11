@@ -218,6 +218,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                             child: download_button(
                               download_url: widget.android_url,
                               image_path: 'assets/images/logo_android.png',
+                              tooltip: "Android App",
                             ),
                           ),
                           Spacer(flex: 1),
@@ -226,6 +227,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                             child: download_button(
                               download_url: widget.ios_url,
                               image_path: 'assets/images/logo_apple.png',
+                              tooltip: "IOS App",
                             ),
                           ),
                         ],
@@ -246,10 +248,12 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
   Widget download_button({
     required download_url,
     required image_path,
+    required tooltip,
   }) {
     return AspectRatio(
       aspectRatio: 1,
       child: CustomCard(
+        tooltip: tooltip,
         splash_color: widget.button_background_color.first.withOpacity(0.3),
         linear_gradient: LinearGradient(
           colors: widget.button_background_color,
