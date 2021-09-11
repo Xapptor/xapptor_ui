@@ -17,6 +17,7 @@ class CustomCard extends StatefulWidget {
     this.use_pointer_interceptor = false,
     this.animation_duration = const Duration(milliseconds: 100),
     this.shape = BoxShape.rectangle,
+    this.tooltip,
   });
 
   final Widget child;
@@ -28,6 +29,7 @@ class CustomCard extends StatefulWidget {
   final bool use_pointer_interceptor;
   final Duration animation_duration;
   final BoxShape shape;
+  final String? tooltip;
 
   @override
   _CustomCardState createState() => _CustomCardState();
@@ -55,7 +57,7 @@ class _CustomCardState extends State<CustomCard> {
       ),
     );
 
-    return AnimatedContainer(
+    Widget body = AnimatedContainer(
       duration: widget.animation_duration,
       decoration: BoxDecoration(
         shape: widget.shape,
@@ -88,5 +90,12 @@ class _CustomCardState extends State<CustomCard> {
         ],
       ),
     );
+
+    return widget.tooltip == null
+        ? body
+        : Tooltip(
+            message: widget.tooltip!,
+            child: body,
+          );
   }
 }

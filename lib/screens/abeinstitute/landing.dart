@@ -2,9 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:xapptor_auth/check_login.dart';
 import 'package:xapptor_logic/check_metadata_app.dart';
-import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/download_apps_container.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
@@ -25,17 +23,13 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
-
-  int current_offset = 0;
-  double current_page = 0;
-  final PageController page_controller = PageController(initialPage: 0);
-  int total_pages = 7;
-  bool active_auto_scroll = false;
-
   String current_language = "en";
-
   late SharedPreferences prefs;
 
+  double current_page = 0;
+  PageController page_controller = PageController(initialPage: 0);
+  int total_pages = 7;
+  bool active_auto_scroll = false;
   ScrollController scroll_controller = ScrollController();
 
   TranslationStream translation_stream_menu = TranslationStream();
@@ -46,7 +40,7 @@ class _LandingState extends State<Landing> {
   TranslationStream translation_stream_contact_us = TranslationStream();
 
   List<String> text_list_menu = [
-    "About",
+    "About Us",
     "Download",
     "Pricing",
     "Contact",
@@ -100,8 +94,8 @@ class _LandingState extends State<Landing> {
 
   List<String> text_list_download = [
     "Learn anytime, anywhere.",
-    "If you have to go on a trip..",
-    "or stay at home and watch your favourite course.",
+    "If you have to travel",
+    "or if you have to stay at home",
     "Download our app and enjoy all the courses wherever you are.",
   ];
 
