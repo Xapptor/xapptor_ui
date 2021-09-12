@@ -112,7 +112,6 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 style: TextStyle(
                   color: widget.title_color,
                   fontSize: 40,
-                  fontWeight: FontWeight.bold,
                 ),
                 minFontSize: 30,
                 maxLines: 4,

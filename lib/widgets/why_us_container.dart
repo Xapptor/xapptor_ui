@@ -68,7 +68,6 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
                   style: TextStyle(
                     color: widget.title_color,
                     fontSize: 40,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

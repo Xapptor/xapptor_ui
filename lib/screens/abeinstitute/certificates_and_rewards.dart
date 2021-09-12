@@ -7,7 +7,7 @@ import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
-import 'package:xapptor_ui/widgets/covered_container_coming_soon.dart';
+import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -229,7 +229,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             text: "Rewards",
             foreground_color: Colors.white,
             background_color: color_abeinstitute_light_aqua,
-            page: CoveredContainerComingSoon(
+            page: ComingSoonContainer(
+              text: "Coming soon",
               enable_cover: true,
             ),
           ),

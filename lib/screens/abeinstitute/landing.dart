@@ -29,7 +29,6 @@ class _LandingState extends State<Landing> {
   double current_page = 0;
   PageController page_controller = PageController(initialPage: 0);
   int total_pages = 7;
-  bool active_auto_scroll = false;
   ScrollController scroll_controller = ScrollController();
 
   TranslationStream translation_stream_menu = TranslationStream();
@@ -53,17 +52,6 @@ class _LandingState extends State<Landing> {
     "Be able to follow the life you dream of, adding professional experience to your career.",
   ];
 
-  /*List<String> textListCharacteristics = [
-    "Framework",
-    "We design an ideal structure for your online education.",
-    "Dynamic",
-    "Learn through videos and interactive reinforcements.",
-    "Mobile education",
-    "Login no matter where in the world you are.",
-    "Expertise",
-    "Build your Cross-Functional Expertise with our online tools.",
-  ];*/
-
   List<String> text_list_why_us = [
     "Why us?",
     "Ever-evolving for our students, at an affordable price.",
@@ -75,23 +63,6 @@ class _LandingState extends State<Landing> {
     "According to the Lean Six Sigma methodology, a business operating at the level of “excellence” is characterized by having zero defects - in real terms, that’s 3.4 defects per one million opportunities. \n\n Through easy-to-follow applications, we show you how the broader concepts of Lean Six Sigma can be applied to any business, large or small, and in any situation. We put a large focus on the customer, who is the driver of any business, and help you to adapt according to their ever-changing needs and demands.",
   ];
 
-  /*List<String> textListBestProjects = [
-    "Our best projects",
-    "Experiences that changed the way we work.",
-    "Speed",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Feedback",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Execution",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Speed",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Feedback",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Execution",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  ];*/
-
   List<String> text_list_download = [
     "Learn anytime, anywhere.",
     "If you have to travel",
@@ -102,13 +73,8 @@ class _LandingState extends State<Landing> {
   List<String> text_list_buy = [
     "Our courses",
     "Learn and get certified in any of them.",
-    "White Belt",
-    "\$100",
-    "Yellow Belt",
-    "\$249",
-    "Black Belt",
-    "\$300",
-    "Buy Now",
+    "Buy now",
+    "Coming soon"
   ];
 
   List<String> text_list_contact_us = [
@@ -125,32 +91,6 @@ class _LandingState extends State<Landing> {
   ];
 
   List<String> full_text_list = [];
-
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getString("language_target") == null)
-      prefs.setString("language_target", "en");
-  }
-
-  auto_scroll() {
-    Timer(Duration(seconds: 13), () {
-      if (current_page < total_pages - 1) {
-        page_controller.nextPage(
-          duration: Duration(milliseconds: 900),
-          curve: Curves.linear,
-        );
-      } else {
-        page_controller.animateToPage(
-          0,
-          duration: Duration(milliseconds: 900),
-          curve: Curves.linear,
-        );
-      }
-
-      if (active_auto_scroll) auto_scroll();
-    });
-  }
 
   /*checkCheckoutSessionID() async {
     if (widget.checkoutSessionID.length > 26) {
@@ -203,57 +143,15 @@ class _LandingState extends State<Landing> {
     current_scroll_position = MediaQuery.of(context).size.height;
 
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
-      switch (index) {
-        case 0:
-          {
-            //
-          }
-          break;
-
-        case 1:
-          {
-            current_scroll_position *= 4.2;
-          }
-          break;
-
-        case 2:
-          {
-            current_scroll_position *= 6.2;
-          }
-          break;
-
-        case 3:
-          {
-            current_scroll_position *= 9.4;
-          }
-          break;
+      if (index == 1) {
+        current_scroll_position *= 4.2;
+      } else if (index == 2) {
+        current_scroll_position *= 6.2;
+      } else if (index == 3) {
+        current_scroll_position *= 9.4;
       }
     } else {
-      switch (index) {
-        case 0:
-          {
-            //
-          }
-          break;
-
-        case 1:
-          {
-            current_scroll_position *= 2;
-          }
-          break;
-
-        case 2:
-          {
-            current_scroll_position *= 3;
-          }
-          break;
-
-        case 3:
-          {
-            current_scroll_position *= 4;
-          }
-          break;
-      }
+      current_scroll_position *= (index + 1);
     }
 
     if (pop) Navigator.pop(context);
@@ -357,7 +255,6 @@ class _LandingState extends State<Landing> {
         text_list_contact_us, update_text_list_contact_us);
     translation_stream_contact_us.translate();
 
-    init_prefs();
     //checkCheckoutSessionID();
   }
 

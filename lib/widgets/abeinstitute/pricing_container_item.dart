@@ -3,16 +3,15 @@ import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
-import 'package:xapptor_ui/widgets/covered_container_coming_soon.dart';
+import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/webview/webview.dart';
-import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class PricingContainerItem extends StatefulWidget {
   const PricingContainerItem({
     required this.title,
-    required this.description,
-    required this.characteristics,
+    required this.price,
+    required this.buy_text,
     required this.icon,
     required this.text_color,
     required this.image_url,
@@ -20,11 +19,12 @@ class PricingContainerItem extends StatefulWidget {
     required this.gradient_2,
     required this.coming_soon,
     required this.stripe_payment,
+    required this.coming_soon_text,
   });
 
   final String title;
-  final String description;
-  final String characteristics;
+  final String price;
+  final String buy_text;
   final IconData icon;
   final Color text_color;
   final String image_url;
@@ -32,6 +32,7 @@ class PricingContainerItem extends StatefulWidget {
   final Color gradient_2;
   final bool coming_soon;
   final StripePayment stripe_payment;
+  final String coming_soon_text;
 
   @override
   _PricingContainerItemState createState() => _PricingContainerItemState();
@@ -61,7 +62,7 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
       Container(
         child: Center(
           child: Text(
-            'Buy Now',
+            widget.buy_text,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: widget.text_color,
@@ -82,9 +83,6 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
       if (widget.stripe_payment.user_id.isEmpty) {
         children.add(
           TextButton(
-            style: ButtonStyle(
-                //backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                ),
             onPressed: () {
               open_screen("login");
             },
@@ -116,7 +114,8 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       heightFactor: 0.9,
-      child: CoveredContainerComingSoon(
+      child: ComingSoonContainer(
+        text: widget.coming_soon_text,
         border_radius: border_radius,
         enable_cover: widget.coming_soon,
         child: Card(
@@ -161,7 +160,7 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
                       style: DefaultTextStyle.of(context).style,
                       children: <TextSpan>[
                         TextSpan(
-                          text: widget.description.substring(0, 2),
+                          text: "\$",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: widget.text_color,
@@ -169,39 +168,10 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
                           ),
                         ),
                         TextSpan(
-                          text: widget.description.substring(
-                            2,
-                            widget.description.length,
-                          ),
+                          text: widget.price,
                           style: TextStyle(
                             color: widget.text_color,
                             fontSize: 36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  RichText(
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: widget.characteristics.substring(0, 1),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: widget.text_color,
-                            fontSize: 24,
-                          ),
-                        ),
-                        TextSpan(
-                          text: widget.characteristics.substring(
-                            1,
-                            widget.characteristics.length,
-                          ),
-                          style: TextStyle(
-                            color: widget.text_color,
-                            fontSize: 24,
                           ),
                         ),
                       ],
