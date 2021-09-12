@@ -301,6 +301,7 @@ class _HomeState extends State<Home> {
       update_text_list_function: update_text_list,
       list_index: 0,
     );
+    translation_stream_list = [translation_stream];
 
     if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS)
       check_permissions();

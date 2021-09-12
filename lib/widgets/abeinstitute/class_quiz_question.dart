@@ -32,6 +32,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   List<bool> answers_selected = <bool>[];
 
   late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
 
   List<String> text_list = [
     "Lives:",
@@ -74,7 +75,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
       update_text_list_function: update_text_list,
       list_index: 0,
     );
-    translation_stream.translate();
+    translation_stream_list = [translation_stream];
 
     get_quiz_data();
   }

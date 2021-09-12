@@ -101,6 +101,7 @@ class _ClassSessionState extends State<ClassSession> {
         update_text_list_function: update_text_list,
         list_index: 0,
       );
+      translation_stream_list = [translation_stream];
     });
   }
 

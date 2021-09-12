@@ -54,6 +54,7 @@ class _BuyCoursesState extends State<BuyCourses> {
       update_text_list_function: update_text_list,
       list_index: 0,
     );
+    translation_stream_list = [translation_stream];
 
     change_show_items();
   }
@@ -98,7 +99,7 @@ class _BuyCoursesState extends State<BuyCourses> {
                 height: MediaQuery.of(context).size.height -
                     appbar.preferredSize.height,
                 child: PricingContainer(
-                  texts: text_list.sublist(0, 8),
+                  texts: text_list,
                   background_color: Colors.blue.shade800,
                   title_color: Colors.white,
                   subtitle_color: Colors.white,
