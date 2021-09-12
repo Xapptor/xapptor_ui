@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_translation/pgc.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xapptor_translation/translate.dart';
 
 class LanguagePicker extends StatefulWidget {
   const LanguagePicker({
-    required this.current_language,
-    required this.language_picker_callback,
+    required this.translation_stream_list,
     required this.language_picker_items_text_color,
   });
 
-  final String current_language;
-  final Function language_picker_callback;
+  final List<TranslationStream> translation_stream_list;
   final Color language_picker_items_text_color;
 
   @override
@@ -40,9 +39,14 @@ class _LanguagePickerState extends State<LanguagePicker> {
       prefs.setString("language_target", target);
     }
 
-    widget.language_picker_callback(target);
-
+    translate();
     get_languages_list();
+  }
+
+  translate() {
+    widget.translation_stream_list.forEach((translation_stream) {
+      translation_stream.translate();
+    });
   }
 
   get_languages_list() async {
@@ -94,7 +98,7 @@ class _LanguagePickerState extends State<LanguagePicker> {
 
             prefs.setString('language_target', selectedLanguage['language']);
 
-            widget.language_picker_callback(selectedLanguage['language']);
+            translate();
           });
         },
         selectedItemBuilder: (BuildContext context) {

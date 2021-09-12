@@ -1,12 +1,9 @@
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
-import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/screens/abeinstitute/class_session.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,8 +23,6 @@ class CoursesList extends StatefulWidget {
 }
 
 class _CoursesListState extends State<CoursesList> {
-  late SharedPreferences prefs;
-
   List<String> courses_acquired = <String>[];
   List<Map<String, dynamic>> courses_and_units = <Map<String, dynamic>>[];
   List<Course> courses = <Course>[];
@@ -84,52 +79,25 @@ class _CoursesListState extends State<CoursesList> {
     setState(() {});
   }
 
-  List<String> text_list = [
-    "Account",
-    "Notifications",
-    "My courses",
-    "Buy courses",
-    "Certificates and Rewards",
-    "Settings",
-  ];
-
-  String current_language = "en";
-
-  TranslationStream translation_stream = TranslationStream();
-
-  update_text_list(int index, String new_text) {
-    text_list[index] = new_text;
-    setState(() {});
-  }
-
-  language_picker_callback(String new_current_language) async {
-    current_language = new_current_language;
-    translation_stream.translate();
-    setState(() {});
-  }
-
-  List<Widget> widgets_action(bool portrait) {
-    return [
-      Container(
-        width: portrait ? 100 : 150,
-        child: widget.language_picker
-            ? LanguagePicker(
-                current_language: current_language,
-                language_picker_callback: language_picker_callback,
-                language_picker_items_text_color:
-                    widget.language_picker_items_text_color,
-              )
-            : Container(),
-      ),
-    ];
-  }
+  // List<Widget> widgets_action(bool portrait) {
+  //   return [
+  //     Container(
+  //       width: portrait ? 100 : 150,
+  //       child: widget.language_picker
+  //           ? LanguagePicker(
+  //               language_picker_callback: language_picker_callback,
+  //               language_picker_items_text_color:
+  //                   widget.language_picker_items_text_color,
+  //             )
+  //           : Container(),
+  //     ),
+  //   ];
+  // }
 
   @override
   void initState() {
     super.initState();
     get_courses_and_units();
-    translation_stream.init(text_list, update_text_list);
-    translation_stream.translate();
   }
 
   @override
@@ -140,7 +108,8 @@ class _CoursesListState extends State<CoursesList> {
       appBar: TopBar(
         background_color: color_abeinstitute_topbar,
         has_back_button: true,
-        actions: widgets_action(portrait),
+        //actions: widgets_action(portrait),
+        actions: [],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),

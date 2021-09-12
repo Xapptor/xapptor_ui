@@ -10,7 +10,6 @@ import 'package:xapptor_ui/widgets/contact_us_container.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/values/urls.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_ui/widgets/introduction_container.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -24,20 +23,7 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
-  String current_language = "en";
-  late SharedPreferences prefs;
-
-  double current_page = 0;
-  PageController page_controller = PageController(initialPage: 0);
-  int total_pages = 7;
   ScrollController scroll_controller = ScrollController();
-
-  TranslationStream translation_stream_menu = TranslationStream();
-  TranslationStream translation_stream_introduction = TranslationStream();
-  TranslationStream translation_stream_why_us = TranslationStream();
-  TranslationStream translation_stream_download = TranslationStream();
-  TranslationStream translation_stream_buy = TranslationStream();
-  TranslationStream translation_stream_contact_us = TranslationStream();
 
   List<String> text_list_menu = [
     "About Us",
@@ -90,6 +76,35 @@ class _LandingState extends State<Landing> {
     "+1 (954) 995-9592",
     "community-mgmt@abeinstitute.com",
   ];
+
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
+    if (list_index == 0) {
+      text_list_menu[index] = new_text;
+    } else if (list_index == 1) {
+      text_list_introduction[index] = new_text;
+    } else if (list_index == 2) {
+      text_list_why_us[index] = new_text;
+    } else if (list_index == 3) {
+      text_list_download[index] = new_text;
+    } else if (list_index == 4) {
+      text_list_buy[index] = new_text;
+    } else if (list_index == 5) {
+      text_list_contact_us[index] = new_text;
+    }
+    setState(() {});
+  }
+
+  late TranslationStream translation_stream_menu;
+  late TranslationStream translation_stream_introduction;
+  late TranslationStream translation_stream_why_us;
+  late TranslationStream translation_stream_download;
+  late TranslationStream translation_stream_buy;
+  late TranslationStream translation_stream_contact_us;
+  late List<TranslationStream> translation_stream_list;
 
   /*checkCheckoutSessionID() async {
     if (widget.checkoutSessionID.length > 26) {
@@ -162,36 +177,6 @@ class _LandingState extends State<Landing> {
     );
   }
 
-  update_text_list_menu(int index, String new_text) {
-    text_list_menu[index] = new_text;
-    setState(() {});
-  }
-
-  update_text_list_introduction(int index, String new_text) {
-    text_list_introduction[index] = new_text;
-    setState(() {});
-  }
-
-  update_text_list_why_us(int index, String new_text) {
-    text_list_why_us[index] = new_text;
-    setState(() {});
-  }
-
-  update_text_list_download(int index, String new_text) {
-    text_list_download[index] = new_text;
-    setState(() {});
-  }
-
-  update_text_list_buy(int index, String new_text) {
-    text_list_buy[index] = new_text;
-    setState(() {});
-  }
-
-  update_text_list_contact_us(int index, String new_text) {
-    text_list_contact_us[index] = new_text;
-    setState(() {});
-  }
-
   void dispose() {
     scroll_controller.dispose();
     super.dispose();
@@ -233,32 +218,50 @@ class _LandingState extends State<Landing> {
     super.initState();
     check_metadata_app();
 
-    translation_stream_menu.init(text_list_menu, update_text_list_menu);
-    translation_stream_menu.translate();
-
-    translation_stream_introduction.init(
-      text_list_introduction,
-      update_text_list_introduction,
+    translation_stream_menu = TranslationStream(
+      text_list: text_list_menu,
+      update_text_list_function: update_text_list,
+      list_index: 0,
     );
-    translation_stream_introduction.translate();
 
-    translation_stream_why_us.init(text_list_why_us, update_text_list_why_us);
-    translation_stream_why_us.translate();
-
-    translation_stream_download.init(
-      text_list_download,
-      update_text_list_download,
+    translation_stream_introduction = TranslationStream(
+      text_list: text_list_introduction,
+      update_text_list_function: update_text_list,
+      list_index: 1,
     );
-    translation_stream_download.translate();
 
-    translation_stream_buy.init(text_list_buy, update_text_list_buy);
-    translation_stream_buy.translate();
-
-    translation_stream_contact_us.init(
-      text_list_contact_us,
-      update_text_list_contact_us,
+    translation_stream_why_us = TranslationStream(
+      text_list: text_list_why_us,
+      update_text_list_function: update_text_list,
+      list_index: 2,
     );
-    translation_stream_contact_us.translate();
+
+    translation_stream_download = TranslationStream(
+      text_list: text_list_download,
+      update_text_list_function: update_text_list,
+      list_index: 3,
+    );
+
+    translation_stream_buy = TranslationStream(
+      text_list: text_list_buy,
+      update_text_list_function: update_text_list,
+      list_index: 4,
+    );
+
+    translation_stream_contact_us = TranslationStream(
+      text_list: text_list_contact_us,
+      update_text_list_function: update_text_list,
+      list_index: 5,
+    );
+
+    translation_stream_list = [
+      translation_stream_menu,
+      translation_stream_introduction,
+      translation_stream_why_us,
+      translation_stream_download,
+      translation_stream_buy,
+      translation_stream_contact_us,
+    ];
 
     //checkCheckoutSessionID();
   }
@@ -321,24 +324,12 @@ class _LandingState extends State<Landing> {
     );
   }
 
-  language_picker_callback(String new_current_language) async {
-    current_language = new_current_language;
-    translation_stream_menu.translate();
-    translation_stream_introduction.translate();
-    translation_stream_why_us.translate();
-    translation_stream_download.translate();
-    translation_stream_buy.translate();
-    translation_stream_contact_us.translate();
-    setState(() {});
-  }
-
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
         width: portrait ? 100 : 150,
         child: LanguagePicker(
-          current_language: current_language,
-          language_picker_callback: language_picker_callback,
+          translation_stream_list: translation_stream_list,
           language_picker_items_text_color: color_abeinstitute_ocean_blue,
         ),
       ),

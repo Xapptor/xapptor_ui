@@ -35,13 +35,14 @@ class ClassQuiz extends StatefulWidget {
 class _ClassQuizState extends State<ClassQuiz> {
   String user_id = "";
 
-  String current_language = "en";
-  TranslationStream translation_stream = TranslationStream();
   List<String> text_list = [
     "Lives:",
     "Validate",
     "Progress:",
   ];
+
+  late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
 
   bool quiz_passed = false;
   List questions_result = [];
@@ -54,20 +55,13 @@ class _ClassQuizState extends State<ClassQuiz> {
   List<Widget> widgets_list = <Widget>[];
   String html_certificate = "";
 
-  language_picker_callback(String new_current_language) async {
-    current_language = new_current_language;
-    translation_stream.translate();
-    setState(() {});
-  }
-
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
         width: portrait ? 100 : 150,
         child: widget.language_picker
             ? LanguagePicker(
-                current_language: current_language,
-                language_picker_callback: language_picker_callback,
+                translation_stream_list: translation_stream_list,
                 language_picker_items_text_color:
                     widget.language_picker_items_text_color,
               )
@@ -150,12 +144,19 @@ class _ClassQuizState extends State<ClassQuiz> {
 
       setState(() {});
 
-      translation_stream.init(text_list, update_text_list);
-      translation_stream.translate();
+      translation_stream = TranslationStream(
+        text_list: text_list,
+        update_text_list_function: update_text_list,
+        list_index: 0,
+      );
     });
   }
 
-  update_text_list(int index, String new_text) {
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
     text_list[index] = new_text;
     setState(() {});
   }

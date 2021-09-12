@@ -50,9 +50,17 @@ class _HomeState extends State<Home> {
     "Logout",
   ];
 
-  String current_language = "en";
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
+    text_list[index] = new_text;
+    setState(() {});
+  }
 
-  TranslationStream translation_stream = TranslationStream();
+  late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
 
   Widget drawer() {
     return SafeArea(
@@ -118,19 +126,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  language_picker_callback(String new_current_language) async {
-    current_language = new_current_language;
-    translation_stream.translate();
-    setState(() {});
-  }
-
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
         width: portrait ? 100 : 150,
         child: LanguagePicker(
-          current_language: current_language,
-          language_picker_callback: language_picker_callback,
+          translation_stream_list: translation_stream_list,
           language_picker_items_text_color: color_abeinstitute_ocean_blue,
         ),
       ),
@@ -198,11 +199,6 @@ class _HomeState extends State<Home> {
         },
       ),
     ];
-  }
-
-  update_text_list(int index, String new_text) {
-    text_list[index] = new_text;
-    setState(() {});
   }
 
   check_permissions() async {
@@ -299,8 +295,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     check_login();
-    translation_stream.init(text_list, update_text_list);
-    translation_stream.translate();
+
+    translation_stream = TranslationStream(
+      text_list: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+    );
 
     if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS)
       check_permissions();

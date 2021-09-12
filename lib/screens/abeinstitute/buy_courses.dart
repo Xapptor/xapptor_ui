@@ -23,39 +23,38 @@ class BuyCourses extends StatefulWidget {
 
 class _BuyCoursesState extends State<BuyCourses> {
   ScrollController scroll_controller = ScrollController();
-  String current_language = "en";
-  TranslationStream translation_stream = TranslationStream();
 
   List<String> text_list = [
     "Our courses",
     "Learn and get certified in any of them.",
-    "White Belt",
-    "\$100",
-    "Yellow Belt",
-    "\$249",
-    "Black Belt",
-    "\$300",
     "Buy now",
+    "Upcoming",
   ];
 
-  update_text_list(int index, String new_text) {
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
     text_list[index] = new_text;
     setState(() {});
   }
 
-  language_picker_callback(String new_current_language) async {
-    current_language = new_current_language;
-    translation_stream.translate();
-    setState(() {});
-  }
+  late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
 
   bool show_items = false;
 
   @override
   void initState() {
     super.initState();
-    translation_stream.init(text_list, update_text_list);
-    translation_stream.translate();
+
+    translation_stream = TranslationStream(
+      text_list: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+    );
+
     change_show_items();
   }
 
@@ -80,8 +79,7 @@ class _BuyCoursesState extends State<BuyCourses> {
           width: portrait ? 200 : 100,
           child: widget.language_picker
               ? LanguagePicker(
-                  current_language: current_language,
-                  language_picker_callback: language_picker_callback,
+                  translation_stream_list: translation_stream_list,
                   language_picker_items_text_color:
                       widget.language_picker_items_text_color,
                 )

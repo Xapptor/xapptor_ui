@@ -11,6 +11,7 @@ import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_logic/is_portrait.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ClassSession extends StatefulWidget {
   const ClassSession({
@@ -33,7 +34,9 @@ class ClassSession extends StatefulWidget {
 
 class _ClassSessionState extends State<ClassSession> {
   String current_language = "en";
-  TranslationStream translation_stream = TranslationStream();
+  late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
+
   List<String> text_list = [
     "text",
     "text",
@@ -51,7 +54,11 @@ class _ClassSessionState extends State<ClassSession> {
 
   bool show_webview = false;
 
-  update_text_list(int index, String new_text) {
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
     text_list[index] = new_text;
     setState(() {});
   }
@@ -89,15 +96,22 @@ class _ClassSessionState extends State<ClassSession> {
       last_unit = doc_snap.get('last_unit');
       setState(() {});
 
-      translation_stream.init(text_list, update_text_list);
-      translation_stream.translate();
+      translation_stream = TranslationStream(
+        text_list: text_list,
+        update_text_list_function: update_text_list,
+        list_index: 0,
+      );
     });
   }
 
-  language_picker_callback(String new_current_language) async {
-    current_language = new_current_language;
-    translation_stream.translate();
-    setState(() {});
+  late SharedPreferences prefs;
+
+  get_current_language() async {
+    prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getString("language_target") != null) {
+      current_language = prefs.getString("language_target")!;
+    }
   }
 
   List<Widget> widgets_action(bool portrait) {
@@ -105,8 +119,7 @@ class _ClassSessionState extends State<ClassSession> {
       Container(
         width: portrait ? 100 : 150,
         child: LanguagePicker(
-          current_language: current_language,
-          language_picker_callback: language_picker_callback,
+          translation_stream_list: translation_stream_list,
           language_picker_items_text_color: Theme.of(context).primaryColor,
         ),
       ),

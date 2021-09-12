@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
+import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/widgets/made_with_container.dart';
 import '../widgets/topbar.dart';
 import '../widgets/language_picker.dart';
@@ -8,8 +9,6 @@ import 'package:xapptor_logic/is_portrait.dart';
 
 class UserInfoViewContainer extends StatefulWidget {
   const UserInfoViewContainer({
-    required this.current_language,
-    required this.language_picker_callback,
     required this.child,
     required this.text_color,
     required this.topbar_color,
@@ -17,10 +16,9 @@ class UserInfoViewContainer extends StatefulWidget {
     required this.custom_background,
     required this.has_back_button,
     required this.user_info_form_type,
+    required this.translation_stream_list,
   });
 
-  final String? current_language;
-  final Function? language_picker_callback;
   final Widget child;
   final Color text_color;
   final Color topbar_color;
@@ -28,6 +26,7 @@ class UserInfoViewContainer extends StatefulWidget {
   final Widget? custom_background;
   final bool has_back_button;
   final UserInfoFormType user_info_form_type;
+  final List<TranslationStream> translation_stream_list;
 
   @override
   _UserInfoViewContainerState createState() => _UserInfoViewContainerState();
@@ -59,9 +58,7 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
               width: portrait ? 100 : 200,
               child: widget.has_language_picker
                   ? LanguagePicker(
-                      current_language: widget.current_language!,
-                      language_picker_callback:
-                          widget.language_picker_callback!,
+                      translation_stream_list: widget.translation_stream_list,
                       language_picker_items_text_color: widget.text_color,
                     )
                   : Container(),
