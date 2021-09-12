@@ -18,6 +18,7 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
   @override
@@ -112,7 +113,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double screen_height = MediaQuery.of(context).size.height;
     EdgeInsets margin = EdgeInsets.all(20);
     EdgeInsets padding = EdgeInsets.all(10);

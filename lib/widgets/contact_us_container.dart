@@ -4,6 +4,7 @@ import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'custom_card.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class ContactUsContainer extends StatefulWidget {
   const ContactUsContainer({
@@ -54,7 +55,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Container(
       height: portrait

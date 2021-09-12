@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xapptor_translation/translate.dart';
@@ -7,6 +6,7 @@ import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class BuyCourses extends StatefulWidget {
   const BuyCourses({
@@ -69,7 +69,7 @@ class _BuyCoursesState extends State<BuyCourses> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     AppBar appbar = TopBar(
       background_color: color_abeinstitute_topbar,

@@ -16,6 +16,7 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'product_details.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({
@@ -160,7 +161,7 @@ class _ProductListState extends State<ProductList> {
     required Dispenser? dispenser,
     required int dispenser_id,
   }) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double fractional_factor = 0.85;
     double border_radius = 10;
 

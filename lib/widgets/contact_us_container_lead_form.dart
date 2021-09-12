@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'contact_us_container.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
   const ContactUsContainerLeadForm({
@@ -101,7 +102,7 @@ class _ContactUsContainerLeadFormState
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Container(
       height: portrait

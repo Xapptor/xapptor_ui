@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'pricing_container_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class PricingContainer extends StatefulWidget {
   const PricingContainer({
@@ -81,7 +82,7 @@ class _PricingContainerState extends State<PricingContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Container(
       color: widget.background_color,

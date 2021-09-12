@@ -9,6 +9,7 @@ import 'package:xapptor_ui/widgets/abeinstitute/class_quiz_result.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class ClassQuiz extends StatefulWidget {
   const ClassQuiz({
@@ -229,7 +230,7 @@ class _ClassQuizState extends State<ClassQuiz> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Scaffold(
       appBar: TopBar(

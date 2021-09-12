@@ -23,6 +23,7 @@ import 'package:flutter/services.dart'
     show Clipboard, ClipboardData, rootBundle;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'vending_machine_details.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -387,7 +388,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return WillPopScope(
       onWillPop: () async => false,

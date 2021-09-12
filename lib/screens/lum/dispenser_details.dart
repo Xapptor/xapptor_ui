@@ -7,6 +7,7 @@ import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class DispenserDetails extends StatefulWidget {
   const DispenserDetails({
@@ -61,7 +62,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Scaffold(
       appBar: TopBar(

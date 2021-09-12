@@ -3,6 +3,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'class_quiz_answer_item.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class ClassQuizQuestion extends StatefulWidget {
   const ClassQuizQuestion({
@@ -87,7 +88,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Container(
       child: Column(

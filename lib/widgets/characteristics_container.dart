@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'characteristics_container_item.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class CharacteristicsContainer extends StatefulWidget {
   const CharacteristicsContainer({
@@ -17,7 +17,7 @@ class CharacteristicsContainer extends StatefulWidget {
 class _CharacteristicsContainerState extends State<CharacteristicsContainer> {
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double fractional_Factor = 0.5;
 
     return Container(

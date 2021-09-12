@@ -6,6 +6,7 @@ import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/screens/lum/vending_machine_details.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class VendingMachineCard extends StatefulWidget {
   const VendingMachineCard({
@@ -30,7 +31,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double current_card_height = MediaQuery.of(context).size.height / 4;
     double name_size = 22;
     double title_size = 16;

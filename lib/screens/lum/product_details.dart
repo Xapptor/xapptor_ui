@@ -13,6 +13,7 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart' as file_picker;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:xapptor_logic/is_portrait.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -223,7 +224,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
     double textfield_size = 18;

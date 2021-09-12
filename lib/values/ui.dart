@@ -5,6 +5,7 @@ import 'package:xapptor_ui/webview/webview.dart';
 import 'package:xapptor_ui/widgets/crop_widget.dart';
 import 'custom_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 // General
 
@@ -13,12 +14,12 @@ double outline_border_radius = 20;
 double outline_width = 3;
 double outline_padding = 15;
 double logo_height(BuildContext context) {
-  bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+  bool portrait = is_portrait(context);
   return MediaQuery.of(context).size.width * (portrait ? 0.3 : 0.1);
 }
 
 double logo_width(BuildContext context) {
-  bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+  bool portrait = is_portrait(context);
   return MediaQuery.of(context).size.width * (portrait ? 0.6 : 0.2);
 }
 

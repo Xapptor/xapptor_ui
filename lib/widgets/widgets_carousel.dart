@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:xapptor_logic/random_number_with_range.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class WidgetsCarousel extends StatefulWidget {
   const WidgetsCarousel({
@@ -74,7 +75,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     PageController new_page_controller = PageController(
       initialPage: page_controller.initialPage,

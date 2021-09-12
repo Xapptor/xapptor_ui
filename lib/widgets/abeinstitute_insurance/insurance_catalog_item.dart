@@ -1,5 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class InsuranceCatalogItem extends StatefulWidget {
   const InsuranceCatalogItem({
@@ -23,7 +24,7 @@ class InsuranceCatalogItem extends StatefulWidget {
 class _InsuranceCatalogItemState extends State<InsuranceCatalogItem> {
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Card(
       elevation: 10,

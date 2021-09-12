@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
@@ -10,6 +9,7 @@ import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class VendingMachineDetails extends StatefulWidget {
   const VendingMachineDetails({
@@ -177,7 +177,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     double textfield_size = 24;
     double title_size = 20;
     double subtitle_size = 18;
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double screen_width = MediaQuery.of(context).size.width;
 
     return Scaffold(

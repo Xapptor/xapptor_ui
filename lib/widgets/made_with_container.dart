@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:xapptor_ui/values/version.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class MadeWithContainer extends StatelessWidget {
   MadeWithContainer({
@@ -13,7 +13,7 @@ class MadeWithContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double view_padding_bottom = MediaQuery.of(context).viewPadding.bottom;
 
     return GestureDetector(

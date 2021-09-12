@@ -7,6 +7,7 @@ import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({
@@ -77,7 +78,7 @@ class _QRScannerState extends State<QRScanner> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double screen_width = MediaQuery.of(context).size.width;
 
     return Scaffold(

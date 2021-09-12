@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'characteristics_container_item.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class WhyUsContainer extends StatefulWidget {
   const WhyUsContainer({
@@ -35,7 +36,7 @@ class WhyUsContainer extends StatefulWidget {
 class _WhyUsContainerState extends State<WhyUsContainer> {
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Container(
       decoration: BoxDecoration(

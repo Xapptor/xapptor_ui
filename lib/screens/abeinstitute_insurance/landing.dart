@@ -12,6 +12,7 @@ import 'package:xapptor_ui/widgets/expandable_fab.dart';
 import 'package:xapptor_ui/widgets/introduction_container.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/values/urls.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -284,7 +285,7 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Scaffold(
       key: scaffold_key,

@@ -4,6 +4,7 @@ import 'package:xapptor_auth/user_info_form_type.dart';
 import 'package:xapptor_ui/widgets/made_with_container.dart';
 import '../widgets/topbar.dart';
 import '../widgets/language_picker.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class UserInfoViewContainer extends StatefulWidget {
   const UserInfoViewContainer({
@@ -43,7 +44,7 @@ class _UserInfoViewContainerState extends State<UserInfoViewContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return WillPopScope(
       onWillPop: () async => widget.has_back_button,

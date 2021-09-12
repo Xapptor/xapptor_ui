@@ -23,6 +23,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class Home extends StatefulWidget {
   Home({
@@ -312,7 +313,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
     double elevation = 3;
     double border_radius = 20;
 

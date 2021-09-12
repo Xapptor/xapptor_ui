@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class DownloadAppsContainer extends StatefulWidget {
   const DownloadAppsContainer({
@@ -38,7 +39,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     var widgets_list = <Widget>[
       Spacer(flex: 2),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class IntroductionContainer extends StatefulWidget {
   const IntroductionContainer({
@@ -44,7 +45,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Container(
       height: widget.height,

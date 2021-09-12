@@ -15,6 +15,7 @@ import 'package:xapptor_ui/widgets/introduction_container.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/widgets/why_us_container.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -89,8 +90,6 @@ class _LandingState extends State<Landing> {
     "+1 (954) 995-9592",
     "community-mgmt@abeinstitute.com",
   ];
-
-  List<String> full_text_list = [];
 
   /*checkCheckoutSessionID() async {
     if (widget.checkoutSessionID.length > 26) {
@@ -238,21 +237,27 @@ class _LandingState extends State<Landing> {
     translation_stream_menu.translate();
 
     translation_stream_introduction.init(
-        text_list_introduction, update_text_list_introduction);
+      text_list_introduction,
+      update_text_list_introduction,
+    );
     translation_stream_introduction.translate();
 
     translation_stream_why_us.init(text_list_why_us, update_text_list_why_us);
     translation_stream_why_us.translate();
 
     translation_stream_download.init(
-        text_list_download, update_text_list_download);
+      text_list_download,
+      update_text_list_download,
+    );
     translation_stream_download.translate();
 
     translation_stream_buy.init(text_list_buy, update_text_list_buy);
     translation_stream_buy.translate();
 
     translation_stream_contact_us.init(
-        text_list_contact_us, update_text_list_contact_us);
+      text_list_contact_us,
+      update_text_list_contact_us,
+    );
     translation_stream_contact_us.translate();
 
     //checkCheckoutSessionID();
@@ -318,7 +323,6 @@ class _LandingState extends State<Landing> {
 
   language_picker_callback(String new_current_language) async {
     current_language = new_current_language;
-
     translation_stream_menu.translate();
     translation_stream_introduction.translate();
     translation_stream_why_us.translate();
@@ -400,7 +404,7 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    bool portrait = is_portrait(context);
 
     return Scaffold(
       key: scaffold_key,
@@ -414,94 +418,81 @@ class _LandingState extends State<Landing> {
       ),
       body: Container(
         color: Colors.white,
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewport_constraints) {
-            return SingleChildScrollView(
-              controller: scroll_controller,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewport_constraints.minHeight,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      IntroductionContainer(
-                        texts: text_list_introduction,
-                        text_color: Colors.white,
-                        background_image:
-                            "assets/images/introduction_container.jpg",
-                        logo_image: "assets/images/logo.png",
-                        scroll_icon: Icons.keyboard_arrow_down,
-                        scroll_icon_color: Colors.orangeAccent,
-                        height: MediaQuery.of(context).size.height,
-                      ),
-                      WhyUsContainer(
-                        texts: text_list_why_us,
-                        background_color: Colors.white,
-                        characteristic_icon_1: Icons.shutter_speed,
-                        characteristic_icon_2: Icons.message,
-                        characteristic_icon_3: Icons.compare,
-                        characteristic_icon_color_1: Colors.orangeAccent,
-                        characteristic_icon_color_2: Colors.lightBlueAccent,
-                        characteristic_icon_color_3: Colors.redAccent,
-                        title_color: Colors.black,
-                        subtitle_color: Colors.grey,
-                        background_image: '',
-                      ),
-                      DownloadAppsContainer(
-                        texts: text_list_download,
-                        title_color: Colors.black,
-                        subtitle_color: Colors.grey,
-                        image_1: 'assets/images/traveler_2.jpg',
-                        image_2: 'assets/images/traveler_1.jpg',
-                        android_url:
-                            "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=a83fe9a6-8b09-4dea-b280-6217ce1ffbcb",
-                        ios_url:
-                            "itms-services://?action=download-manifest&url=https://www.abeinstitute.com/manifest.plist",
-                        background_image: "",
-                        button_background_color: [
-                          color_abeinstitute_background_grey,
-                          color_abeinstitute_ocean_blue,
-                        ],
-                      ),
-                      PricingContainer(
-                        texts: text_list_buy,
-                        background_color: Colors.blue.shade800,
-                        title_color: Colors.white,
-                        subtitle_color: Colors.white,
-                        image_1: 'assets/images/student_1.jpg',
-                        image_2: 'assets/images/student_2.jpg',
-                        image_3: 'assets/images/family.jpg',
-                      ),
-                      ContactUsContainer(
-                        texts: text_list_contact_us,
-                        landing_class: this,
-                        icon_color: color_abeinstitute_ocean_blue,
-                        container_background_image:
-                            "assets/images/background_building.jpg",
-                        facebook_url: url_facebook_abeinstitute,
-                        facebook_url_fallback:
-                            url_facebook_fallback_abeinstitute,
-                        youtube_url: url_youtube_abeinstitute,
-                        instagram_url: url_instagram_abeinstitute,
-                        twitter_url: url_twitter_abeinstitute,
-                        email: "community-mgmt@abeinstitute.com",
-                        feedback_message: "✉️ Message sent! 👍",
-                        card_background_image: "",
-                        container_background_color: Colors.white,
-                        card_background_color: Colors.white,
-                        linear_gradient_colors: [
-                          Colors.black.withOpacity(0.6),
-                          Colors.black.withOpacity(0.6),
-                        ],
-                        border_radius: 10,
-                      ),
-                    ],
-                  ),
-                ),
+        child: SingleChildScrollView(
+          controller: scroll_controller,
+          child: Column(
+            children: [
+              IntroductionContainer(
+                texts: text_list_introduction,
+                text_color: Colors.white,
+                background_image: "assets/images/introduction_container.jpg",
+                logo_image: "assets/images/logo.png",
+                scroll_icon: Icons.keyboard_arrow_down,
+                scroll_icon_color: Colors.orangeAccent,
+                height: MediaQuery.of(context).size.height,
               ),
-            );
-          },
+              WhyUsContainer(
+                texts: text_list_why_us,
+                background_color: Colors.white,
+                characteristic_icon_1: Icons.shutter_speed,
+                characteristic_icon_2: Icons.message,
+                characteristic_icon_3: Icons.compare,
+                characteristic_icon_color_1: Colors.orangeAccent,
+                characteristic_icon_color_2: Colors.lightBlueAccent,
+                characteristic_icon_color_3: Colors.redAccent,
+                title_color: Colors.black,
+                subtitle_color: Colors.grey,
+                background_image: '',
+              ),
+              DownloadAppsContainer(
+                texts: text_list_download,
+                title_color: Colors.black,
+                subtitle_color: Colors.grey,
+                image_1: 'assets/images/traveler_2.jpg',
+                image_2: 'assets/images/traveler_1.jpg',
+                android_url:
+                    "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=a83fe9a6-8b09-4dea-b280-6217ce1ffbcb",
+                ios_url:
+                    "itms-services://?action=download-manifest&url=https://www.abeinstitute.com/manifest.plist",
+                background_image: "",
+                button_background_color: [
+                  color_abeinstitute_background_grey,
+                  color_abeinstitute_ocean_blue,
+                ],
+              ),
+              PricingContainer(
+                texts: text_list_buy,
+                background_color: Colors.blue.shade800,
+                title_color: Colors.white,
+                subtitle_color: Colors.white,
+                image_1: 'assets/images/student_1.jpg',
+                image_2: 'assets/images/student_2.jpg',
+                image_3: 'assets/images/family.jpg',
+              ),
+              ContactUsContainer(
+                texts: text_list_contact_us,
+                landing_class: this,
+                icon_color: color_abeinstitute_ocean_blue,
+                container_background_image:
+                    "assets/images/background_building.jpg",
+                facebook_url: url_facebook_abeinstitute,
+                facebook_url_fallback: url_facebook_fallback_abeinstitute,
+                youtube_url: url_youtube_abeinstitute,
+                instagram_url: url_instagram_abeinstitute,
+                twitter_url: url_twitter_abeinstitute,
+                email: "community-mgmt@abeinstitute.com",
+                feedback_message: "✉️ Message sent! 👍",
+                card_background_image: "",
+                container_background_color: Colors.white,
+                card_background_color: Colors.white,
+                linear_gradient_colors: [
+                  Colors.black.withOpacity(0.6),
+                  Colors.black.withOpacity(0.6),
+                ],
+                border_radius: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );
