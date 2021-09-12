@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'contact_us_container.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
+import 'custom_card.dart';
+
 class ContactUsContainerLeadForm extends StatefulWidget {
   const ContactUsContainerLeadForm({
     required this.landing_class,
@@ -392,24 +394,15 @@ class _ContactUsContainerLeadFormState
                                       portrait ? Spacer(flex: 1) : Container(),
                                       Expanded(
                                         flex: 2,
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(widget.icon_color),
-                                            shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                ),
-                                              ),
-                                            ),
+                                        child: CustomCard(
+                                          linear_gradient: LinearGradient(
+                                            colors: [
+                                              widget.icon_color,
+                                              widget.icon_color,
+                                            ],
                                           ),
-                                          onPressed: () {
+                                          border_radius: 1000,
+                                          on_pressed: () {
                                             if (insurance_type_value !=
                                                     "¿Qué seguro te interesa?" &&
                                                 schedule_value !=

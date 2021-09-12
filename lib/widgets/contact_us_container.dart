@@ -202,101 +202,99 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: Row(
-                                    children: <Widget>[
-                                      portrait ? Spacer(flex: 1) : Container(),
-                                      Expanded(
-                                        flex: 2,
-                                        child: ElevatedButton(
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(widget.icon_color),
-                                            shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width,
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.5,
+                                    child: Row(
+                                      children: <Widget>[
+                                        portrait
+                                            ? Spacer(flex: 1)
+                                            : Container(),
+                                        Expanded(
+                                          flex: 2,
+                                          child: CustomCard(
+                                            linear_gradient: LinearGradient(
+                                              colors: [
+                                                widget.icon_color,
+                                                widget.icon_color,
+                                              ],
+                                            ),
+                                            border_radius: 1000,
+                                            on_pressed: () {
+                                              String newMessage =
+                                                  name_input_controller.text +
+                                                      " has a message for you! \n\n Email: " +
+                                                      email_input_controller
+                                                          .text +
+                                                      "\n\n Message: " +
+                                                      message_input_controller
+                                                          .text;
+
+                                              FirebaseFirestore.instance
+                                                  .collection("emails")
+                                                  .doc()
+                                                  .set({
+                                                "to": widget.email,
+                                                "message": {
+                                                  "subject":
+                                                      "Message from contact us section: " +
+                                                          '"' +
+                                                          subject_input_controller
+                                                              .text +
+                                                          '"',
+                                                  "text": newMessage,
+                                                }
+                                              }).then((value) {
+                                                name_input_controller.clear();
+                                                email_input_controller.clear();
+                                                subject_input_controller
+                                                    .clear();
+                                                message_input_controller
+                                                    .clear();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      widget.feedback_message,
+                                                    ),
+                                                    duration:
+                                                        Duration(seconds: 2),
+                                                  ),
+                                                );
+                                              }).catchError((err) {
+                                                print(err);
+                                              });
+                                            },
+                                            child: Row(
+                                              children: <Widget>[
+                                                Spacer(flex: 1),
+                                                Expanded(
+                                                  flex: 5,
+                                                  child: Icon(
+                                                    FontAwesome.paper_plane,
+                                                    color: Colors.white,
+                                                    size: 16,
+                                                  ),
                                                 ),
-                                              ),
+                                                Spacer(flex: 1),
+                                                Expanded(
+                                                  flex: 7,
+                                                  child: Text(
+                                                    widget.texts[6],
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Spacer(flex: 1),
+                                              ],
                                             ),
                                           ),
-                                          onPressed: () {
-                                            String newMessage =
-                                                name_input_controller.text +
-                                                    " has a message for you! \n\n Email: " +
-                                                    email_input_controller
-                                                        .text +
-                                                    "\n\n Message: " +
-                                                    message_input_controller
-                                                        .text;
-
-                                            FirebaseFirestore.instance
-                                                .collection("emails")
-                                                .doc()
-                                                .set({
-                                              "to": widget.email,
-                                              "message": {
-                                                "subject":
-                                                    "Message from contact us section: " +
-                                                        '"' +
-                                                        subject_input_controller
-                                                            .text +
-                                                        '"',
-                                                "text": newMessage,
-                                              }
-                                            }).then((value) {
-                                              name_input_controller.clear();
-                                              email_input_controller.clear();
-                                              subject_input_controller.clear();
-                                              message_input_controller.clear();
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    widget.feedback_message,
-                                                  ),
-                                                  duration:
-                                                      Duration(seconds: 2),
-                                                ),
-                                              );
-                                            }).catchError((err) {
-                                              print(err);
-                                            });
-                                          },
-                                          child: Row(
-                                            children: <Widget>[
-                                              Spacer(flex: 1),
-                                              Expanded(
-                                                flex: 5,
-                                                child: Icon(
-                                                  FontAwesome.paper_plane,
-                                                  color: Colors.white,
-                                                  size: 16,
-                                                ),
-                                              ),
-                                              Spacer(flex: 1),
-                                              Expanded(
-                                                flex: 7,
-                                                child: Text(
-                                                  widget.texts[6],
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                              ),
-                                              Spacer(flex: 1),
-                                            ],
-                                          ),
                                         ),
-                                      ),
-                                      Spacer(flex: portrait ? 1 : 9),
-                                    ],
+                                        Spacer(flex: portrait ? 1 : 9),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 portrait ? Container() : Spacer(flex: 1),
