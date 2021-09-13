@@ -67,7 +67,7 @@ class _WebviewState extends State<Webview> {
                         </style>
                     </head>
                     <body>
-                      ${widget.src}
+                        <iframe src="${widget.src}" width="100%" height="100%"></iframe>
                     </body>
                   </html>
                     """;
