@@ -41,7 +41,12 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> scaffold_key = new GlobalKey<ScaffoldState>();
   bool auto_scroll = true;
 
-  List<String> text_list = [
+  late TranslationStream translation_stream_menu;
+  late TranslationStream translation_stream_cards_1;
+  late TranslationStream translation_stream_cards_2;
+  late List<TranslationStream> translation_stream_list;
+
+  List<String> text_list_menu = [
     "Account",
     "My courses",
     "Buy courses",
@@ -50,17 +55,37 @@ class _HomeState extends State<Home> {
     "Logout",
   ];
 
+  List<String> text_list_cards_1 = [
+    "Account",
+    "Edit your Info",
+    "Courses",
+    "Complete the Units",
+    "New Courses",
+    "Extend your Knowledge",
+    "Certificates",
+    "and Rewards",
+  ];
+
+  List<String> text_list_cards_2 = [
+    "Official Page",
+    "Official Account",
+    "Official Channel",
+  ];
+
   update_text_list({
     required int index,
     required String new_text,
     required int list_index,
   }) {
-    text_list[index] = new_text;
+    if (list_index == 0) {
+      text_list_menu[index] = new_text;
+    } else if (list_index == 1) {
+      text_list_cards_1[index] = new_text;
+    } else if (list_index == 2) {
+      text_list_cards_2[index] = new_text;
+    }
     setState(() {});
   }
-
-  late TranslationStream translation_stream;
-  late List<TranslationStream> translation_stream_list;
 
   Widget drawer() {
     return SafeArea(
@@ -81,7 +106,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             ListTile(
-              title: Text(text_list[0]),
+              title: Text(text_list_menu[0]),
               onTap: () {
                 setState(() {
                   auto_scroll = false;
@@ -90,29 +115,29 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text(text_list[1]),
+              title: Text(text_list_menu[1]),
               onTap: () {
                 open_screen("home/courses");
               },
             ),
             ListTile(
-              title: Text(text_list[2]),
+              title: Text(text_list_menu[2]),
               onTap: () {
                 open_screen("home/buy_courses");
               },
             ),
             ListTile(
-              title: Text(text_list[3]),
+              title: Text(text_list_menu[3]),
               onTap: () {
                 open_screen("home/certificates_and_rewards");
               },
             ),
             ListTile(
-              title: Text(text_list[4]),
+              title: Text(text_list_menu[4]),
               onTap: () {},
             ),
             ListTile(
-              title: Text(text_list[5]),
+              title: Text(text_list_menu[5]),
               onTap: () async {
                 await FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pop(context);
@@ -140,7 +165,7 @@ class _HomeState extends State<Home> {
           : Row(
               children: [
                 Tooltip(
-                  message: text_list[0],
+                  message: text_list_menu[0],
                   child: TextButton(
                     onPressed: () {
                       open_screen("home/account");
@@ -152,7 +177,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Tooltip(
-                  message: text_list[1],
+                  message: text_list_menu[1],
                   child: TextButton(
                     onPressed: () {
                       open_screen("home/courses");
@@ -164,7 +189,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Tooltip(
-                  message: text_list[2],
+                  message: text_list_menu[2],
                   child: TextButton(
                     onPressed: () {
                       open_screen("home/buy_courses");
@@ -176,7 +201,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Tooltip(
-                  message: text_list[3],
+                  message: text_list_menu[3],
                   child: TextButton(
                     onPressed: () {
                       open_screen("home/certificates_and_rewards");
@@ -296,12 +321,29 @@ class _HomeState extends State<Home> {
     super.initState();
     check_login();
 
-    translation_stream = TranslationStream(
-      text_list: text_list,
+    translation_stream_menu = TranslationStream(
+      text_list: text_list_menu,
       update_text_list_function: update_text_list,
       list_index: 0,
     );
-    translation_stream_list = [translation_stream];
+
+    translation_stream_cards_1 = TranslationStream(
+      text_list: text_list_cards_1,
+      update_text_list_function: update_text_list,
+      list_index: 1,
+    );
+
+    translation_stream_cards_2 = TranslationStream(
+      text_list: text_list_cards_2,
+      update_text_list_function: update_text_list,
+      list_index: 2,
+    );
+
+    translation_stream_list = [
+      translation_stream_menu,
+      translation_stream_cards_1,
+      translation_stream_cards_2,
+    ];
 
     if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS)
       check_permissions();
@@ -372,8 +414,8 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     CardHolder(
                       image_path: "assets/images/traveler_2.jpg",
-                      title: "Account",
-                      subtitle: "Edit your Info",
+                      title: text_list_cards_1[0],
+                      subtitle: text_list_cards_1[1],
                       background_image_alignment: Alignment.center,
                       icon: null,
                       icon_background_color: null,
@@ -386,8 +428,8 @@ class _HomeState extends State<Home> {
                     ),
                     CardHolder(
                       image_path: "assets/images/courses.jpg",
-                      title: "Courses",
-                      subtitle: "Complete the Units",
+                      title: text_list_cards_1[2],
+                      subtitle: text_list_cards_1[3],
                       background_image_alignment: Alignment.center,
                       icon: null,
                       icon_background_color: null,
@@ -400,8 +442,8 @@ class _HomeState extends State<Home> {
                     ),
                     CardHolder(
                       image_path: "assets/images/course_student_1.jpg",
-                      title: "New Courses",
-                      subtitle: "Extend your Knowledge",
+                      title: text_list_cards_1[4],
+                      subtitle: text_list_cards_1[5],
                       background_image_alignment: Alignment.center,
                       icon: null,
                       icon_background_color: null,
@@ -414,8 +456,8 @@ class _HomeState extends State<Home> {
                     ),
                     CardHolder(
                       image_path: "assets/images/course_student_2.jpg",
-                      title: "Certificates",
-                      subtitle: "and Rewards",
+                      title: text_list_cards_1[6],
+                      subtitle: text_list_cards_1[7],
                       background_image_alignment: Alignment.center,
                       icon: null,
                       icon_background_color: null,
@@ -451,7 +493,7 @@ class _HomeState extends State<Home> {
                     CardHolder(
                       image_path: "assets/images/family.jpg",
                       title: "Facebook",
-                      subtitle: "Official Page",
+                      subtitle: text_list_cards_2[0],
                       background_image_alignment: Alignment.center,
                       icon: FontAwesome.facebook,
                       icon_background_color: color_facebook,
@@ -466,7 +508,7 @@ class _HomeState extends State<Home> {
                     CardHolder(
                       image_path: "assets/images/traveler_1.jpg",
                       title: "Instagram",
-                      subtitle: "Official Account",
+                      subtitle: text_list_cards_2[1],
                       background_image_alignment: Alignment.topCenter,
                       icon: FontAwesome.instagram,
                       icon_background_color: color_instagram,
@@ -481,7 +523,7 @@ class _HomeState extends State<Home> {
                     CardHolder(
                       image_path: "assets/images/traveler_2.jpg",
                       title: "Twitter",
-                      subtitle: "Official Account",
+                      subtitle: text_list_cards_2[1],
                       background_image_alignment: Alignment.topCenter,
                       icon: FontAwesome.twitter,
                       icon_background_color: color_twitter,
@@ -496,7 +538,7 @@ class _HomeState extends State<Home> {
                     CardHolder(
                       image_path: "assets/images/project_demo_1.jpg",
                       title: "Youtube",
-                      subtitle: "Official Channel",
+                      subtitle: text_list_cards_2[2],
                       background_image_alignment: Alignment.center,
                       icon: FontAwesome.youtube,
                       icon_background_color: color_youtube,
