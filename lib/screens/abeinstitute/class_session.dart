@@ -218,13 +218,15 @@ class _ClassSessionState extends State<ClassSession> {
                           ),
                         ),
                         Expanded(
-                          flex: 4,
-                          child: SelectableText(
-                            text_list[2],
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          flex: 5,
+                          child: Center(
+                            child: SelectableText(
+                              text_list[2],
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -239,19 +241,16 @@ class _ClassSessionState extends State<ClassSession> {
                               )
                             : Container(),
                         Expanded(
-                          flex: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SelectableText(
-                                text_list[3],
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          flex: 5,
+                          child: Center(
+                            child: SelectableText(
+                              text_list[3],
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
+                            ),
                           ),
                         ),
                         Expanded(

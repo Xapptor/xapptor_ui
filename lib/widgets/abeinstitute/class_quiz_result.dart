@@ -27,10 +27,10 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
             child: Center(
               child: Icon(
                 widget.class_quiz.quiz_passed
-                    ? Icons.check_circle_outline
-                    : Icons.highlight_off_outlined,
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.highlight_off_rounded,
                 color: color_abeinstitute_text,
-                size: 100,
+                size: 200,
               ),
             ),
           ),
