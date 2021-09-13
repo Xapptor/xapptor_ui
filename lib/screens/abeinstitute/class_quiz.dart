@@ -59,6 +59,7 @@ class _ClassQuizState extends State<ClassQuiz> {
     return [
       Container(
         width: 150,
+        margin: EdgeInsets.only(right: 20),
         child: widget.language_picker
             ? LanguagePicker(
                 translation_stream_list: translation_stream_list,
@@ -290,7 +291,11 @@ class _ClassQuizState extends State<ClassQuiz> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      text_list[1] + " " + percentage_progress.toString(),
+                      text_list[1] +
+                          " " +
+                          (percentage_progress.toString().length > 4
+                              ? percentage_progress.toString().substring(0, 4)
+                              : percentage_progress.toString()),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
