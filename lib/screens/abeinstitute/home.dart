@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
   late TranslationStream translation_stream_menu;
   late TranslationStream translation_stream_cards_1;
   late TranslationStream translation_stream_cards_2;
-  late List<TranslationStream> translation_stream_list;
+  List<TranslationStream> translation_stream_list = [];
 
   List<String> text_list_menu = [
     "Account",

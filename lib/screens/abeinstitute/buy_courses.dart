@@ -26,7 +26,7 @@ class _BuyCoursesState extends State<BuyCourses> {
   bool show_items = false;
 
   late TranslationStream translation_stream;
-  late List<TranslationStream> translation_stream_list;
+  List<TranslationStream> translation_stream_list = [];
   List<String> text_list = [
     "Our courses",
     "Learn and get certified in any of them.",

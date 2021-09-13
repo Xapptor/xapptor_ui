@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/webview/webview.dart';
@@ -35,7 +36,7 @@ class ClassSession extends StatefulWidget {
 class _ClassSessionState extends State<ClassSession> {
   String current_language = "en";
   late TranslationStream translation_stream;
-  late List<TranslationStream> translation_stream_list;
+  List<TranslationStream> translation_stream_list = [];
 
   List<String> text_list = [
     "text",
@@ -118,10 +119,10 @@ class _ClassSessionState extends State<ClassSession> {
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
-        width: portrait ? 100 : 150,
+        width: 150,
         child: LanguagePicker(
           translation_stream_list: translation_stream_list,
-          language_picker_items_text_color: Theme.of(context).primaryColor,
+          language_picker_items_text_color: color_abeinstitute_text,
         ),
       ),
       Container(
@@ -181,110 +182,114 @@ class _ClassSessionState extends State<ClassSession> {
           fullscreen_mode
               ? Container()
               : Center(
-                  child: Container(
+                  child: FractionallySizedBox(
+                    widthFactor: portrait ? 0.9 : 0.3,
                     child: Column(
                       children: <Widget>[
                         Spacer(flex: 1),
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            width: portrait ? 300 : 500,
-                            child: AutoSizeText(
-                              text_list[0],
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              minFontSize: 22,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
+                          child: AutoSizeText(
+                            text_list[0],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
                             ),
+                            minFontSize: 22,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                         Expanded(
                           flex: 1,
-                          child: Container(
-                            width: portrait ? 300 : 500,
-                            child: AutoSizeText(
-                              text_list[1],
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              minFontSize: 18,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
+                          child: AutoSizeText(
+                            text_list[1],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
+                            minFontSize: 18,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
                         Expanded(
-                          flex: 2,
-                          child: Container(
-                            width: portrait ? 300 : 500,
-                            child: SelectableText(
-                              text_list[2],
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          flex: 3,
+                          child: SelectableText(
+                            text_list[2],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         show_webview
                             ? Expanded(
-                                flex: 5,
-                                child: Container(
-                                  width: portrait ? double.infinity : 700,
-                                  child: Webview(
-                                    src: video_url,
-                                    id: Uuid().v4(),
-                                    function: () {},
-                                  ),
+                                flex: 4,
+                                child: Webview(
+                                  src: video_url,
+                                  id: Uuid().v4(),
+                                  function: () {},
                                 ),
                               )
                             : Container(),
                         Expanded(
                           flex: 3,
-                          child: Container(
-                            width: portrait ? 300 : 500,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SelectableText(
-                                  text_list[3],
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ClassQuiz(
-                                  course_id: widget.course_id,
-                                  course_name: widget.course_name,
-                                  unit_id: widget.unit_id,
-                                  last_unit: last_unit,
-                                  language_picker_items_text_color:
-                                      widget.language_picker_items_text_color,
-                                  language_picker: widget.language_picker,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SelectableText(
+                                text_list[3],
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          },
-                          child: Text(text_list[4]),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: 200,
+                            child: CustomCard(
+                              linear_gradient: LinearGradient(
+                                colors: [
+                                  color_abeinstitute_text,
+                                  color_abeinstitute_text,
+                                ],
+                              ),
+                              border_radius: 1000,
+                              on_pressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ClassQuiz(
+                                      course_id: widget.course_id,
+                                      course_name: widget.course_name,
+                                      unit_id: widget.unit_id,
+                                      last_unit: last_unit,
+                                      language_picker_items_text_color: widget
+                                          .language_picker_items_text_color,
+                                      language_picker: widget.language_picker,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                text_list[4],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                         Spacer(flex: 1),
                       ],
@@ -292,12 +297,10 @@ class _ClassSessionState extends State<ClassSession> {
                   ),
                 ),
           fullscreen_mode
-              ? Container(
-                  child: Webview(
-                    src: video_url,
-                    id: Uuid().v4(),
-                    function: () {},
-                  ),
+              ? Webview(
+                  src: video_url,
+                  id: Uuid().v4(),
+                  function: () {},
                 )
               : Container(),
         ],

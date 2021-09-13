@@ -2,6 +2,8 @@ import 'package:xapptor_translation/translate.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
+import '../custom_card.dart';
 import 'class_quiz_answer_item.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
@@ -32,12 +34,12 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   List<bool> answers_selected = <bool>[];
 
   late TranslationStream translation_stream;
-  late List<TranslationStream> translation_stream_list;
+  List<TranslationStream> translation_stream_list = [];
 
   List<String> text_list = [
-    "Lives:",
-    "Validate",
-    "Progress:",
+    "Text",
+    "Text",
+    "Text",
   ];
 
   get_quiz_data() {
@@ -157,15 +159,33 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
             ),
           ),
           Spacer(flex: 1),
-          ElevatedButton(
-            onPressed: () {
-              bool answer_is_correct =
-                  text_list[current_index + 3] == text_list[2];
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: 200,
+              child: CustomCard(
+                linear_gradient: LinearGradient(
+                  colors: [
+                    color_abeinstitute_text,
+                    color_abeinstitute_text,
+                  ],
+                ),
+                border_radius: 1000,
+                on_pressed: () {
+                  bool answer_is_correct =
+                      text_list[current_index + 3] == text_list[2];
 
-              widget.class_quiz
-                  .get_next_question(answer_is_correct, widget.question_id);
-            },
-            child: Text(text_list[1]),
+                  widget.class_quiz
+                      .get_next_question(answer_is_correct, widget.question_id);
+                },
+                child: Text(
+                  text_list[1],
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ),
           Spacer(flex: 1),
         ],

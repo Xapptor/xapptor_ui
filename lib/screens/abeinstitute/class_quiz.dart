@@ -37,12 +37,11 @@ class _ClassQuizState extends State<ClassQuiz> {
 
   List<String> text_list = [
     "Lives:",
-    "Validate",
     "Progress:",
   ];
 
   late TranslationStream translation_stream;
-  late List<TranslationStream> translation_stream_list;
+  List<TranslationStream> translation_stream_list = [];
 
   bool quiz_passed = false;
   List questions_result = [];
@@ -58,7 +57,7 @@ class _ClassQuizState extends State<ClassQuiz> {
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
-        width: portrait ? 100 : 150,
+        width: 150,
         child: widget.language_picker
             ? LanguagePicker(
                 translation_stream_list: translation_stream_list,
@@ -282,7 +281,7 @@ class _ClassQuizState extends State<ClassQuiz> {
                       bottom: 15,
                     ),
                     child: Text(
-                      text_list[2] + " " + percentage_progress.toString(),
+                      text_list[1] + " " + percentage_progress.toString(),
                     ),
                   ),
                 ],

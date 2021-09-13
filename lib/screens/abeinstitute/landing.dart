@@ -104,7 +104,7 @@ class _LandingState extends State<Landing> {
   late TranslationStream translation_stream_download;
   late TranslationStream translation_stream_buy;
   late TranslationStream translation_stream_contact_us;
-  late List<TranslationStream> translation_stream_list;
+  List<TranslationStream> translation_stream_list = [];
 
   /*checkCheckoutSessionID() async {
     if (widget.checkoutSessionID.length > 26) {
