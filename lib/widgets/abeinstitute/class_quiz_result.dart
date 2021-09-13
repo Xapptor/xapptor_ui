@@ -4,11 +4,11 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizResult extends StatefulWidget {
   const ClassQuizResult({
-    required this.text_list,
+    required this.button_text,
     required this.class_quiz,
   });
 
-  final List<String> text_list;
+  final String button_text;
   final class_quiz;
 
   @override
@@ -23,12 +23,14 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
         children: <Widget>[
           Spacer(flex: 1),
           Expanded(
-            flex: 4,
-            child: Text(
-              widget.text_list[0],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+            flex: 14,
+            child: Center(
+              child: Icon(
+                widget.class_quiz.quiz_passed
+                    ? Icons.check_circle_outline
+                    : Icons.highlight_off_outlined,
+                color: color_abeinstitute_text,
+                size: 100,
               ),
             ),
           ),
@@ -54,7 +56,7 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
                   }
                 },
                 child: Text(
-                  widget.text_list[1],
+                  widget.button_text,
                   style: TextStyle(
                     color: Colors.white,
                   ),

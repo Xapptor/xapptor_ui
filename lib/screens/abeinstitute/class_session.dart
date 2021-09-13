@@ -218,7 +218,7 @@ class _ClassSessionState extends State<ClassSession> {
                           ),
                         ),
                         Expanded(
-                          flex: 3,
+                          flex: 4,
                           child: SelectableText(
                             text_list[2],
                             textAlign: TextAlign.left,
@@ -230,7 +230,7 @@ class _ClassSessionState extends State<ClassSession> {
                         ),
                         show_webview
                             ? Expanded(
-                                flex: 4,
+                                flex: 5,
                                 child: Webview(
                                   src: video_url,
                                   id: Uuid().v4(),
@@ -239,7 +239,7 @@ class _ClassSessionState extends State<ClassSession> {
                               )
                             : Container(),
                         Expanded(
-                          flex: 3,
+                          flex: 4,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

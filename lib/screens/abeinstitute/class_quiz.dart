@@ -39,7 +39,6 @@ class _ClassQuizState extends State<ClassQuiz> {
   List<String> text_list = [
     "Lives:",
     "Progress:",
-    "Label",
     "Continue",
   ];
 
@@ -139,24 +138,21 @@ class _ClassQuizState extends State<ClassQuiz> {
         );
       }
 
-      text_list[2] =
-          this.quiz_passed ? "Well done!" : "You need to restart the quiz!";
-
-      widgets_list.add(
-        ClassQuizResult(
-          text_list: text_list.sublist(2, 4),
-          class_quiz: this,
-        ),
-      );
-
-      setState(() {});
-
       translation_stream = TranslationStream(
         text_list: text_list,
         update_text_list_function: update_text_list,
         list_index: 0,
       );
       translation_stream_list = [translation_stream];
+
+      widgets_list.add(
+        ClassQuizResult(
+          button_text: text_list[2],
+          class_quiz: this,
+        ),
+      );
+
+      setState(() {});
     });
   }
 
