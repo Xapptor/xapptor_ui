@@ -4,6 +4,7 @@ import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
+import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
@@ -11,10 +12,10 @@ import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
+import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,6 @@ class CertificatesAndRewards extends StatefulWidget {
 class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   double current_page = 0;
   final PageController page_controller = PageController(initialPage: 0);
-  late SharedPreferences prefs;
 
   List certificates_id = [];
   List courses_id = [];
@@ -36,9 +36,34 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   Map<String, dynamic> user_info = {};
   String user_id = "";
 
+  late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
+  List<String> text_list = [
+    "Certificates",
+    "Rewards",
+    "Upcoming",
+  ];
+
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
+    text_list[index] = new_text;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+
+    translation_stream = TranslationStream(
+      text_list: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+    );
+    translation_stream_list = [translation_stream];
+
     set_user_info();
   }
 
@@ -122,7 +147,16 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
       appBar: TopBar(
         background_color: color_abeinstitute_topbar,
         has_back_button: true,
-        actions: [],
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            width: 150,
+            child: LanguagePicker(
+              translation_stream_list: translation_stream_list,
+              language_picker_items_text_color: color_abeinstitute_text,
+            ),
+          ),
+        ],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
@@ -132,7 +166,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
         bottom_bar_buttons: [
           BottomBarButton(
             icon: ModernPictograms.article_alt,
-            text: "Certificates",
+            text: text_list[0],
             foreground_color: Colors.white,
             background_color: color_abeinstitute_green,
             page: certificates_id.isEmpty
@@ -227,11 +261,11 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
           ),
           BottomBarButton(
             icon: FontAwesome5.gift,
-            text: "Rewards",
+            text: text_list[1],
             foreground_color: Colors.white,
             background_color: color_abeinstitute_light_aqua,
             page: ComingSoonContainer(
-              text: "Coming soon",
+              text: text_list[2],
               enable_cover: true,
             ),
           ),
@@ -239,16 +273,4 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
       ),
     );
   }
-}
-
-class CertificateListItem {
-  CertificateListItem(
-    this.id,
-    this.date,
-    this.icon,
-  );
-
-  final String id;
-  final String date;
-  final IconData icon;
 }

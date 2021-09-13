@@ -259,7 +259,7 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/buy_courses",
         child: BuyCourses(
-          language_picker_items_text_color: color_abeinstitute_ocean_blue,
+          language_picker_items_text_color: color_abeinstitute_text,
           language_picker: true,
         ),
       ),

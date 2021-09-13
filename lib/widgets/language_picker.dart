@@ -89,17 +89,17 @@ class _LanguagePickerState extends State<LanguagePicker> {
           height: 2,
           color: Colors.white,
         ),
-        onChanged: (new_value) {
-          setState(() {
-            language_value = new_value!;
+        onChanged: (new_value) async {
+          language_value = new_value!;
 
-            var selectedLanguage = languages_list
-                .singleWhere((language) => language['name'] == language_value);
+          var selectedLanguage = languages_list
+              .singleWhere((language) => language['name'] == language_value);
 
-            prefs.setString('language_target', selectedLanguage['language']);
+          await prefs.setString(
+              'language_target', selectedLanguage['language']);
 
-            translate();
-          });
+          setState(() {});
+          translate();
         },
         selectedItemBuilder: (BuildContext context) {
           return language_values.map<DropdownMenuItem<String>>((String value) {

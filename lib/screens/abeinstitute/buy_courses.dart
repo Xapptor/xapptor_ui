@@ -23,7 +23,10 @@ class BuyCourses extends StatefulWidget {
 
 class _BuyCoursesState extends State<BuyCourses> {
   ScrollController scroll_controller = ScrollController();
+  bool show_items = false;
 
+  late TranslationStream translation_stream;
+  late List<TranslationStream> translation_stream_list;
   List<String> text_list = [
     "Our courses",
     "Learn and get certified in any of them.",
@@ -39,11 +42,6 @@ class _BuyCoursesState extends State<BuyCourses> {
     text_list[index] = new_text;
     setState(() {});
   }
-
-  late TranslationStream translation_stream;
-  late List<TranslationStream> translation_stream_list;
-
-  bool show_items = false;
 
   @override
   void initState() {
@@ -77,7 +75,7 @@ class _BuyCoursesState extends State<BuyCourses> {
       actions: <Widget>[
         Container(
           margin: EdgeInsets.only(right: 20),
-          width: portrait ? 200 : 100,
+          width: 150,
           child: widget.language_picker
               ? LanguagePicker(
                   translation_stream_list: translation_stream_list,

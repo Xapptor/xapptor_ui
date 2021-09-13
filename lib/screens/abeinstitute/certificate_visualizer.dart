@@ -135,7 +135,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
       appBar: TopBar(
         background_color: color_abeinstitute_topbar,
         has_back_button: true,
-        actions: <Widget>[],
+        actions: [],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
