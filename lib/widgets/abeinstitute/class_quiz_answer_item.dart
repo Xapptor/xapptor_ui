@@ -30,8 +30,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
 
   @override
   Widget build(BuildContext context) {
-    bool is_image = widget.answer_text.contains("http") &&
-        widget.answer_text.contains(".com");
+    bool is_image = widget.answer_text.contains("http");
 
     Color background_color =
         widget.selected ? Colors.cyan : widget.background_color;

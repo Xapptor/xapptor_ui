@@ -39,6 +39,8 @@ class _ClassQuizState extends State<ClassQuiz> {
   List<String> text_list = [
     "Lives:",
     "Progress:",
+    "Label",
+    "Continue",
   ];
 
   late TranslationStream translation_stream;
@@ -137,8 +139,12 @@ class _ClassQuizState extends State<ClassQuiz> {
         );
       }
 
+      text_list[2] =
+          this.quiz_passed ? "Well done!" : "You need to restart the quiz!";
+
       widgets_list.add(
         ClassQuizResult(
+          text_list: text_list.sublist(2, 4),
           class_quiz: this,
         ),
       );
@@ -235,6 +241,14 @@ class _ClassQuizState extends State<ClassQuiz> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
+    String progress_text = text_list[1] +
+        " " +
+        (percentage_progress.toString().length > 4
+            ? percentage_progress
+                .toString()
+                .substring(0, percentage_progress.toString().indexOf("."))
+            : percentage_progress.toString());
+
     return Scaffold(
       appBar: TopBar(
         background_color: color_abeinstitute_topbar,
@@ -291,11 +305,7 @@ class _ClassQuizState extends State<ClassQuiz> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      text_list[1] +
-                          " " +
-                          (percentage_progress.toString().length > 4
-                              ? percentage_progress.toString().substring(0, 4)
-                              : percentage_progress.toString()),
+                      progress_text,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

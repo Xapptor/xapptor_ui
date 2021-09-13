@@ -1,9 +1,8 @@
 import 'package:xapptor_translation/translate.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import '../custom_card.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'class_quiz_answer_item.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
@@ -42,6 +41,8 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
     "Text",
   ];
 
+  List<String> answers_list = [];
+
   get_quiz_data() {
     for (var i = 0; i < widget.answers.length; i++) {
       answers_selected.add(false);
@@ -49,37 +50,6 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
 
     widget.answers.shuffle();
     setState(() {});
-  }
-
-  late SharedPreferences prefs;
-  String current_language = "en";
-
-  init_prefs() async {
-    prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getString("language_target") != null)
-      current_language = prefs.getString("language_target") ?? "";
-
-    text_list = [
-      widget.question_title,
-      "Validate",
-      widget.correct_answer,
-    ];
-
-    for (int i = 0; i < widget.answers.length; i++) {
-      text_list.add(widget.answers[i].toString());
-    }
-
-    setState(() {});
-
-    translation_stream = TranslationStream(
-      text_list: text_list,
-      update_text_list_function: update_text_list,
-      list_index: 0,
-    );
-    translation_stream_list = [translation_stream];
-
-    get_quiz_data();
   }
 
   update_text_list({
@@ -94,7 +64,28 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
   @override
   void initState() {
     super.initState();
-    init_prefs();
+
+    text_list = [
+      widget.question_title,
+      "Validate",
+      widget.correct_answer,
+    ];
+
+    for (int i = 0; i < widget.answers.length; i++) {
+      text_list.add(widget.answers[i].toString());
+      answers_list.add(widget.answers[i].toString());
+    }
+
+    setState(() {});
+
+    translation_stream = TranslationStream(
+      text_list: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+    );
+    translation_stream_list = [translation_stream];
+
+    get_quiz_data();
   }
 
   @override
@@ -142,7 +133,9 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                 widthFactor: portrait ? 0.85 : 0.4,
                 child: ClassQuizAnswerItem(
                   answer_text: text_list.length >= (index + 4)
-                      ? text_list[index + 3]
+                      ? answers_list[index].contains("http")
+                          ? answers_list[index]
+                          : text_list[index + 3]
                       : "",
                   index: index,
                   class_quiz_question: this,
