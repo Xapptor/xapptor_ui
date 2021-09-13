@@ -36,7 +36,7 @@ class _LandingState extends State<Landing> {
 
   List<String> text_list_introduction = [
     "Building the future for professionals",
-    "Be able to follow the life you dream of, adding professional experience to your career.",
+    "Follow the life you dream of, add professional experience to your career",
   ];
 
   List<String> text_list_why_us = [
