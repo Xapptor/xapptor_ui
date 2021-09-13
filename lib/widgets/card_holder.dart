@@ -1,3 +1,4 @@
+import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'custom_card.dart';
 
@@ -6,7 +7,6 @@ class CardHolder extends StatefulWidget {
     required this.on_pressed,
     this.title = "",
     this.subtitle = "",
-    this.text = "",
     this.text_color = Colors.black,
     this.image_path = "",
     this.background_image_alignment = Alignment.center,
@@ -20,7 +20,6 @@ class CardHolder extends StatefulWidget {
   final Function() on_pressed;
   final String title;
   final String subtitle;
-  final String text;
   final Color text_color;
   final String image_path;
   final Alignment background_image_alignment;
@@ -45,6 +44,8 @@ class _CardHolderState extends State<CardHolder> {
 
   @override
   Widget build(BuildContext context) {
+    double text_padding = MediaQuery.of(context).size.height / 40;
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return MouseRegion(
@@ -75,40 +76,38 @@ class _CardHolderState extends State<CardHolder> {
                     elevation: widget.is_focused ? 12 : widget.elevation,
                     border_radius: widget.border_radius,
                     child: Container(
-                      width: constraints.maxWidth,
                       padding: EdgeInsets.only(
-                        left: 15,
+                        bottom: text_padding,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            widget.title,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: widget.text_color,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                      child: FractionallySizedBox(
+                        widthFactor: 0.8,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              widget.title,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: widget.text_color,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              minFontSize: 18,
+                              maxLines: 1,
                             ),
-                          ),
-                          Text(
-                            widget.subtitle,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: widget.text_color,
-                              fontSize: 16,
+                            AutoSizeText(
+                              widget.subtitle,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: widget.text_color,
+                                fontSize: 18,
+                              ),
+                              minFontSize: 14,
+                              maxLines: 1,
                             ),
-                          ),
-                          Text(
-                            widget.text,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: widget.text_color,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
