@@ -134,26 +134,24 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                 ),
           Expanded(
             flex: 10,
-            child: Container(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: widget.answers.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    FractionallySizedBox(
-                  widthFactor: portrait ? 0.8 : 0.65,
-                  child: ClassQuizAnswerItem(
-                    answer_text: text_list.length >= (index + 4)
-                        ? text_list[index + 3]
-                        : "",
-                    index: index,
-                    class_quiz_question: this,
-                    selected: current_index == index,
-                    background_color: widget.answers.length > 2
-                        ? (index % 2 == 0)
-                            ? Colors.white
-                            : Color(0xffe4eded)
-                        : Colors.white,
-                  ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget.answers.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  FractionallySizedBox(
+                widthFactor: portrait ? 0.85 : 0.4,
+                child: ClassQuizAnswerItem(
+                  answer_text: text_list.length >= (index + 4)
+                      ? text_list[index + 3]
+                      : "",
+                  index: index,
+                  class_quiz_question: this,
+                  selected: current_index == index,
+                  background_color: widget.answers.length > 2
+                      ? (index % 2 == 0)
+                          ? Colors.white
+                          : Color(0xffe4eded)
+                      : Colors.white,
                 ),
               ),
             ),

@@ -183,7 +183,7 @@ class _ClassSessionState extends State<ClassSession> {
               ? Container()
               : Center(
                   child: FractionallySizedBox(
-                    widthFactor: portrait ? 0.9 : 0.3,
+                    widthFactor: portrait ? 0.85 : 0.3,
                     child: Column(
                       children: <Widget>[
                         Spacer(flex: 1),

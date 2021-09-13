@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/widgets.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -251,37 +252,49 @@ class _ClassQuizState extends State<ClassQuiz> {
                 ),
               )
             : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    child: Text(text_list[0] + " " + lives.toString()),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 1.33,
-                    child: PageView(
-                      scrollDirection: Axis.horizontal,
-                      physics: NeverScrollableScrollPhysics(),
-                      onPageChanged: (int page) {
-                        setState(() {
-                          current_page = page;
-                        });
-                      },
-                      pageSnapping: true,
-                      controller: page_controller,
-                      children: widgets_list,
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: 15,
+                        bottom: 15,
+                      ),
+                      child: Text(
+                        text_list[0] + " " + lives.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
+                  Expanded(
+                    flex: 8,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 1.33,
+                      child: PageView(
+                        scrollDirection: Axis.horizontal,
+                        physics: NeverScrollableScrollPhysics(),
+                        onPageChanged: (int page) {
+                          setState(() {
+                            current_page = page;
+                          });
+                        },
+                        pageSnapping: true,
+                        controller: page_controller,
+                        children: widgets_list,
+                      ),
                     ),
+                  ),
+                  Expanded(
+                    flex: 1,
                     child: Text(
                       text_list[1] + " " + percentage_progress.toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ],
