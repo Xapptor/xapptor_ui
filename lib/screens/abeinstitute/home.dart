@@ -261,8 +261,6 @@ class _HomeState extends State<Home> {
           first_button_action: null,
           second_button_action: null,
           third_button_action: null,
-          secret_answer_values: [],
-          secret_question_values: [],
           has_back_button: true,
           text_field_background_color: null,
         ),

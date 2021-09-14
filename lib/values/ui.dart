@@ -64,11 +64,11 @@ List<String> register_values_spanish = [
 ];
 
 List<String> account_values_english =
-    register_values_english.sublist(0, register_values_english.length - 2) +
+    register_values_english.sublist(0, register_values_english.length - 1) +
         ["Update"];
 
 List<String> account_values_spanish =
-    register_values_spanish.sublist(0, register_values_spanish.length - 2) +
+    register_values_spanish.sublist(0, register_values_spanish.length - 1) +
         ["Actualizar"];
 
 List<String> forgot_password_values_english = [
