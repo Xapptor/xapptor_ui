@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/widgets.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
@@ -172,7 +173,13 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             page: certificates_id.isEmpty
                 ? Container(
                     child: Center(
-                      child: Text("You don't have any certificate"),
+                      child: Text(
+                        "You don't have any certificate",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   )
                 : Container(
@@ -182,7 +189,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                         return FractionallySizedBox(
                           widthFactor: portrait ? 1 : 0.4,
                           child: Container(
-                            height: screen_height / 6,
+                            height: screen_height / (portrait ? 6 : 8),
                             margin: margin,
                             child: CustomCard(
                               splash_color: color_abeinstitute_light_aqua
@@ -203,52 +210,60 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                 open_screen(
                                     "home/certificates_and_rewards/certificate_$certificate_id");
                               },
-                              child: Container(
-                                padding: padding,
-                                child: ListTile(
-                                  title: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        certificates[i].course_name,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                              child: Center(
+                                child: Container(
+                                  padding: padding,
+                                  child: ListTile(
+                                    title: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          certificates[i].course_name,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                          style: DefaultTextStyle.of(context)
-                                              .style,
+                                        RichText(
+                                          text: TextSpan(
+                                            style: DefaultTextStyle.of(context)
+                                                .style,
+                                            children: [
+                                              TextSpan(
+                                                text: 'Date: ',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: certificates[i].date,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            TextSpan(
-                                              text: 'Date: ',
+                                            Text(
+                                              'ID: ',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            TextSpan(
-                                              text: certificates[i].date,
-                                            ),
+                                            SelectableText(certificates[i].id),
                                           ],
                                         ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'ID: ',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SelectableText(certificates[i].id),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  leading: Icon(
-                                    ModernPictograms.article_alt,
-                                    color: color_abeinstitute_topbar,
+                                      ],
+                                    ),
+                                    leading: Icon(
+                                      ModernPictograms.article_alt,
+                                      color: color_abeinstitute_topbar,
+                                    ),
                                   ),
                                 ),
                               ),

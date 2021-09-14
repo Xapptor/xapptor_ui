@@ -12,8 +12,6 @@ class UnknownScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-        //height: 100,
-        //width: 300,
         decoration: BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
@@ -24,29 +22,6 @@ class UnknownScreen extends StatelessWidget {
           ),
         ),
       ),
-      /*body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 100,
-              width: 300,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.contain,
-                  image: AssetImage(
-                    logoPath,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Text('404 - Sorry, Baby not found!'),
-          ],
-        ),
-      ),*/
     );
   }
 }

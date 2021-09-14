@@ -37,6 +37,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
 
     return Container(
       height: MediaQuery.of(context).size.height / 6,
+      padding: EdgeInsets.all(5),
       child: CustomCard(
         splash_color: color_abeinstitute_text.withOpacity(0.3),
         linear_gradient: LinearGradient(
@@ -49,18 +50,21 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
           widget.class_quiz_question.current_index = widget.index;
           widget.class_quiz_question.setState(() {});
         },
-        child: is_image
-            ? Image.network(
-                widget.answer_text,
-                fit: BoxFit.fitHeight,
-              )
-            : Text(
-                widget.answer_text,
-                style: TextStyle(
-                  color:
-                      !widget.selected ? Colors.cyan : widget.background_color,
+        child: Center(
+          child: is_image
+              ? Image.network(
+                  widget.answer_text,
+                  fit: BoxFit.fitHeight,
+                )
+              : Text(
+                  widget.answer_text,
+                  style: TextStyle(
+                    color: !widget.selected
+                        ? Colors.cyan
+                        : widget.background_color,
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }

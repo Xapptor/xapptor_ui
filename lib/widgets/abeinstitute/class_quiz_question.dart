@@ -28,7 +28,7 @@ class ClassQuizQuestion extends StatefulWidget {
 }
 
 class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
-  int current_index = -1;
+  int current_index = 0;
 
   List<bool> answers_selected = <bool>[];
 
@@ -169,10 +169,12 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                   widget.class_quiz
                       .get_next_question(answer_is_correct, widget.question_id);
                 },
-                child: Text(
-                  text_list[1],
-                  style: TextStyle(
-                    color: Colors.white,
+                child: Center(
+                  child: Text(
+                    text_list[1],
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

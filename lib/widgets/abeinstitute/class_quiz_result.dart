@@ -55,10 +55,12 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
                     Navigator.of(context).pop();
                   }
                 },
-                child: Text(
-                  widget.button_text,
-                  style: TextStyle(
-                    color: Colors.white,
+                child: Center(
+                  child: Text(
+                    widget.button_text,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
