@@ -49,8 +49,6 @@ class _WebviewState extends State<Webview> {
     _iframe_element.style.height = '100%';
     _iframe_element.style.width = '100%';
 
-    print("current_src: $current_src");
-
     if (widget.src.toLowerCase().contains("</html>")) {
       print("Source 1");
       current_src = """

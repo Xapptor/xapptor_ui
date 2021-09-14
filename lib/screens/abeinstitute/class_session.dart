@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:xapptor_ui/screens/abeinstitute/class_quiz.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/models/abeinstitute/class_unit_arguments.dart';
@@ -8,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -48,10 +47,6 @@ class _ClassSessionState extends State<ClassSession> {
   ];
 
   String video_url = "";
-  late ClassUnitArguments args;
-  bool already_have_texts = false;
-  bool fullscreen_mode = false;
-  String class_session_html = "class_session";
   bool last_unit = false;
 
   update_text_list({
@@ -118,42 +113,6 @@ class _ClassSessionState extends State<ClassSession> {
     set_texts_and_video_url();
   }
 
-  List<Widget> widgets_action(bool portrait) {
-    return [
-      Container(
-        width: 150,
-        child: LanguagePicker(
-          translation_stream_list: translation_stream_list,
-          language_picker_items_text_color: color_abeinstitute_text,
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width / 100,
-          right: MediaQuery.of(context).size.width / 100,
-        ),
-        child: TextButton(
-          onPressed: () {
-            fullscreen_mode = !fullscreen_mode;
-            setState(() {});
-          },
-          child: Row(
-            children: <Widget>[
-              Text(
-                "Fullscreen",
-                style: TextStyle(color: Colors.white),
-              ),
-              Icon(
-                fullscreen_mode ? Icons.fullscreen_exit : Icons.fullscreen,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
-    ];
-  }
-
   @override
   void initState() {
     super.initState();
@@ -168,104 +127,118 @@ class _ClassSessionState extends State<ClassSession> {
       appBar: TopBar(
         background_color: color_abeinstitute_topbar,
         has_back_button: true,
-        actions: widgets_action(portrait),
+        actions: [
+          Container(
+            width: 150,
+            margin: EdgeInsets.only(right: 20),
+            child: LanguagePicker(
+              translation_stream_list: translation_stream_list,
+              language_picker_items_text_color: color_abeinstitute_text,
+            ),
+          ),
+        ],
         custom_leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         logo_path: "assets/images/logo.png",
       ),
-      body: fullscreen_mode
-          ? Webview(
-              src: video_url,
-              id: Uuid().v4(),
-              function: () {},
-            )
-          : Center(
-              child: FractionallySizedBox(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              FractionallySizedBox(
                 widthFactor: portrait ? 0.85 : 0.3,
                 child: Column(
                   children: <Widget>[
-                    Spacer(flex: 1),
-                    Expanded(
-                      flex: 1,
-                      child: AutoSizeText(
-                        text_list[0] + " - " + text_list[1],
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        minFontSize: 16,
-                        maxLines: 2,
-                        overflow: TextOverflow.clip,
+                    SizedBox(
+                      height: sized_box_space * 4,
+                    ),
+                    AutoSizeText(
+                      text_list[0] + " - " + text_list[1],
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      minFontSize: 18,
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+                    ),
+                    SizedBox(
+                      height: sized_box_space * 2,
+                    ),
+                    SelectableText(
+                      text_list[2],
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Expanded(
-                      flex: 4,
-                      child: Center(
-                        child: SelectableText(
-                          text_list[2],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    SizedBox(
+                      height: sized_box_space * 2,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: Webview(
+                  src: video_url,
+                  id: Uuid().v4(),
+                  function: () {},
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: portrait ? 0.85 : 0.3,
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: sized_box_space * 2,
+                    ),
+                    SelectableText(
+                      text_list[3],
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Expanded(
-                      flex: 5,
-                      child: Container(
-                        child: Webview(
-                          src: video_url,
-                          id: Uuid().v4(),
-                          function: () {},
-                        ),
-                      ),
+                    SizedBox(
+                      height: sized_box_space * 2,
                     ),
-                    Expanded(
-                      flex: 4,
-                      child: Center(
-                        child: SelectableText(
-                          text_list[3],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    Container(
+                      height: 40,
+                      width: 200,
+                      child: CustomCard(
+                        linear_gradient: LinearGradient(
+                          colors: [
+                            color_abeinstitute_text,
+                            color_abeinstitute_text,
+                          ],
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: 200,
-                        child: CustomCard(
-                          linear_gradient: LinearGradient(
-                            colors: [
-                              color_abeinstitute_text,
-                              color_abeinstitute_text,
-                            ],
-                          ),
-                          border_radius: 1000,
-                          on_pressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ClassQuiz(
-                                  course_id: widget.course_id,
-                                  course_name: widget.course_name,
-                                  unit_id: widget.unit_id,
-                                  last_unit: last_unit,
-                                  language_picker_items_text_color:
-                                      widget.language_picker_items_text_color,
-                                  language_picker: widget.language_picker,
-                                ),
+                        border_radius: 1000,
+                        on_pressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ClassQuiz(
+                                course_id: widget.course_id,
+                                course_name: widget.course_name,
+                                unit_id: widget.unit_id,
+                                last_unit: last_unit,
+                                language_picker_items_text_color:
+                                    widget.language_picker_items_text_color,
+                                language_picker: widget.language_picker,
                               ),
-                            );
-                          },
+                            ),
+                          );
+                        },
+                        child: Center(
                           child: Text(
                             text_list[4],
                             style: TextStyle(
@@ -275,11 +248,16 @@ class _ClassSessionState extends State<ClassSession> {
                         ),
                       ),
                     ),
-                    Spacer(flex: 1),
+                    SizedBox(
+                      height: sized_box_space * 4,
+                    ),
                   ],
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
