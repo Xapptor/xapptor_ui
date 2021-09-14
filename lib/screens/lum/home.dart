@@ -107,16 +107,7 @@ class _HomeState extends State<Home> {
         name: "home/account",
         child: UserInfoView(
           uid: widget.user.id,
-          text_list: [
-            "Email",
-            "Confirmar email",
-            "Contraseña",
-            "Confirmar contraseña",
-            "Nombres",
-            "Apellidos",
-            "Ingresa la fecha de tu nacimiento",
-            "Guardar",
-          ],
+          text_list: account_values_spanish,
           tc_and_pp_text: tc_and_pp_text_lum,
           gender_values: gender_values_spanish,
           country_values: null,

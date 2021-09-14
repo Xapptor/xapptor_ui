@@ -23,6 +23,66 @@ double logo_width(BuildContext context) {
   return MediaQuery.of(context).size.width * (portrait ? 0.6 : 0.2);
 }
 
+List<String> login_values_english = [
+  "Email",
+  "Password",
+  "Remember me",
+  "Log In",
+  "Recover password",
+  "Register",
+];
+
+List<String> login_values_spanish = [
+  "Email",
+  "Contraseña",
+  "Recuerdame",
+  "Ingresar",
+  "Recuperar contraseña",
+  "Registrar",
+];
+
+List<String> register_values_english = [
+  "Email",
+  "Confirm Email",
+  "Password",
+  "Confirm password",
+  "First name",
+  "Last name",
+  "Enter your date of birth",
+  "Register",
+];
+
+List<String> register_values_spanish = [
+  "Email",
+  "Confirmar email",
+  "Contraseña",
+  "Confirmar contraseña",
+  "Nombres",
+  "Apellidos",
+  "Ingresa la fecha de tu nacimiento",
+  "Registrar",
+];
+
+List<String> account_values_english =
+    register_values_english.sublist(0, register_values_english.length - 2) +
+        ["Update"];
+
+List<String> account_values_spanish =
+    register_values_spanish.sublist(0, register_values_spanish.length - 2) +
+        ["Actualizar"];
+
+List<String> forgot_password_values_english = [
+  "Enter your email",
+  "Email",
+  "Restore your password",
+];
+
+List<String> forgot_password_values_spanish = [
+  "Ingresa tu email",
+  "Email",
+  "Restablecer contraseña",
+];
+
 List<String> gender_values_english = [
   'Masculine',
   'Femenine',
