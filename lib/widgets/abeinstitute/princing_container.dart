@@ -144,7 +144,7 @@ class _PricingContainerState extends State<PricingContainer> {
           Expanded(
             flex: 4,
             child: FractionallySizedBox(
-              widthFactor: portrait ? 0.8 : 0.15,
+              widthFactor: portrait ? 0.8 : 0.2,
               child: Column(
                 children: [
                   TextField(
