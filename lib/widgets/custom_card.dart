@@ -46,18 +46,19 @@ class _CustomCardState extends State<CustomCard> {
     }
 
     Widget ink_well_widget(Widget child) {
-      return Material(
-        color: Colors.transparent,
-        child: InkWell(
-          splashFactory: InkRipple.splashFactory,
-          customBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(widget.border_radius),
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(
+          widget.border_radius,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashFactory: InkRipple.splashFactory,
+            onTap: widget.on_pressed,
+            splashColor: widget.splash_color,
+            highlightColor: Colors.transparent,
+            child: child,
           ),
-          borderRadius: BorderRadius.circular(widget.border_radius),
-          onTap: widget.on_pressed,
-          splashColor: widget.splash_color,
-          highlightColor: Colors.transparent,
-          child: child,
         ),
       );
     }
