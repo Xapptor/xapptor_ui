@@ -51,9 +51,7 @@ class _CustomCardState extends State<CustomCard> {
         child: InkWell(
           splashFactory: InkRipple.splashFactory,
           customBorder: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(widget.border_radius),
-            ),
+            borderRadius: BorderRadius.circular(widget.border_radius),
           ),
           onTap: widget.on_pressed,
           splashColor: widget.splash_color,

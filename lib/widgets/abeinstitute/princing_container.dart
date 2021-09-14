@@ -142,7 +142,7 @@ class _PricingContainerState extends State<PricingContainer> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: FractionallySizedBox(
               widthFactor: portrait ? 0.8 : 0.15,
               child: Column(
@@ -180,6 +180,7 @@ class _PricingContainerState extends State<PricingContainer> {
                       on_pressed: () {
                         check_if_coupon_is_valid(text_editing_controller.text);
                       },
+                      border_radius: 1000,
                       splash_color: color_abeinstitute_text.withOpacity(0.3),
                       child: Center(
                         child: Text(
@@ -191,9 +192,6 @@ class _PricingContainerState extends State<PricingContainer> {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: sized_box_space,
                   ),
                 ],
               ),
