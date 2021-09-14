@@ -175,7 +175,7 @@ class _PricingContainerState extends State<PricingContainer> {
                     height: sized_box_space,
                   ),
                   Container(
-                    height: 40,
+                    height: 50,
                     child: CustomCard(
                       on_pressed: () {
                         check_if_coupon_is_valid(text_editing_controller.text);
@@ -191,6 +191,9 @@ class _PricingContainerState extends State<PricingContainer> {
                         ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: sized_box_space,
                   ),
                 ],
               ),
