@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
+import 'package:xapptor_ui/values/custom_colors.dart';
+import 'package:xapptor_ui/values/ui.dart';
+import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'pricing_container_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
@@ -66,18 +70,34 @@ class _PricingContainerState extends State<PricingContainer> {
     },
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    set_user_info();
-  }
-
   set_user_info() async {
     if (FirebaseAuth.instance.currentUser != null) {
       user_id = FirebaseAuth.instance.currentUser!.uid;
       user_email = FirebaseAuth.instance.currentUser!.email!;
       setState(() {});
     }
+  }
+
+  TextEditingController text_editing_controller = TextEditingController();
+
+  check_if_coupon_is_valid(String coupon_id) {
+    bool coupon_valid = false;
+    if (coupon_valid) {
+      //
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(widget.texts[6]),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    set_user_info();
   }
 
   @override
@@ -118,6 +138,61 @@ class _PricingContainerState extends State<PricingContainer> {
                   color: widget.subtitle_color,
                   fontSize: 18,
                 ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: FractionallySizedBox(
+              widthFactor: portrait ? 0.8 : 0.15,
+              child: Column(
+                children: [
+                  TextField(
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: widget.texts[4],
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(1000),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(1000),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    controller: text_editing_controller,
+                  ),
+                  SizedBox(
+                    height: sized_box_space,
+                  ),
+                  Container(
+                    height: 40,
+                    child: CustomCard(
+                      on_pressed: () {
+                        check_if_coupon_is_valid(text_editing_controller.text);
+                      },
+                      splash_color: color_abeinstitute_text.withOpacity(0.3),
+                      child: Center(
+                        child: Text(
+                          widget.texts[5],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: color_abeinstitute_text,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

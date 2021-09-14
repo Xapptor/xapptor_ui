@@ -59,9 +59,12 @@ class _LandingState extends State<Landing> {
 
   List<String> text_list_buy = [
     "Our courses",
-    "Learn and get certified in any of them.",
+    "Learn and get certified.",
     "Buy now",
-    "Upcoming"
+    "Upcoming",
+    "Coupon ID",
+    "Enter",
+    "Coupon is not valid",
   ];
 
   List<String> text_list_contact_us = [

@@ -32,6 +32,9 @@ class _BuyCoursesState extends State<BuyCourses> {
     "Learn and get certified in any of them.",
     "Buy now",
     "Upcoming",
+    "Coupon ID",
+    "Enter",
+    "Coupon is not valid",
   ];
 
   update_text_list({
