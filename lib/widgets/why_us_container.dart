@@ -51,7 +51,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
         color: widget.background_color,
       ),
       height: portrait
-          ? (MediaQuery.of(context).size.height * 3.2)
+          ? (MediaQuery.of(context).size.height * 4)
           : (MediaQuery.of(context).size.height),
       width: MediaQuery.of(context).size.width,
       child: FractionallySizedBox(

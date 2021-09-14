@@ -87,7 +87,7 @@ class _PricingContainerState extends State<PricingContainer> {
     return Container(
       color: widget.background_color,
       height: portrait
-          ? (MediaQuery.of(context).size.height * 3.2)
+          ? (MediaQuery.of(context).size.height * 3)
           : (MediaQuery.of(context).size.height),
       width: MediaQuery.of(context).size.width,
       child: Column(

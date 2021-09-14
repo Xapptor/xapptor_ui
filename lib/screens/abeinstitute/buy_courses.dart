@@ -96,7 +96,7 @@ class _BuyCoursesState extends State<BuyCourses> {
               child: SingleChildScrollView(
                 child: Container(
                   height: portrait
-                      ? (MediaQuery.of(context).size.height * 3.2)
+                      ? (MediaQuery.of(context).size.height * 3)
                       : (MediaQuery.of(context).size.height),
                   child: PricingContainer(
                     texts: text_list,

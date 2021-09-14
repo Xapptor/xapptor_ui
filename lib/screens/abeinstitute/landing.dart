@@ -158,11 +158,11 @@ class _LandingState extends State<Landing> {
 
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       if (index == 1) {
-        current_scroll_position *= 4.2;
+        current_scroll_position *= 5;
       } else if (index == 2) {
-        current_scroll_position *= 6.2;
+        current_scroll_position *= 7;
       } else if (index == 3) {
-        current_scroll_position *= 9.4;
+        current_scroll_position *= 10;
       }
     } else {
       current_scroll_position *= (index + 1);
