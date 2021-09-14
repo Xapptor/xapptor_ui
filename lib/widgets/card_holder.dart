@@ -1,5 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 import 'custom_card.dart';
 
 class CardHolder extends StatefulWidget {
@@ -45,6 +46,7 @@ class _CardHolderState extends State<CardHolder> {
   @override
   Widget build(BuildContext context) {
     double text_padding = MediaQuery.of(context).size.height / 40;
+    bool portrait = is_portrait(context);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -80,7 +82,7 @@ class _CardHolderState extends State<CardHolder> {
                         bottom: text_padding,
                       ),
                       child: FractionallySizedBox(
-                        widthFactor: 0.8,
+                        widthFactor: 0.85,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -90,21 +92,24 @@ class _CardHolderState extends State<CardHolder> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: widget.text_color,
-                                fontSize: 22,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                               minFontSize: 18,
                               maxLines: 1,
+                              overflow: TextOverflow.visible,
                             ),
                             AutoSizeText(
                               widget.subtitle,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: widget.text_color,
-                                fontSize: 18,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
-                              minFontSize: 14,
+                              minFontSize: 12,
                               maxLines: 1,
+                              overflow: TextOverflow.visible,
                             ),
                           ],
                         ),
@@ -115,7 +120,7 @@ class _CardHolderState extends State<CardHolder> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: AnimatedContainer(
-                    height: (constraints.maxHeight / 2),
+                    height: (constraints.maxHeight / (portrait ? 2.2 : 1.8)),
                     width: constraints.maxWidth *
                         (widget.is_focused ? 1 : size_multiplier),
                     duration: animation_duration,
@@ -124,44 +129,32 @@ class _CardHolderState extends State<CardHolder> {
                       on_pressed: widget.on_pressed,
                       elevation: 0,
                       border_radius: widget.border_radius,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                widget.border_radius,
-                              ),
-                              image: DecorationImage(
-                                alignment: widget.background_image_alignment,
-                                fit: BoxFit.cover,
-                                image: widget.image_path.contains("http")
-                                    ? Image.network(widget.image_path).image
-                                    : AssetImage(
-                                        widget.image_path,
-                                      ),
-                              ),
-                            ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: widget.icon_background_color,
+                          borderRadius: BorderRadius.circular(
+                            widget.border_radius,
                           ),
-                          widget.icon != null
-                              ? Container(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.height,
-                                  decoration: BoxDecoration(
-                                    color: widget.icon_background_color,
+                        ),
+                        child: widget.icon != null
+                            ? Icon(
+                                widget.icon,
+                                color: Colors.white.withOpacity(1.0),
+                                size: MediaQuery.of(context).size.height / 20,
+                              )
+                            : widget.image_path != ""
+                                ? ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                       widget.border_radius,
                                     ),
-                                  ),
-                                  child: Icon(
-                                    widget.icon,
-                                    color: Colors.white.withOpacity(1.0),
-                                    size:
-                                        MediaQuery.of(context).size.height / 20,
-                                  ),
-                                )
-                              : Container(),
-                        ],
+                                    child: Image.asset(
+                                      widget.image_path,
+                                      fit: BoxFit.fitWidth,
+                                      alignment:
+                                          widget.background_image_alignment,
+                                    ),
+                                  )
+                                : Container(),
                       ),
                     ),
                   ),

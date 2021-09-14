@@ -33,8 +33,6 @@ class DownloadAppsContainer extends StatefulWidget {
 }
 
 class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
-  double current_page = 0;
-  final PageController page_controller = PageController(initialPage: 0);
   double icon_size_factor = 0.5;
 
   @override
@@ -50,13 +48,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
           border_radius: 10,
           on_pressed: null,
           child: Container(
-            decoration: BoxDecoration(
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
+              child: Image.asset(
+                widget.image_1,
                 fit: BoxFit.fitWidth,
-                image: AssetImage(
-                  widget.image_1,
-                ),
               ),
             ),
           ),
@@ -154,13 +150,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                         border_radius: 10,
                         on_pressed: null,
                         child: Container(
-                          decoration: BoxDecoration(
+                          child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
+                            child: Image.asset(
+                              widget.image_2,
                               fit: BoxFit.fitWidth,
-                              image: AssetImage(
-                                widget.image_2,
-                              ),
                             ),
                           ),
                         ),

@@ -491,7 +491,7 @@ class _HomeState extends State<Home> {
                   dot_color_inactive: color_abeinstitute_ocean_blue,
                   children: <Widget>[
                     CardHolder(
-                      image_path: "assets/images/family.jpg",
+                      image_path: "",
                       title: "Facebook",
                       subtitle: text_list_cards_2[0],
                       background_image_alignment: Alignment.center,
@@ -506,7 +506,7 @@ class _HomeState extends State<Home> {
                       is_focused: is_focused_5,
                     ),
                     CardHolder(
-                      image_path: "assets/images/traveler_1.jpg",
+                      image_path: "",
                       title: "Instagram",
                       subtitle: text_list_cards_2[1],
                       background_image_alignment: Alignment.topCenter,
@@ -521,7 +521,7 @@ class _HomeState extends State<Home> {
                       is_focused: is_focused_6,
                     ),
                     CardHolder(
-                      image_path: "assets/images/traveler_2.jpg",
+                      image_path: "",
                       title: "Twitter",
                       subtitle: text_list_cards_2[1],
                       background_image_alignment: Alignment.topCenter,
@@ -536,7 +536,7 @@ class _HomeState extends State<Home> {
                       is_focused: is_focused_7,
                     ),
                     CardHolder(
-                      image_path: "assets/images/project_demo_1.jpg",
+                      image_path: "",
                       title: "Youtube",
                       subtitle: text_list_cards_2[2],
                       background_image_alignment: Alignment.center,

@@ -57,14 +57,17 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
+    double height = portrait
+        ? (MediaQuery.of(context).size.height * 2)
+        : (MediaQuery.of(context).size.height);
+
     return Container(
-      height: portrait
-          ? (MediaQuery.of(context).size.height * 1.8)
-          : (MediaQuery.of(context).size.height),
+      height: height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(
+        height: height,
         box_fit: BoxFit.cover,
-        background_image_path: widget.container_background_image,
+        image_path: widget.container_background_image,
         linear_gradient: LinearGradient(
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
@@ -203,7 +206,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                 Expanded(
                                   flex: 1,
                                   child: FractionallySizedBox(
-                                    heightFactor: 0.5,
+                                    heightFactor: portrait ? 0.5 : 0.5,
                                     child: Row(
                                       children: <Widget>[
                                         portrait

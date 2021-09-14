@@ -4,69 +4,70 @@ import 'package:flutter/material.dart';
 class BackgroundImageWithGradientColor extends StatelessWidget {
   const BackgroundImageWithGradientColor({
     required this.child,
-    required this.background_image_path,
+    required this.height,
+    required this.image_path,
     required this.linear_gradient,
     required this.box_fit,
     this.blur_image,
-    this.blur_imageColor,
+    this.blur_image_color,
     this.blur_image_parameters,
     this.border_radius = 0,
   });
 
   final Widget child;
-  final String? background_image_path;
+  final double height;
+  final String? image_path;
   final LinearGradient linear_gradient;
   final BoxFit box_fit;
   final bool? blur_image;
-  final Color? blur_imageColor;
+  final Color? blur_image_color;
   final List<double>? blur_image_parameters;
   final double border_radius;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            image: background_image_path != null
-                ? DecorationImage(
-                    fit: box_fit,
-                    image: background_image_path!.contains("http") ||
-                            background_image_path!.contains(".com")
-                        ? Image.network(
-                            background_image_path!,
-                          ).image
-                        : AssetImage(
-                            background_image_path!,
-                          ),
-                  )
-                : null,
-            borderRadius: BorderRadius.circular(border_radius),
+    return Container(
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            height: height,
+            width: MediaQuery.of(context).size.width,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                border_radius,
+              ),
+              child: image_path != null
+                  ? Image.asset(
+                      image_path!,
+                      fit: box_fit,
+                    )
+                  : Container(),
+            ),
           ),
-          child: blur_image != null && blur_image!
+          blur_image != null && blur_image!
               ? BackdropFilter(
                   filter: ImageFilter.blur(
                     sigmaX: blur_image_parameters![0],
                     sigmaY: blur_image_parameters![1],
                   ),
                   child: Container(
-                    color: blur_imageColor,
+                    color: blur_image_color,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(border_radius),
                     ),
                   ),
                 )
               : Container(),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: linear_gradient,
-            borderRadius: BorderRadius.circular(border_radius),
+          Container(
+            decoration: BoxDecoration(
+              gradient: linear_gradient,
+              borderRadius: BorderRadius.circular(border_radius),
+            ),
           ),
-        ),
-        child,
-      ],
+          child,
+        ],
+      ),
     );
   }
 }

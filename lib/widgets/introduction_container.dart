@@ -51,8 +51,9 @@ class IntroductionContainerState extends State<IntroductionContainer> {
       height: widget.height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(
+        height: widget.height,
         box_fit: BoxFit.cover,
-        background_image_path: widget.background_image,
+        image_path: widget.background_image,
         linear_gradient: LinearGradient(
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,

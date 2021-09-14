@@ -37,14 +37,17 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
+    double height = portrait
+        ? (MediaQuery.of(context).size.height * 3.5)
+        : (MediaQuery.of(context).size.height);
+
     return Container(
-      height: portrait
-          ? (MediaQuery.of(context).size.height * 3.5)
-          : (MediaQuery.of(context).size.height),
+      height: height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(
+        height: height,
         box_fit: BoxFit.cover,
-        background_image_path: null,
+        image_path: null,
         linear_gradient: LinearGradient(
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,

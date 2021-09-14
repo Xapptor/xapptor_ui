@@ -106,14 +106,17 @@ class _ContactUsContainerLeadFormState
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
+    double height = portrait
+        ? (MediaQuery.of(context).size.height * 2)
+        : (MediaQuery.of(context).size.height);
+
     return Container(
-      height: portrait
-          ? (MediaQuery.of(context).size.height * 1.8)
-          : (MediaQuery.of(context).size.height),
+      height: height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(
+        height: height,
         box_fit: BoxFit.cover,
-        background_image_path: widget.container_background_image,
+        image_path: widget.container_background_image,
         linear_gradient: LinearGradient(
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,

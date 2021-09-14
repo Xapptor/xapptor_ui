@@ -44,21 +44,26 @@ class _CustomCardState extends State<CustomCard> {
     } else {
       shadow_color = Colors.grey.withOpacity(0.5);
     }
-    Widget ink_well_widget = Material(
-      color: Colors.transparent,
-      child: InkWell(
-        splashFactory: InkRipple.splashFactory,
-        borderRadius: BorderRadius.circular(
-          widget.border_radius,
-        ),
-        onTap: widget.on_pressed,
-        splashColor: widget.splash_color,
-        highlightColor: Colors.transparent,
-      ),
-    );
 
-    Widget body = AnimatedContainer(
-      duration: widget.animation_duration,
+    Widget ink_well_widget(Widget child) {
+      return Material(
+        color: Colors.transparent,
+        child: InkWell(
+          splashFactory: InkRipple.splashFactory,
+          customBorder: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(widget.border_radius),
+            ),
+          ),
+          onTap: widget.on_pressed,
+          splashColor: widget.splash_color,
+          highlightColor: Colors.transparent,
+          child: child,
+        ),
+      );
+    }
+
+    Widget body = Container(
       decoration: BoxDecoration(
         shape: widget.shape,
         gradient: widget.linear_gradient,
@@ -78,24 +83,22 @@ class _CustomCardState extends State<CustomCard> {
           ),
         ],
       ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          widget.child,
-          widget.use_pointer_interceptor
-              ? PointerInterceptor(
-                  child: ink_well_widget,
-                )
-              : ink_well_widget,
-        ],
-      ),
+      child: widget.use_pointer_interceptor
+          ? PointerInterceptor(
+              child: ink_well_widget(widget.child),
+            )
+          : ink_well_widget(widget.child),
     );
 
-    return widget.tooltip == null
-        ? body
-        : Tooltip(
-            message: widget.tooltip!,
-            child: body,
-          );
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: widget.tooltip == null
+          ? body
+          : Tooltip(
+              message: widget.tooltip!,
+              child: body,
+            ),
+    );
   }
 }

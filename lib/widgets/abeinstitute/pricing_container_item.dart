@@ -125,9 +125,10 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
           margin: EdgeInsets.all(0),
           elevation: 5,
           child: BackgroundImageWithGradientColor(
+            height: double.maxFinite,
             border_radius: border_radius,
             box_fit: BoxFit.cover,
-            background_image_path: widget.image_url,
+            image_path: widget.image_url,
             linear_gradient: LinearGradient(
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomCenter,

@@ -92,18 +92,21 @@ class _BuyCoursesState extends State<BuyCourses> {
     return Scaffold(
       appBar: appbar,
       body: show_items
-          ? SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height -
-                    appbar.preferredSize.height,
-                child: PricingContainer(
-                  texts: text_list,
-                  background_color: Colors.blue.shade800,
-                  title_color: Colors.white,
-                  subtitle_color: Colors.white,
-                  image_1: 'assets/images/student_1.jpg',
-                  image_2: 'assets/images/student_2.jpg',
-                  image_3: 'assets/images/family.jpg',
+          ? Container(
+              child: SingleChildScrollView(
+                child: Container(
+                  height: portrait
+                      ? (MediaQuery.of(context).size.height * 3.2)
+                      : (MediaQuery.of(context).size.height),
+                  child: PricingContainer(
+                    texts: text_list,
+                    background_color: Colors.blue.shade800,
+                    title_color: Colors.white,
+                    subtitle_color: Colors.white,
+                    image_1: 'assets/images/student_1.jpg',
+                    image_2: 'assets/images/student_2.jpg',
+                    image_3: 'assets/images/family.jpg',
+                  ),
                 ),
               ),
             )

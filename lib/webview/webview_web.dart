@@ -49,7 +49,10 @@ class _WebviewState extends State<Webview> {
     _iframe_element.style.height = '100%';
     _iframe_element.style.width = '100%';
 
-    if (widget.src.toUpperCase().contains("HTML")) {
+    print("current_src: $current_src");
+
+    if (widget.src.toLowerCase().contains("</html>")) {
+      print("Source 1");
       current_src = """
                   <!DOCTYPE html>
                   <html lang="en">
@@ -67,35 +70,35 @@ class _WebviewState extends State<Webview> {
                         </style>
                     </head>
                     <body>
-                        <iframe src="${widget.src}" width="100%" height="100%"></iframe>
+                        ${widget.src}"
                     </body>
                   </html>
                     """;
-
       _iframe_element.srcdoc = current_src;
-    } else {
+    } else if (widget.src.toLowerCase().contains("http")) {
+      print("Source 2");
       _iframe_element.src = current_src;
     }
 
     _iframe_element.style.border = 'none';
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          child: HtmlElementView(
-            key: UniqueKey(),
-            viewType: 'iframeElement-${widget.id}',
-          ),
+    return Center(
+      child: Container(
+        // child: !page_loaded
+        //     ? CircularProgressIndicator(
+        //         valueColor: AlwaysStoppedAnimation<Color>(
+        //           Theme.of(context).primaryColor,
+        //         ),
+        //       )
+        //     : HtmlElementView(
+        //         key: UniqueKey(),
+        //         viewType: 'iframeElement-${widget.id}',
+        //       ),
+        child: HtmlElementView(
+          key: UniqueKey(),
+          viewType: 'iframeElement-${widget.id}',
         ),
-        !page_loaded
-            ? CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor,
-                ),
-              )
-            : Container(),
-      ],
+      ),
     );
   }
 }

@@ -53,7 +53,6 @@ class _ClassSessionState extends State<ClassSession> {
   bool fullscreen_mode = false;
   String class_session_html = "class_session";
   bool last_unit = false;
-  bool show_webview = false;
 
   update_text_list({
     required int index,
@@ -97,11 +96,6 @@ class _ClassSessionState extends State<ClassSession> {
       last_unit = doc_snap.get('last_unit');
 
       setState(() {});
-
-      Timer(Duration(milliseconds: 1000), () {
-        setState(() {});
-        show_webview = true;
-      });
 
       translation_stream = TranslationStream(
         text_list: text_list,
@@ -223,16 +217,13 @@ class _ClassSessionState extends State<ClassSession> {
                     ),
                     Expanded(
                       flex: 5,
-                      child: show_webview
-                          ? Container(
-                              width: portrait ? double.infinity : 700,
-                              child: Webview(
-                                src: video_url,
-                                id: Uuid().v4(),
-                                function: () {},
-                              ),
-                            )
-                          : Container(),
+                      child: Container(
+                        child: Webview(
+                          src: video_url,
+                          id: Uuid().v4(),
+                          function: () {},
+                        ),
+                      ),
                     ),
                     Expanded(
                       flex: 4,

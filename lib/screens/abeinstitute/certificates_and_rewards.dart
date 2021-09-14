@@ -41,7 +41,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
   List<String> text_list = [
     "Certificates",
     "Rewards",
-    "Upcoming",
+    "You have no rewards",
   ];
 
   update_text_list({
@@ -182,7 +182,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                         return FractionallySizedBox(
                           widthFactor: portrait ? 1 : 0.4,
                           child: Container(
-                            height: screen_height / 10,
+                            height: screen_height / 6,
                             margin: margin,
                             child: CustomCard(
                               splash_color: color_abeinstitute_light_aqua
