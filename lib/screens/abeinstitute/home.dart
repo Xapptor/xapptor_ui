@@ -9,6 +9,7 @@ import 'package:xapptor_logic/url_launcher.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_auth/xapptor_user.dart';
 import 'package:xapptor_auth/user_info_form_type.dart';
+import 'package:xapptor_ui/screens/privacy_policy.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/card_holder.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
@@ -134,7 +135,9 @@ class _HomeState extends State<Home> {
             ),
             ListTile(
               title: Text(text_list_menu[4]),
-              onTap: () {},
+              onTap: () {
+                open_screen("home/privacy_policy");
+              },
             ),
             ListTile(
               title: Text(text_list_menu[5]),
@@ -286,6 +289,16 @@ class _HomeState extends State<Home> {
         child: BuyCourses(
           language_picker_items_text_color: color_abeinstitute_text,
           language_picker: true,
+        ),
+      ),
+    );
+
+    add_new_app_screen(
+      AppScreen(
+        name: "home/privacy_policy",
+        child: PrivacyPolicy(
+          url_base: "https://www.abeinstitute.com",
+          use_topbar: true,
         ),
       ),
     );

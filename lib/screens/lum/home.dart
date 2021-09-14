@@ -164,9 +164,7 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/privacy_policy",
         child: PrivacyPolicy(
-          src: UniversalPlatform.isWeb
-              ? await rootBundle.loadString("assets/privacy_policy.html")
-              : "https://app.franquiciaslum.com/#/privacy_policy",
+          url_base: "https://app.franquiciaslum.com",
           use_topbar: true,
         ),
       ),
