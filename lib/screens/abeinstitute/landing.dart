@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:xapptor_logic/check_metadata_app.dart';
@@ -185,41 +183,6 @@ class _LandingState extends State<Landing> {
     super.dispose();
   }
 
-  delete_corrupted_certificates() async {
-    int certificates_counter = 0;
-    int certificates_corrupted_counter = 0;
-
-    await FirebaseFirestore.instance
-        .collection("certificates")
-        .get()
-        .then((collection) {
-      collection.docs.forEach((certificate) async {
-        certificates_counter++;
-
-        var certificate_data = certificate.data();
-        DocumentSnapshot user = await FirebaseFirestore.instance
-            .collection("users")
-            .doc(certificate_data["user_id"])
-            .get();
-        if (!user.exists) {
-          certificates_corrupted_counter++;
-          print(
-              "id: ${certificate.id} user_id: ${certificate_data["user_id"]}");
-          certificate.reference.delete();
-        }
-      });
-
-      Timer(Duration(milliseconds: 800), () {
-        print("certificates_counter $certificates_counter");
-        print("certificates_corrupted_counter $certificates_corrupted_counter");
-      });
-    });
-  }
-
-  update_users_gender_value() async {
-    //
-  }
-
   @override
   void initState() {
     super.initState();
@@ -229,36 +192,42 @@ class _LandingState extends State<Landing> {
       text_list: text_list_menu,
       update_text_list_function: update_text_list,
       list_index: 0,
+      active_translation: true,
     );
 
     translation_stream_introduction = TranslationStream(
       text_list: text_list_introduction,
       update_text_list_function: update_text_list,
       list_index: 1,
+      active_translation: true,
     );
 
     translation_stream_why_us = TranslationStream(
       text_list: text_list_why_us,
       update_text_list_function: update_text_list,
       list_index: 2,
+      active_translation: true,
     );
 
     translation_stream_download = TranslationStream(
       text_list: text_list_download,
       update_text_list_function: update_text_list,
       list_index: 3,
+      active_translation: true,
     );
 
     translation_stream_buy = TranslationStream(
       text_list: text_list_buy,
       update_text_list_function: update_text_list,
       list_index: 4,
+      active_translation: true,
     );
 
     translation_stream_contact_us = TranslationStream(
       text_list: text_list_contact_us,
       update_text_list_function: update_text_list,
       list_index: 5,
+      active_translation: true,
     );
 
     translation_stream_list = [

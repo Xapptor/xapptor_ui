@@ -23,6 +23,20 @@ double logo_width(BuildContext context) {
   return MediaQuery.of(context).size.width * (portrait ? 0.6 : 0.2);
 }
 
+List<String> gender_values_english = [
+  'Masculine',
+  'Femenine',
+  'Non-binary',
+  'Rather not say',
+];
+
+List<String> gender_values_spanish = [
+  'Masculino',
+  'Femenino',
+  'No binario',
+  'Prefiero no decir',
+];
+
 // Abeinstitute
 
 String logo_image_path_abeinstitute = "assets/images/logo.png";

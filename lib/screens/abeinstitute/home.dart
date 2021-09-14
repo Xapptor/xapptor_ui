@@ -250,12 +250,7 @@ class _HomeState extends State<Home> {
             "Update",
           ],
           tc_and_pp_text: RichText(text: TextSpan()),
-          gender_values: [
-            'Male',
-            'Female',
-            'Non-binary',
-            'Rather not say',
-          ],
+          gender_values: gender_values_english,
           country_values: [
             'United States',
             'Mexico',
@@ -338,18 +333,21 @@ class _HomeState extends State<Home> {
       text_list: text_list_menu,
       update_text_list_function: update_text_list,
       list_index: 0,
+      active_translation: true,
     );
 
     translation_stream_cards_1 = TranslationStream(
       text_list: text_list_cards_1,
       update_text_list_function: update_text_list,
       list_index: 1,
+      active_translation: true,
     );
 
     translation_stream_cards_2 = TranslationStream(
       text_list: text_list_cards_2,
       update_text_list_function: update_text_list,
       list_index: 2,
+      active_translation: true,
     );
 
     translation_stream_list = [

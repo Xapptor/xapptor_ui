@@ -118,12 +118,7 @@ class _HomeState extends State<Home> {
             "Guardar",
           ],
           tc_and_pp_text: tc_and_pp_text_lum,
-          gender_values: [
-            'Hombre',
-            'Mujer',
-            'No-binario',
-            'Prefiero no decir',
-          ],
+          gender_values: gender_values_spanish,
           country_values: null,
           text_color: color_lum_text,
           first_button_color: color_lum_main_button,

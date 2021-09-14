@@ -96,6 +96,7 @@ class _ClassSessionState extends State<ClassSession> {
         text_list: text_list,
         update_text_list_function: update_text_list,
         list_index: 0,
+        active_translation: true,
       );
       translation_stream_list = [translation_stream];
     });
