@@ -76,7 +76,7 @@ class _CharacteristicsContainerItemState
                     : Container(),
                 Spacer(flex: 1),
                 Expanded(
-                  flex: 3,
+                  flex: 4,
                   child: Text(
                     widget.title,
                     textAlign:

@@ -41,7 +41,7 @@ class _LandingState extends State<Landing> {
 
   List<String> text_list_why_us = [
     "Why us?",
-    "Ever-evolving for our students, at an affordable price.",
+    "Ever-evolving for our students and at an affordable price",
     "American",
     "Our passion for teaching business leaders how to reach “excellence” began in the great state of Texas through in-person lectures. With the latest advances in technology communications, and with the resources in the sunny state of Florida we’ve now adapted our model and made it our goal to reach an international audience with our uniquely “American” approach to Business excellence.",
     "Business",
