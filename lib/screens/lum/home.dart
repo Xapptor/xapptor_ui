@@ -18,7 +18,6 @@ import 'package:xapptor_ui/widgets/lum/vending_machine_card.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../privacy_policy.dart';
-import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter/services.dart'
     show Clipboard, ClipboardData, rootBundle;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -166,6 +165,7 @@ class _HomeState extends State<Home> {
         child: PrivacyPolicy(
           url_base: "https://app.franquiciaslum.com",
           use_topbar: true,
+          logo_color: Colors.white,
         ),
       ),
     );

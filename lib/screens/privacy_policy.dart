@@ -10,10 +10,12 @@ class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({
     required this.url_base,
     required this.use_topbar,
+    this.logo_color,
   });
 
   final String url_base;
   final bool use_topbar;
+  final Color? logo_color;
 
   @override
   _PrivacyPolicyState createState() => _PrivacyPolicyState();
@@ -45,7 +47,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               actions: [],
               custom_leading: null,
               logo_path: "assets/images/logo.png",
-              logo_color: Colors.white,
+              logo_color: widget.logo_color,
             )
           : null,
       body: SafeArea(
