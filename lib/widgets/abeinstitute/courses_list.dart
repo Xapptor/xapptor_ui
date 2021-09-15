@@ -79,21 +79,6 @@ class _CoursesListState extends State<CoursesList> {
     setState(() {});
   }
 
-  // List<Widget> widgets_action(bool portrait) {
-  //   return [
-  //     Container(
-  //       width: portrait ? 100 : 150,
-  //       child: widget.language_picker
-  //           ? LanguagePicker(
-  //               language_picker_callback: language_picker_callback,
-  //               language_picker_items_text_color:
-  //                   widget.language_picker_items_text_color,
-  //             )
-  //           : Container(),
-  //     ),
-  //   ];
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -104,62 +89,64 @@ class _CoursesListState extends State<CoursesList> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    return Scaffold(
-      appBar: TopBar(
-        background_color: color_abeinstitute_topbar,
-        has_back_button: true,
-        //actions: widgets_action(portrait),
-        actions: [],
-        custom_leading: null,
-        logo_path: "assets/images/logo.png",
-      ),
-      body: courses.length > 0
-          ? Align(
-              alignment: Alignment.bottomCenter,
-              child: FractionallySizedBox(
-                heightFactor: 0.8,
-                widthFactor: 0.8,
-                child: ListView.builder(
-                  itemCount: courses.length,
-                  itemBuilder: (context, i) {
-                    return Column(
-                      children: <Widget>[
-                        ExpansionTile(
-                          backgroundColor: Colors.grey[100],
-                          title: Text(
-                            courses[i].title,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                          initiallyExpanded: true,
-                          children: <Widget>[
-                            Column(
-                              children: _buildExpandableContent(
-                                courses[i],
-                                context,
-                                get_courses_and_units,
-                                widget.language_picker_items_text_color,
-                                widget.language_picker,
+    return WillPopScope(
+      onWillPop: () async => true,
+      child: Scaffold(
+        appBar: TopBar(
+          background_color: color_abeinstitute_topbar,
+          has_back_button: true,
+          actions: [],
+          custom_leading: null,
+          logo_path: "assets/images/logo.png",
+        ),
+        body: courses.length > 0
+            ? Align(
+                alignment: Alignment.bottomCenter,
+                child: FractionallySizedBox(
+                  heightFactor: 0.8,
+                  widthFactor: 0.8,
+                  child: ListView.builder(
+                    itemCount: courses.length,
+                    itemBuilder: (context, i) {
+                      return Column(
+                        children: <Widget>[
+                          ExpansionTile(
+                            backgroundColor: Colors.grey[100],
+                            title: Text(
+                              courses[i].title,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
+                            initiallyExpanded: true,
+                            children: <Widget>[
+                              Column(
+                                children: _buildExpandableContent(
+                                  courses[i],
+                                  context,
+                                  get_courses_and_units,
+                                  widget.language_picker_items_text_color,
+                                  widget.language_picker,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              )
+            : Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
-            )
-          : Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
+      ),
     );
   }
 }

@@ -164,13 +164,19 @@ class _PricingContainerState extends State<PricingContainer> {
                   Container(
                     height: 50,
                     child: CustomCard(
-                      on_pressed: () {
-                        check_if_coupon_is_valid(
-                          text_editing_controller.text,
+                      on_pressed: () async {
+                        await check_if_coupon_is_valid(
+                          text_editing_controller.text.isEmpty
+                              ? " "
+                              : text_editing_controller.text,
                           context,
                           widget.texts[6],
                           widget.texts[7],
-                        );
+                        ).then((coupon_is_valid) {
+                          if (coupon_is_valid) {
+                            text_editing_controller.clear();
+                          }
+                        });
                       },
                       border_radius: 1000,
                       splash_color: color_abeinstitute_text.withOpacity(0.3),
