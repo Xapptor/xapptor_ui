@@ -34,6 +34,7 @@ class _BuyCoursesState extends State<BuyCourses> {
     "Upcoming",
     "Coupon ID",
     "Enter",
+    "Coupon applied",
     "Coupon is not valid",
   ];
 

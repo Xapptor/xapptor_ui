@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
@@ -79,20 +80,6 @@ class _PricingContainerState extends State<PricingContainer> {
   }
 
   TextEditingController text_editing_controller = TextEditingController();
-
-  check_if_coupon_is_valid(String coupon_id) {
-    bool coupon_valid = false;
-    if (coupon_valid) {
-      //
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(widget.texts[6]),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
 
   @override
   void initState() {
@@ -178,7 +165,12 @@ class _PricingContainerState extends State<PricingContainer> {
                     height: 50,
                     child: CustomCard(
                       on_pressed: () {
-                        check_if_coupon_is_valid(text_editing_controller.text);
+                        check_if_coupon_is_valid(
+                          text_editing_controller.text,
+                          context,
+                          widget.texts[6],
+                          widget.texts[7],
+                        );
                       },
                       border_radius: 1000,
                       splash_color: color_abeinstitute_text.withOpacity(0.3),

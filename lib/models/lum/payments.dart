@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:xapptor_logic/timestamp_to_date.dart';
 
 class Payment {
   final String id;

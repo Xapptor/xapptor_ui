@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:xapptor_logic/check_metadata_app.dart';
+import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/download_apps_container.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
@@ -62,6 +63,7 @@ class _LandingState extends State<Landing> {
     "Upcoming",
     "Coupon ID",
     "Enter",
+    "Coupon applied",
     "Coupon is not valid",
   ];
 
@@ -141,6 +143,12 @@ class _LandingState extends State<Landing> {
   void initState() {
     super.initState();
     check_metadata_app();
+
+    // duplicate_document(
+    //   document_id: "26HgL5ZsZcurpBFhFOoV",
+    //   collection_id: "coupons",
+    //   times: 1,
+    // );
 
     translation_stream_menu = TranslationStream(
       text_list: text_list_menu,
