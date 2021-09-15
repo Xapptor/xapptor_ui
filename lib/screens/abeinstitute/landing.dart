@@ -107,52 +107,6 @@ class _LandingState extends State<Landing> {
   late TranslationStream translation_stream_contact_us;
   List<TranslationStream> translation_stream_list = [];
 
-  /*checkCheckoutSessionID() async {
-    if (widget.checkoutSessionID.length > 26) {
-      waitingForPaymentResponse = true;
-
-      setState(() {});
-
-      DocumentSnapshot firestoreUser;
-
-      PaymentRedirectType currentPaymentRedirectType;
-
-      if (widget.checkoutSessionID.length > 28) {
-        currentPaymentRedirectType = PaymentRedirectType.successful;
-
-        CollectionReference reference =
-            FirebaseFirestore.instance.collection('payments');
-        reference.snapshots().listen((querySnapshot) {
-          querySnapshot.docChanges.forEach((change) async {
-            if (change.type == DocumentChangeType.added) {
-              print("change.document.data: " + change.doc.data.toString());
-
-              if (change.doc.data()['checkout_session_id'] ==
-                  widget.checkoutSessionID) {
-                String userID = change.doc.data()["user_id"];
-                firestoreUser = await FirebaseFirestore.instance
-                    .collection("users")
-                    .doc(userID)
-                    .get();
-
-                pushToHome(firestoreUser, currentPaymentRedirectType);
-              }
-            }
-          });
-        });
-      } else {
-        currentPaymentRedirectType = PaymentRedirectType.failed;
-
-        firestoreUser = await FirebaseFirestore.instance
-            .collection("users")
-            .doc(widget.checkoutSessionID)
-            .get();
-
-        pushToHome(firestoreUser, currentPaymentRedirectType);
-      }
-    }
-  }*/
-
   animate_scroll_position({required int index, required bool pop}) {
     double current_scroll_position = 0;
     current_scroll_position = MediaQuery.of(context).size.height;
@@ -238,8 +192,6 @@ class _LandingState extends State<Landing> {
       translation_stream_buy,
       translation_stream_contact_us,
     ];
-
-    //checkCheckoutSessionID();
   }
 
   Widget drawer() {
