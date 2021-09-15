@@ -371,7 +371,7 @@ class _LandingState extends State<Landing> {
                 image_1: 'assets/images/traveler_2.jpg',
                 image_2: 'assets/images/traveler_1.jpg',
                 android_url:
-                    "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=8add54d8-f877-4b3c-b31e-3313e1526c7e",
+                    "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=91d2c4f4-6c69-49c3-95e4-2b888796c2e1",
                 ios_url:
                     "itms-services://?action=download-manifest&url=https://www.abeinstitute.com/manifest.plist",
                 background_image: "",
