@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:xapptor_logic/check_metadata_app.dart';
-import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/download_apps_container.dart';
 import 'package:xapptor_ui/widgets/abeinstitute/princing_container.dart';
@@ -143,12 +142,6 @@ class _LandingState extends State<Landing> {
   void initState() {
     super.initState();
     check_metadata_app();
-
-    // duplicate_document(
-    //   document_id: "26HgL5ZsZcurpBFhFOoV",
-    //   collection_id: "coupons",
-    //   times: 1,
-    // );
 
     translation_stream_menu = TranslationStream(
       text_list: text_list_menu,
@@ -378,7 +371,7 @@ class _LandingState extends State<Landing> {
                 image_1: 'assets/images/traveler_2.jpg',
                 image_2: 'assets/images/traveler_1.jpg',
                 android_url:
-                    "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=df1c8995-8a2e-4588-9ca9-6ba260e1a01e",
+                    "https://firebasestorage.googleapis.com/v0/b/abei-21f7c.appspot.com/o/apps%2Fabeinstitute.apk?alt=media&token=8add54d8-f877-4b3c-b31e-3313e1526c7e",
                 ios_url:
                     "itms-services://?action=download-manifest&url=https://www.abeinstitute.com/manifest.plist",
                 background_image: "",
