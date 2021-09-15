@@ -1,8 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/abeinstitute/class_session.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -27,6 +29,19 @@ class _CoursesListState extends State<CoursesList> {
   List<Map<String, dynamic>> courses_and_units = <Map<String, dynamic>>[];
   List<Course> courses = <Course>[];
   Map<String, dynamic> user_info = {};
+
+  List<String> text_list = ["You don't have courses"];
+  late TranslationStream translation_stream;
+  List<TranslationStream> translation_stream_list = [];
+
+  update_text_list({
+    required int index,
+    required String new_text,
+    required int list_index,
+  }) {
+    text_list[index] = new_text;
+    setState(() {});
+  }
 
   get_courses_and_units() async {
     user_info = await get_user_info(FirebaseAuth.instance.currentUser!.uid);
@@ -83,6 +98,17 @@ class _CoursesListState extends State<CoursesList> {
   void initState() {
     super.initState();
     get_courses_and_units();
+
+    translation_stream = TranslationStream(
+      text_list: text_list,
+      update_text_list_function: update_text_list,
+      list_index: 0,
+      active_translation: true,
+    );
+
+    translation_stream_list = [
+      translation_stream,
+    ];
   }
 
   @override
@@ -140,12 +166,21 @@ class _CoursesListState extends State<CoursesList> {
                 ),
               )
             : Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor,
+                child: Text(
+                  text_list[0],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
               ),
+        // : Center(
+        //     child: CircularProgressIndicator(
+        //       valueColor: new AlwaysStoppedAnimation<Color>(
+        //         Theme.of(context).primaryColor,
+        //       ),
+        //     ),
+        //   ),
       ),
     );
   }

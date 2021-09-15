@@ -165,18 +165,15 @@ class _PricingContainerState extends State<PricingContainer> {
                     height: 50,
                     child: CustomCard(
                       on_pressed: () async {
+                        String coupon_id = text_editing_controller.text;
+                        text_editing_controller.clear();
+
                         await check_if_coupon_is_valid(
-                          text_editing_controller.text.isEmpty
-                              ? " "
-                              : text_editing_controller.text,
+                          coupon_id.isEmpty ? " " : coupon_id,
                           context,
                           widget.texts[6],
                           widget.texts[7],
-                        ).then((coupon_is_valid) {
-                          if (coupon_is_valid) {
-                            text_editing_controller.clear();
-                          }
-                        });
+                        );
                       },
                       border_radius: 1000,
                       splash_color: color_abeinstitute_text.withOpacity(0.3),
