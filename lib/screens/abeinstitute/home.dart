@@ -28,10 +28,10 @@ import 'package:xapptor_logic/is_portrait.dart';
 
 class Home extends StatefulWidget {
   Home({
-    required this.user,
+    this.user,
   });
 
-  XapptorUser user;
+  XapptorUser? user;
 
   @override
   _HomeState createState() => _HomeState();
@@ -238,7 +238,7 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/account",
         child: UserInfoView(
-          uid: widget.user.id,
+          uid: widget.user!.id,
           text_list: account_values_english,
           tc_and_pp_text: RichText(text: TextSpan()),
           gender_values: gender_values_english,
