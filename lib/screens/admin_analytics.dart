@@ -7,7 +7,6 @@ import 'package:fluttericon/typicons_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
-import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_ui/models/payments.dart';
 import 'package:xapptor_ui/models/product.dart';
 import 'package:xapptor_ui/models/vending_machine.dart';
@@ -814,7 +813,7 @@ LineChart main_line_chart({
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 0,
-          getTextStyles: (value) => TextStyle(
+          getTextStyles: (context, double_var) => TextStyle(
             color: color_lum_blue,
             fontWeight: FontWeight.bold,
             fontSize: 14,
@@ -830,7 +829,7 @@ LineChart main_line_chart({
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (value) => TextStyle(
+          getTextStyles: (context, double_var) => TextStyle(
             color: color_lum_green,
             fontWeight: FontWeight.bold,
             fontSize: 13,
