@@ -137,6 +137,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                                         style: TextStyle(
                                           color: widget.text_color,
                                           fontSize: 16,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     )
