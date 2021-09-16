@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
-        width: portrait ? 100 : 150,
+        width: 150,
         child: LanguagePicker(
           translation_stream_list: translation_stream_list,
           language_picker_items_text_color: color_abeinstitute_ocean_blue,
