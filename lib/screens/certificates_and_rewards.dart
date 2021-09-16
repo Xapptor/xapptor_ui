@@ -6,7 +6,7 @@ import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_logic/get_user_info.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_translation/translate.dart';
-import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
+import 'package:xapptor_ui/models/certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';

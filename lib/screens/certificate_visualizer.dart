@@ -7,9 +7,9 @@ import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
-import 'package:xapptor_ui/models/abeinstitute/certificate.dart';
+import 'package:xapptor_ui/models/certificate.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
 class CertificatesVisualizer extends StatefulWidget {

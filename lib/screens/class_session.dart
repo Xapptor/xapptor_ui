@@ -1,6 +1,4 @@
-import 'package:xapptor_ui/screens/abeinstitute/class_quiz.dart';
 import 'package:xapptor_translation/translate.dart';
-import 'package:xapptor_ui/models/abeinstitute/class_unit_arguments.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +8,10 @@ import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
-import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'class_quiz.dart';
 
 class ClassSession extends StatefulWidget {
   const ClassSession({

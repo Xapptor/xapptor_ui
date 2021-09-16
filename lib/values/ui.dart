@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/crop_widget.dart';
 import 'custom_colors.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/models/lum/vending_machine.dart';
+import 'package:xapptor_ui/models/vending_machine.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/screens/lum/vending_machine_details.dart';

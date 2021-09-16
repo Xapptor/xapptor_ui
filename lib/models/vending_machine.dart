@@ -1,4 +1,4 @@
-import 'package:xapptor_ui/models/lum/dispenser.dart';
+import 'package:xapptor_ui/models/dispenser.dart';
 
 class VendingMachine {
   final String id;

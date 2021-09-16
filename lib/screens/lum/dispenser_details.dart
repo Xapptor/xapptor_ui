@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
-import 'package:xapptor_ui/models/lum/dispenser.dart';
-import 'package:xapptor_ui/models/lum/product.dart';
+import 'package:xapptor_ui/models/dispenser.dart';
+import 'package:xapptor_ui/models/product.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
-import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 

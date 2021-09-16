@@ -5,7 +5,7 @@ import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/webview/webview.dart';
 
 class PricingContainerItem extends StatefulWidget {
   const PricingContainerItem({

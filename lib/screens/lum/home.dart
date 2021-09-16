@@ -7,7 +7,7 @@ import 'package:xapptor_auth/user_info_view.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
-import 'package:xapptor_ui/models/lum/vending_machine.dart';
+import 'package:xapptor_ui/models/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/screens/lum/admin_analytics.dart';
 import 'package:xapptor_ui/screens/qr_scanner.dart';
@@ -106,7 +106,6 @@ class _HomeState extends State<Home> {
       AppScreen(
         name: "home/account",
         child: UserInfoView(
-          uid: widget.user.id,
           text_list: account_values_spanish,
           tc_and_pp_text: tc_and_pp_text_lum,
           gender_values: gender_values_spanish,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_ui/webview/webview.dart';
+import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:universal_platform/universal_platform.dart';
