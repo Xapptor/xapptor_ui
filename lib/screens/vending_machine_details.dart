@@ -5,11 +5,12 @@ import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/vending_machine.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
-import 'package:xapptor_ui/screens/lum/product_list.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_logic/is_portrait.dart';
+
+import 'product_list.dart';
 
 class VendingMachineDetails extends StatefulWidget {
   const VendingMachineDetails({
