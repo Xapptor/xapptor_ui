@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
-import 'package:xapptor_ui/widgets/language_picker.dart';
+import 'package:xapptor_translation/language_picker.dart';
 import 'certificate_visualizer.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';

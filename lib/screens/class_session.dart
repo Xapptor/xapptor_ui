@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
-import 'package:xapptor_ui/widgets/language_picker.dart';
+import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_logic/is_portrait.dart';

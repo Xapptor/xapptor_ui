@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/class_quiz_question.dart';
 import 'package:xapptor_ui/widgets/class_quiz_result.dart';
-import 'package:xapptor_ui/widgets/language_picker.dart';
+import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
