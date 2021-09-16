@@ -345,7 +345,8 @@ class _LandingState extends State<Landing> {
               IntroductionContainer(
                 texts: text_list_introduction,
                 text_color: Colors.white,
-                background_image: "assets/images/introduction_container.jpg",
+                //background_image: "assets/images/introduction_container_1.jpg",
+                background_image: "assets/images/introduction_container_2.jpg",
                 logo_image: "assets/images/logo.png",
                 scroll_icon: Icons.keyboard_arrow_down,
                 scroll_icon_color: Colors.orangeAccent,

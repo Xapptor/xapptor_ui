@@ -23,10 +23,8 @@ class _LanguagePickerState extends State<LanguagePicker> {
   List<String> language_values = [
     'English',
   ];
-
   String target = "";
   late List languages_list;
-
   late SharedPreferences prefs;
 
   init_prefs() async {
@@ -50,21 +48,28 @@ class _LanguagePickerState extends State<LanguagePicker> {
   }
 
   get_languages_list() async {
-    String pgc_data = await pgc();
-    String url =
-        "https://translation.googleapis.com/language/translate/v2/languages?key=$pgc_data&target=en";
+    if (prefs.getStringList("languages_list") != null) {
+      print("return languages list from local storage");
+      language_values = prefs.getStringList("languages_list")!;
+    } else {
+      String pgc_data = await pgc();
+      String url =
+          "https://translation.googleapis.com/language/translate/v2/languages?key=$pgc_data&target=en";
 
-    Response response = await get(Uri.parse(url));
-    Map<String, dynamic> body = jsonDecode(response.body);
+      Response response = await get(Uri.parse(url));
+      Map<String, dynamic> body = jsonDecode(response.body);
 
-    languages_list = body['data']['languages'];
+      languages_list = body['data']['languages'];
+      language_values.clear();
 
-    language_values.clear();
+      languages_list
+          .forEach((language) => language_values.add(language['name']));
+      language_value = (languages_list
+          .firstWhere((language) => language["language"] == target))["name"];
 
-    languages_list.forEach((n) => language_values.add(n['name']));
-
-    language_value = (languages_list
-        .firstWhere((language) => language["language"] == target))["name"];
+      print("return languages list from api");
+      prefs.setStringList("languages_list", language_values);
+    }
 
     setState(() {});
   }
