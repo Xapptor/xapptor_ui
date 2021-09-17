@@ -50,20 +50,23 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
           widget.class_quiz_question.current_index = widget.index;
           widget.class_quiz_question.setState(() {});
         },
-        child: Center(
-          child: is_image
-              ? Image.network(
-                  widget.answer_text,
-                  fit: BoxFit.fitHeight,
-                )
-              : Text(
-                  widget.answer_text,
-                  style: TextStyle(
-                    color: !widget.selected
-                        ? Colors.cyan
-                        : widget.background_color,
+        child: FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Center(
+            child: is_image
+                ? Image.network(
+                    widget.answer_text,
+                    fit: BoxFit.fitHeight,
+                  )
+                : Text(
+                    widget.answer_text,
+                    style: TextStyle(
+                      color: !widget.selected
+                          ? Colors.cyan
+                          : widget.background_color,
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );

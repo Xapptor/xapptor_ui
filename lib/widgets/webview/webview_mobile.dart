@@ -39,7 +39,7 @@ class _WebviewState extends State<Webview> {
           onWebViewCreated: (WebViewController webview_controller) {
             controller = webview_controller;
           },
-          initialUrl: widget.src.toUpperCase().contains("HTML")
+          initialUrl: widget.src.toLowerCase().contains("html")
               ? Uri.dataFromString(
                   widget.src,
                   mimeType: 'text/html',

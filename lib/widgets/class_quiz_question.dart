@@ -125,7 +125,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                   ),
                 ),
           Expanded(
-            flex: 10,
+            flex: 9,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: widget.answers.length,
