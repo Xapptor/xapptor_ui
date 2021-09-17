@@ -50,7 +50,7 @@ class _WebviewState extends State<Webview> {
     _iframe_element.style.width = '100%';
 
     if (widget.src.toLowerCase().contains("</html>")) {
-      print("Source 1");
+      //print("webview source 1");
       current_src = """
                   <!DOCTYPE html>
                   <html lang="en">
@@ -74,7 +74,7 @@ class _WebviewState extends State<Webview> {
                     """;
       _iframe_element.srcdoc = current_src;
     } else if (widget.src.toLowerCase().contains("http")) {
-      print("Source 2");
+      //print("webview source 2");
       _iframe_element.src = current_src;
     }
 

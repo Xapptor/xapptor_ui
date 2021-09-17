@@ -106,8 +106,8 @@ class _ClassSessionState extends State<ClassSession> {
   get_current_language() async {
     prefs = await SharedPreferences.getInstance();
 
-    if (prefs.getString("language_target") != null) {
-      current_language = prefs.getString("language_target")!;
+    if (prefs.getString("target_language") != null) {
+      current_language = prefs.getString("target_language")!;
     }
     setState(() {});
     set_texts_and_video_url();
