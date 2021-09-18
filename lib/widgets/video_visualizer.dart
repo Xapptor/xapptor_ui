@@ -16,7 +16,6 @@ class WebVideoVisualizer extends StatelessWidget {
         child: Webview(
           src: src,
           id: Uuid().v4(),
-          function: () {},
         ),
       ),
     );

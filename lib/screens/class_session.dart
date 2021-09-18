@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:xapptor_translation/translate.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,7 @@ import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'class_quiz.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ClassSession extends StatefulWidget {
   const ClassSession({
@@ -45,8 +47,10 @@ class _ClassSessionState extends State<ClassSession> {
     "text",
   ];
 
-  String video_url = "";
+  String video_url = "https://www.abeinstitute.com/#/privacy_policy";
   bool last_unit = false;
+  Map video_urls = {};
+  bool first_time_updating_text = true;
 
   update_text_list({
     required int index,
@@ -55,19 +59,21 @@ class _ClassSessionState extends State<ClassSession> {
   }) {
     text_list[index] = new_text;
     setState(() {});
+
+    if (index == (text_list.length - 1)) {
+      if (!first_time_updating_text) {
+        Timer(Duration(milliseconds: 300), () {
+          set_video_url();
+        });
+      } else {
+        first_time_updating_text = false;
+      }
+    }
   }
 
-  String generate_video_url_for_current_platform(String original_url) {
-    String new_url = "";
-    String video_id = original_url.substring(
-      original_url.lastIndexOf("/"),
-      original_url.length,
-    );
-    new_url = "https://www.abeinstitute.com/#/video$video_id";
-    return new_url;
-  }
+  get_texts() async {
+    prefs = await SharedPreferences.getInstance();
 
-  set_texts_and_video_url() {
     FirebaseFirestore.instance
         .collection('units')
         .doc(widget.unit_id)
@@ -81,15 +87,8 @@ class _ClassSessionState extends State<ClassSession> {
         "Start Quiz",
       ];
 
-      video_url = generate_video_url_for_current_platform(
-          doc_snap.get("video_urls")[
-              (current_language == "en" || current_language == "es")
-                  ? current_language
-                  : "en"]);
-
+      video_urls = doc_snap.get("video_urls");
       last_unit = doc_snap.get('last_unit');
-
-      setState(() {});
 
       translation_stream = TranslationStream(
         text_list: text_list,
@@ -98,25 +97,54 @@ class _ClassSessionState extends State<ClassSession> {
         active_translation: true,
       );
       translation_stream_list = [translation_stream];
+
+      set_video_url();
+    });
+  }
+
+  String generate_video_url_for_current_platform(String original_url) {
+    String new_url = "";
+    String video_id = original_url.substring(
+      original_url.lastIndexOf("/"),
+      original_url.length,
+    );
+    new_url = "https://www.abeinstitute.com/#/video$video_id";
+    return new_url;
+  }
+
+  set_video_url() {
+    if (prefs.getString("target_language") != null) {
+      current_language = prefs.getString("target_language")!;
+    }
+
+    video_url = generate_video_url_for_current_platform(video_urls[
+        (current_language == "en" || current_language == "es")
+            ? current_language
+            : "en"]);
+
+    Timer(Duration(milliseconds: 300), () {
+      if (UniversalPlatform.isWeb) {
+        setState(() {});
+      } else {
+        webview_controller.loadUrl(video_url);
+      }
     });
   }
 
   late SharedPreferences prefs;
 
-  get_current_language() async {
-    prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getString("target_language") != null) {
-      current_language = prefs.getString("target_language")!;
-    }
-    setState(() {});
-    set_texts_and_video_url();
-  }
+  String webview_id = Uuid().v4();
 
   @override
   void initState() {
     super.initState();
-    get_current_language();
+    get_texts();
+  }
+
+  late var webview_controller;
+
+  controller_callback(var current_webview_controller) {
+    webview_controller = current_webview_controller;
   }
 
   @override
@@ -186,10 +214,11 @@ class _ClassSessionState extends State<ClassSession> {
               ),
               Container(
                 height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width / (portrait ? 1 : 2),
                 child: Webview(
                   src: video_url,
-                  id: Uuid().v4(),
-                  function: () {},
+                  id: webview_id,
+                  controller_callback: controller_callback,
                 ),
               ),
               FractionallySizedBox(

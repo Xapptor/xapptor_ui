@@ -1,19 +1,21 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'get_source_for_webview_mobile.dart';
 
 class Webview extends StatefulWidget {
   const Webview({
     required this.src,
     required this.id,
-    required this.function,
+    this.controller_callback,
+    this.loaded_callback,
   });
 
   final String src;
   final String id;
-  final Function function;
+  final Function? controller_callback;
+  final Function(String url)? loaded_callback;
 
   @override
   _WebviewState createState() => _WebviewState();
@@ -21,8 +23,8 @@ class Webview extends StatefulWidget {
 
 class _WebviewState extends State<Webview> {
   bool page_loaded = false;
-
   late WebViewController controller;
+  String current_url = "";
 
   @override
   void initState() {
@@ -38,24 +40,23 @@ class _WebviewState extends State<Webview> {
         WebView(
           onWebViewCreated: (WebViewController webview_controller) {
             controller = webview_controller;
+            if (widget.controller_callback != null) {
+              widget.controller_callback!(controller);
+            }
           },
-          initialUrl: widget.src.toLowerCase().contains("html")
-              ? Uri.dataFromString(
-                  widget.src,
-                  mimeType: 'text/html',
-                  encoding: Encoding.getByName('utf-8'),
-                ).toString()
-              : widget.src,
+          initialUrl: get_source_for_webview_mobile(widget.src),
           javascriptMode: JavascriptMode.unrestricted,
           navigationDelegate: (action) {
-            String current_url = action.url;
-            widget.function(current_url);
+            current_url = action.url;
+            if (widget.loaded_callback != null) {
+              widget.loaded_callback!(current_url);
+            }
             return NavigationDecision.navigate;
           },
           onPageFinished: (value) {
             if (!page_loaded) {
               page_loaded = true;
-              controller.loadUrl(widget.src);
+
               setState(() {});
             }
           },

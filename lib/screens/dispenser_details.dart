@@ -86,7 +86,6 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                 child: Webview(
                   id: Uuid().v4(),
                   src: widget.product.url,
-                  function: () {},
                 ),
               ),
               Expanded(

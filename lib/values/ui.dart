@@ -171,7 +171,6 @@ custom_background_lum() {
             flex: 1,
             child: Webview(
               src: logo_gotas_path_lum,
-              function: () {},
               id: Uuid().v4(),
             ),
           ),

@@ -61,7 +61,6 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 child: Webview(
                   src: src,
                   id: Uuid().v4(),
-                  function: () {},
                 ),
               ),
             ),

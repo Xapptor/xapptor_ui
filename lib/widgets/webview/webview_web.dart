@@ -7,12 +7,14 @@ class Webview extends StatefulWidget {
   const Webview({
     required this.src,
     required this.id,
-    required this.function,
+    this.controller_callback,
+    this.loaded_callback,
   });
 
   final String src;
   final String id;
-  final Function function;
+  final Function? controller_callback;
+  final Function(String url)? loaded_callback;
 
   @override
   _WebviewState createState() => _WebviewState();

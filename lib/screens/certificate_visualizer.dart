@@ -189,7 +189,6 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
                     child: Webview(
                       src: html_certificate,
                       id: Uuid().v4(),
-                      function: () {},
                     ),
                   ),
                 ],

@@ -75,12 +75,6 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     setState(() {});
     check_user_courses();
     get_certificates();
-
-    Timer(Duration(seconds: 2), () async {
-      user_id = FirebaseAuth.instance.currentUser!.uid;
-      user_info = await get_user_info(user_id);
-      get_certificates();
-    });
   }
 
   check_user_courses() {

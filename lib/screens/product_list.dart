@@ -194,7 +194,6 @@ class _ProductListState extends State<ProductList> {
                     child: Webview(
                       id: Uuid().v4(),
                       src: product.url,
-                      function: () {},
                     ),
                   ),
                 ),

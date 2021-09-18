@@ -40,19 +40,29 @@ class PricingContainerItem extends StatefulWidget {
 
 class _PricingContainerItemState extends State<PricingContainerItem> {
   double border_radius = 10;
+  bool fisrt_time_on_checkout = true;
 
-  when_webview_loaded(String url) {
+  loaded_callback(String url) async {
     if (!UniversalPlatform.isWeb) {
       if (url.contains("checkout.stripe.com")) {
-        setState(() {
-          Navigator.of(context).push(
+        if (fisrt_time_on_checkout) {
+          fisrt_time_on_checkout = false;
+
+          final result = await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => PaymentWebview(url: url),
             ),
           );
-        });
+          Navigator.of(context).pop();
+        }
       }
     }
+  }
+
+  late var webview_controller;
+
+  controller_callback(var current_webview_controller) {
+    webview_controller = current_webview_controller;
   }
 
   Widget buy_now_button() {
@@ -94,11 +104,11 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
       } else {
         children.add(
           Webview(
-            src:
-                "https://us-central1-abei-21f7c.cloudfunctions.net/stripeSessionView?priceID=${widget.stripe_payment.price_id}&userID=${widget.stripe_payment.user_id}&courseID=${widget.stripe_payment.course_id}&customerEmail=${widget.stripe_payment.customer_email}",
+            src: url,
             //src: "https://www.google.com",
             id: Uuid().v4(),
-            function: when_webview_loaded,
+            controller_callback: controller_callback,
+            loaded_callback: loaded_callback,
           ),
         );
       }
@@ -108,6 +118,15 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
       alignment: Alignment.center,
       children: children,
     );
+  }
+
+  late String url;
+
+  @override
+  void initState() {
+    url =
+        "https://us-central1-abei-21f7c.cloudfunctions.net/stripeSessionView?priceID=${widget.stripe_payment.price_id}&userID=${widget.stripe_payment.user_id}&courseID=${widget.stripe_payment.course_id}&customerEmail=${widget.stripe_payment.customer_email}";
+    super.initState();
   }
 
   @override
