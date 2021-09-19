@@ -18,6 +18,7 @@ class PricingContainer extends StatefulWidget {
     required this.image_2,
     required this.image_3,
     required this.text_color,
+    required this.button_color,
   });
 
   final List<String> texts;
@@ -28,6 +29,7 @@ class PricingContainer extends StatefulWidget {
   final String image_2;
   final String image_3;
   final Color text_color;
+  final Color button_color;
 
   @override
   _PricingContainerState createState() => _PricingContainerState();
@@ -219,6 +221,7 @@ class _PricingContainerState extends State<PricingContainer> {
                         course_id: price_id_list[0]["course_id"],
                       ),
                       coming_soon_text: widget.texts[3],
+                      button_color: widget.button_color,
                     ),
                   ),
                   portrait ? Container() : Spacer(flex: 1),
@@ -243,6 +246,7 @@ class _PricingContainerState extends State<PricingContainer> {
                         course_id: price_id_list[1]["course_id"],
                       ),
                       coming_soon_text: widget.texts[3],
+                      button_color: widget.button_color,
                     ),
                   ),
                   portrait ? Container() : Spacer(flex: 1),
@@ -265,6 +269,7 @@ class _PricingContainerState extends State<PricingContainer> {
                         course_id: price_id_list[2]["course_id"],
                       ),
                       coming_soon_text: widget.texts[3],
+                      button_color: widget.button_color,
                     ),
                   ),
                 ],

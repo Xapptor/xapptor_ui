@@ -157,6 +157,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
                               UniversalPlatform.isWeb
                                   ? Icons.download_rounded
                                   : Icons.share,
+                              color: widget.topbar_color,
                             ),
                             onPressed: () async {
                               waiting_pdf_base64 = true;

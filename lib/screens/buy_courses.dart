@@ -12,12 +12,14 @@ class BuyCourses extends StatefulWidget {
     required this.language_picker_items_text_color,
     required this.language_picker,
     required this.text_color,
+    required this.button_color,
     required this.topbar_color,
   });
 
   final Color language_picker_items_text_color;
   final bool language_picker;
   final Color text_color;
+  final Color button_color;
   final Color topbar_color;
 
   @override
@@ -115,6 +117,7 @@ class _BuyCoursesState extends State<BuyCourses> {
                     image_2: 'assets/images/student_2.jpg',
                     image_3: 'assets/images/family.jpg',
                     text_color: widget.text_color,
+                    button_color: widget.button_color,
                   ),
                 ),
               ),

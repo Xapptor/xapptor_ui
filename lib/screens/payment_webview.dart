@@ -35,12 +35,14 @@ class _PaymentWebviewState extends State<PaymentWebview> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Webview(
-        src: widget.url,
-        id: Uuid().v4(),
-        loaded_callback: loaded_callback,
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        body: Webview(
+          src: widget.url,
+          id: Uuid().v4(),
+          loaded_callback: loaded_callback,
+        ),
       ),
     );
   }

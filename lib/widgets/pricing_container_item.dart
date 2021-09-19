@@ -14,6 +14,7 @@ class PricingContainerItem extends StatefulWidget {
     required this.buy_text,
     required this.icon,
     required this.text_color,
+    required this.button_color,
     required this.image_url,
     required this.gradient_1,
     required this.gradient_2,
@@ -27,6 +28,7 @@ class PricingContainerItem extends StatefulWidget {
   final String buy_text;
   final IconData icon;
   final Color text_color;
+  final Color button_color;
   final String image_url;
   final Color gradient_1;
   final Color gradient_2;
@@ -68,27 +70,6 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
   Widget buy_now_button() {
     List<Widget> children = [];
 
-    children.add(
-      Container(
-        child: Center(
-          child: Text(
-            widget.buy_text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: widget.text_color,
-            ),
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(border_radius),
-          border: Border.all(
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-
     if (!widget.coming_soon) {
       if (widget.stripe_payment.user_id.isEmpty) {
         children.add(
@@ -103,16 +84,45 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
         );
       } else {
         children.add(
-          Webview(
-            src: url,
-            //src: "https://www.google.com",
-            id: Uuid().v4(),
-            controller_callback: controller_callback,
-            loaded_callback: loaded_callback,
+          FractionallySizedBox(
+            heightFactor: 0.98,
+            widthFactor: 0.98,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                border_radius,
+              ),
+              child: Webview(
+                src: url,
+                //src: "https://www.google.com",
+                id: Uuid().v4(),
+                controller_callback: controller_callback,
+                loaded_callback: loaded_callback,
+              ),
+            ),
           ),
         );
       }
     }
+
+    children.add(
+      IgnorePointer(
+        child: Container(
+          child: Center(
+            child: Text(
+              widget.buy_text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: widget.text_color,
+              ),
+            ),
+          ),
+          decoration: BoxDecoration(
+            color: widget.button_color,
+            borderRadius: BorderRadius.circular(border_radius),
+          ),
+        ),
+      ),
+    );
 
     return Stack(
       alignment: Alignment.center,
