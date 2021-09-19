@@ -4,7 +4,6 @@ import 'package:xapptor_ui/models/vending_machine.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/screens/vending_machine_details.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
@@ -13,11 +12,17 @@ class VendingMachineCard extends StatefulWidget {
     required this.vending_machine,
     required this.remove_vending_machine_callback,
     required this.owner_name,
+    required this.text_color,
+    required this.textfield_color,
+    required this.topbar_color,
   });
 
   final VendingMachine vending_machine;
   final Function remove_vending_machine_callback;
   final String owner_name;
+  final Color text_color;
+  final Color textfield_color;
+  final Color topbar_color;
 
   @override
   _VendingMachineCardState createState() => _VendingMachineCardState();
@@ -46,7 +51,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
             height: current_card_height,
             margin: margin,
             child: CustomCard(
-              splash_color: color_lum_blue.withOpacity(0.2),
+              splash_color: widget.text_color.withOpacity(0.2),
               elevation: 3,
               border_radius: 10,
               on_pressed: () {
@@ -55,6 +60,9 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                     name: "home/vending_machine_details",
                     child: VendingMachineDetails(
                       vending_machine: widget.vending_machine,
+                      text_color: widget.text_color,
+                      topbar_color: widget.topbar_color,
+                      textfield_color: widget.textfield_color,
                     ),
                   ),
                 );
@@ -73,7 +81,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: color_lum_green,
+                            color: widget.textfield_color,
                             fontSize: name_size,
                           ),
                         ),
@@ -84,7 +92,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                       child: Text(
                         "ID: " + widget.vending_machine.id,
                         style: TextStyle(
-                          color: color_lum_grey,
+                          color: widget.textfield_color,
                           fontSize: title_size,
                         ),
                       ),
@@ -100,7 +108,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                                   widget.vending_machine.money_change
                                       .toString(),
                               style: TextStyle(
-                                color: color_lum_blue,
+                                color: widget.text_color,
                                 fontSize: title_size,
                               ),
                             ),
@@ -111,7 +119,7 @@ class _VendingMachineCardState extends State<VendingMachineCard> {
                               widget.owner_name,
                               textAlign: TextAlign.right,
                               style: TextStyle(
-                                color: color_lum_blue,
+                                color: widget.text_color,
                                 fontSize: title_size,
                               ),
                             ),

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xapptor_translation/translate.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_ui/widgets/princing_container.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -12,10 +11,14 @@ class BuyCourses extends StatefulWidget {
   const BuyCourses({
     required this.language_picker_items_text_color,
     required this.language_picker,
+    required this.text_color,
+    required this.topbar_color,
   });
 
   final Color language_picker_items_text_color;
   final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
 
   @override
   _BuyCoursesState createState() => _BuyCoursesState();
@@ -75,7 +78,7 @@ class _BuyCoursesState extends State<BuyCourses> {
     bool portrait = is_portrait(context);
 
     AppBar appbar = TopBar(
-      background_color: color_abeinstitute_topbar,
+      background_color: widget.topbar_color,
       has_back_button: true,
       actions: <Widget>[
         Container(
@@ -111,6 +114,7 @@ class _BuyCoursesState extends State<BuyCourses> {
                     image_1: 'assets/images/student_1.jpg',
                     image_2: 'assets/images/student_2.jpg',
                     image_3: 'assets/images/family.jpg',
+                    text_color: widget.text_color,
                   ),
                 ),
               ),

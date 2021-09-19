@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -11,11 +10,13 @@ class PrivacyPolicy extends StatefulWidget {
     required this.url_base,
     required this.use_topbar,
     this.logo_color,
+    required this.topbar_color,
   });
 
   final String url_base;
   final bool use_topbar;
   final Color? logo_color;
+  final Color topbar_color;
 
   @override
   _PrivacyPolicyState createState() => _PrivacyPolicyState();
@@ -42,7 +43,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     return Scaffold(
       appBar: widget.use_topbar
           ? TopBar(
-              background_color: color_lum_topbar,
+              background_color: widget.topbar_color,
               has_back_button: true,
               actions: [],
               custom_leading: null,

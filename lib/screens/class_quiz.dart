@@ -4,7 +4,6 @@ import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/class_quiz_question.dart';
 import 'package:xapptor_ui/widgets/class_quiz_result.dart';
 import 'package:xapptor_translation/language_picker.dart';
@@ -20,6 +19,8 @@ class ClassQuiz extends StatefulWidget {
     required this.last_unit,
     required this.language_picker_items_text_color,
     required this.language_picker,
+    required this.text_color,
+    required this.topbar_color,
   });
 
   final String course_id;
@@ -28,6 +29,8 @@ class ClassQuiz extends StatefulWidget {
   final bool last_unit;
   final Color language_picker_items_text_color;
   final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
 
   @override
   _ClassQuizState createState() => _ClassQuizState();
@@ -134,6 +137,7 @@ class _ClassQuizState extends State<ClassQuiz> {
             class_quiz: this,
             correct_answer: questions_object[i]["correct_answer"].toString(),
             question_id: i,
+            text_color: widget.text_color,
           ),
         );
       }
@@ -150,6 +154,7 @@ class _ClassQuizState extends State<ClassQuiz> {
         ClassQuizResult(
           button_text: text_list[2],
           class_quiz: this,
+          text_color: widget.text_color,
         ),
       );
 
@@ -248,7 +253,7 @@ class _ClassQuizState extends State<ClassQuiz> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: color_abeinstitute_topbar,
+        background_color: widget.topbar_color,
         has_back_button: true,
         actions: widgets_action(portrait),
         custom_leading: null,

@@ -4,7 +4,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
 import 'package:xapptor_ui/models/product.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
@@ -19,10 +18,14 @@ class ProductDetails extends StatefulWidget {
   const ProductDetails({
     required this.product,
     required this.is_editing,
+    required this.title_color,
+    required this.text_color,
   });
 
   final Product? product;
   final bool is_editing;
+  final Color title_color;
+  final Color text_color;
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -268,14 +271,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: color_lum_green,
+                      color: widget.title_color,
                       fontSize: textfield_size,
                     ),
                     controller: _controller_name,
                     decoration: InputDecoration(
                       hintText: "Nombre",
                       hintStyle: TextStyle(
-                        color: color_lum_green,
+                        color: widget.title_color,
                         fontSize: textfield_size,
                       ),
                     ),
@@ -293,7 +296,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Text(
                             "\$",
                             style: TextStyle(
-                              color: color_lum_blue,
+                              color: widget.text_color,
                             ),
                           ),
                         ),
@@ -305,14 +308,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                             },
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: color_lum_blue,
+                              color: widget.text_color,
                               fontSize: textfield_size,
                             ),
                             controller: _controller_price,
                             decoration: InputDecoration(
                               hintText: "Precio",
                               hintStyle: TextStyle(
-                                color: color_lum_blue,
+                                color: widget.text_color,
                                 fontSize: textfield_size,
                               ),
                             ),
@@ -330,7 +333,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Text(
                                 upload_image_button_label,
                                 style: TextStyle(
-                                  color: color_lum_blue,
+                                  color: widget.text_color,
                                 ),
                               ),
                             ),
@@ -347,7 +350,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 Colors.white,
                               ],
                             ),
-                            splash_color: color_lum_blue
+                            splash_color: widget.text_color
                                 .withOpacity(is_editing ? 0.3 : 0),
                           ),
                         ),
@@ -364,14 +367,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     },
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: color_lum_blue,
+                      color: widget.text_color,
                       fontSize: textfield_size,
                     ),
                     controller: _controller_description,
                     decoration: InputDecoration(
                       hintText: "Descripción",
                       hintStyle: TextStyle(
-                        color: color_lum_blue,
+                        color: widget.text_color,
                         fontSize: textfield_size,
                       ),
                     ),

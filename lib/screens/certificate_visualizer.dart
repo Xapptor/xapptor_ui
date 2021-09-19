@@ -8,16 +8,17 @@ import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
 import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_ui/models/certificate.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
 class CertificatesVisualizer extends StatefulWidget {
   const CertificatesVisualizer({
     required this.certificate,
+    required this.topbar_color,
   });
 
   final Certificate certificate;
+  final Color topbar_color;
 
   @override
   _CertificatesVisualizerState createState() => _CertificatesVisualizerState();
@@ -133,7 +134,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        background_color: color_abeinstitute_topbar,
+        background_color: widget.topbar_color,
         has_back_button: true,
         actions: [],
         custom_leading: null,

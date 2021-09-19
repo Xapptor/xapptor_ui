@@ -10,6 +10,7 @@ class ClassQuizAnswerItem extends StatefulWidget {
     required this.class_quiz_question,
     required this.selected,
     required this.background_color,
+    required this.text_color,
   });
 
   final String answer_text;
@@ -17,6 +18,7 @@ class ClassQuizAnswerItem extends StatefulWidget {
   final class_quiz_question;
   final bool selected;
   final Color background_color;
+  final Color text_color;
 
   @override
   _ClassQuizAnswerItemState createState() => _ClassQuizAnswerItemState();
@@ -39,7 +41,7 @@ class _ClassQuizAnswerItemState extends State<ClassQuizAnswerItem> {
       height: MediaQuery.of(context).size.height / 6,
       padding: EdgeInsets.all(5),
       child: CustomCard(
-        splash_color: color_abeinstitute_text.withOpacity(0.3),
+        splash_color: widget.text_color.withOpacity(0.3),
         linear_gradient: LinearGradient(
           colors: [
             background_color,

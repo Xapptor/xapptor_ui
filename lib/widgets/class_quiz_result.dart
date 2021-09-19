@@ -6,10 +6,12 @@ class ClassQuizResult extends StatefulWidget {
   const ClassQuizResult({
     required this.button_text,
     required this.class_quiz,
+    required this.text_color,
   });
 
   final String button_text;
   final class_quiz;
+  final Color text_color;
 
   @override
   _ClassQuizResultState createState() => _ClassQuizResultState();
@@ -29,7 +31,7 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
                 widget.class_quiz.quiz_passed
                     ? Icons.check_circle_outline_rounded
                     : Icons.highlight_off_rounded,
-                color: color_abeinstitute_text,
+                color: widget.text_color,
                 size: 200,
               ),
             ),
@@ -42,8 +44,8 @@ class _ClassQuizResultState extends State<ClassQuizResult> {
               child: CustomCard(
                 linear_gradient: LinearGradient(
                   colors: [
-                    color_abeinstitute_text,
-                    color_abeinstitute_text,
+                    widget.text_color,
+                    widget.text_color,
                   ],
                 ),
                 border_radius: 1000,

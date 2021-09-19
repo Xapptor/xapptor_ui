@@ -10,12 +10,18 @@ import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_ui/models/payments.dart';
 import 'package:xapptor_ui/models/product.dart';
 import 'package:xapptor_ui/models/vending_machine.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_ui/widgets/timeframe_chart_functions.dart';
 
 class AdminAnalytics extends StatefulWidget {
+  const AdminAnalytics({
+    required this.text_color,
+    required this.icon_color,
+  });
+
+  final Color text_color;
+  final Color icon_color;
   @override
   _AdminAnalyticsState createState() => _AdminAnalyticsState();
 }
@@ -393,7 +399,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                       'Analíticas de ventas',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        color: color_lum_blue,
+                        color: widget.text_color,
                         fontSize: title_size,
                         fontWeight: FontWeight.bold,
                       ),
@@ -406,7 +412,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                       onPressed: download_excel_file,
                       icon: Icon(
                         Typicons.down_outline,
-                        color: color_lum_green,
+                        color: widget.icon_color,
                       ),
                     ),
                   ),
@@ -424,18 +430,18 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                         child: DropdownButton<String>(
                           icon: Icon(
                             Icons.arrow_drop_down,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           value: timeframe_value,
                           iconSize: 24,
                           elevation: 16,
                           isExpanded: true,
                           style: TextStyle(
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           underline: Container(
                             height: 1,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           onChanged: (new_value) {
                             setState(() {
@@ -476,18 +482,18 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                         child: DropdownButton<String>(
                           icon: Icon(
                             Icons.arrow_drop_down,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           value: vending_machine_value,
                           iconSize: 24,
                           elevation: 16,
                           isExpanded: true,
                           style: TextStyle(
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           underline: Container(
                             height: 1,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           onChanged: (new_value) {
                             setState(() {
@@ -514,18 +520,18 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                         child: DropdownButton<String>(
                           icon: Icon(
                             Icons.arrow_drop_down,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           value: dispenser_value,
                           iconSize: 24,
                           elevation: 16,
                           isExpanded: true,
                           style: TextStyle(
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           underline: Container(
                             height: 1,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           onChanged: (new_value) {
                             setState(() {
@@ -548,18 +554,18 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                         child: DropdownButton<String>(
                           icon: Icon(
                             Icons.arrow_drop_down,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           value: product_value,
                           iconSize: 24,
                           elevation: 16,
                           isExpanded: true,
                           style: TextStyle(
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           underline: Container(
                             height: 1,
-                            color: color_lum_blue,
+                            color: widget.text_color,
                           ),
                           onChanged: (new_value) {
                             setState(() {
@@ -593,6 +599,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                             current_timeframe: current_timeframe,
                             max_y: max_y,
                             sum_of_payments: sum_of_payments,
+                            text_color: widget.text_color,
+                            icon_color: widget.icon_color,
                           ),
                         ),
                         FractionallySizedBox(
@@ -606,7 +614,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                 'Ventas por Máquina',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: color_lum_blue,
+                                  color: widget.text_color,
                                   fontSize: subtitle_size,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -631,7 +639,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                 'Ventas por Dispensador',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: color_lum_blue,
+                                  color: widget.text_color,
                                   fontSize: subtitle_size,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -658,7 +666,7 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
                                 'Ventas por Producto',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: color_lum_blue,
+                                  color: widget.text_color,
                                   fontSize: subtitle_size,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -699,6 +707,8 @@ LineChart main_line_chart({
   required TimeFrame current_timeframe,
   required double max_y,
   required List<Map<String, dynamic>> sum_of_payments,
+  required Color text_color,
+  required Color icon_color,
 }) {
   sum_of_payments.sort((a, b) => a["date"].compareTo(b["date"]));
 
@@ -801,7 +811,7 @@ LineChart main_line_chart({
     LineChartData(
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: color_lum_green.withOpacity(0.5),
+          tooltipBgColor: icon_color.withOpacity(0.5),
         ),
         touchCallback: (LineTouchResponse touchResponse) {},
         handleBuiltInTouches: true,
@@ -814,7 +824,7 @@ LineChart main_line_chart({
           showTitles: true,
           reservedSize: 0,
           getTextStyles: (context, double_var) => TextStyle(
-            color: color_lum_blue,
+            color: text_color,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
@@ -830,7 +840,7 @@ LineChart main_line_chart({
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (context, double_var) => TextStyle(
-            color: color_lum_green,
+            color: icon_color,
             fontWeight: FontWeight.bold,
             fontSize: 13,
           ),
@@ -900,7 +910,7 @@ LineChart main_line_chart({
         show: true,
         border: Border(
           bottom: BorderSide(
-            color: color_lum_blue,
+            color: text_color,
             width: 4,
           ),
           left: BorderSide(
@@ -924,7 +934,7 @@ LineChart main_line_chart({
           isCurved: true,
           curveSmoothness: 0.15,
           colors: [
-            color_lum_blue.withOpacity(0.7),
+            text_color.withOpacity(0.7),
           ],
           barWidth: 6,
           isStrokeCapRound: true,
@@ -934,8 +944,8 @@ LineChart main_line_chart({
           belowBarData: BarAreaData(
             show: true,
             colors: [
-              color_lum_green.withOpacity(0.3),
-              color_lum_blue.withOpacity(0.3),
+              icon_color.withOpacity(0.3),
+              text_color.withOpacity(0.3),
             ],
             gradientFrom: Offset(0, 0),
             gradientTo: Offset(0, 1),
@@ -946,7 +956,7 @@ LineChart main_line_chart({
             spotsLine: BarAreaSpotsLine(
               show: true,
               flLineStyle: FlLine(
-                color: color_lum_blue.withOpacity(0.3),
+                color: text_color.withOpacity(0.3),
                 strokeWidth: 4,
               ),
             ),

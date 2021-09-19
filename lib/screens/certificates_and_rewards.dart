@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
@@ -10,7 +9,6 @@ import 'package:xapptor_ui/models/certificate.dart';
 import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/bottom_bar_container.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_router/app_screen.dart';
@@ -23,6 +21,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
 class CertificatesAndRewards extends StatefulWidget {
+  const CertificatesAndRewards({
+    required this.topbar_color,
+    required this.text_color,
+    required this.button_color_1,
+    required this.button_color_2,
+  });
+
+  final Color topbar_color;
+  final Color text_color;
+  final Color button_color_1;
+  final Color button_color_2;
+
   @override
   _CertificatesAndRewardsState createState() => _CertificatesAndRewardsState();
 }
@@ -141,7 +151,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: color_abeinstitute_topbar,
+        background_color: widget.topbar_color,
         has_back_button: true,
         actions: [
           Container(
@@ -149,7 +159,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             width: 150,
             child: LanguagePicker(
               translation_stream_list: translation_stream_list,
-              language_picker_items_text_color: color_abeinstitute_text,
+              language_picker_items_text_color: widget.text_color,
             ),
           ),
         ],
@@ -164,7 +174,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             icon: ModernPictograms.article_alt,
             text: text_list[0],
             foreground_color: Colors.white,
-            background_color: color_abeinstitute_green,
+            background_color: widget.button_color_1,
             page: certificates_id.isEmpty
                 ? Container(
                     child: Center(
@@ -187,8 +197,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                             height: screen_height / (portrait ? 6 : 8),
                             margin: margin,
                             child: CustomCard(
-                              splash_color: color_abeinstitute_light_aqua
-                                  .withOpacity(0.2),
+                              splash_color:
+                                  widget.button_color_2.withOpacity(0.2),
                               elevation: 3,
                               border_radius: 20,
                               on_pressed: () {
@@ -199,6 +209,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                         "home/certificates_and_rewards/certificate_$certificate_id",
                                     child: CertificatesVisualizer(
                                       certificate: certificates[i],
+                                      topbar_color: widget.topbar_color,
                                     ),
                                   ),
                                 );
@@ -257,7 +268,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                     ),
                                     leading: Icon(
                                       ModernPictograms.article_alt,
-                                      color: color_abeinstitute_topbar,
+                                      color: widget.topbar_color,
                                     ),
                                   ),
                                 ),
@@ -273,7 +284,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
             icon: FontAwesome5.gift,
             text: text_list[1],
             foreground_color: Colors.white,
-            background_color: color_abeinstitute_light_aqua,
+            background_color: widget.button_color_2,
             page: ComingSoonContainer(
               text: text_list[2],
               enable_cover: true,

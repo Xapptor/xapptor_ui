@@ -8,7 +8,6 @@ import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/dispenser.dart';
 import 'package:xapptor_ui/models/product.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -24,12 +23,18 @@ class ProductList extends StatefulWidget {
     required this.allow_edit,
     required this.has_topbar,
     required this.for_dispensers,
+    required this.topbar_color,
+    required this.text_color,
+    required this.title_color,
   });
 
   final String? vending_machine_id;
   final bool allow_edit;
   final bool has_topbar;
   final bool for_dispensers;
+  final Color topbar_color;
+  final Color text_color;
+  final Color title_color;
 
   @override
   State<StatefulWidget> createState() => _ProductListState();
@@ -107,7 +112,7 @@ class _ProductListState extends State<ProductList> {
     return Scaffold(
       appBar: widget.has_topbar
           ? TopBar(
-              background_color: color_lum_topbar,
+              background_color: widget.topbar_color,
               has_back_button: true,
               actions: [],
               custom_leading: null,
@@ -143,6 +148,8 @@ class _ProductListState extends State<ProductList> {
                     child: ProductDetails(
                       product: null,
                       is_editing: true,
+                      text_color: widget.text_color,
+                      title_color: widget.title_color,
                     ),
                   ),
                 );
@@ -150,7 +157,7 @@ class _ProductListState extends State<ProductList> {
               },
               label: Text("Agregar Producto"),
               icon: Icon(Icons.add),
-              backgroundColor: color_lum_blue,
+              backgroundColor: widget.text_color,
             ),
     );
   }
@@ -176,7 +183,7 @@ class _ProductListState extends State<ProductList> {
             Container(
               height: MediaQuery.of(context).size.height / 3,
               child: CustomCard(
-                splash_color: color_lum_blue.withOpacity(0.2),
+                splash_color: widget.text_color.withOpacity(0.2),
                 use_pointer_interceptor: true,
                 elevation: 3,
                 border_radius: border_radius,
@@ -208,7 +215,7 @@ class _ProductListState extends State<ProductList> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22,
-                    color: color_lum_grey,
+                    color: widget.text_color,
                   ),
                 ),
               ),
@@ -220,7 +227,7 @@ class _ProductListState extends State<ProductList> {
                       alignment: Alignment.center,
                       icon: Icon(
                         Icons.edit,
-                        color: color_lum_grey,
+                        color: widget.text_color,
                       ),
                       onPressed: () {
                         setState(() {
@@ -314,6 +321,8 @@ class _ProductListState extends State<ProductList> {
           child: ProductDetails(
             product: product,
             is_editing: false,
+            text_color: widget.text_color,
+            title_color: widget.title_color,
           ),
         ),
       );

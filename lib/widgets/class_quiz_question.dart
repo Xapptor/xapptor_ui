@@ -1,7 +1,6 @@
 import 'package:xapptor_translation/translate.dart';
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'class_quiz_answer_item.dart';
 import 'package:xapptor_logic/is_portrait.dart';
@@ -14,6 +13,7 @@ class ClassQuizQuestion extends StatefulWidget {
     required this.class_quiz,
     required this.correct_answer,
     required this.question_id,
+    required this.text_color,
   });
 
   final String question_title;
@@ -22,6 +22,7 @@ class ClassQuizQuestion extends StatefulWidget {
   final class_quiz;
   final String correct_answer;
   final int question_id;
+  final Color text_color;
 
   @override
   _ClassQuizQuestionState createState() => _ClassQuizQuestionState();
@@ -146,6 +147,7 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
                           ? Colors.white
                           : Color(0xffe4eded)
                       : Colors.white,
+                  text_color: widget.text_color,
                 ),
               ),
             ),
@@ -158,8 +160,8 @@ class _ClassQuizQuestionState extends State<ClassQuizQuestion> {
               child: CustomCard(
                 linear_gradient: LinearGradient(
                   colors: [
-                    color_abeinstitute_text,
-                    color_abeinstitute_text,
+                    widget.text_color,
+                    widget.text_color,
                   ],
                 ),
                 border_radius: 1000,

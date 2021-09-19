@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'dart:math' as math;
 
-import '../values/custom_colors.dart';
-
 @immutable
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
@@ -11,11 +9,13 @@ class ExpandableFab extends StatefulWidget {
     this.initial_open,
     required this.distance,
     required this.children,
+    required this.background_color,
   }) : super(key: key);
 
   final bool? initial_open;
   final double distance;
   final List<Widget> children;
+  final Color background_color;
 
   @override
   _ExpandableFabState createState() => _ExpandableFabState();
@@ -135,7 +135,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
-            backgroundColor: color_abeinstitute_ocean_blue,
+            backgroundColor: widget.background_color,
             onPressed: _toggle,
             child: Icon(
               FontAwesome.facebook,
@@ -195,18 +195,20 @@ class ActionButton extends StatelessWidget {
   const ActionButton({
     Key? key,
     this.on_pressed,
+    required this.icon_color,
     required this.icon,
   }) : super(key: key);
 
   final VoidCallback? on_pressed;
   final Widget icon;
+  final Color icon_color;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: color_abeinstitute_ocean_blue,
+      color: icon_color,
       elevation: 4.0,
       child: IconButton(
         onPressed: on_pressed,

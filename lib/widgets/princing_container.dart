@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'pricing_container_item.dart';
@@ -18,6 +17,7 @@ class PricingContainer extends StatefulWidget {
     required this.image_1,
     required this.image_2,
     required this.image_3,
+    required this.text_color,
   });
 
   final List<String> texts;
@@ -27,6 +27,7 @@ class PricingContainer extends StatefulWidget {
   final String image_1;
   final String image_2;
   final String image_3;
+  final Color text_color;
 
   @override
   _PricingContainerState createState() => _PricingContainerState();
@@ -176,13 +177,13 @@ class _PricingContainerState extends State<PricingContainer> {
                         );
                       },
                       border_radius: 1000,
-                      splash_color: color_abeinstitute_text.withOpacity(0.3),
+                      splash_color: widget.text_color.withOpacity(0.3),
                       child: Center(
                         child: Text(
                           widget.texts[5],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: color_abeinstitute_text,
+                            color: widget.text_color,
                           ),
                         ),
                       ),

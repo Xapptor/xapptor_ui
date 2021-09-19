@@ -22,6 +22,8 @@ class ClassSession extends StatefulWidget {
     required this.unit_id,
     required this.language_picker_items_text_color,
     required this.language_picker,
+    required this.text_color,
+    required this.topbar_color,
   });
 
   final String course_id;
@@ -29,6 +31,8 @@ class ClassSession extends StatefulWidget {
   final String unit_id;
   final Color language_picker_items_text_color;
   final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
 
   @override
   _ClassSessionState createState() => _ClassSessionState();
@@ -153,7 +157,7 @@ class _ClassSessionState extends State<ClassSession> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: color_abeinstitute_topbar,
+        background_color: widget.topbar_color,
         has_back_button: true,
         actions: [
           Container(
@@ -161,7 +165,7 @@ class _ClassSessionState extends State<ClassSession> {
             margin: EdgeInsets.only(right: 20),
             child: LanguagePicker(
               translation_stream_list: translation_stream_list,
-              language_picker_items_text_color: color_abeinstitute_text,
+              language_picker_items_text_color: widget.text_color,
             ),
           ),
         ],
@@ -246,8 +250,8 @@ class _ClassSessionState extends State<ClassSession> {
                       child: CustomCard(
                         linear_gradient: LinearGradient(
                           colors: [
-                            color_abeinstitute_text,
-                            color_abeinstitute_text,
+                            widget.text_color,
+                            widget.text_color,
                           ],
                         ),
                         border_radius: 1000,
@@ -263,6 +267,8 @@ class _ClassSessionState extends State<ClassSession> {
                                 language_picker_items_text_color:
                                     widget.language_picker_items_text_color,
                                 language_picker: widget.language_picker,
+                                text_color: widget.text_color,
+                                topbar_color: widget.topbar_color,
                               ),
                             ),
                           );

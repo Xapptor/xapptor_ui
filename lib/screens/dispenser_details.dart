@@ -3,7 +3,6 @@ import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/get_main_color_from_remote_svg.dart';
 import 'package:xapptor_ui/models/dispenser.dart';
 import 'package:xapptor_ui/models/product.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
@@ -100,7 +99,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                           "DISPENSADOR ",
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            color: color_lum_grey,
+                            color: Colors.grey,
                             fontSize: 20,
                           ),
                         ),
@@ -126,7 +125,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                     widget.product.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: color_lum_grey,
+                      color: Colors.grey,
                       fontSize: 18,
                     ),
                   ),
@@ -191,7 +190,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                                     child: Text(
                                       " LITROS",
                                       style: TextStyle(
-                                        color: color_lum_grey,
+                                        color: Colors.grey,
                                         fontSize: 30,
                                       ),
                                     ),

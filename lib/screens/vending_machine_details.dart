@@ -4,20 +4,24 @@ import 'package:xapptor_logic/firebase_tasks.dart';
 import 'package:xapptor_router/app_screen.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/models/vending_machine.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/switch_button.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:xapptor_logic/is_portrait.dart';
-
 import 'product_list.dart';
 
 class VendingMachineDetails extends StatefulWidget {
   const VendingMachineDetails({
     required this.vending_machine,
+    required this.topbar_color,
+    required this.text_color,
+    required this.textfield_color,
   });
 
   final VendingMachine? vending_machine;
+  final Color topbar_color;
+  final Color text_color;
+  final Color textfield_color;
 
   @override
   _VendingMachineDetailsState createState() => _VendingMachineDetailsState();
@@ -183,7 +187,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
 
     return Scaffold(
       appBar: TopBar(
-        background_color: color_lum_topbar,
+        background_color: widget.topbar_color,
         has_back_button: true,
         actions: [],
         custom_leading: null,
@@ -206,14 +210,14 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: color_lum_green,
+                    color: widget.textfield_color,
                     fontSize: textfield_size,
                   ),
                   controller: _controller_name,
                   decoration: InputDecoration(
                     hintText: "Nombre",
                     hintStyle: TextStyle(
-                      color: color_lum_green,
+                      color: widget.textfield_color,
                       fontSize: textfield_size,
                     ),
                   ),
@@ -229,14 +233,14 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: color_lum_green,
+                    color: widget.textfield_color,
                     fontSize: textfield_size,
                   ),
                   controller: _controller_user_id,
                   decoration: InputDecoration(
                     hintText: "ID de usuario",
                     hintStyle: TextStyle(
-                      color: color_lum_green,
+                      color: widget.textfield_color,
                       fontSize: textfield_size,
                     ),
                   ),
@@ -252,26 +256,14 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "CAMBIO \$",
-                                    style: TextStyle(
-                                      color: color_lum_light_pink,
-                                      fontSize: title_size,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: widget.vending_machine?.money_change
-                                            .toString() ??
-                                        "0",
-                                    style: TextStyle(
-                                      color: color_lum_light_pink,
-                                      fontSize: title_size,
-                                    ),
-                                  ),
-                                ],
+                            child: Text(
+                              "CAMBIO \$" +
+                                  (widget.vending_machine?.money_change
+                                          .toString() ??
+                                      "0"),
+                              style: TextStyle(
+                                color: Colors.pink,
+                                fontSize: title_size,
                               ),
                             ),
                           ),
@@ -285,11 +277,11 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                                 value: enabled,
                                 enabled: is_editing,
                                 active_track_color:
-                                    color_lum_blue.withOpacity(0.5),
+                                    widget.text_color.withOpacity(0.5),
                                 active_color: Colors.lightGreen,
                                 inactive_color:
                                     !is_editing ? Colors.grey : Colors.red,
-                                background_color: color_lum_blue,
+                                background_color: widget.text_color,
                                 callback: switch_button_callback,
                                 border_radius:
                                     MediaQuery.of(context).size.width,
@@ -325,6 +317,9 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                                           allow_edit: true,
                                           has_topbar: true,
                                           for_dispensers: true,
+                                          text_color: widget.text_color,
+                                          topbar_color: widget.topbar_color,
+                                          title_color: widget.textfield_color,
                                         ),
                                       ),
                                     );
@@ -333,8 +328,8 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                                   },
                                   linear_gradient: LinearGradient(
                                     colors: [
-                                      color_lum_blue.withOpacity(0.4),
-                                      color_lum_green.withOpacity(0.4),
+                                      widget.text_color.withOpacity(0.4),
+                                      widget.textfield_color.withOpacity(0.4),
                                     ],
                                   ),
                                 ),
@@ -361,7 +356,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
             }
           });
         },
-        backgroundColor: color_lum_green,
+        backgroundColor: widget.textfield_color,
         child: Icon(
           is_editing ? Icons.done : Icons.edit,
           color: Colors.white,

@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/screens/class_session.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
@@ -15,10 +14,14 @@ class CoursesList extends StatefulWidget {
   const CoursesList({
     required this.language_picker_items_text_color,
     required this.language_picker,
+    required this.text_color,
+    required this.topbar_color,
   });
 
   final Color language_picker_items_text_color;
   final bool language_picker;
+  final Color text_color;
+  final Color topbar_color;
 
   @override
   _CoursesListState createState() => _CoursesListState();
@@ -119,7 +122,7 @@ class _CoursesListState extends State<CoursesList> {
       onWillPop: () async => true,
       child: Scaffold(
         appBar: TopBar(
-          background_color: color_abeinstitute_topbar,
+          background_color: widget.text_color,
           has_back_button: true,
           actions: [],
           custom_leading: null,
@@ -155,6 +158,8 @@ class _CoursesListState extends State<CoursesList> {
                                   get_courses_and_units,
                                   widget.language_picker_items_text_color,
                                   widget.language_picker,
+                                  widget.topbar_color,
+                                  widget.text_color,
                                 ),
                               ),
                             ],
@@ -192,6 +197,8 @@ _buildExpandableContent(
   Function get_courses_and_units,
   Color language_picker_items_text_color,
   bool language_picker,
+  Color topbar_color,
+  Color text_color,
 ) {
   List<Widget> column_content = [];
 
@@ -210,6 +217,8 @@ _buildExpandableContent(
               language_picker_items_text_color:
                   language_picker_items_text_color,
               language_picker: language_picker,
+              topbar_color: topbar_color,
+              text_color: text_color,
             );
 
             //getCoursesAndUnits();
@@ -222,6 +231,8 @@ _buildExpandableContent(
                 language_picker_items_text_color:
                     language_picker_items_text_color,
                 language_picker: language_picker,
+                topbar_color: topbar_color,
+                text_color: text_color,
               );
             }
           }
@@ -251,6 +262,8 @@ open_class_session({
   required String unit_id,
   required Color language_picker_items_text_color,
   required bool language_picker,
+  required Color topbar_color,
+  required Color text_color,
 }) {
   add_new_app_screen(
     AppScreen(
@@ -261,6 +274,8 @@ open_class_session({
         unit_id: unit_id,
         language_picker_items_text_color: language_picker_items_text_color,
         language_picker: language_picker,
+        topbar_color: topbar_color,
+        text_color: text_color,
       ),
     ),
   );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
@@ -22,6 +21,7 @@ class QRScanner extends StatefulWidget {
     required this.permission_message,
     required this.permission_message_no,
     required this.permission_message_yes,
+    required this.textfield_color,
   });
 
   final String descriptive_text;
@@ -35,6 +35,7 @@ class QRScanner extends StatefulWidget {
   final String permission_message;
   final String permission_message_no;
   final String permission_message_yes;
+  final Color textfield_color;
 
   @override
   State<StatefulWidget> createState() => _QRScannerState();
@@ -95,14 +96,14 @@ class _QRScannerState extends State<QRScanner> {
                       },
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: color_lum_green,
+                        color: widget.textfield_color,
                         fontSize: 18,
                       ),
                       controller: _controller_vending_machine_id,
                       decoration: InputDecoration(
                         hintText: "Ingresa tu código",
                         hintStyle: TextStyle(
-                          color: color_lum_green,
+                          color: widget.textfield_color,
                           fontSize: 18,
                         ),
                       ),
