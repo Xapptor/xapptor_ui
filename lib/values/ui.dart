@@ -40,7 +40,7 @@ List<String> register_values_english = [
   "Confirm password",
   "First name",
   "Last name",
-  "Enter your date of birth",
+  "Birthday",
   "Register",
 ];
 
@@ -51,7 +51,7 @@ List<String> register_values_spanish = [
   "Confirmar contraseña",
   "Nombres",
   "Apellidos",
-  "Ingresa la fecha de tu nacimiento",
+  "Fecha de nacimiento",
   "Registrar",
 ];
 

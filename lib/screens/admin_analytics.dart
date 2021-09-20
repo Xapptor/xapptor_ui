@@ -813,7 +813,7 @@ LineChart main_line_chart({
         touchTooltipData: LineTouchTooltipData(
           tooltipBgColor: icon_color.withOpacity(0.5),
         ),
-        touchCallback: (LineTouchResponse touchResponse) {},
+        touchCallback: (touch_event, touch_response) {},
         handleBuiltInTouches: true,
       ),
       gridData: FlGridData(
@@ -823,7 +823,7 @@ LineChart main_line_chart({
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 0,
-          getTextStyles: (context, double_var) => TextStyle(
+          getTextStyles: (context, value) => TextStyle(
             color: text_color,
             fontWeight: FontWeight.bold,
             fontSize: 14,
@@ -839,7 +839,7 @@ LineChart main_line_chart({
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (context, double_var) => TextStyle(
+          getTextStyles: (context, value) => TextStyle(
             color: icon_color,
             fontWeight: FontWeight.bold,
             fontSize: 13,
