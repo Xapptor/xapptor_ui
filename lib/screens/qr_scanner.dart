@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
@@ -21,7 +23,12 @@ class QRScanner extends StatefulWidget {
     required this.permission_message,
     required this.permission_message_no,
     required this.permission_message_yes,
+    required this.enter_code_text,
+    required this.validate_button_text,
+    required this.fail_message,
     required this.textfield_color,
+    required this.login_button_text,
+    required this.show_login_button,
   });
 
   final String descriptive_text;
@@ -35,7 +42,12 @@ class QRScanner extends StatefulWidget {
   final String permission_message;
   final String permission_message_no;
   final String permission_message_yes;
+  final String enter_code_text;
+  final String validate_button_text;
+  final String fail_message;
   final Color textfield_color;
+  final String login_button_text;
+  final bool show_login_button;
 
   @override
   State<StatefulWidget> createState() => _QRScannerState();
@@ -45,13 +57,12 @@ class _QRScannerState extends State<QRScanner> {
   Barcode? result;
   late QRViewController controller;
   final GlobalKey qr_key = GlobalKey(debugLabel: 'QR');
-  TextEditingController _controller_vending_machine_id =
-      TextEditingController();
+  TextEditingController _controller_code_id = TextEditingController();
 
   @override
   void dispose() {
     controller.dispose();
-    _controller_vending_machine_id.dispose();
+    _controller_code_id.dispose();
     super.dispose();
   }
 
@@ -91,17 +102,14 @@ class _QRScannerState extends State<QRScanner> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextField(
-                      onTap: () {
-                        //
-                      },
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: widget.textfield_color,
                         fontSize: 18,
                       ),
-                      controller: _controller_vending_machine_id,
+                      controller: _controller_code_id,
                       decoration: InputDecoration(
-                        hintText: "Ingresa tu código",
+                        hintText: widget.enter_code_text,
                         hintStyle: TextStyle(
                           color: widget.textfield_color,
                           fontSize: 18,
@@ -116,7 +124,7 @@ class _QRScannerState extends State<QRScanner> {
                       width: screen_width / (portrait ? 2 : 8),
                       child: CustomCard(
                         child: Text(
-                          "Validar",
+                          widget.validate_button_text,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -125,14 +133,13 @@ class _QRScannerState extends State<QRScanner> {
                         ),
                         border_radius: MediaQuery.of(context).size.width,
                         on_pressed: () {
-                          if (_controller_vending_machine_id.text != "") {
+                          if (_controller_code_id.text != "") {
                             setState(() {
-                              widget.update_qr_value(
-                                  _controller_vending_machine_id.text);
+                              widget.update_qr_value(_controller_code_id.text);
                             });
                           } else {
                             SnackBar snackBar = SnackBar(
-                              content: Text("Debes ingresar un código"),
+                              content: Text(widget.fail_message),
                               duration: Duration(seconds: 2),
                             );
                             ScaffoldMessenger.of(context)
@@ -173,18 +180,31 @@ class _QRScannerState extends State<QRScanner> {
                   child: Column(
                     children: [
                       Spacer(flex: 1),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          widget.descriptive_text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.4),
-                            fontSize: 18,
-                          ),
+                      Text(
+                        widget.descriptive_text,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.4),
+                          fontSize: 18,
                         ),
                       ),
-                      Spacer(flex: 4),
+                      Spacer(flex: 6),
+                      widget.show_login_button
+                          ? TextButton(
+                              onPressed: () {
+                                open_screen("login");
+                              },
+                              child: Text(
+                                widget.login_button_text,
+                                style: TextStyle(
+                                  color: widget.border_color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      Spacer(flex: 1),
                     ],
                   ),
                 ),
