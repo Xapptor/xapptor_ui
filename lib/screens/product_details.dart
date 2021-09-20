@@ -242,6 +242,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         logo_color: Colors.white,
       ),
       body: Container(
+        color: Colors.white,
         alignment: Alignment.center,
         child: SingleChildScrollView(
           child: Container(
@@ -337,7 +338,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ),
-                            elevation: 6,
                             border_radius: 10,
                             on_pressed: () {
                               if (is_editing) {

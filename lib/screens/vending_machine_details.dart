@@ -196,6 +196,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
       ),
       body: Container(
         alignment: Alignment.center,
+        color: Colors.white,
         child: FractionallySizedBox(
           widthFactor: portrait ? 0.7 : 0.2,
           child: Column(
@@ -281,7 +282,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                                 active_color: Colors.lightGreen,
                                 inactive_color:
                                     !is_editing ? Colors.grey : Colors.red,
-                                background_color: widget.text_color,
+                                background_color: widget.topbar_color,
                                 callback: switch_button_callback,
                                 border_radius:
                                     MediaQuery.of(context).size.width,
@@ -295,13 +296,15 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                               widthFactor: 0.7,
                               child: Container(
                                 child: CustomCard(
-                                  child: Text(
-                                    "DISPENSADORES",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
+                                  child: Center(
+                                    child: Text(
+                                      "DISPENSADORES",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   border_radius:
@@ -328,7 +331,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                                   },
                                   linear_gradient: LinearGradient(
                                     colors: [
-                                      widget.text_color.withOpacity(0.4),
+                                      widget.topbar_color.withOpacity(0.4),
                                       widget.textfield_color.withOpacity(0.4),
                                     ],
                                   ),

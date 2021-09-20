@@ -56,7 +56,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           color: Colors.white,
           child: Center(
             child: FractionallySizedBox(
-              widthFactor: widget.use_topbar ? 0.8 : 1,
+              widthFactor: widget.use_topbar ? 0.9 : 1,
               child: Container(
                 color: Colors.white,
                 child: Webview(

@@ -121,6 +121,7 @@ class _ProductListState extends State<ProductList> {
             )
           : null,
       body: Container(
+        color: Colors.white,
         child: ListView.builder(
           controller: _scroll_controller,
           itemCount: widget.for_dispensers
@@ -227,7 +228,7 @@ class _ProductListState extends State<ProductList> {
                       alignment: Alignment.center,
                       icon: Icon(
                         Icons.edit,
-                        color: widget.text_color,
+                        color: Colors.grey,
                       ),
                       onPressed: () {
                         setState(() {
