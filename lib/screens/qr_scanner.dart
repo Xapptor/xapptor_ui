@@ -123,12 +123,14 @@ class _QRScannerState extends State<QRScanner> {
                       height: 50,
                       width: screen_width / (portrait ? 2 : 8),
                       child: CustomCard(
-                        child: Text(
-                          widget.validate_button_text,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        child: Center(
+                          child: Text(
+                            widget.validate_button_text,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         border_radius: MediaQuery.of(context).size.width,
