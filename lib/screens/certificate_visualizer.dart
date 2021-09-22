@@ -1,15 +1,13 @@
-import 'package:xapptor_logic/check_if_user_is_admin.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_platform/universal_platform.dart';
-import 'package:uuid/uuid.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
-import 'package:xapptor_logic/timestamp_to_date.dart';
 import 'package:xapptor_ui/models/certificate.dart';
-import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
+import 'dart:convert';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CertificatesVisualizer extends StatefulWidget {
   const CertificatesVisualizer({
@@ -17,7 +15,7 @@ class CertificatesVisualizer extends StatefulWidget {
     required this.topbar_color,
   });
 
-  final Certificate certificate;
+  final CourseCertificate certificate;
   final Color topbar_color;
 
   @override
@@ -25,101 +23,45 @@ class CertificatesVisualizer extends StatefulWidget {
 }
 
 class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
-  TextEditingController certificate_id_input_controller =
-      TextEditingController();
-  String html_certificate = "";
-  bool waiting_pdf_base64 = false;
-  bool user_is_admin = false;
-
-  String other_course_name = "";
-  String other_date = "";
-  String other_user_id = "";
-  String other_user_name = "";
-
-  String attributes_for_user = "";
-  String attributes_for_admin = "";
-  bool attributes_are_for_admin = false;
+  String html_string = "";
+  String pdf_base64 = "";
+  Uint8List? pdf_bytes = null;
 
   get_html_certificate() async {
-    html_certificate = await generate_html_certificate(
+    html_string = await generate_html_certificate(
       course_name: widget.certificate.course_name,
       user_name: widget.certificate.user_name,
       date: widget.certificate.date,
       id: widget.certificate.id,
     );
-    setState(() {});
+    download_certificate();
   }
 
-  download_certificate(http.Response response) async {
-    String base64_pdf = response.body.toString();
+  download_certificate() async {
+    String base_url = Uri.base.toString().contains("localhost")
+        ? "http://localhost:5001/xapptor/us-central1/"
+        : "https://us-central1-xapptor.cloudfunctions.net/";
 
-    attributes_for_user =
-        "certificate_${widget.certificate.user_name.split(" ").join("_")}_${widget.certificate.course_name.split(" ").join("_")}_${widget.certificate.id}.pdf";
-    attributes_for_admin =
-        "certificate_${other_user_name.split(" ").join("_")}_${other_course_name.split(" ").join("_")}_${certificate_id_input_controller.text}.pdf";
+    int pdf_height = 940;
+    int pdf_width = 1200;
 
-    FileDownloader.save(
-      base64_string: base64_pdf,
-      file_name:
-          attributes_are_for_admin ? attributes_for_admin : attributes_for_user,
-    );
-
-    waiting_pdf_base64 = false;
-    setState(() {});
-  }
-
-  check_if_is_admin() async {
-    user_is_admin = await check_if_user_is_admin(widget.certificate.user_id);
-    setState(() {});
-  }
-
-  generate_certificate() async {
-    String url_user =
-        'https://us-central1-abei-21f7c.cloudfunctions.net/createPDF?userName=${widget.certificate.user_name}&courseName=${widget.certificate.course_name}&date=${widget.certificate.date}&certificateID=${widget.certificate.id}';
-    String url_admin =
-        'https://us-central1-abei-21f7c.cloudfunctions.net/createPDF?userName=$other_user_name&courseName=$other_course_name&date=$other_date&certificateID=${certificate_id_input_controller.text}';
-
-    attributes_are_for_admin =
-        user_is_admin && certificate_id_input_controller.text != "";
-
-    await http.get(
-      Uri.parse(attributes_are_for_admin ? url_admin : url_user),
+    await http
+        .post(
+      Uri.parse(
+          base_url + "convert_html_to_pdf?height=$pdf_height&width=$pdf_width"),
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-    ).then((response) => download_certificate(response));
-  }
-
-  get_other_certificate_info() async {
-    await FirebaseFirestore.instance
-        .collection("certificates")
-        .doc(certificate_id_input_controller.text)
-        .get()
-        .then((DocumentSnapshot certificate_doc) async {
-      other_date = timestamp_to_date(certificate_doc.get("date"));
-      other_user_id = certificate_doc.get("user_id");
-
-      await FirebaseFirestore.instance
-          .collection("courses")
-          .doc(certificate_doc.get("course_id"))
-          .get()
-          .then((DocumentSnapshot course_doc) async {
-        other_course_name = course_doc.get("name");
-
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(other_user_id)
-            .get()
-            .then((DocumentSnapshot user_doc) async {
-          other_user_name =
-              user_doc.get("firstname") + " " + user_doc.get("lastname");
-          generate_certificate();
-          return null;
-        });
-
-        return null;
-      });
-      return null;
+      body: json.encode(
+        {
+          "html_base64": base64.encode(utf8.encode(html_string)),
+        },
+      ),
+    )
+        .then((response) {
+      pdf_base64 = response.body.toString();
+      pdf_bytes = base64.decode(pdf_base64);
+      setState(() {});
     });
   }
 
@@ -127,7 +69,6 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   void initState() {
     super.initState();
     get_html_certificate();
-    check_if_is_admin();
   }
 
   @override
@@ -136,64 +77,31 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
       appBar: TopBar(
         background_color: widget.topbar_color,
         has_back_button: true,
-        actions: [],
+        actions: [
+          IconButton(
+            icon: Icon(
+              UniversalPlatform.isWeb ? Icons.download_rounded : Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              String file_name =
+                  "certificate_${widget.certificate.user_name.split(" ").join("_")}_${widget.certificate.course_name.split(" ").join("_")}_${widget.certificate.id}.pdf";
+
+              FileDownloader.save(
+                base64_string: pdf_base64,
+                file_name: file_name,
+              );
+            },
+          ),
+        ],
         custom_leading: null,
         logo_path: "assets/images/logo.png",
       ),
-      body: html_certificate != "" && !waiting_pdf_base64
+      body: pdf_bytes != null
           ? SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(
-                              UniversalPlatform.isWeb
-                                  ? Icons.download_rounded
-                                  : Icons.share,
-                              color: widget.topbar_color,
-                            ),
-                            onPressed: () async {
-                              waiting_pdf_base64 = true;
-                              setState(() {});
-
-                              if (user_is_admin &&
-                                  certificate_id_input_controller.text != "") {
-                                get_other_certificate_info();
-                              } else {
-                                generate_certificate();
-                              }
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: user_is_admin
-                              ? TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: "Other certificate ID",
-                                  ),
-                                  controller: certificate_id_input_controller,
-                                )
-                              : Container(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 17,
-                    child: Webview(
-                      src: html_certificate,
-                      id: Uuid().v4(),
-                    ),
-                  ),
-                ],
+              child: SfPdfViewer.memory(
+                pdf_bytes!,
+                enableDoubleTapZooming: true,
               ),
             )
           : Center(

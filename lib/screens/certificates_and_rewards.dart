@@ -43,7 +43,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
 
   List certificates_id = [];
   List courses_id = [];
-  List<Certificate> certificates = [];
+  List<CourseCertificate> certificates = [];
   Map<String, dynamic> user_info = {};
   String user_id = "";
 
@@ -125,7 +125,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
               Map<String, dynamic> data_course = snapshot_course.data()!;
 
               certificates.add(
-                Certificate(
+                CourseCertificate(
                   id: certificate_id,
                   date: timestamp_to_date(data_certificate["date"]),
                   course_name: data_course["name"],
