@@ -32,7 +32,6 @@ class ProductCatalogItem extends StatefulWidget {
   final LinearGradient linear_gradient;
   final StripePayment stripe_payment;
   final bool coming_soon;
-
   final String coming_soon_text;
 
   @override
@@ -134,7 +133,7 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
   @override
   void initState() {
     url =
-        "${widget.stripe_payment.session_view_url}?checkout_session_url=${widget.stripe_payment.checkout_session_url}&publishable_key=${widget.stripe_payment.publishable_key}&price_id=${widget.stripe_payment.price_id}&user_id=${widget.stripe_payment.user_id}&course_id=${widget.stripe_payment.product_id}&customer_email=${widget.stripe_payment.customer_email}";
+        "${widget.stripe_payment.session_view_url}?checkout_session_url=${widget.stripe_payment.checkout_session_url}&publishable_key=${widget.stripe_payment.publishable_key}&price_id=${widget.stripe_payment.price_id}&user_id=${widget.stripe_payment.user_id}&product_id=${widget.stripe_payment.product_id}&customer_email=${widget.stripe_payment.customer_email}&success_url=${widget.stripe_payment.success_url}&cancel_url=${widget.stripe_payment.cancel_url}&stripe_key=${widget.stripe_payment.stripe_key}";
     super.initState();
   }
 
