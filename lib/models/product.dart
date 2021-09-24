@@ -26,7 +26,7 @@ class Product {
         image_src = snapshot['image_src'],
         price = snapshot['price'],
         enabled = snapshot['enabled'] ?? true,
-        description = snapshot['description'];
+        description = snapshot['description'] ?? "";
 
   Map<String, dynamic> to_json() {
     return {

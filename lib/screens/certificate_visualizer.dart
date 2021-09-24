@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/generate_certificate.dart';
-import 'package:xapptor_ui/models/certificate.dart';
+import 'package:xapptor_ui/models/course_certificate.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 import 'dart:convert';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
