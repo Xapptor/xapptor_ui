@@ -142,6 +142,7 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       heightFactor: 0.9,
+      widthFactor: 0.9,
       child: ComingSoonContainer(
         text: widget.coming_soon_text,
         border_radius: border_radius,
