@@ -61,10 +61,12 @@ class _ProductListState extends State<ProductList> {
         .get()
         .then((snapshot_products) async {
       for (var snapshot_product in snapshot_products.docs) {
-        products.add(Product.from_snapshot(
-          snapshot_product.id,
-          snapshot_product.data(),
-        ));
+        products.add(
+          Product.from_snapshot(
+            snapshot_product.id,
+            snapshot_product.data(),
+          ),
+        );
       }
 
       if (widget.for_dispensers) {
@@ -201,7 +203,7 @@ class _ProductListState extends State<ProductList> {
                     heightFactor: 0.6,
                     child: Webview(
                       id: Uuid().v4(),
-                      src: product.url,
+                      src: product.image_src,
                     ),
                   ),
                 ),
@@ -368,7 +370,7 @@ class _ProductListState extends State<ProductList> {
                               .delete()
                               .then((value) async {
                             await FirebaseStorage.instance
-                                .refFromURL(product.url)
+                                .refFromURL(product.image_src)
                                 .delete()
                                 .then((value) async {
                               get_products();

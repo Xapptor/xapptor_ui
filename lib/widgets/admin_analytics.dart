@@ -109,10 +109,12 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
         .get()
         .then((snapshot_products) {
       for (var snapshot_product in snapshot_products.docs) {
-        products.add(Product.from_snapshot(
-          snapshot_product.id,
-          snapshot_product.data(),
-        ));
+        products.add(
+          Product.from_snapshot(
+            snapshot_product.id,
+            snapshot_product.data(),
+          ),
+        );
         product_values.add(products.last.name);
       }
       product_value = product_values.first;

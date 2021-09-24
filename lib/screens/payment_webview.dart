@@ -15,13 +15,13 @@ class PaymentWebview extends StatefulWidget {
 }
 
 class _PaymentWebviewState extends State<PaymentWebview> {
-  bool fisrt_time_on_abeinstitute = true;
+  bool fisrt_time_on_host = true;
 
   loaded_callback(String url) async {
     if (!UniversalPlatform.isWeb) {
-      if (url.contains("abeinstitute.com")) {
-        if (fisrt_time_on_abeinstitute) {
-          fisrt_time_on_abeinstitute = false;
+      if (url.contains(Uri.base.host)) {
+        if (fisrt_time_on_host) {
+          fisrt_time_on_host = false;
           Navigator.of(context).pop();
         }
       }
@@ -49,15 +49,27 @@ class _PaymentWebviewState extends State<PaymentWebview> {
 }
 
 class StripePayment {
+  final String publishable_key;
+  final String session_view_url;
+  final String checkout_session_url;
   final String price_id;
   final String user_id;
+  final String product_id;
   final String customer_email;
-  final String course_id;
+  final String success_url;
+  final String cancel_url;
+  final String stripe_key;
 
   StripePayment({
+    required this.publishable_key,
+    required this.session_view_url,
+    required this.checkout_session_url,
     required this.price_id,
     required this.user_id,
+    required this.product_id,
     required this.customer_email,
-    required this.course_id,
+    required this.success_url,
+    required this.cancel_url,
+    required this.stripe_key,
   });
 }

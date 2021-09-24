@@ -1,29 +1,37 @@
 class Product {
-  final String id;
-  final String name;
-  final String url;
-  final int price;
-  final String description;
-
   const Product({
     required this.id,
+    this.stripe_id = "",
     required this.name,
-    required this.url,
+    required this.image_src,
     required this.price,
     required this.description,
+    this.enabled = true,
   });
 
-  Product.from_snapshot(String id, Map<String, dynamic> snapshot)
-      : id = id,
+  final String id;
+  final String stripe_id;
+  final String name;
+  final String image_src;
+  final int price;
+  final String description;
+  final bool enabled;
+
+  Product.from_snapshot(
+    String id,
+    Map<String, dynamic> snapshot,
+  )   : id = id,
+        stripe_id = snapshot['stripe_id'] ?? "",
         name = snapshot['name'],
-        url = snapshot['url'],
+        image_src = snapshot['image_src'],
         price = snapshot['price'],
+        enabled = snapshot['enabled'] ?? true,
         description = snapshot['description'];
 
   Map<String, dynamic> to_json() {
     return {
       'name': name,
-      'image': url,
+      'image': image_src,
       'price': price,
       'description': description,
     };

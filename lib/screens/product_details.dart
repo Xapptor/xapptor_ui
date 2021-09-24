@@ -57,7 +57,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   check_main_color() async {
     if (widget.product != null) {
-      main_color = await get_main_color_from_remote_svg(widget.product!.url);
+      main_color =
+          await get_main_color_from_remote_svg(widget.product!.image_src);
       setState(() {});
     }
   }
@@ -66,7 +67,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     _controller_name.text = widget.product?.name ?? "";
     _controller_price.text = widget.product?.price.toString() ?? "";
     _controller_description.text = widget.product?.description ?? "";
-    url = widget.product?.url ?? "";
+    url = widget.product?.image_src ?? "";
     is_editing = widget.is_editing;
     setState(() {});
   }
@@ -158,7 +159,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     } else {
       if (current_image_file_base64 != "") {
         await firebase_storage.FirebaseStorage.instance
-            .refFromURL(widget.product!.url)
+            .refFromURL(widget.product!.image_src)
             .delete()
             .then((value) async {
           await firebase_storage.FirebaseStorage.instance
@@ -262,7 +263,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: screen_height / 3,
                           child: Webview(
                             id: Uuid().v4(),
-                            src: widget.product!.url,
+                            src: widget.product!.image_src,
                           ),
                         ),
                   TextField(

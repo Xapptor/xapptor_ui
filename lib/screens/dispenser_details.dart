@@ -43,7 +43,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   }
 
   check_main_color() async {
-    main_color = await get_main_color_from_remote_svg(widget.product.url);
+    main_color = await get_main_color_from_remote_svg(widget.product.image_src);
     setState(() {});
   }
 
@@ -84,7 +84,7 @@ class _DispenserDetailsState extends State<DispenserDetails> {
                 flex: widget.allow_edit ? 1 : 2,
                 child: Webview(
                   id: Uuid().v4(),
-                  src: widget.product.url,
+                  src: widget.product.image_src,
                 ),
               ),
               Expanded(

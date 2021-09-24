@@ -7,8 +7,8 @@ import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 
-class PricingContainerItem extends StatefulWidget {
-  const PricingContainerItem({
+class ProductCatalogItem extends StatefulWidget {
+  const ProductCatalogItem({
     required this.title,
     required this.price,
     required this.buy_text,
@@ -16,10 +16,9 @@ class PricingContainerItem extends StatefulWidget {
     required this.text_color,
     required this.button_color,
     required this.image_url,
-    required this.gradient_1,
-    required this.gradient_2,
-    required this.coming_soon,
+    required this.linear_gradient,
     required this.stripe_payment,
+    required this.coming_soon,
     required this.coming_soon_text,
   });
 
@@ -30,17 +29,17 @@ class PricingContainerItem extends StatefulWidget {
   final Color text_color;
   final Color button_color;
   final String image_url;
-  final Color gradient_1;
-  final Color gradient_2;
-  final bool coming_soon;
+  final LinearGradient linear_gradient;
   final StripePayment stripe_payment;
+  final bool coming_soon;
+
   final String coming_soon_text;
 
   @override
-  _PricingContainerItemState createState() => _PricingContainerItemState();
+  _ProductCatalogItemState createState() => _ProductCatalogItemState();
 }
 
-class _PricingContainerItemState extends State<PricingContainerItem> {
+class _ProductCatalogItemState extends State<ProductCatalogItem> {
   double border_radius = 10;
   bool fisrt_time_on_checkout = true;
 
@@ -135,7 +134,7 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
   @override
   void initState() {
     url =
-        "https://us-central1-abei-21f7c.cloudfunctions.net/stripeSessionView?priceID=${widget.stripe_payment.price_id}&userID=${widget.stripe_payment.user_id}&courseID=${widget.stripe_payment.course_id}&customerEmail=${widget.stripe_payment.customer_email}";
+        "${widget.stripe_payment.session_view_url}?checkout_session_url=${widget.stripe_payment.checkout_session_url}&publishable_key=${widget.stripe_payment.publishable_key}&price_id=${widget.stripe_payment.price_id}&user_id=${widget.stripe_payment.user_id}&course_id=${widget.stripe_payment.product_id}&customer_email=${widget.stripe_payment.customer_email}";
     super.initState();
   }
 
@@ -158,17 +157,7 @@ class _PricingContainerItemState extends State<PricingContainerItem> {
             border_radius: border_radius,
             box_fit: BoxFit.cover,
             image_path: widget.image_url,
-            linear_gradient: LinearGradient(
-                begin: FractionalOffset.topCenter,
-                end: FractionalOffset.bottomCenter,
-                colors: [
-                  widget.gradient_1,
-                  widget.gradient_2,
-                ],
-                stops: [
-                  0.8,
-                  1.0
-                ]),
+            linear_gradient: widget.linear_gradient,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
