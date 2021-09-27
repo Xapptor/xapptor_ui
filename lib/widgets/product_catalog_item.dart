@@ -1,11 +1,13 @@
-import 'package:universal_platform/universal_platform.dart';
-import 'package:uuid/uuid.dart';
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/webview/webview.dart';
+import 'package:http/http.dart' as http;
+import 'package:universal_platform/universal_platform.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductCatalogItem extends StatefulWidget {
   const ProductCatalogItem({
@@ -40,100 +42,9 @@ class ProductCatalogItem extends StatefulWidget {
 
 class _ProductCatalogItemState extends State<ProductCatalogItem> {
   double border_radius = 10;
-  bool fisrt_time_on_checkout = true;
-
-  loaded_callback(String url) async {
-    if (!UniversalPlatform.isWeb) {
-      if (url.contains("checkout.stripe.com")) {
-        if (fisrt_time_on_checkout) {
-          fisrt_time_on_checkout = false;
-
-          final result = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PaymentWebview(url: url),
-            ),
-          );
-          Navigator.of(context).pop();
-        }
-      }
-    }
-  }
-
-  late var webview_controller;
-
-  controller_callback(var current_webview_controller) {
-    webview_controller = current_webview_controller;
-  }
-
-  Widget buy_now_button() {
-    List<Widget> children = [];
-
-    if (!widget.coming_soon) {
-      if (widget.stripe_payment.user_id.isEmpty) {
-        children.add(
-          TextButton(
-            onPressed: () {
-              open_screen("login");
-            },
-            child: Center(
-              child: Container(),
-            ),
-          ),
-        );
-      } else {
-        children.add(
-          FractionallySizedBox(
-            heightFactor: 0.98,
-            widthFactor: 0.98,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                border_radius,
-              ),
-              child: Webview(
-                src: url,
-                //src: "https://www.google.com",
-                id: Uuid().v4(),
-                controller_callback: controller_callback,
-                loaded_callback: loaded_callback,
-              ),
-            ),
-          ),
-        );
-      }
-    }
-
-    children.add(
-      IgnorePointer(
-        child: Container(
-          child: Center(
-            child: Text(
-              widget.buy_text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: widget.text_color,
-              ),
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: widget.button_color,
-            borderRadius: BorderRadius.circular(border_radius),
-          ),
-        ),
-      ),
-    );
-
-    return Stack(
-      alignment: Alignment.center,
-      children: children,
-    );
-  }
-
-  late String url;
 
   @override
   void initState() {
-    url =
-        "${widget.stripe_payment.session_view_url}?checkout_session_url=${widget.stripe_payment.checkout_session_url}&publishable_key=${widget.stripe_payment.publishable_key}&price_id=${widget.stripe_payment.price_id}&user_id=${widget.stripe_payment.user_id}&product_id=${widget.stripe_payment.product_id}&customer_email=${widget.stripe_payment.customer_email}&success_url=${widget.stripe_payment.success_url}&cancel_url=${widget.stripe_payment.cancel_url}&stripe_key=${widget.stripe_payment.stripe_key}";
     super.initState();
   }
 
@@ -201,7 +112,95 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
                     flex: 3,
                     child: FractionallySizedBox(
                       widthFactor: 0.5,
-                      child: buy_now_button(),
+                      child: Container(
+                        child: TextButton(
+                          onPressed: () async {
+                            if (!widget.coming_soon) {
+                              if (widget.stripe_payment.user_id.isEmpty) {
+                                open_screen("login");
+                              } else {
+                                var stripe_doc = await FirebaseFirestore
+                                    .instance
+                                    .collection("metadata")
+                                    .doc("stripe")
+                                    .get();
+
+                                Map stripe_doc_data = stripe_doc.data()!;
+                                String stripe_key =
+                                    stripe_doc_data["keys"]["secret_test"];
+
+                                await http
+                                    .post(
+                                  Uri.parse(
+                                      "https://api.stripe.com/v1/checkout/sessions"),
+                                  headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded",
+                                    "Authorization": "Bearer $stripe_key",
+                                  },
+                                  encoding: Encoding.getByName('utf-8'),
+                                  body: {
+                                    "customer_email":
+                                        widget.stripe_payment.customer_email,
+                                    "metadata[user_id]":
+                                        widget.stripe_payment.user_id,
+                                    "metadata[product_id]":
+                                        widget.stripe_payment.product_id,
+                                    "metadata[firebase_config]": widget
+                                        .stripe_payment.firebase_config
+                                        .toString(),
+                                    "payment_method_types[0]": "card",
+                                    "mode": "payment",
+                                    "allow_promotion_codes": "true",
+                                    "line_items[0][price]":
+                                        widget.stripe_payment.price_id,
+                                    "line_items[0][quantity]": "1",
+                                    "success_url":
+                                        widget.stripe_payment.success_url,
+                                    "cancel_url":
+                                        widget.stripe_payment.cancel_url,
+                                  },
+                                )
+                                    .then((response) async {
+                                  print("response ${response.body.toString()}");
+                                  Map body = jsonDecode(response.body);
+                                  String url = body["url"];
+
+                                  if (UniversalPlatform.isWeb) {
+                                    await launch(
+                                      url,
+                                      webOnlyWindowName: "_self",
+                                    );
+                                  } else {
+                                    final result =
+                                        await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => PaymentWebview(
+                                          url_base: url,
+                                        ),
+                                      ),
+                                    );
+                                    Navigator.of(context).pop();
+                                  }
+                                });
+                              }
+                            }
+                          },
+                          child: Center(
+                            child: Text(
+                              widget.buy_text,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: widget.text_color,
+                              ),
+                            ),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: widget.button_color,
+                          borderRadius: BorderRadius.circular(border_radius),
+                        ),
+                      ),
                     ),
                   ),
                   Spacer(flex: 2),

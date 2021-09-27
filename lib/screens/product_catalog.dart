@@ -7,10 +7,10 @@ import 'package:xapptor_ui/models/product.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
-import '../widgets/product_catalog_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
-import '../widgets/topbar.dart';
+import 'package:xapptor_ui/widgets/product_catalog_item.dart';
+import 'package:xapptor_ui/widgets/topbar.dart';
 
 class ProductCatalog extends StatefulWidget {
   const ProductCatalog({
@@ -24,12 +24,9 @@ class ProductCatalog extends StatefulWidget {
     required this.subtitle_color,
     required this.text_color,
     required this.button_color,
-    required this.publishable_key,
-    required this.session_view_url,
-    required this.checkout_session_url,
     required this.success_url,
     required this.cancel_url,
-    required this.stripe_key,
+    required this.firebase_config,
   });
 
   final Color? topbar_color;
@@ -42,12 +39,9 @@ class ProductCatalog extends StatefulWidget {
   final Color subtitle_color;
   final Color text_color;
   final Color button_color;
-  final String publishable_key;
-  final String session_view_url;
-  final String checkout_session_url;
   final String success_url;
   final String cancel_url;
-  final String stripe_key;
+  final Map<String, dynamic> firebase_config;
 
   @override
   _ProductCatalogState createState() => _ProductCatalogState();
@@ -221,16 +215,13 @@ class _ProductCatalogState extends State<ProductCatalog> {
                         linear_gradient: widget.linear_gradients[index],
                         coming_soon: !widget.products[index].enabled,
                         stripe_payment: StripePayment(
-                          publishable_key: widget.publishable_key,
-                          session_view_url: widget.session_view_url,
-                          checkout_session_url: widget.checkout_session_url,
                           price_id: widget.products[index].stripe_id,
                           user_id: user_id,
                           product_id: widget.products[index].id,
                           customer_email: user_email,
                           success_url: widget.success_url,
                           cancel_url: widget.cancel_url,
-                          stripe_key: widget.stripe_key,
+                          firebase_config: widget.firebase_config,
                         ),
                         coming_soon_text: widget.texts[3],
                         button_color: widget.button_color,

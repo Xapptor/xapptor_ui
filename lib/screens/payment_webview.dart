@@ -5,10 +5,10 @@ import 'package:universal_platform/universal_platform.dart';
 
 class PaymentWebview extends StatefulWidget {
   const PaymentWebview({
-    required this.url,
+    required this.url_base,
   });
 
-  final String url;
+  final String url_base;
 
   @override
   _PaymentWebviewState createState() => _PaymentWebviewState();
@@ -39,7 +39,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
       top: true,
       child: Scaffold(
         body: Webview(
-          src: widget.url,
+          src: widget.url_base,
           id: Uuid().v4(),
           loaded_callback: loaded_callback,
         ),
@@ -49,27 +49,33 @@ class _PaymentWebviewState extends State<PaymentWebview> {
 }
 
 class StripePayment {
-  final String publishable_key;
-  final String session_view_url;
-  final String checkout_session_url;
   final String price_id;
   final String user_id;
   final String product_id;
   final String customer_email;
   final String success_url;
   final String cancel_url;
-  final String stripe_key;
+  final Map<String, dynamic> firebase_config;
 
   StripePayment({
-    required this.publishable_key,
-    required this.session_view_url,
-    required this.checkout_session_url,
     required this.price_id,
     required this.user_id,
     required this.product_id,
     required this.customer_email,
     required this.success_url,
     required this.cancel_url,
-    required this.stripe_key,
+    required this.firebase_config,
   });
+
+  Map<String, dynamic> to_json() {
+    return {
+      'price_id': price_id,
+      'user_id': user_id,
+      'product_id': product_id,
+      'customer_email': customer_email,
+      'success_url': success_url,
+      'cancel_url': cancel_url,
+      'firebase_config': firebase_config,
+    };
+  }
 }
