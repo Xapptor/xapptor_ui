@@ -48,9 +48,6 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
     await http
         .post(
       Uri.parse(base_url + "convert_html_to_pdf"),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
       body: json.encode(
         {
           "html_base64": base64.encode(utf8.encode(html_string)),
