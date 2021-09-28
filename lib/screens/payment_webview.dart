@@ -55,7 +55,7 @@ class StripePayment {
   final String customer_email;
   final String success_url;
   final String cancel_url;
-  final Map<String, dynamic> firebase_config;
+  final String firebase_config_url;
 
   StripePayment({
     required this.price_id,
@@ -64,7 +64,7 @@ class StripePayment {
     required this.customer_email,
     required this.success_url,
     required this.cancel_url,
-    required this.firebase_config,
+    required this.firebase_config_url,
   });
 
   Map<String, dynamic> to_json() {
@@ -75,7 +75,7 @@ class StripePayment {
       'customer_email': customer_email,
       'success_url': success_url,
       'cancel_url': cancel_url,
-      'firebase_config': firebase_config,
+      'firebase_config': firebase_config_url,
     };
   }
 }

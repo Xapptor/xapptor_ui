@@ -114,77 +114,8 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
                       widthFactor: 0.5,
                       child: Container(
                         child: TextButton(
-                          onPressed: () async {
-                            if (!widget.coming_soon) {
-                              if (widget.stripe_payment.user_id.isEmpty) {
-                                open_screen("login");
-                              } else {
-                                var stripe_doc = await FirebaseFirestore
-                                    .instance
-                                    .collection("metadata")
-                                    .doc("stripe")
-                                    .get();
-
-                                Map stripe_doc_data = stripe_doc.data()!;
-                                String stripe_key =
-                                    stripe_doc_data["keys"]["secret_test"];
-
-                                await http
-                                    .post(
-                                  Uri.parse(
-                                      "https://api.stripe.com/v1/checkout/sessions"),
-                                  headers: {
-                                    "Content-Type":
-                                        "application/x-www-form-urlencoded",
-                                    "Authorization": "Bearer $stripe_key",
-                                  },
-                                  encoding: Encoding.getByName('utf-8'),
-                                  body: {
-                                    "customer_email":
-                                        widget.stripe_payment.customer_email,
-                                    "metadata[user_id]":
-                                        widget.stripe_payment.user_id,
-                                    "metadata[product_id]":
-                                        widget.stripe_payment.product_id,
-                                    "metadata[firebase_config]": widget
-                                        .stripe_payment.firebase_config
-                                        .toString(),
-                                    "payment_method_types[0]": "card",
-                                    "mode": "payment",
-                                    "allow_promotion_codes": "true",
-                                    "line_items[0][price]":
-                                        widget.stripe_payment.price_id,
-                                    "line_items[0][quantity]": "1",
-                                    "success_url":
-                                        widget.stripe_payment.success_url,
-                                    "cancel_url":
-                                        widget.stripe_payment.cancel_url,
-                                  },
-                                )
-                                    .then((response) async {
-                                  print("response ${response.body.toString()}");
-                                  Map body = jsonDecode(response.body);
-                                  String url = body["url"];
-
-                                  if (UniversalPlatform.isWeb) {
-                                    await launch(
-                                      url,
-                                      webOnlyWindowName: "_self",
-                                    );
-                                  } else {
-                                    final result =
-                                        await Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => PaymentWebview(
-                                          url_base: url,
-                                        ),
-                                      ),
-                                    );
-                                    Navigator.of(context).pop();
-                                  }
-                                });
-                              }
-                            }
+                          onPressed: () {
+                            on_pressed();
                           },
                           child: Center(
                             child: Text(
@@ -211,5 +142,67 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
         ),
       ),
     );
+  }
+
+  on_pressed() async {
+    if (!widget.coming_soon) {
+      if (widget.stripe_payment.user_id.isEmpty) {
+        open_screen("login");
+      } else {
+        var stripe_doc = await FirebaseFirestore.instance
+            .collection("metadata")
+            .doc("stripe")
+            .get();
+
+        Map stripe_doc_data = stripe_doc.data()!;
+
+        String stripe_key = stripe_doc_data["keys"]["secret"];
+        //String stripe_key = stripe_doc_data["keys"]["secret_test"];
+
+        await http
+            .post(
+          Uri.parse("https://api.stripe.com/v1/checkout/sessions"),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer $stripe_key",
+          },
+          encoding: Encoding.getByName('utf-8'),
+          body: {
+            "customer_email": widget.stripe_payment.customer_email,
+            "metadata[user_id]": widget.stripe_payment.user_id,
+            "metadata[product_id]": widget.stripe_payment.product_id,
+            "metadata[firebase_config_url]":
+                widget.stripe_payment.firebase_config_url,
+            "payment_method_types[0]": "card",
+            "mode": "payment",
+            "allow_promotion_codes": "true",
+            "line_items[0][price]": widget.stripe_payment.price_id,
+            "line_items[0][quantity]": "1",
+            "success_url": widget.stripe_payment.success_url,
+            "cancel_url": widget.stripe_payment.cancel_url,
+          },
+        )
+            .then((response) async {
+          Map body = jsonDecode(response.body);
+          String url = body["url"];
+
+          if (UniversalPlatform.isWeb) {
+            await launch(
+              url,
+              webOnlyWindowName: "_self",
+            );
+          } else {
+            final result = await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PaymentWebview(
+                  url_base: url,
+                ),
+              ),
+            );
+            Navigator.of(context).pop();
+          }
+        });
+      }
+    }
   }
 }
