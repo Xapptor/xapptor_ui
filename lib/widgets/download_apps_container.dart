@@ -263,7 +263,6 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                colorFilter: color_filter_invert,
                 fit: BoxFit.contain,
                 image: AssetImage(
                   image_path,
