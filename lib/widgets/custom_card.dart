@@ -14,7 +14,6 @@ class CustomCard extends StatefulWidget {
       ],
     ),
     this.splash_color = Colors.transparent,
-    this.use_pointer_interceptor = false,
     this.animation_duration = const Duration(milliseconds: 100),
     this.shape = BoxShape.rectangle,
     this.tooltip,
@@ -26,7 +25,6 @@ class CustomCard extends StatefulWidget {
   final double border_radius;
   final LinearGradient linear_gradient;
   final Color splash_color;
-  final bool use_pointer_interceptor;
   final Duration animation_duration;
   final BoxShape shape;
   final String? tooltip;
@@ -36,6 +34,11 @@ class CustomCard extends StatefulWidget {
 }
 
 class _CustomCardState extends State<CustomCard> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Color shadow_color = Colors.transparent;
@@ -83,11 +86,7 @@ class _CustomCardState extends State<CustomCard> {
           ),
         ],
       ),
-      child: widget.use_pointer_interceptor
-          ? PointerInterceptor(
-              child: ink_well_widget(widget.child),
-            )
-          : ink_well_widget(widget.child),
+      child: ink_well_widget(widget.child),
     );
 
     return Container(

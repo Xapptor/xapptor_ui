@@ -187,7 +187,6 @@ class _ProductListState extends State<ProductList> {
               height: MediaQuery.of(context).size.height / 3,
               child: CustomCard(
                 splash_color: widget.text_color.withOpacity(0.2),
-                use_pointer_interceptor: true,
                 elevation: 3,
                 border_radius: border_radius,
                 on_pressed: () {
@@ -201,9 +200,11 @@ class _ProductListState extends State<ProductList> {
                   borderRadius: BorderRadius.circular(border_radius),
                   child: FractionallySizedBox(
                     heightFactor: 0.6,
-                    child: Webview(
-                      id: Uuid().v4(),
-                      src: product.image_src,
+                    child: IgnorePointer(
+                      child: Webview(
+                        id: Uuid().v4(),
+                        src: product.image_src,
+                      ),
                     ),
                   ),
                 ),
@@ -218,7 +219,7 @@ class _ProductListState extends State<ProductList> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22,
-                    color: widget.text_color,
+                    color: Colors.grey,
                   ),
                 ),
               ),
