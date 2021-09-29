@@ -19,7 +19,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
 
   loaded_callback(String url) async {
     if (!UniversalPlatform.isWeb) {
-      if (url.contains(Uri.base.host)) {
+      if (!url.contains("stripe")) {
         if (fisrt_time_on_host) {
           fisrt_time_on_host = false;
           Navigator.of(context).pop();

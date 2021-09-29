@@ -73,7 +73,7 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Spacer(flex: 18),
+                  Spacer(flex: 8),
                   Text(
                     widget.title,
                     textAlign: TextAlign.center,

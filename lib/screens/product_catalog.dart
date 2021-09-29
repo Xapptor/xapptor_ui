@@ -100,7 +100,7 @@ class _ProductCatalogState extends State<ProductCatalog> {
           Expanded(
             flex: 2,
             child: FractionallySizedBox(
-              widthFactor: 0.7,
+              widthFactor: 1,
               child: Center(
                 child: Text(
                   widget.texts[0],
@@ -132,6 +132,7 @@ class _ProductCatalogState extends State<ProductCatalog> {
             child: FractionallySizedBox(
               widthFactor: portrait ? 0.8 : 0.2,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextField(
                     style: TextStyle(
@@ -192,42 +193,38 @@ class _ProductCatalogState extends State<ProductCatalog> {
             ),
           ),
           Expanded(
-            flex: 11,
-            child: Container(
-              //color: Colors.red,
-              child: ListView.builder(
-                itemCount: widget.products.length,
-                scrollDirection: portrait ? Axis.horizontal : Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: double.maxFinite,
-                    width: portrait
-                        ? (screen_width * 0.85)
-                        : (screen_width / 3.75),
-                    child: ProductCatalogItem(
-                      title: widget.products[index].name,
-                      price: widget.products[index].price.toString(),
-                      buy_text: widget.texts[2],
-                      icon: Icons.shutter_speed,
-                      text_color: widget.text_color,
-                      image_url: widget.products[index].image_src,
-                      linear_gradient: widget.linear_gradients[index],
-                      coming_soon: !widget.products[index].enabled,
-                      stripe_payment: StripePayment(
-                        price_id: widget.products[index].stripe_id,
-                        user_id: user_id,
-                        product_id: widget.products[index].id,
-                        customer_email: user_email,
-                        success_url: widget.success_url,
-                        cancel_url: widget.cancel_url,
-                        firebase_config_url: widget.firebase_config_url,
-                      ),
-                      coming_soon_text: widget.texts[3],
-                      button_color: widget.button_color,
+            flex: 8,
+            child: ListView.builder(
+              itemCount: widget.products.length,
+              scrollDirection: portrait ? Axis.horizontal : Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: double.maxFinite,
+                  width:
+                      portrait ? (screen_width * 0.85) : (screen_width / 3.75),
+                  child: ProductCatalogItem(
+                    title: widget.products[index].name,
+                    price: widget.products[index].price.toString(),
+                    buy_text: widget.texts[2],
+                    icon: Icons.shutter_speed,
+                    text_color: widget.text_color,
+                    image_url: widget.products[index].image_src,
+                    linear_gradient: widget.linear_gradients[index],
+                    coming_soon: !widget.products[index].enabled,
+                    stripe_payment: StripePayment(
+                      price_id: widget.products[index].stripe_id,
+                      user_id: user_id,
+                      product_id: widget.products[index].id,
+                      customer_email: user_email,
+                      success_url: widget.success_url,
+                      cancel_url: widget.cancel_url,
+                      firebase_config_url: widget.firebase_config_url,
                     ),
-                  );
-                },
-              ),
+                    coming_soon_text: widget.texts[3],
+                    button_color: widget.button_color,
+                  ),
+                );
+              },
             ),
           ),
         ],
