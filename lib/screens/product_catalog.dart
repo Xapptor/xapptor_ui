@@ -67,9 +67,11 @@ class _ProductCatalogState extends State<ProductCatalog> {
 
   @override
   void initState() {
-    User current_user = FirebaseAuth.instance.currentUser!;
-    user_id = current_user.uid;
-    user_email = current_user.email!;
+    if (FirebaseAuth.instance.currentUser != null) {
+      User current_user = FirebaseAuth.instance.currentUser!;
+      user_id = current_user.uid;
+      user_email = current_user.email!;
+    }
 
     if (widget.topbar_color != null &&
         widget.language_picker_items_text_color != null) {
