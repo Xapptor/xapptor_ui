@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class CustomCard extends StatefulWidget {
   const CustomCard({

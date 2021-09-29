@@ -14,7 +14,6 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dispenser_details.dart';
 import 'product_details.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
 class ProductList extends StatefulWidget {
@@ -402,70 +401,68 @@ class _ProductListState extends State<ProductList> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return PointerInterceptor(
-          child: AlertDialog(
-            content: StatefulBuilder(
-              builder: (
-                BuildContext context,
-                StateSetter setState,
-              ) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: sized_box_height),
-                    Text(
-                      "Selecciona el producto para este dispensador",
-                      textAlign: TextAlign.center,
+        return AlertDialog(
+          content: StatefulBuilder(
+            builder: (
+              BuildContext context,
+              StateSetter setState,
+            ) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: sized_box_height),
+                  Text(
+                    "Selecciona el producto para este dispensador",
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: sized_box_height),
+                  DropdownButton<String>(
+                    value: products_value,
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
-                    SizedBox(height: sized_box_height),
-                    DropdownButton<String>(
-                      value: products_value,
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(
-                        color: Colors.black,
+                    underline: Container(
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    onChanged: (new_value) {
+                      setState(() {
+                        products_value = new_value!;
+                      });
+                    },
+                    items: products_values
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height: sized_box_height),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancelar"),
                       ),
-                      underline: Container(
-                        height: 1,
-                        color: Colors.black,
+                      TextButton(
+                        onPressed: () {
+                          update_product_in_dispenser(index);
+                          Navigator.pop(context);
+                        },
+                        child: Text("Aceptar"),
                       ),
-                      onChanged: (new_value) {
-                        setState(() {
-                          products_value = new_value!;
-                        });
-                      },
-                      items: products_values
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(height: sized_box_height),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancelar"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            update_product_in_dispenser(index);
-                            Navigator.pop(context);
-                          },
-                          child: Text("Aceptar"),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: sized_box_height),
-                  ],
-                );
-              },
-            ),
+                    ],
+                  ),
+                  SizedBox(height: sized_box_height),
+                ],
+              );
+            },
           ),
         );
       },

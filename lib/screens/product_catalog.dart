@@ -93,27 +93,28 @@ class _ProductCatalogState extends State<ProductCatalog> {
 
     Widget body = Container(
       color: widget.background_color,
-      height: portrait ? (screen_height * 3) : (screen_height),
+      height: screen_height,
       width: screen_width,
       child: Column(
         children: <Widget>[
-          Spacer(flex: 1),
           Expanded(
-            flex: portrait ? 3 : 1,
+            flex: 2,
             child: FractionallySizedBox(
               widthFactor: 0.7,
-              child: Text(
-                widget.texts[0],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: widget.title_color,
-                  fontSize: 40,
+              child: Center(
+                child: Text(
+                  widget.texts[0],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: widget.title_color,
+                    fontSize: 40,
+                  ),
                 ),
               ),
             ),
           ),
           Expanded(
-            flex: portrait ? 2 : 1,
+            flex: 1,
             child: FractionallySizedBox(
               widthFactor: 0.7,
               child: Text(
@@ -191,48 +192,44 @@ class _ProductCatalogState extends State<ProductCatalog> {
             ),
           ),
           Expanded(
-            flex: portrait ? 42 : 10,
-            child: FractionallySizedBox(
-              widthFactor: 0.8,
-              child: Container(
-                //color: Colors.red,
-                child: ListView.builder(
-                  itemCount: widget.products.length,
-                  scrollDirection: portrait ? Axis.vertical : Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height:
-                          portrait ? (screen_height / 1.3) : double.maxFinite,
-                      width:
-                          portrait ? double.maxFinite : (screen_width / 3.75),
-                      child: ProductCatalogItem(
-                        title: widget.products[index].name,
-                        price: widget.products[index].price.toString(),
-                        buy_text: widget.texts[2],
-                        icon: Icons.shutter_speed,
-                        text_color: widget.text_color,
-                        image_url: widget.products[index].image_src,
-                        linear_gradient: widget.linear_gradients[index],
-                        coming_soon: !widget.products[index].enabled,
-                        stripe_payment: StripePayment(
-                          price_id: widget.products[index].stripe_id,
-                          user_id: user_id,
-                          product_id: widget.products[index].id,
-                          customer_email: user_email,
-                          success_url: widget.success_url,
-                          cancel_url: widget.cancel_url,
-                          firebase_config_url: widget.firebase_config_url,
-                        ),
-                        coming_soon_text: widget.texts[3],
-                        button_color: widget.button_color,
+            flex: 11,
+            child: Container(
+              //color: Colors.red,
+              child: ListView.builder(
+                itemCount: widget.products.length,
+                scrollDirection: portrait ? Axis.horizontal : Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: double.maxFinite,
+                    width: portrait
+                        ? (screen_width * 0.85)
+                        : (screen_width / 3.75),
+                    child: ProductCatalogItem(
+                      title: widget.products[index].name,
+                      price: widget.products[index].price.toString(),
+                      buy_text: widget.texts[2],
+                      icon: Icons.shutter_speed,
+                      text_color: widget.text_color,
+                      image_url: widget.products[index].image_src,
+                      linear_gradient: widget.linear_gradients[index],
+                      coming_soon: !widget.products[index].enabled,
+                      stripe_payment: StripePayment(
+                        price_id: widget.products[index].stripe_id,
+                        user_id: user_id,
+                        product_id: widget.products[index].id,
+                        customer_email: user_email,
+                        success_url: widget.success_url,
+                        cancel_url: widget.cancel_url,
+                        firebase_config_url: widget.firebase_config_url,
                       ),
-                    );
-                  },
-                ),
+                      coming_soon_text: widget.texts[3],
+                      button_color: widget.button_color,
+                    ),
+                  );
+                },
               ),
             ),
           ),
-          portrait ? Container() : Spacer(flex: 2),
         ],
       ),
     );
@@ -258,9 +255,7 @@ class _ProductCatalogState extends State<ProductCatalog> {
               custom_leading: null,
               logo_path: "assets/images/logo.png",
             ),
-            body: SingleChildScrollView(
-              child: body,
-            ),
+            body: body,
           )
         : body;
   }
