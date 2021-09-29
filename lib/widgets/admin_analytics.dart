@@ -822,6 +822,14 @@ LineChart main_line_chart({
         show: true,
       ),
       titlesData: FlTitlesData(
+        topTitles: SideTitles(
+          reservedSize: 0,
+          showTitles: false,
+        ),
+        rightTitles: SideTitles(
+          reservedSize: 0,
+          showTitles: false,
+        ),
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 0,
@@ -905,7 +913,7 @@ LineChart main_line_chart({
             }
           },
           margin: 10,
-          reservedSize: 30,
+          reservedSize: 40,
         ),
       ),
       borderData: FlBorderData(
