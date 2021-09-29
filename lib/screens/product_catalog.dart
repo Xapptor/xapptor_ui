@@ -193,9 +193,10 @@ class _ProductCatalogState extends State<ProductCatalog> {
             ),
           ),
           Expanded(
-            flex: 8,
+            flex: portrait ? 8 : 14,
             child: ListView.builder(
               itemCount: widget.products.length,
+              shrinkWrap: true,
               scrollDirection: portrait ? Axis.horizontal : Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
@@ -227,6 +228,7 @@ class _ProductCatalogState extends State<ProductCatalog> {
               },
             ),
           ),
+          portrait ? Container() : Spacer(flex: 2),
         ],
       ),
     );

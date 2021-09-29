@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
@@ -50,6 +51,8 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
 
   @override
   Widget build(BuildContext context) {
+    bool portrait = is_portrait(context);
+
     return FractionallySizedBox(
       heightFactor: 0.9,
       widthFactor: 0.9,
@@ -109,7 +112,7 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
                   ),
                   Spacer(flex: 1),
                   Expanded(
-                    flex: 3,
+                    flex: portrait ? 3 : 2,
                     child: FractionallySizedBox(
                       widthFactor: 0.5,
                       child: Container(
