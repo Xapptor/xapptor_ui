@@ -1,7 +1,6 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 

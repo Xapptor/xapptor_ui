@@ -30,7 +30,6 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     initialPage: 1,
     viewportFraction: 0.3,
   );
-  int total_pages = 0;
   Curve animation_curve = Curves.easeInOutCirc;
   late Timer timer;
 
@@ -38,7 +37,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     int delay_seconds = random_number_with_range(5, 9);
 
     timer = Timer(Duration(seconds: delay_seconds), () {
-      if (current_page < total_pages - 1) {
+      if (current_page < widget.children.length - 1) {
         page_controller.nextPage(
           duration: Duration(milliseconds: 900),
           curve: animation_curve,
@@ -60,9 +59,6 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   @override
   void initState() {
     super.initState();
-    total_pages = widget.children.length;
-    setState(() {});
-
     if (widget.auto_scroll) auto_scroll();
   }
 
@@ -115,7 +111,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
             flex: 1,
             child: SmoothPageIndicator(
               controller: page_controller,
-              count: total_pages,
+              count: widget.children.length,
               effect: SwapEffect(
                 dotColor: widget.dot_color_inactive,
                 activeDotColor: widget.dot_colors_active[current_page.toInt()],
