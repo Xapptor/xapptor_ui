@@ -88,6 +88,22 @@ class _QRScannerState extends State<QRScanner> {
     );
   }
 
+  Widget login_button() {
+    return TextButton(
+      onPressed: () {
+        open_screen("login");
+      },
+      child: Text(
+        widget.login_button_text,
+        style: TextStyle(
+          color: widget.border_color,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
@@ -151,6 +167,12 @@ class _QRScannerState extends State<QRScanner> {
                         linear_gradient: widget.button_linear_gradient,
                       ),
                     ),
+                    widget.show_login_button
+                        ? Container(
+                            height: 50,
+                            child: login_button(),
+                          )
+                        : Container(),
                   ],
                 ),
               ),
@@ -191,21 +213,7 @@ class _QRScannerState extends State<QRScanner> {
                         ),
                       ),
                       Spacer(flex: 6),
-                      widget.show_login_button
-                          ? TextButton(
-                              onPressed: () {
-                                open_screen("login");
-                              },
-                              child: Text(
-                                widget.login_button_text,
-                                style: TextStyle(
-                                  color: widget.border_color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            )
-                          : Container(),
+                      widget.show_login_button ? login_button() : Container(),
                       Spacer(flex: 1),
                     ],
                   ),
