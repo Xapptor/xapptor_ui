@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_router/app_screens.dart';
@@ -148,6 +149,21 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
   }
 
   on_pressed() async {
+    const Set<String> _kIds = <String>{'njrXMgGFkJklI3ZZONSP'};
+    final ProductDetailsResponse response =
+        await InAppPurchase.instance.queryProductDetails(_kIds);
+    if (response.notFoundIDs.isNotEmpty) {
+      print("Not Found IDs");
+    } else {
+      List<ProductDetails> productDetails = response.productDetails;
+
+      final PurchaseParam purchaseParam =
+          PurchaseParam(productDetails: productDetails[0]);
+      InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
+    }
+  }
+
+  on_pressed_stripe() async {
     if (!widget.coming_soon) {
       if (widget.stripe_payment.user_id.isEmpty) {
         open_screen("login");

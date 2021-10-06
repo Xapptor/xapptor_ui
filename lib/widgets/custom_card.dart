@@ -5,7 +5,7 @@ class CustomCard extends StatefulWidget {
     required this.child,
     required this.on_pressed,
     this.elevation = 3,
-    this.border_radius = 20,
+    this.border_radius = 18,
     this.linear_gradient = const LinearGradient(
       colors: [
         Colors.white,
