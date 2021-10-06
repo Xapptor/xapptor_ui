@@ -13,27 +13,24 @@ description_card({
   bool portrait = screen_height > screen_width;
 
   List<Widget> widgets = [
-    Spacer(flex: 1),
-    Expanded(
-      flex: 4,
-      child: Container(
-        margin: EdgeInsets.all(20),
-        child: CustomCard(
-          elevation: 6,
-          border_radius: 18,
-          child: Image.asset(
-            description_card.image_src,
-            fit: BoxFit.fill,
-          ),
-          on_pressed: () {
-            //
-          },
+    Container(
+      margin: EdgeInsets.all(20),
+      height: (screen_height * (portrait ? 0.4 : 0.6)),
+      width: (screen_height * (portrait ? 0.2 : 0.3)),
+      child: CustomCard(
+        elevation: 6,
+        border_radius: 18,
+        child: Image.asset(
+          description_card.image_src,
+          fit: BoxFit.fill,
         ),
+        on_pressed: () {
+          //
+        },
       ),
     ),
-    Spacer(flex: 1),
-    Expanded(
-      flex: 5,
+    Container(
+      width: (screen_height * (portrait ? 0.2 : 0.3)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,23 +77,42 @@ description_card({
         ],
       ),
     ),
-    Spacer(flex: 1),
   ];
 
-  return AnimatedOpacity(
-    opacity: (description_card.current_offset >=
-                description_card.visible_offset - screen_height) &&
-            (description_card.current_offset <=
-                description_card.visible_offset - current_height)
-        ? 1
-        : 0,
-    duration: Duration(milliseconds: 300),
-    child: Container(
-      width: 200,
-      child: Row(
-        children:
-            description_card.reversed ? widgets.reversed.toList() : widgets,
+  bool card_visible = (description_card.current_offset >=
+          description_card.visible_offset - screen_height) &&
+      (description_card.current_offset <=
+          description_card.visible_offset - current_height);
+
+  return Stack(
+    alignment: Alignment.center,
+    children: [
+      AnimatedPositioned(
+        duration: Duration(milliseconds: 1500),
+        curve: Curves.elasticOut,
+        left: !description_card.reversed
+            ? card_visible
+                ? (screen_width / 2) - (screen_height * (portrait ? 0.25 : 0.3))
+                : 0
+            : null,
+        right: description_card.reversed
+            ? card_visible
+                ? (screen_width / 2) - (screen_height * (portrait ? 0.25 : 0.3))
+                : 0
+            : null,
+        child: AnimatedOpacity(
+          opacity: card_visible ? 1 : 0,
+          duration: Duration(milliseconds: card_visible ? 800 : 100),
+          child: Container(
+            height: (screen_height * 0.7),
+            child: Row(
+              children: description_card.reversed
+                  ? widgets.reversed.toList()
+                  : widgets,
+            ),
+          ),
+        ),
       ),
-    ),
+    ],
   );
 }
