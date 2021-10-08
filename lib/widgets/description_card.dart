@@ -12,14 +12,16 @@ description_card({
 
   List<Widget> widgets = [
     Container(
-      width: screen_width * (portrait ? 0.55 : 0.25),
+      //color: Colors.orange,
+      width: screen_width * (portrait ? 0.6 : 0.25),
       child: Image.asset(
         description_card.image_src,
-        fit: BoxFit.contain,
+        fit: BoxFit.fitHeight,
       ),
     ),
     Container(
-      width: screen_width * (portrait ? 0.4 : 0.25),
+      width: screen_width * (portrait ? 0.35 : 0.25),
+      //color: Colors.orange,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +93,11 @@ description_card({
             width: screen_width,
             //color: Colors.orange,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: portrait
+                  ? description_card.reversed
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: description_card.reversed
                   ? widgets.reversed.toList()
                   : widgets,
