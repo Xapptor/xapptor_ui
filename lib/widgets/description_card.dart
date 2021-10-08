@@ -13,14 +13,14 @@ description_card({
   List<Widget> widgets = [
     Container(
       //color: Colors.orange,
-      width: screen_width * (portrait ? 0.6 : 0.25),
+      width: screen_width * (portrait ? 0.5 : 0.25),
       child: Image.asset(
         description_card.image_src,
         fit: BoxFit.fitHeight,
       ),
     ),
     Container(
-      width: screen_width * (portrait ? 0.35 : 0.25),
+      width: screen_width * (portrait ? 0.45 : 0.25),
       //color: Colors.orange,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,13 +31,16 @@ description_card({
               description_card.title,
               style: TextStyle(
                 color: description_card.text_color,
-                fontSize: 22,
+                fontSize: portrait ? 20 : 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.only(
+              top: 10,
+              bottom: 10,
+            ),
             child: Text(
               description_card.description,
               style: TextStyle(
@@ -48,7 +51,6 @@ description_card({
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
             child: GestureDetector(
               onTap: () {
                 launch(description_card.url);
