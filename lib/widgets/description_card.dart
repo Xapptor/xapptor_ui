@@ -14,29 +14,20 @@ description_card({
 
   List<Widget> widgets = [
     Container(
-      margin: EdgeInsets.all(20),
-      height: (screen_height * (portrait ? 0.4 : 0.6)),
-      width: (screen_height * (portrait ? 0.2 : 0.3)),
-      child: CustomCard(
-        elevation: 6,
-        border_radius: 18,
-        child: Image.asset(
-          description_card.image_src,
-          fit: BoxFit.fill,
-        ),
-        on_pressed: () {
-          //
-        },
+      width: screen_width * (portrait ? 0.5 : 0.25),
+      child: Image.asset(
+        description_card.image_src,
+        fit: BoxFit.contain,
       ),
     ),
     Container(
-      width: (screen_height * (portrait ? 0.2 : 0.3)),
+      width: screen_width * (portrait ? 0.5 : 0.25),
+      padding: EdgeInsets.only(left: description_card.reversed ? 15 : 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.all(10),
             child: Text(
               description_card.title,
               style: TextStyle(
@@ -47,18 +38,18 @@ description_card({
             ),
           ),
           Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.only(top: 10),
             child: Text(
               description_card.description,
               style: TextStyle(
                 color: description_card.text_color,
-                fontSize: 18,
+                fontSize: portrait ? 14 : 16,
               ),
-              maxLines: 6,
+              maxLines: 20,
             ),
           ),
           Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.only(top: 10),
             child: GestureDetector(
               onTap: () {
                 launch(description_card.url);
@@ -79,10 +70,16 @@ description_card({
     ),
   ];
 
-  bool card_visible = (description_card.current_offset >=
-          description_card.visible_offset - screen_height) &&
-      (description_card.current_offset <=
-          description_card.visible_offset - current_height);
+  bool card_visible = description_card.current_offset >=
+          (description_card.visible_offset - (screen_height * 1.05)) &&
+      description_card.current_offset <=
+          (description_card.visible_offset - (screen_height * 0.35));
+
+  double card_position =
+      card_visible ? (portrait ? 0 : screen_width * 0.25) : screen_width;
+
+  double card_reversed_position =
+      card_visible ? (portrait ? 0 : screen_width * 0.25) : -screen_width;
 
   return Stack(
     alignment: Alignment.center,
@@ -90,21 +87,14 @@ description_card({
       AnimatedPositioned(
         duration: Duration(milliseconds: 1500),
         curve: Curves.elasticOut,
-        left: !description_card.reversed
-            ? card_visible
-                ? (screen_width / 2) - (screen_height * (portrait ? 0.25 : 0.3))
-                : 0
-            : null,
-        right: description_card.reversed
-            ? card_visible
-                ? (screen_width / 2) - (screen_height * (portrait ? 0.25 : 0.3))
-                : 0
-            : null,
+        left:
+            description_card.reversed ? card_reversed_position : card_position,
         child: AnimatedOpacity(
           opacity: card_visible ? 1 : 0,
           duration: Duration(milliseconds: card_visible ? 800 : 100),
           child: Container(
             height: (screen_height * 0.7),
+            width: screen_width,
             child: Row(
               children: description_card.reversed
                   ? widgets.reversed.toList()
