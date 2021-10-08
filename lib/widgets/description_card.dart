@@ -22,7 +22,10 @@ description_card({
     ),
     Container(
       width: screen_width * (portrait ? 0.5 : 0.25),
-      padding: EdgeInsets.only(left: description_card.reversed ? 15 : 0),
+      padding: EdgeInsets.only(
+        left: description_card.reversed ? 15 : 0,
+        right: !description_card.reversed ? 15 : 0,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
