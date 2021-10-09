@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xapptor_ui/models/resume.dart';
@@ -103,7 +104,7 @@ resume({
                   children: [
                     resume_section(
                       resume_section: ResumeSection(
-                        icon: Icons.account_circle_rounded,
+                        icon: FontAwesome5.user_astronaut,
                         title: "Profile",
                         description: resume.profile,
                       ),
@@ -111,7 +112,7 @@ resume({
                     ),
                     resume_section(
                       resume_section: ResumeSection(
-                        icon: Icons.account_circle_rounded,
+                        icon: FontAwesome5.user,
                         title: "Details",
                         subtitle: (resume.address ?? "") +
                             " " +
@@ -185,7 +186,7 @@ resume_section({
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               resume_section.title != null
-                  ? Text(
+                  ? SelectableText(
                       resume_section.title!,
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -193,11 +194,10 @@ resume_section({
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 2,
                     )
                   : Container(),
               resume_section.subtitle != null
-                  ? Text(
+                  ? SelectableText(
                       resume_section.subtitle!,
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -205,13 +205,12 @@ resume_section({
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 2,
                     )
                   : Container(),
               resume_section.begin != null && resume_section.end != null
-                  ? Text(
+                  ? SelectableText(
                       DateFormat.yMMMM().format(resume_section.begin!) +
-                          " -- " +
+                          " - " +
                           DateFormat.yMMMM().format(resume_section.end!),
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -221,14 +220,13 @@ resume_section({
                     )
                   : Container(),
               resume_section.description != null
-                  ? Text(
+                  ? SelectableText(
                       resume_section.description!,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                       ),
-                      maxLines: 20,
                     )
                   : Container(),
             ],
