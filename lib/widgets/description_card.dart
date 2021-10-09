@@ -13,14 +13,28 @@ description_card({
   List<Widget> widgets = [
     Container(
       //color: Colors.orange,
-      width: screen_width * (portrait ? 0.5 : 0.25),
+      width: screen_width *
+          (description_card.direction == Axis.horizontal
+              ? portrait
+                  ? 0.5
+                  : 0.25
+              : portrait
+                  ? 0.85
+                  : 0.5),
       child: Image.asset(
         description_card.image_src,
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.contain,
       ),
     ),
     Container(
-      width: screen_width * (portrait ? 0.45 : 0.25),
+      width: screen_width *
+          (description_card.direction == Axis.horizontal
+              ? portrait
+                  ? 0.45
+                  : 0.25
+              : portrait
+                  ? 0.85
+                  : 0.25),
       //color: Colors.orange,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +70,7 @@ description_card({
                 launch(description_card.url);
               },
               child: Text(
-                "Github Repo",
+                description_card.url_title,
                 style: TextStyle(
                   color: description_card.text_color,
                   fontSize: 16,
@@ -81,7 +95,7 @@ description_card({
     children: [
       AnimatedPositioned(
         duration: Duration(milliseconds: 1000),
-        curve: Curves.fastLinearToSlowEaseIn,
+        curve: Curves.easeInOut,
         left: card_visible
             ? 0
             : description_card.reversed
@@ -89,12 +103,14 @@ description_card({
                 : screen_width,
         child: AnimatedOpacity(
           opacity: card_visible ? 1 : 0,
-          duration: Duration(milliseconds: card_visible ? 800 : 200),
+          duration: Duration(milliseconds: card_visible ? 1000 : 500),
           child: Container(
             height: (screen_height * 0.7),
             width: screen_width,
             //color: Colors.orange,
-            child: Row(
+            child: Flex(
+              direction:
+                  portrait ? description_card.direction : Axis.horizontal,
               mainAxisAlignment: portrait
                   ? description_card.reversed
                       ? MainAxisAlignment.end
