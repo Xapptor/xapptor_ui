@@ -335,7 +335,7 @@ class _ResumeSkillState extends State<ResumeSkill> {
                   boxShadow: [
                     BoxShadow(
                       color: widget.skill.color,
-                      blurRadius: 7,
+                      blurRadius: 4,
                     )
                   ],
                 ),
