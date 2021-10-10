@@ -296,7 +296,7 @@ class _ResumeSkillState extends State<ResumeSkill> {
     if (widget.apply_variation) {
       Timer(Duration(milliseconds: 3000), () {
         Timer.periodic(
-            Duration(milliseconds: random_number_with_range(1000, 3000)),
+            Duration(milliseconds: random_number_with_range(2000, 3500)),
             (timer) {
           percentage_variation = random_number_with_range(-50, 50) / 1000;
           setState(() {});
@@ -347,7 +347,7 @@ class _ResumeSkillState extends State<ResumeSkill> {
               ),
               AnimatedContainer(
                 curve: Curves.elasticOut,
-                duration: Duration(milliseconds: 1700),
+                duration: Duration(milliseconds: 2000),
                 height: 7,
                 width: current_bar_width,
                 decoration: BoxDecoration(

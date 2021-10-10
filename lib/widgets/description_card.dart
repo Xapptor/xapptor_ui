@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xapptor_ui/models/description_card.dart';
@@ -65,10 +67,13 @@ description_card({
             ),
           ),
           Container(
-            child: GestureDetector(
-              onTap: () {
+            child: TextButton(
+              onPressed: () {
                 launch(description_card.url);
               },
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.all(0),
+              ),
               child: Text(
                 description_card.url_title,
                 style: TextStyle(
@@ -76,6 +81,7 @@ description_card({
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
+                  decoration: TextDecoration.underline,
                 ),
               ),
             ),
