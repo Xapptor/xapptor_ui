@@ -52,14 +52,18 @@ class _ResumeState extends State<Resume> {
       );
     });
 
-    Widget image = Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(
-          20,
-        ),
-        child: Image.asset(
-          widget.resume.image_src,
-          fit: BoxFit.contain,
+    Widget image = AnimatedOpacity(
+      opacity: widget.visible ? 1 : 0,
+      duration: Duration(milliseconds: 600),
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(
+            20,
+          ),
+          child: Image.asset(
+            widget.resume.image_src,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );
@@ -112,7 +116,7 @@ class _ResumeState extends State<Resume> {
                   bottom: text_bottom_margin,
                 ),
                 child: Text(
-                  "Dextery Points",
+                  "Dexterity Points",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Colors.black,
@@ -129,45 +133,36 @@ class _ResumeState extends State<Resume> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: screen_height / 20),
       //color: Colors.cyan,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          AnimatedOpacity(
-            opacity: widget.visible ? 1 : 0,
-            duration: Duration(milliseconds: 600),
-            child: FractionallySizedBox(
-              widthFactor: portrait ? 0.8 : 0.4,
+      child: FractionallySizedBox(
+        widthFactor: portrait ? 0.8 : 0.4,
+        child: Column(
+          children: [
+            Flex(
+              direction: portrait ? Axis.vertical : Axis.horizontal,
+              children: portrait
+                  ? <Widget>[
+                      image,
+                      name_and_skills,
+                    ]
+                  : <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: image,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: name_and_skills,
+                      ),
+                    ],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
               child: Column(
-                children: [
-                  Flex(
-                    direction: portrait ? Axis.vertical : Axis.horizontal,
-                    children: portrait
-                        ? <Widget>[
-                            image,
-                            name_and_skills,
-                          ]
-                        : <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: image,
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: name_and_skills,
-                            ),
-                          ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: Column(
-                      children: sections,
-                    ),
-                  ),
-                ],
+                children: sections,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
