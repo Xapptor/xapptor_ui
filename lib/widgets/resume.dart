@@ -20,6 +20,8 @@ class Resume extends StatefulWidget {
 }
 
 class _ResumeState extends State<Resume> {
+  double text_bottom_margin = 3;
+
   @override
   void initState() {
     super.initState();
@@ -65,12 +67,14 @@ class _ResumeState extends State<Resume> {
       margin:
           EdgeInsets.symmetric(horizontal: portrait ? 0 : (screen_width / 100)),
       child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              children: [
-                Text(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                  top: 10,
+                  bottom: text_bottom_margin,
+                ),
+                child: Text(
                   widget.resume.name,
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -79,7 +83,10 @@ class _ResumeState extends State<Resume> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: text_bottom_margin),
+                child: Text(
                   widget.resume.job_title,
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -88,16 +95,24 @@ class _ResumeState extends State<Resume> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              children: skills,
-            ),
-          ),
-        ],
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: 10,
+                  bottom: text_bottom_margin,
+                ),
+                child: Text(
+                  "Dextery Points",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: portrait ? 14 : 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ] +
+            skills,
       ),
     );
 
@@ -114,32 +129,26 @@ class _ResumeState extends State<Resume> {
               widthFactor: portrait ? 0.8 : 0.4,
               child: Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: portrait ? 0 : 10),
-                    //color: Colors.lightBlue,
-                    child: Flex(
-                      //mainAxisAlignment: MainAxisAlignment.start,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      direction: portrait ? Axis.vertical : Axis.horizontal,
-                      children: portrait
-                          ? [
-                              image,
-                              name_and_skills,
-                            ]
-                          : [
-                              Expanded(
-                                flex: 1,
-                                child: image,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: name_and_skills,
-                              ),
-                            ],
-                    ),
+                  Flex(
+                    direction: portrait ? Axis.vertical : Axis.horizontal,
+                    children: portrait
+                        ? <Widget>[
+                            image,
+                            name_and_skills,
+                          ]
+                        : <Widget>[
+                            Expanded(
+                              flex: 1,
+                              child: image,
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: name_and_skills,
+                            ),
+                          ],
                   ),
                   Container(
-                    //color: Colors.greenAccent,
+                    margin: EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       children: sections,
                     ),
@@ -159,7 +168,6 @@ class _ResumeState extends State<Resume> {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
     bool portrait = screen_height > screen_width;
-    double text_bottom_margin = 3;
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
