@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:xapptor_logic/random_number_with_range.dart';
 import 'package:xapptor_ui/models/resume.dart' as ResumeData;
 import 'package:xapptor_ui/models/resume_section.dart';
 import 'package:xapptor_ui/models/resume_skill.dart' as SkillData;
@@ -258,14 +259,27 @@ class ResumeSkill extends StatefulWidget {
 
 class _ResumeSkillState extends State<ResumeSkill> {
   double current_percentage = 0.1;
+  double percentage_variation = 0;
+
+  update_bar_width() {
+    Timer(Duration(milliseconds: 2000), () {
+      current_percentage = widget.skill.percentage;
+      setState(() {});
+    });
+    Timer(Duration(milliseconds: 3000), () {
+      Timer.periodic(
+          Duration(milliseconds: random_number_with_range(1000, 3000)),
+          (timer) {
+        percentage_variation = random_number_with_range(-50, 50) / 1000;
+        setState(() {});
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 1000), () {
-      current_percentage = widget.skill.percentage;
-      setState(() {});
-    });
+    update_bar_width();
   }
 
   @override
@@ -273,8 +287,8 @@ class _ResumeSkillState extends State<ResumeSkill> {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
     bool portrait = screen_height > screen_width;
-    double current_bar_width =
-        (screen_width * (portrait ? 0.8 : 0.18)) * current_percentage;
+    double current_bar_width = (screen_width * (portrait ? 0.8 : 0.18)) *
+        (current_percentage + percentage_variation);
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
