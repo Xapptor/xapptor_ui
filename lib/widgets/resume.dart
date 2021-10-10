@@ -233,7 +233,13 @@ class _ResumeState extends State<Resume> {
                         child: SelectableText(
                           DateFormat.yMMMM().format(resume_section.begin!) +
                               " - " +
-                              DateFormat.yMMMM().format(resume_section.end!),
+                              (resume_section.end!
+                                          .difference(DateTime.now())
+                                          .inDays ==
+                                      0
+                                  ? "Present"
+                                  : DateFormat.yMMMM()
+                                      .format(resume_section.end!)),
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.black,
