@@ -38,6 +38,7 @@ class _ResumeState extends State<Resume> {
       skills.add(
         ResumeSkill(
           skill: skill,
+          apply_variation: true,
         ),
       );
     });
@@ -95,6 +96,15 @@ class _ResumeState extends State<Resume> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              ),
+              ResumeSkill(
+                skill: SkillData.ResumeSkill(
+                  name:
+                      "Years of Experience:\nLevel ${widget.resume.years_of_experience}",
+                  percentage: widget.resume.years_of_experience / 10,
+                  color: widget.resume.icon_color,
+                ),
+                apply_variation: false,
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -257,9 +267,11 @@ class _ResumeState extends State<Resume> {
 class ResumeSkill extends StatefulWidget {
   const ResumeSkill({
     required this.skill,
+    required this.apply_variation,
   });
 
   final SkillData.ResumeSkill skill;
+  final bool apply_variation;
 
   @override
   _ResumeSkillState createState() => _ResumeSkillState();
@@ -274,14 +286,17 @@ class _ResumeSkillState extends State<ResumeSkill> {
       current_percentage = widget.skill.percentage;
       setState(() {});
     });
-    Timer(Duration(milliseconds: 3000), () {
-      Timer.periodic(
-          Duration(milliseconds: random_number_with_range(1000, 3000)),
-          (timer) {
-        percentage_variation = random_number_with_range(-50, 50) / 1000;
-        setState(() {});
+
+    if (widget.apply_variation) {
+      Timer(Duration(milliseconds: 3000), () {
+        Timer.periodic(
+            Duration(milliseconds: random_number_with_range(1000, 3000)),
+            (timer) {
+          percentage_variation = random_number_with_range(-50, 50) / 1000;
+          setState(() {});
+        });
       });
-    });
+    }
   }
 
   @override
