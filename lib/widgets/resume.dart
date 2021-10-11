@@ -39,6 +39,7 @@ class _ResumeState extends State<Resume> {
         ResumeSkill(
           skill: skill,
           apply_variation: true,
+          visible: widget.visible,
         ),
       );
     });
@@ -109,6 +110,7 @@ class _ResumeState extends State<Resume> {
                   color: widget.resume.icon_color,
                 ),
                 apply_variation: false,
+                visible: widget.visible,
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -131,7 +133,7 @@ class _ResumeState extends State<Resume> {
     );
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: screen_height / 20),
+      margin: EdgeInsets.symmetric(vertical: screen_height / 10),
       //color: Colors.cyan,
       child: FractionallySizedBox(
         widthFactor: portrait ? 0.8 : 0.4,
@@ -269,10 +271,12 @@ class ResumeSkill extends StatefulWidget {
   const ResumeSkill({
     required this.skill,
     required this.apply_variation,
+    required this.visible,
   });
 
   final SkillData.ResumeSkill skill;
   final bool apply_variation;
+  final bool visible;
 
   @override
   _ResumeSkillState createState() => _ResumeSkillState();
@@ -312,7 +316,7 @@ class _ResumeSkillState extends State<ResumeSkill> {
     double screen_width = MediaQuery.of(context).size.width;
     bool portrait = screen_height > screen_width;
     double current_bar_width = (screen_width * (portrait ? 0.8 : 0.18)) *
-        (current_percentage + percentage_variation);
+        (widget.visible ? (current_percentage + percentage_variation) : 0.3);
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
