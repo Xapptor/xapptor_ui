@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 import 'package:xapptor_logic/random_number_with_range.dart';
 import 'package:xapptor_ui/models/resume.dart' as ResumeData;
 import 'package:xapptor_ui/models/resume_section.dart';
 import 'package:xapptor_ui/models/resume_skill.dart' as SkillData;
+import 'package:screenshot/screenshot.dart';
 
 class Resume extends StatefulWidget {
   const Resume({
@@ -20,7 +24,26 @@ class Resume extends StatefulWidget {
 }
 
 class _ResumeState extends State<Resume> {
+  ScreenshotController screenshot_controller = ScreenshotController();
   double text_bottom_margin = 3;
+  bool show_download_icon = true;
+
+  capture_resume_image() {
+    show_download_icon = false;
+    setState(() {});
+
+    screenshot_controller.capture().then((image) async {
+      FileDownloader.save(
+        base64_string: base64Encode(image!),
+        file_name:
+            "resume_${widget.resume.name.toLowerCase().replaceAll(" ", "_")}.png",
+      );
+      show_download_icon = true;
+      setState(() {});
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
 
   @override
   void initState() {
@@ -92,14 +115,29 @@ class _ResumeState extends State<Resume> {
               ),
               Container(
                 margin: EdgeInsets.only(bottom: text_bottom_margin),
-                child: Text(
-                  widget.resume.job_title,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: portrait ? 16 : 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.resume.job_title,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: portrait ? 16 : 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        capture_resume_image();
+                      },
+                      icon: Icon(
+                        FontAwesome5.file_download,
+                        color: widget.resume.icon_color
+                            .withOpacity(show_download_icon ? 1 : 0),
+                      ),
+                    )
+                  ],
                 ),
               ),
               ResumeSkill(
@@ -132,38 +170,46 @@ class _ResumeState extends State<Resume> {
       ),
     );
 
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: screen_height / 10),
-      //color: Colors.cyan,
+    return Screenshot(
+      controller: screenshot_controller,
       child: FractionallySizedBox(
-        widthFactor: portrait ? 0.8 : 0.4,
-        child: Column(
-          children: [
-            Flex(
-              direction: portrait ? Axis.vertical : Axis.horizontal,
-              children: portrait
-                  ? <Widget>[
-                      image,
-                      name_and_skills,
-                    ]
-                  : <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: image,
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: name_and_skills,
-                      ),
-                    ],
+        widthFactor: portrait ? 0.9 : 0.5,
+        child: Container(
+          color: Colors.white,
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              vertical: screen_height / 10,
+              horizontal: screen_width * 0.05,
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: sections,
-              ),
+            child: Column(
+              children: [
+                Flex(
+                  direction: portrait ? Axis.vertical : Axis.horizontal,
+                  children: portrait
+                      ? <Widget>[
+                          image,
+                          name_and_skills,
+                        ]
+                      : <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: image,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: name_and_skills,
+                          ),
+                        ],
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    children: sections,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
