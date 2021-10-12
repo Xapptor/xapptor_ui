@@ -263,14 +263,13 @@ class _ResumeState extends State<Resume> {
           Container(
             margin: EdgeInsets.only(
               top: portrait ? 10 : 0,
-              bottom: text_bottom_margin,
             ),
             child: SelectableText(
               widget.resume.name,
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: portrait ? 18 : 24,
+                fontSize: portrait ? 18 : 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -284,7 +283,7 @@ class _ResumeState extends State<Resume> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: portrait ? 16 : 22,
+                    fontSize: portrait ? 16 : 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -302,7 +301,7 @@ class _ResumeState extends State<Resume> {
           ),
           Container(
             margin: EdgeInsets.only(
-              top: 3,
+              bottom: 3,
             ),
             child: UrlText(
               text: widget.resume.email,

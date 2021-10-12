@@ -127,7 +127,7 @@ resume_section({
               ? Icon(
                   resume_section.icon,
                   color: resume.icon_color,
-                  size: portrait ? 16 : 22,
+                  size: portrait ? 18 : 22,
                 )
               : Container(),
         ),
@@ -144,7 +144,7 @@ resume_section({
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: portrait ? 16 : 20,
+                          fontSize: portrait ? 16 : 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -158,7 +158,7 @@ resume_section({
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: portrait ? 12 : 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -180,7 +180,7 @@ resume_section({
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: portrait ? 8 : 12,
+                          fontSize: 12,
                         ),
                       ),
                     )
@@ -193,7 +193,7 @@ resume_section({
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: portrait ? 10 : 14,
+                          fontSize: 14,
                         ),
                       ),
                     )
