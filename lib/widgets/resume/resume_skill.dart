@@ -9,8 +9,7 @@ pw.Widget resume_skill_pw({
   required SkillData.ResumeSkill skill,
   required BuildContext context,
 }) {
-  double screen_width = MediaQuery.of(context).size.width;
-  double current_bar_width = ((screen_width * 0.18) * skill.percentage) / 2;
+  double current_bar_width = 165 * skill.percentage;
 
   return pw.Container(
     margin: pw.EdgeInsets.symmetric(vertical: 2),
@@ -34,28 +33,18 @@ pw.Widget resume_skill_pw({
               height: 7,
               width: double.maxFinite,
               decoration: pw.BoxDecoration(
-                borderRadius: pw.BorderRadius.circular(1000),
-                color: PdfColor.fromInt(
-                  skill.color.withOpacity(0.5).value,
-                ),
+                borderRadius: pw.BorderRadius.circular(3.5),
+                color: PdfColors.blueGrey700,
               ),
             ),
             pw.Container(
               height: 7,
               width: current_bar_width,
               decoration: pw.BoxDecoration(
-                borderRadius: pw.BorderRadius.circular(1000),
+                borderRadius: pw.BorderRadius.circular(3.5),
                 color: PdfColor.fromInt(
                   skill.color.value,
                 ),
-                boxShadow: [
-                  pw.BoxShadow(
-                    color: PdfColor.fromInt(
-                      skill.color.value,
-                    ),
-                    blurRadius: 4,
-                  ),
-                ],
               ),
             ),
           ],
@@ -113,7 +102,7 @@ class _ResumeSkillState extends State<ResumeSkill> {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
     bool portrait = screen_height > screen_width;
-    double current_bar_width = (screen_width * (portrait ? 0.8 : 0.18)) *
+    double current_bar_width = (screen_width * (portrait ? 0.38 : 0.13)) *
         (widget.visible ? (current_percentage + percentage_variation) : 0.3);
 
     return Container(

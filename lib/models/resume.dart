@@ -7,6 +7,7 @@ class Resume {
   final String name;
   final String job_title;
   final String email;
+  final String url;
   final List<ResumeSkill> skills;
   final List<ResumeSection> sections;
   final Color icon_color;
@@ -16,6 +17,7 @@ class Resume {
     required this.name,
     required this.job_title,
     required this.email,
+    required this.url,
     required this.skills,
     required this.sections,
     required this.icon_color,

@@ -41,7 +41,6 @@ class _ResumeState extends State<Resume> {
       pw.MultiPage(
         theme: pw.ThemeData.withFont(
           base: await PdfGoogleFonts.varelaRoundRegular(),
-          bold: await PdfGoogleFonts.varelaRoundRegular(),
           icons: await PdfGoogleFonts.materialIcons(),
         ),
         pageFormat: PdfPageFormat.a4,
@@ -49,7 +48,7 @@ class _ResumeState extends State<Resume> {
           pw.Column(
             children: [
               pw.Container(
-                height: screen_height / 7,
+                height: 140,
                 child: pw.Row(
                   crossAxisAlignment: pw.CrossAxisAlignment.center,
                   children: [
@@ -102,9 +101,23 @@ class _ResumeState extends State<Resume> {
                               margin: pw.EdgeInsets.only(
                                 top: 3,
                               ),
-                              child: PdfUrlText(
-                                text: widget.resume.email,
-                                url: "mailto:${widget.resume.email}",
+                              child: pw.Row(
+                                children: [
+                                  pw.Expanded(
+                                    flex: 1,
+                                    child: PdfUrlText(
+                                      text: widget.resume.email,
+                                      url: "mailto:${widget.resume.email}",
+                                    ),
+                                  ),
+                                  pw.Expanded(
+                                    flex: 1,
+                                    child: PdfUrlText(
+                                      text: "website " + widget.resume.url,
+                                      url: widget.resume.url,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             pw.Container(
@@ -186,12 +199,17 @@ class _ResumeState extends State<Resume> {
   List<pw.Widget> sections_pw = [];
 
   populate_skills() {
+    skills.clear();
+    skills_pw.clear();
+    sections.clear();
+    sections_pw.clear();
+
     widget.resume.skills.forEach((skill) {
       skills.add(
         ResumeSkill(
           skill: skill,
-          apply_variation: true,
-          visible: widget.visible,
+          apply_variation: widget.resume.skills.indexOf(skill) != 0,
+          visible: true,
         ),
       );
 
@@ -227,10 +245,9 @@ class _ResumeState extends State<Resume> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 1000), () {
-      populate_skills();
-    });
   }
+
+  bool first_time_populating_skills = true;
 
   @override
   Widget build(BuildContext context) {
@@ -238,14 +255,17 @@ class _ResumeState extends State<Resume> {
     screen_width = MediaQuery.of(context).size.width;
     bool portrait = screen_height > screen_width;
 
+    if (first_time_populating_skills) {
+      first_time_populating_skills = false;
+      populate_skills();
+    }
+
     Widget image = AnimatedOpacity(
       opacity: widget.visible ? 1 : 0,
       duration: Duration(milliseconds: 600),
       child: Container(
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(
-            20,
-          ),
+          borderRadius: BorderRadius.circular(20),
           child: Image.asset(
             widget.resume.image_src,
             fit: BoxFit.contain,
