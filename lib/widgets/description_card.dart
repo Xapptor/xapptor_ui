@@ -43,7 +43,7 @@ description_card({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            child: Text(
+            child: SelectableText(
               description_card.title,
               style: TextStyle(
                 color: description_card.text_color,
@@ -57,13 +57,12 @@ description_card({
               top: 10,
               bottom: 10,
             ),
-            child: Text(
+            child: SelectableText(
               description_card.description,
               style: TextStyle(
                 color: description_card.text_color,
                 fontSize: portrait ? 14 : 16,
               ),
-              maxLines: 20,
             ),
           ),
           Container(
@@ -74,7 +73,7 @@ description_card({
               style: TextButton.styleFrom(
                 padding: EdgeInsets.all(0),
               ),
-              child: Text(
+              child: SelectableText(
                 description_card.url_title,
                 style: TextStyle(
                   color: description_card.text_color,
