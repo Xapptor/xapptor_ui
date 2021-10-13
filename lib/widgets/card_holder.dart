@@ -9,7 +9,8 @@ class CardHolder extends StatefulWidget {
     this.title = "",
     this.subtitle = "",
     this.text_color = Colors.black,
-    this.image_path = "",
+    this.image_src = "",
+    this.image_fit = BoxFit.fitWidth,
     this.background_image_alignment = Alignment.center,
     this.icon,
     this.icon_background_color = Colors.blue,
@@ -22,7 +23,8 @@ class CardHolder extends StatefulWidget {
   final String title;
   final String subtitle;
   final Color text_color;
-  final String image_path;
+  final String image_src;
+  final BoxFit image_fit;
   final Alignment background_image_alignment;
   final IconData? icon;
   final Color? icon_background_color;
@@ -142,14 +144,14 @@ class _CardHolderState extends State<CardHolder> {
                                 color: Colors.white.withOpacity(1.0),
                                 size: MediaQuery.of(context).size.height / 20,
                               )
-                            : widget.image_path != ""
+                            : widget.image_src != ""
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                       widget.border_radius,
                                     ),
                                     child: Image.asset(
-                                      widget.image_path,
-                                      fit: BoxFit.fitWidth,
+                                      widget.image_src,
+                                      fit: widget.image_fit,
                                       alignment:
                                           widget.background_image_alignment,
                                     ),
