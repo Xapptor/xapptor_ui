@@ -11,6 +11,16 @@ pw.Widget resume_skill_pw({
 }) {
   double current_bar_width = 165 * skill.percentage;
 
+  PdfColor pdf_color = PdfColor.fromInt(
+    skill.color.value,
+  );
+
+  PdfColor background_color = PdfColor(
+    (pdf_color.red + ((1 - pdf_color.red) * 0.5)).clamp(0, 1),
+    (pdf_color.green + ((1 - pdf_color.green) * 0.5)).clamp(0, 1),
+    (pdf_color.blue + ((1 - pdf_color.blue) * 0.5)).clamp(0, 1),
+  );
+
   return pw.Container(
     margin: pw.EdgeInsets.symmetric(vertical: 2),
     child: pw.Column(
@@ -34,7 +44,7 @@ pw.Widget resume_skill_pw({
               width: double.maxFinite,
               decoration: pw.BoxDecoration(
                 borderRadius: pw.BorderRadius.circular(3.5),
-                color: PdfColors.blueGrey700,
+                color: background_color,
               ),
             ),
             pw.Container(
