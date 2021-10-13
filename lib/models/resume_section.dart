@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ResumeSection {
   IconData? icon;
+  int? code_point;
   String? title;
   String? subtitle;
   String? description;
@@ -10,6 +11,7 @@ class ResumeSection {
 
   ResumeSection({
     this.icon,
+    this.code_point,
     this.title,
     this.subtitle,
     this.description,

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +39,8 @@ class _ResumeState extends State<Resume> {
     pdf.addPage(
       pw.MultiPage(
         theme: pw.ThemeData.withFont(
-          base: await PdfGoogleFonts.varelaRoundRegular(),
+          base: await PdfGoogleFonts.quicksandRegular(),
+          bold: await PdfGoogleFonts.quicksandMedium(),
           icons: await PdfGoogleFonts.materialIcons(),
         ),
         pageFormat: PdfPageFormat.a4,
@@ -209,7 +209,6 @@ class _ResumeState extends State<Resume> {
         ResumeSkill(
           skill: skill,
           apply_variation: widget.resume.skills.indexOf(skill) != 0,
-          visible: true,
         ),
       );
 

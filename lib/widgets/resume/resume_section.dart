@@ -21,9 +21,9 @@ pw.Widget resume_section_pw({
       children: [
         pw.Expanded(
           flex: 1,
-          child: resume_section.icon != null
+          child: resume_section.code_point != null
               ? pw.Icon(
-                  pw.IconData(0xe530),
+                  pw.IconData(resume_section.code_point!),
                   color: PdfColor.fromInt(
                     resume.icon_color.value,
                   ),
