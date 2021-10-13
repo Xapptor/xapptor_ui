@@ -73,7 +73,7 @@ description_card({
               style: TextButton.styleFrom(
                 padding: EdgeInsets.all(0),
               ),
-              child: SelectableText(
+              child: Text(
                 description_card.url_title,
                 style: TextStyle(
                   color: description_card.text_color,
