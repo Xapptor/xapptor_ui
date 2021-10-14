@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_purchase_ios/store_kit_wrappers.dart';
 
 class ProductCatalogItem extends StatefulWidget {
   const ProductCatalogItem({
@@ -119,7 +120,11 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
                       child: Container(
                         child: TextButton(
                           onPressed: () {
-                            on_pressed();
+                            if (UniversalPlatform.isIOS) {
+                              on_pressed_iap();
+                            } else {
+                              on_pressed_stripe();
+                            }
                           },
                           child: Center(
                             child: Text(
@@ -148,13 +153,19 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
     );
   }
 
-  on_pressed() async {
+  on_pressed_iap() async {
     const Set<String> _kIds = <String>{'njrXMgGFkJklI3ZZONSP'};
     final ProductDetailsResponse response =
         await InAppPurchase.instance.queryProductDetails(_kIds);
+
     if (response.notFoundIDs.isNotEmpty) {
       print("Not Found IDs");
     } else {
+      var transactions = await SKPaymentQueueWrapper().transactions();
+      transactions.forEach((skPaymentTransactionWrapper) {
+        SKPaymentQueueWrapper().finishTransaction(skPaymentTransactionWrapper);
+      });
+
       List<ProductDetails> productDetails = response.productDetails;
 
       final PurchaseParam purchaseParam =
