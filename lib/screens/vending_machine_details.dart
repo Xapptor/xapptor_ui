@@ -144,7 +144,7 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
                   },
                 ],
               }).then((result) {
-                duplicate_item_in_array_field(
+                duplicate_item_in_array(
                     document_id: result.id,
                     collection_id: "vending_machines",
                     field_key: "dispensers",

@@ -3,8 +3,10 @@ import 'package:xapptor_ui/values/version.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MadeWithContainer extends StatefulWidget {
-  MadeWithContainer({
+// Display Xapptor and App version
+
+class AppVersionContainer extends StatefulWidget {
+  AppVersionContainer({
     required this.text_color,
     required this.background_color,
     this.url,
@@ -14,14 +16,14 @@ class MadeWithContainer extends StatefulWidget {
   final Color background_color;
   final String? url;
   @override
-  _MadeWithContainerState createState() => _MadeWithContainerState();
+  _AppVersionContainerState createState() => _AppVersionContainerState();
 }
 
-class _MadeWithContainerState extends State<MadeWithContainer> {
+class _AppVersionContainerState extends State<AppVersionContainer> {
   String software_version = "";
 
   get_software_version() async {
-    software_version = await current_software_version();
+    software_version = await current_app_version();
   }
 
   @override

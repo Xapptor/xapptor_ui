@@ -489,7 +489,7 @@ class _ProductListState extends State<ProductList> {
   }
 
   update_dispenser(Dispenser dispenser, int index) {
-    update_item_in_array_field(
+    update_item_value_in_array(
       document_id: widget.vending_machine_id!,
       collection_id: "vending_machines",
       field_key: "dispensers",

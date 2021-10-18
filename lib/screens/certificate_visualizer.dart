@@ -27,8 +27,8 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   String pdf_base64 = "";
   Uint8List? pdf_bytes = null;
 
-  get_html_certificate() async {
-    html_string = await generate_html_certificate(
+  set_html_certificate() async {
+    html_string = await get_html_certificate(
       course_name: widget.certificate.course_name,
       user_name: widget.certificate.user_name,
       date: widget.certificate.date,
@@ -66,7 +66,7 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   @override
   void initState() {
     super.initState();
-    get_html_certificate();
+    set_html_certificate();
   }
 
   @override

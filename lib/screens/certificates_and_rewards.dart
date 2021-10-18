@@ -92,7 +92,7 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
       if (user_info["products_acquired"].length > 0) {
         courses_id = List.from(user_info["products_acquired"]);
         for (var course_id in courses_id) {
-          check_if_course_is_completed(
+          check_if_course_was_completed(
             course_id: course_id,
             user_info: user_info,
             context: context,
