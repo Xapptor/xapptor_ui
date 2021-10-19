@@ -32,6 +32,8 @@ class _DispenserDetailsState extends State<DispenserDetails> {
   bool enable_dispenser_edit = true;
   Color main_color = Colors.grey;
 
+  // Callback button switch "enabled" parameter.
+
   switch_button_callback(bool new_value) {
     setState(() {
       dispenser_enabled = new_value;
@@ -42,10 +44,14 @@ class _DispenserDetailsState extends State<DispenserDetails> {
     });
   }
 
+  // Checking main color in the image.
+
   check_main_color() async {
     main_color = await get_main_color_from_remote_svg(widget.product.image_src);
     setState(() {});
   }
+
+  // Checking "enabled" parameter.
 
   check_enabled() {
     dispenser_enabled = widget.dispenser.enabled;

@@ -1,6 +1,6 @@
 import 'package:package_info_plus/package_info_plus.dart';
 
-// Return Xapptor and App version
+// Return Xapptor and App version.
 
 Future<String> current_app_version() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();

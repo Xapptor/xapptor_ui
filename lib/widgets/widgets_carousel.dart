@@ -33,6 +33,8 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   Curve animation_curve = Curves.easeInOutCirc;
   late Timer timer;
 
+  // Auto scroll carousel.
+
   auto_scroll() {
     int delay_seconds = random_number_with_range(5, 9);
 

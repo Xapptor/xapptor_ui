@@ -5,6 +5,8 @@ import 'package:xapptor_logic/random_number_with_range.dart';
 import 'package:xapptor_ui/models/resume_skill.dart' as SkillData;
 import 'package:pdf/widgets.dart' as pw;
 
+// Resume, skill widget por PDF.
+
 pw.Widget resume_skill_pw({
   required SkillData.ResumeSkill skill,
   required BuildContext context,
@@ -63,6 +65,8 @@ pw.Widget resume_skill_pw({
     ),
   );
 }
+
+// Resume, skill widget.
 
 class ResumeSkill extends StatefulWidget {
   const ResumeSkill({

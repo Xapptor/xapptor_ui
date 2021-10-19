@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/models/resume_section.dart';
 import 'resume_skill.dart';
 
+// Resume model.
+
 class Resume {
   final String image_src;
   final String name;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// ResumeSection model.
+
 class ResumeSection {
   IconData? icon;
   int? code_point;

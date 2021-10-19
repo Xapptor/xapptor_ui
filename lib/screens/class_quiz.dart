@@ -59,6 +59,8 @@ class _ClassQuizState extends State<ClassQuiz> {
   List<Widget> widgets_list = <Widget>[];
   String html_certificate = "";
 
+  // Topbar widgets action.
+
   List<Widget> widgets_action(bool portrait) {
     return [
       Container(
@@ -74,6 +76,8 @@ class _ClassQuizState extends State<ClassQuiz> {
       ),
     ];
   }
+
+  // Retrieving quiz data.
 
   get_quiz_data(String unit_id) {
     FirebaseFirestore.instance
@@ -170,6 +174,8 @@ class _ClassQuizState extends State<ClassQuiz> {
     text_list[index] = new_text;
     setState(() {});
   }
+
+  // Selecting next question.
 
   get_next_question(bool answer_is_correct, int question_id) {
     if (answer_is_correct) {

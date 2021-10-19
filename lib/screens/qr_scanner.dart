@@ -88,6 +88,8 @@ class _QRScannerState extends State<QRScanner> {
     );
   }
 
+  // Show login button on QRScanner.
+
   Widget login_button() {
     return TextButton(
       onPressed: () {
@@ -187,6 +189,8 @@ class _QRScannerState extends State<QRScanner> {
                       this.controller = controller;
                     });
                     controller.scannedDataStream.listen((data_scanned) {
+                      // Listen when a QR code was scan and update the code value.
+
                       setState(() {
                         widget.update_qr_value(data_scanned.code);
                       });

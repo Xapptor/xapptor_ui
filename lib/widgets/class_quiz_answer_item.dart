@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/values/custom_colors.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class ClassQuizAnswerItem extends StatefulWidget {

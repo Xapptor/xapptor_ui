@@ -1,5 +1,7 @@
 import 'package:xapptor_ui/models/dispenser.dart';
 
+// VendingMachine model.
+
 class VendingMachine {
   final String id;
   final String user_id;

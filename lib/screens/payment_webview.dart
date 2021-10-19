@@ -17,6 +17,8 @@ class PaymentWebview extends StatefulWidget {
 class _PaymentWebviewState extends State<PaymentWebview> {
   bool fisrt_time_on_host = true;
 
+  // Payment was canceled.
+
   loaded_callback(String url) async {
     if (!UniversalPlatform.isWeb) {
       if (!url.contains("stripe")) {
@@ -47,6 +49,8 @@ class _PaymentWebviewState extends State<PaymentWebview> {
     );
   }
 }
+
+// StripePayment model.
 
 class StripePayment {
   final String price_id;

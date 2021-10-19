@@ -1,3 +1,5 @@
+// CourseCertificate model.
+
 class CourseCertificate {
   final String id;
   final String date;

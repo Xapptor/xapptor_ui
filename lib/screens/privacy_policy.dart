@@ -25,6 +25,8 @@ class PrivacyPolicy extends StatefulWidget {
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
   String src = "";
 
+  // Selecting privacy policy source for each platform.
+
   check_src() async {
     src = UniversalPlatform.isWeb
         ? await rootBundle.loadString("assets/privacy_policy.html")

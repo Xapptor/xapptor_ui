@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Payment model.
+
 class Payment {
   final String id;
   final int amount;

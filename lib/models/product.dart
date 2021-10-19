@@ -1,3 +1,5 @@
+// Product model.
+
 class Product {
   const Product({
     required this.id,

@@ -74,6 +74,8 @@ class _ClassSessionState extends State<ClassSession> {
     }
   }
 
+  // Get texts for the class session.
+
   get_texts() async {
     prefs = await SharedPreferences.getInstance();
 
@@ -104,6 +106,8 @@ class _ClassSessionState extends State<ClassSession> {
       set_video_url();
     });
   }
+
+  // Generate video url for current platform.
 
   String generate_video_url_for_current_platform(String original_url) {
     String new_url = "";

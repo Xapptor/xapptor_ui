@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Page not found screen.
+
 class UnknownScreen extends StatelessWidget {
   const UnknownScreen({
     required this.logo_path,

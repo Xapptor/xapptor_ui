@@ -46,6 +46,8 @@ class _CoursesListState extends State<CoursesList> {
     setState(() {});
   }
 
+  // Retrieving courses.
+
   get_courses_and_units() async {
     user_info = await get_user_info(FirebaseAuth.instance.currentUser!.uid);
     courses.clear();
@@ -152,7 +154,7 @@ class _CoursesListState extends State<CoursesList> {
                             initiallyExpanded: true,
                             children: <Widget>[
                               Column(
-                                children: _buildExpandableContent(
+                                children: build_expandable_content(
                                   courses[i],
                                   context,
                                   get_courses_and_units,
@@ -191,7 +193,7 @@ class _CoursesListState extends State<CoursesList> {
   }
 }
 
-_buildExpandableContent(
+build_expandable_content(
   Course course,
   BuildContext context,
   Function get_courses_and_units,
@@ -220,8 +222,6 @@ _buildExpandableContent(
               topbar_color: topbar_color,
               text_color: text_color,
             );
-
-            //getCoursesAndUnits();
           } else {
             if (course.units_completed_status[content_index - 1]) {
               open_class_session(
@@ -256,6 +256,8 @@ _buildExpandableContent(
   return column_content;
 }
 
+// Open class session.
+
 open_class_session({
   required String course_id,
   required String course_name,
@@ -281,6 +283,8 @@ open_class_session({
   );
   open_screen("home/courses/unit_$unit_id");
 }
+
+// Course model.
 
 class Course {
   Course(

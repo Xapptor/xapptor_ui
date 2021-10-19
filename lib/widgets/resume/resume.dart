@@ -28,6 +28,8 @@ class _ResumeState extends State<Resume> {
   double screen_width = 0;
   double text_bottom_margin = 3;
 
+  // Download resume PDF.
+
   download_resume_pdf() async {
     final pdf = pw.Document();
 

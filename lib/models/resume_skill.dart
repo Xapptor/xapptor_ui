@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// ResumeSkill model.
+
 class ResumeSkill {
   final String name;
   final double percentage;

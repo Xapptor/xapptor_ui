@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
+// General UI data.
+
 double sized_box_space = 14;
 double outline_border_radius = 20;
 double outline_width = 3;

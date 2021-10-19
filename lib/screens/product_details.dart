@@ -55,6 +55,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     check_main_color();
   }
 
+  // Checking main color.
+
   check_main_color() async {
     if (widget.product != null) {
       main_color =
@@ -62,6 +64,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       setState(() {});
     }
   }
+
+  // Setting product values.
 
   set_values() {
     _controller_name.text = widget.product?.name ?? "";
@@ -71,6 +75,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     is_editing = widget.is_editing;
     setState(() {});
   }
+
+  // Save changes, alert dialog.
 
   show_save_data_alert_dialog({
     required BuildContext context,
@@ -103,6 +109,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       },
     );
   }
+
+  // Save product changes.
 
   save_product_changes() async {
     if (widget.product == null) {
@@ -198,6 +206,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       }
     }
   }
+
+  // Open file picker for image selection.
 
   open_file_picker(BuildContext context) async {
     bool permission_granted = await check_permission(

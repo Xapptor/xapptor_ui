@@ -1,3 +1,5 @@
+// ISO 3166 Countries with regional codes.
+
 var countries = [
   {
     "name": "Afghanistan",

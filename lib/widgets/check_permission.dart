@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_platform/universal_platform.dart';
 
+// Check permission.
+
 Future<bool> check_permission({
   required BuildContext context,
   required String message,
@@ -30,6 +32,8 @@ Future<bool> check_permission({
     return !must_encourage_give_permission;
   }
 }
+
+// Open alert dialog to encourage give permission.
 
 encourage_give_permission({
   required BuildContext context,

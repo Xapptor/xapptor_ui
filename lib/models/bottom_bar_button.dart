@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// BottomBarButton model.
+
 class BottomBarButton {
   final IconData icon;
   final String text;

@@ -87,6 +87,8 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
     get_certificates();
   }
 
+  // Checking for user courses.
+
   check_user_courses() {
     if (user_info["products_acquired"] != null) {
       if (user_info["products_acquired"].length > 0) {

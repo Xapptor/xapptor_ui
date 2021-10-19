@@ -153,6 +153,8 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
     );
   }
 
+  // In App Purchase.
+
   on_pressed_iap() async {
     const Set<String> _kIds = <String>{'njrXMgGFkJklI3ZZONSP'};
     final ProductDetailsResponse response =
@@ -173,6 +175,8 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
       InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
     }
   }
+
+  // Stripe payment.
 
   on_pressed_stripe() async {
     if (!widget.coming_soon) {

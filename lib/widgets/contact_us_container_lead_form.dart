@@ -5,7 +5,6 @@ import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'contact_us_container.dart';
 import 'package:xapptor_logic/is_portrait.dart';
-
 import 'custom_card.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
@@ -136,7 +135,6 @@ class _ContactUsContainerLeadFormState
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
-                    //fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -456,7 +454,6 @@ class _ContactUsContainerLeadFormState
                                                           name_input_controller
                                                               .text,
                                                   "text": newMessage,
-                                                  //"html": 'This is the <code>HTML</code> section of the email body.',
                                                 }
                                               }).then((value) {
                                                 insurance_type_value =

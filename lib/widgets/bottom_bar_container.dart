@@ -29,6 +29,8 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
     update_current_page();
   }
 
+  // Update current page.
+
   update_current_page() {
     Timer(Duration(milliseconds: 500), () {
       current_page = widget.initial_page;

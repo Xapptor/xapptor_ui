@@ -5,6 +5,8 @@ import 'package:xapptor_ui/models/resume_section.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 
+// Resume, descriptive section for PDF.
+
 pw.Widget resume_section_pw({
   required Resume resume,
   required ResumeSection resume_section,
@@ -105,6 +107,8 @@ pw.Widget resume_section_pw({
     ),
   );
 }
+
+// Resume, descriptive section widget.
 
 resume_section({
   required Resume resume,

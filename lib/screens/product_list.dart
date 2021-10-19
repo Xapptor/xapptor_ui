@@ -47,6 +47,8 @@ class _ProductListState extends State<ProductList> {
   List<String> products_values = [];
   String products_value = "";
 
+  // Getting products data.
+
   get_products() async {
     products = [];
     vending_machine_products = [];
@@ -299,6 +301,8 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
+  // Open dispenser details.
+
   open_details({
     required Product product,
     required Dispenser? dispenser,
@@ -332,6 +336,8 @@ class _ProductListState extends State<ProductList> {
       open_screen("home/products/details");
     }
   }
+
+  // Show product deletion option dialog.
 
   show_delete_product_dialog(BuildContext context, Product product) async {
     double sized_box_height = 10;
@@ -395,6 +401,8 @@ class _ProductListState extends State<ProductList> {
       },
     );
   }
+
+  // Show product picker dialog.
 
   show_product_picker_dialog(BuildContext context, int index) async {
     double sized_box_height = 10;
@@ -469,11 +477,15 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
+  // Setting "enabled" parameter in dispenser.
+
   update_enabled_in_dispenser(int index, bool enabled) {
     Dispenser dispenser_updated = dispensers[index];
     dispenser_updated.enabled = enabled;
     update_dispenser(dispenser_updated, index);
   }
+
+  // Update product in dispenser.
 
   update_product_in_dispenser(int index) {
     Dispenser dispenser_updated = dispensers[index];
@@ -487,6 +499,8 @@ class _ProductListState extends State<ProductList> {
       get_products();
     });
   }
+
+  // Update dispenser.
 
   update_dispenser(Dispenser dispenser, int index) {
     update_item_value_in_array(

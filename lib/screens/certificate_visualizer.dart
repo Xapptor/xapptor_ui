@@ -27,6 +27,8 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   String pdf_base64 = "";
   Uint8List? pdf_bytes = null;
 
+  // Set HTML certificate.
+
   set_html_certificate() async {
     html_string = await get_html_certificate(
       course_name: widget.certificate.course_name,
@@ -36,6 +38,8 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
     );
     download_certificate();
   }
+
+  // Download base64 PDF certificate from backend.
 
   download_certificate() async {
     String base_url = Uri.base.toString().contains("localhost")
@@ -82,6 +86,8 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
               color: Colors.white,
             ),
             onPressed: () async {
+              // Download PDF certificate file.
+
               String file_name =
                   "certificate_${widget.certificate.user_name.split(" ").join("_")}_${widget.certificate.course_name.split(" ").join("_")}_${widget.certificate.id}.pdf";
 

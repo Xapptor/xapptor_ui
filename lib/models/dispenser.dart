@@ -1,3 +1,5 @@
+// Dispenser model.
+
 class Dispenser {
   String product_id;
   bool enabled;

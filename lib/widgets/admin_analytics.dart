@@ -68,6 +68,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     // );
   }
 
+  // Retrieving vending machines.
+
   get_vending_machines() async {
     vending_machines.clear();
     vending_machine_values.clear();
@@ -98,6 +100,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     });
   }
 
+  // Retrieving products.
+
   get_products() async {
     products.clear();
     product_values.clear();
@@ -121,6 +125,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
       get_payments();
     });
   }
+
+  // Retrieving payments.
 
   get_payments() async {
     for (var vending_machine in vending_machines) {
@@ -146,6 +152,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
       });
     }
   }
+
+  // Filtering payments.
 
   get_filtered_payments() {
     filtered_payments.clear();
@@ -268,6 +276,8 @@ class _AdminAnalyticsState extends State<AdminAnalytics> {
     }
     setState(() {});
   }
+
+  // Download excel file.
 
   download_excel_file() async {
     SnackBar snackBar = SnackBar(

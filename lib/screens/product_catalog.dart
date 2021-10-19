@@ -67,6 +67,8 @@ class _ProductCatalogState extends State<ProductCatalog> {
 
   @override
   void initState() {
+    // Checking if user is logged.
+
     if (FirebaseAuth.instance.currentUser != null) {
       User current_user = FirebaseAuth.instance.currentUser!;
       user_id = current_user.uid;
@@ -167,6 +169,8 @@ class _ProductCatalogState extends State<ProductCatalog> {
                     height: 50,
                     child: CustomCard(
                       on_pressed: () async {
+                        // Checking if coupon is valid.
+
                         String coupon_id = coupon_controller.text;
                         coupon_controller.clear();
 

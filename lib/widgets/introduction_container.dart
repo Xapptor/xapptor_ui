@@ -36,6 +36,8 @@ class IntroductionContainerState extends State<IntroductionContainer> {
     init_animation();
   }
 
+  // Init icon animation.
+
   init_animation() {
     Timer(Duration(seconds: 3), () {
       lower_the_icon = !lower_the_icon;

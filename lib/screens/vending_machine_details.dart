@@ -45,6 +45,8 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     set_values();
   }
 
+  // Callback button switch "enabled" parameter.
+
   switch_button_callback(bool new_value) async {
     await FirebaseFirestore.instance
         .collection("vending_machines")
@@ -56,6 +58,8 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
     });
   }
 
+  // Setting vending machine data.
+
   set_values() {
     if (widget.vending_machine != null) {
       _controller_name.text = widget.vending_machine!.name;
@@ -66,6 +70,8 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
       is_editing = true;
     }
   }
+
+  // Save changes, alert dialog.
 
   show_save_data_alert_dialog({
     required BuildContext context,
@@ -100,6 +106,8 @@ class _VendingMachineDetailsState extends State<VendingMachineDetails> {
       },
     );
   }
+
+  // Validating vending machine data.
 
   check_vending_machine_data() async {
     if (_controller_name.text.isNotEmpty &&
