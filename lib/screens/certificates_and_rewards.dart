@@ -26,12 +26,16 @@ class CertificatesAndRewards extends StatefulWidget {
     required this.text_color,
     required this.button_color_1,
     required this.button_color_2,
+    required this.pdf_converter_url,
+    required this.local_host_pdf_converter_url,
   });
 
   final Color topbar_color;
   final Color text_color;
   final Color button_color_1;
   final Color button_color_2;
+  final String pdf_converter_url;
+  final String local_host_pdf_converter_url;
 
   @override
   _CertificatesAndRewardsState createState() => _CertificatesAndRewardsState();
@@ -212,6 +216,10 @@ class _CertificatesAndRewardsState extends State<CertificatesAndRewards> {
                                     child: CertificatesVisualizer(
                                       certificate: certificates[i],
                                       topbar_color: widget.topbar_color,
+                                      pdf_converter_url:
+                                          widget.pdf_converter_url,
+                                      local_host_pdf_converter_url:
+                                          widget.local_host_pdf_converter_url,
                                     ),
                                   ),
                                 );

@@ -13,10 +13,14 @@ class CertificatesVisualizer extends StatefulWidget {
   const CertificatesVisualizer({
     required this.certificate,
     required this.topbar_color,
+    required this.pdf_converter_url,
+    required this.local_host_pdf_converter_url,
   });
 
   final CourseCertificate certificate;
   final Color topbar_color;
+  final String pdf_converter_url;
+  final String local_host_pdf_converter_url;
 
   @override
   _CertificatesVisualizerState createState() => _CertificatesVisualizerState();
@@ -42,16 +46,14 @@ class _CertificatesVisualizerState extends State<CertificatesVisualizer> {
   // Download base64 PDF certificate from backend.
 
   download_certificate() async {
-    String base_url = Uri.base.toString().contains("localhost")
-        ? "http://localhost:5001/xapptor/us-central1/"
-        : "https://us-central1-xapptor.cloudfunctions.net/";
-
     int pdf_height = 940;
     int pdf_width = 1200;
 
     await http
         .post(
-      Uri.parse(base_url + "convert_html_to_pdf"),
+      Uri.parse(Uri.base.toString().contains("localhost")
+          ? widget.local_host_pdf_converter_url
+          : widget.pdf_converter_url),
       body: json.encode(
         {
           "html_base64": base64.encode(utf8.encode(html_string)),

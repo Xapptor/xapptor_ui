@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_router/initial_values_routing.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
@@ -183,15 +184,15 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
       if (widget.stripe_payment.user_id.isEmpty) {
         open_screen("login");
       } else {
-        var stripe_doc = await FirebaseFirestore.instance
+        var payments_doc = await FirebaseFirestore.instance
             .collection("metadata")
-            .doc("stripe")
+            .doc("payments")
             .get();
 
-        Map stripe_doc_data = stripe_doc.data()!;
+        Map payments_doc_data = payments_doc.data()!;
 
-        String stripe_key = stripe_doc_data["keys"]["secret"];
-        //String stripe_key = stripe_doc_data["keys"]["secret_test"];
+        String stripe_key = payments_doc_data["stripe"][
+            current_build_mode == BuildMode.release ? "secret" : "secret_test"];
 
         await http
             .post(
@@ -205,8 +206,6 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
             "customer_email": widget.stripe_payment.customer_email,
             "metadata[user_id]": widget.stripe_payment.user_id,
             "metadata[product_id]": widget.stripe_payment.product_id,
-            "metadata[firebase_config_url]":
-                widget.stripe_payment.firebase_config_url,
             "payment_method_types[0]": "card",
             "mode": "payment",
             "allow_promotion_codes": "true",

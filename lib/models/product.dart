@@ -1,5 +1,7 @@
 // Product model.
 
+import 'package:xapptor_router/initial_values_routing.dart';
+
 class Product {
   const Product({
     required this.id,
@@ -23,8 +25,10 @@ class Product {
     String id,
     Map<String, dynamic> snapshot,
   )   : id = id,
-        stripe_id = snapshot['stripe_id'] ?? "",
-        //stripe_id = snapshot['stripe_id_test'] ?? "",
+        stripe_id = snapshot[current_build_mode == BuildMode.release
+                ? "stripe_id"
+                : "stripe_id_test"] ??
+            "",
         name = snapshot['name'],
         image_src = snapshot['image_src'],
         price = snapshot['price'],

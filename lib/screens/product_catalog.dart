@@ -26,7 +26,6 @@ class ProductCatalog extends StatefulWidget {
     required this.button_color,
     required this.success_url,
     required this.cancel_url,
-    required this.firebase_config_url,
   });
 
   final Color? topbar_color;
@@ -41,7 +40,6 @@ class ProductCatalog extends StatefulWidget {
   final Color button_color;
   final String success_url;
   final String cancel_url;
-  final String firebase_config_url;
 
   @override
   _ProductCatalogState createState() => _ProductCatalogState();
@@ -225,7 +223,6 @@ class _ProductCatalogState extends State<ProductCatalog> {
                       customer_email: user_email,
                       success_url: widget.success_url,
                       cancel_url: widget.cancel_url,
-                      firebase_config_url: widget.firebase_config_url,
                     ),
                     coming_soon_text: widget.texts[3],
                     button_color: widget.button_color,

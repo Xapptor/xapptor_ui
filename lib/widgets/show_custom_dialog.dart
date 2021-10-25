@@ -24,27 +24,3 @@ show_custom_dialog({
     },
   );
 }
-
-show_payment_result_alert_dialog(
-  bool payment_success,
-  BuildContext context,
-) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          payment_success ? "Payment successful" : "Payment failed",
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text("Accept"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      );
-    },
-  );
-}
