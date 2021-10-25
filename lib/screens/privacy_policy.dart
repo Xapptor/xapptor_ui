@@ -7,13 +7,13 @@ import 'package:universal_platform/universal_platform.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({
-    required this.url_base,
+    required this.base_url,
     required this.use_topbar,
     this.logo_color,
     required this.topbar_color,
   });
 
-  final String url_base;
+  final String base_url;
   final bool use_topbar;
   final Color? logo_color;
   final Color topbar_color;
@@ -30,7 +30,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   check_src() async {
     src = UniversalPlatform.isWeb
         ? await rootBundle.loadString("assets/privacy_policy.html")
-        : "${widget.url_base}/#/privacy_policy";
+        : "${widget.base_url}/#/privacy_policy";
     setState(() {});
   }
 
