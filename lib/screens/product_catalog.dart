@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:xapptor_logic/firebase_tasks.dart';
+import 'package:xapptor_logic/random_number_with_range.dart';
 import 'package:xapptor_translation/language_picker.dart';
 import 'package:xapptor_translation/translate.dart';
 import 'package:xapptor_ui/models/product.dart';
@@ -9,6 +13,7 @@ import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/loading.dart';
 import 'package:xapptor_ui/widgets/product_catalog_item.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
 
@@ -26,6 +31,7 @@ class ProductCatalog extends StatefulWidget {
     required this.button_color,
     required this.success_url,
     required this.cancel_url,
+    required this.use_iap,
   });
 
   final Color? topbar_color;
@@ -40,6 +46,7 @@ class ProductCatalog extends StatefulWidget {
   final Color button_color;
   final String success_url;
   final String cancel_url;
+  final bool use_iap;
 
   @override
   _ProductCatalogState createState() => _ProductCatalogState();
@@ -47,6 +54,7 @@ class ProductCatalog extends StatefulWidget {
 
 class _ProductCatalogState extends State<ProductCatalog> {
   TextEditingController coupon_controller = TextEditingController();
+  bool loading = false;
 
   late TranslationStream translation_stream;
   List<TranslationStream> translation_stream_list = [];
@@ -84,7 +92,119 @@ class _ProductCatalogState extends State<ProductCatalog> {
       translation_stream_list = [translation_stream];
     }
 
+    _subscription = InAppPurchase.instance.purchaseStream.listen(
+      (purchase_details_list) {
+        _listen_to_purchase_updated(purchase_details_list);
+      },
+      onDone: () {
+        _subscription.cancel();
+      },
+      onError: (error) {
+        // handle error here.
+      },
+    );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
+  late StreamSubscription<List<PurchaseDetails>> _subscription;
+
+  _listen_to_purchase_updated(List<PurchaseDetails> purchase_details_list) {
+    int random_number =
+        random_number_with_range(1000, random_number_with_range(2, 3) * 1000);
+    print(random_number);
+
+    purchase_details_list.forEach(
+      (PurchaseDetails purchase_details) async {
+        if (purchase_details.status == PurchaseStatus.pending) {
+          //print("payment process pending");
+          loading = true;
+          setState(() {});
+        } else {
+          if (purchase_details.status == PurchaseStatus.error) {
+            //print("payment process error" + purchase_details.error!.toString());
+            loading = false;
+            setState(() {});
+
+            show_purchase_result_banner(false);
+          } else if (purchase_details.status == PurchaseStatus.purchased ||
+              purchase_details.status == PurchaseStatus.restored) {
+            //print("payment process success");
+            loading = false;
+            setState(() {});
+
+            Timer(Duration(milliseconds: random_number), () {
+              register_payment(purchase_details.productID);
+            });
+          }
+
+          if (purchase_details.pendingCompletePurchase) {
+            await InAppPurchase.instance.completePurchase(purchase_details);
+          }
+        }
+      },
+    );
+  }
+
+  register_payment(String product_id) async {
+    bool product_was_acquired = await check_if_product_was_acquired(
+      user_id: user_id,
+      product_id: product_id,
+    );
+    if (!product_was_acquired) {
+      FirebaseFirestore.instance.collection("users").doc(user_id).update({
+        "products_acquired": FieldValue.arrayUnion([product_id]),
+      }).then((value) {
+        FirebaseFirestore.instance.collection("payments").add({
+          "payment_intent_id": "",
+          "user_id": user_id,
+          "product_id": product_id,
+          "date": Timestamp.now(),
+        }).then((value) {
+          show_purchase_result_banner(true);
+        });
+      });
+    }
+  }
+
+  show_purchase_result_banner(bool purchase_success) {
+    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+
+    ScaffoldMessenger.of(context).showMaterialBanner(
+      MaterialBanner(
+        content: Text(
+          purchase_success ? "Purchase Successful" : "Purchase Failed",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        leading: Icon(
+          purchase_success ? Icons.check_circle_rounded : Icons.info,
+          color: Colors.white,
+        ),
+        backgroundColor: purchase_success ? Colors.green : Colors.red,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+            },
+          ),
+        ],
+      ),
+    );
+
+    Timer(Duration(seconds: 3), () {
+      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    });
   }
 
   @override
@@ -216,8 +336,8 @@ class _ProductCatalogState extends State<ProductCatalog> {
                     image_url: widget.products[index].image_src,
                     linear_gradient: widget.linear_gradients[index],
                     coming_soon: !widget.products[index].enabled,
-                    stripe_payment: StripePayment(
-                      price_id: widget.products[index].stripe_id,
+                    stripe_payment: Payment(
+                      price_id: widget.products[index].price_id,
                       user_id: user_id,
                       product_id: widget.products[index].id,
                       customer_email: user_email,
@@ -226,6 +346,7 @@ class _ProductCatalogState extends State<ProductCatalog> {
                     ),
                     coming_soon_text: widget.texts[3],
                     button_color: widget.button_color,
+                    use_iap: widget.use_iap,
                   ),
                 );
               },
@@ -236,29 +357,46 @@ class _ProductCatalogState extends State<ProductCatalog> {
       ),
     );
 
-    return widget.topbar_color != null
-        ? Scaffold(
-            appBar: TopBar(
-              background_color: widget.topbar_color!,
-              has_back_button: true,
-              actions: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  width: 150,
-                  child: widget.language_picker_items_text_color != null
-                      ? LanguagePicker(
-                          translation_stream_list: translation_stream_list,
-                          language_picker_items_text_color:
-                              widget.language_picker_items_text_color!,
-                        )
-                      : Container(),
-                ),
-              ],
-              custom_leading: null,
-              logo_path: "assets/images/logo.png",
-            ),
-            body: body,
-          )
-        : body;
+    return LoadingContainer(
+      loading: loading,
+      background_color: Colors.white.withOpacity(0.75),
+      progress_indicator_color: widget.topbar_color ?? Colors.blueGrey,
+      child: widget.topbar_color != null
+          ? Scaffold(
+              resizeToAvoidBottomInset: false,
+              appBar: TopBar(
+                background_color: widget.topbar_color!,
+                has_back_button: true,
+                actions: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(right: 20),
+                    width: 150,
+                    child: widget.language_picker_items_text_color != null
+                        ? LanguagePicker(
+                            translation_stream_list: translation_stream_list,
+                            language_picker_items_text_color:
+                                widget.language_picker_items_text_color!,
+                          )
+                        : Container(),
+                  ),
+                ],
+                custom_leading: null,
+                logo_path: "assets/images/logo.png",
+              ),
+              body: body,
+            )
+          : body,
+    );
   }
+}
+
+Future<bool> check_if_product_was_acquired({
+  required String user_id,
+  required String product_id,
+}) async {
+  DocumentSnapshot user_snap =
+      await FirebaseFirestore.instance.collection("users").doc(user_id).get();
+  Map user_snap_data = user_snap.data()! as Map;
+  List products_acquired = user_snap_data["products_acquired"] ?? [];
+  return products_acquired.contains(product_id);
 }

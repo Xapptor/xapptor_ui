@@ -5,6 +5,7 @@ import 'package:xapptor_logic/is_portrait.dart';
 import 'package:xapptor_router/initial_values_routing.dart';
 import 'package:xapptor_ui/screens/payment_webview.dart';
 import 'package:xapptor_router/app_screens.dart';
+import 'package:xapptor_ui/screens/product_catalog.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:xapptor_ui/widgets/coming_soon_container.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class ProductCatalogItem extends StatefulWidget {
     required this.stripe_payment,
     required this.coming_soon,
     required this.coming_soon_text,
+    required this.use_iap,
   });
 
   final String title;
@@ -36,9 +38,10 @@ class ProductCatalogItem extends StatefulWidget {
   final Color button_color;
   final String image_url;
   final LinearGradient linear_gradient;
-  final StripePayment stripe_payment;
+  final Payment stripe_payment;
   final bool coming_soon;
   final String coming_soon_text;
+  final bool use_iap;
 
   @override
   _ProductCatalogItemState createState() => _ProductCatalogItemState();
@@ -50,6 +53,26 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
   @override
   void initState() {
     super.initState();
+  }
+
+  buy_now() async {
+    bool product_was_acquired = await check_if_product_was_acquired(
+      user_id: widget.stripe_payment.user_id,
+      product_id: widget.stripe_payment.product_id,
+    );
+    if (product_was_acquired) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("You already bought this item"),
+        ),
+      );
+    } else {
+      if (widget.use_iap) {
+        call_iap();
+      } else {
+        call_stripe();
+      }
+    }
   }
 
   @override
@@ -121,11 +144,7 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
                       child: Container(
                         child: TextButton(
                           onPressed: () {
-                            if (UniversalPlatform.isIOS) {
-                              on_pressed_iap();
-                            } else {
-                              on_pressed_stripe();
-                            }
+                            buy_now();
                           },
                           child: Center(
                             child: Text(
@@ -156,10 +175,9 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
 
   // In App Purchase.
 
-  on_pressed_iap() async {
-    const Set<String> _kIds = <String>{'njrXMgGFkJklI3ZZONSP'};
-    final ProductDetailsResponse response =
-        await InAppPurchase.instance.queryProductDetails(_kIds);
+  call_iap() async {
+    final ProductDetailsResponse response = await InAppPurchase.instance
+        .queryProductDetails({widget.stripe_payment.product_id});
 
     if (response.notFoundIDs.isNotEmpty) {
       print("Not Found IDs");
@@ -177,9 +195,9 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
     }
   }
 
-  // Stripe payment.
+  // Stripe Payment.
 
-  on_pressed_stripe() async {
+  call_stripe() async {
     if (!widget.coming_soon) {
       if (widget.stripe_payment.user_id.isEmpty) {
         open_screen("login");

@@ -52,7 +52,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
 
 // StripePayment model.
 
-class StripePayment {
+class Payment {
   final String price_id;
   final String user_id;
   final String product_id;
@@ -60,7 +60,7 @@ class StripePayment {
   final String success_url;
   final String cancel_url;
 
-  StripePayment({
+  Payment({
     required this.price_id,
     required this.user_id,
     required this.product_id,
