@@ -32,6 +32,7 @@ class ProductCatalog extends StatefulWidget {
     required this.success_url,
     required this.cancel_url,
     required this.use_iap,
+    required this.use_coupons,
   });
 
   final Color? topbar_color;
@@ -47,6 +48,7 @@ class ProductCatalog extends StatefulWidget {
   final String success_url;
   final String cancel_url;
   final bool use_iap;
+  final bool use_coupons;
 
   @override
   _ProductCatalogState createState() => _ProductCatalogState();
@@ -115,9 +117,16 @@ class _ProductCatalogState extends State<ProductCatalog> {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
   _listen_to_purchase_updated(List<PurchaseDetails> purchase_details_list) {
-    int random_number =
-        random_number_with_range(1000, random_number_with_range(2, 3) * 1000);
-    print(random_number);
+    int random_number_1 = random_number_with_range(1000, 2000);
+    int random_number_2 = random_number_with_range(500, 1000);
+    int random_number_3 = random_number_with_range(100, 500);
+
+    int random_number_timer =
+        ((random_number_1 + random_number_2 + random_number_3) *
+                (random_number_with_range(1, 9) / 10))
+            .toInt();
+
+    print(random_number_timer);
 
     purchase_details_list.forEach(
       (PurchaseDetails purchase_details) async {
@@ -138,7 +147,7 @@ class _ProductCatalogState extends State<ProductCatalog> {
             loading = false;
             setState(() {});
 
-            Timer(Duration(milliseconds: random_number), () {
+            Timer(Duration(milliseconds: random_number_timer), () {
               register_payment(purchase_details.productID);
             });
           }
@@ -249,73 +258,75 @@ class _ProductCatalogState extends State<ProductCatalog> {
               ),
             ),
           ),
-          Expanded(
-            flex: 4,
-            child: FractionallySizedBox(
-              widthFactor: portrait ? 0.8 : 0.2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextField(
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: widget.texts[4],
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(1000),
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(1000),
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    controller: coupon_controller,
-                  ),
-                  SizedBox(
-                    height: sized_box_space,
-                  ),
-                  Container(
-                    height: 50,
-                    child: CustomCard(
-                      on_pressed: () async {
-                        // Checking if coupon is valid.
-
-                        String coupon_id = coupon_controller.text;
-                        coupon_controller.clear();
-
-                        await check_if_coupon_is_valid(
-                          coupon_id.isEmpty ? " " : coupon_id,
-                          context,
-                          widget.texts[6],
-                          widget.texts[7],
-                        );
-                      },
-                      border_radius: 1000,
-                      splash_color: widget.text_color.withOpacity(0.3),
-                      child: Center(
-                        child: Text(
-                          widget.texts[5],
+          widget.use_coupons
+              ? Expanded(
+                  flex: 4,
+                  child: FractionallySizedBox(
+                    widthFactor: portrait ? 0.8 : 0.2,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextField(
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: widget.background_color,
+                            color: Colors.white,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: widget.texts[4],
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(1000),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(1000),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          controller: coupon_controller,
+                        ),
+                        SizedBox(
+                          height: sized_box_space,
+                        ),
+                        Container(
+                          height: 50,
+                          child: CustomCard(
+                            on_pressed: () async {
+                              // Checking if coupon is valid.
+
+                              String coupon_id = coupon_controller.text;
+                              coupon_controller.clear();
+
+                              await check_if_coupon_is_valid(
+                                coupon_id.isEmpty ? " " : coupon_id,
+                                context,
+                                widget.texts[6],
+                                widget.texts[7],
+                              );
+                            },
+                            border_radius: 1000,
+                            splash_color: widget.text_color.withOpacity(0.3),
+                            child: Center(
+                              child: Text(
+                                widget.texts[5],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: widget.background_color,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
+                )
+              : Container(),
           Expanded(
             flex: portrait ? 8 : 14,
             child: ListView.builder(
