@@ -94,23 +94,28 @@ class _ProductCatalogState extends State<ProductCatalog> {
       translation_stream_list = [translation_stream];
     }
 
-    _subscription = InAppPurchase.instance.purchaseStream.listen(
-      (purchase_details_list) {
-        _listen_to_purchase_updated(purchase_details_list);
-      },
-      onDone: () {
-        _subscription.cancel();
-      },
-      onError: (error) {
-        // handle error here.
-      },
-    );
+    if (widget.use_iap) {
+      _subscription = InAppPurchase.instance.purchaseStream.listen(
+        (purchase_details_list) {
+          _listen_to_purchase_updated(purchase_details_list);
+        },
+        onDone: () {
+          _subscription.cancel();
+        },
+        onError: (error) {
+          // handle error here.
+        },
+      );
+    }
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _subscription.cancel();
+    if (widget.use_iap) {
+      _subscription.cancel();
+    }
     super.dispose();
   }
 
