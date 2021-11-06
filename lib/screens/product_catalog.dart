@@ -145,9 +145,8 @@ class _ProductCatalogState extends State<ProductCatalog> {
             loading = false;
             setState(() {});
 
-            show_purchase_result_banner(false);
-          } else if (purchase_details.status == PurchaseStatus.purchased ||
-              purchase_details.status == PurchaseStatus.restored) {
+            show_purchase_result_banner(false, null);
+          } else if (purchase_details.status == PurchaseStatus.purchased) {
             //print("payment process success");
             loading = false;
             setState(() {});
@@ -155,6 +154,10 @@ class _ProductCatalogState extends State<ProductCatalog> {
             Timer(Duration(milliseconds: random_number_timer), () {
               register_payment(purchase_details.productID);
             });
+          } else if (purchase_details.status == PurchaseStatus.restored) {
+            loading = false;
+            setState(() {});
+            restore_purchase(purchase_details.productID);
           }
 
           if (purchase_details.pendingCompletePurchase) {
@@ -163,6 +166,14 @@ class _ProductCatalogState extends State<ProductCatalog> {
         }
       },
     );
+  }
+
+  restore_purchase(String product_id) async {
+    FirebaseFirestore.instance.collection("users").doc(user_id).update({
+      "products_acquired": FieldValue.arrayUnion([product_id]),
+    }).then((value) {
+      show_purchase_result_banner(true, "Purchase Restored");
+    });
   }
 
   register_payment(String product_id) async {
@@ -180,19 +191,20 @@ class _ProductCatalogState extends State<ProductCatalog> {
           "product_id": product_id,
           "date": Timestamp.now(),
         }).then((value) {
-          show_purchase_result_banner(true);
+          show_purchase_result_banner(true, null);
         });
       });
     }
   }
 
-  show_purchase_result_banner(bool purchase_success) {
+  show_purchase_result_banner(bool purchase_success, String? custom_message) {
     ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
 
     ScaffoldMessenger.of(context).showMaterialBanner(
       MaterialBanner(
         content: Text(
-          purchase_success ? "Purchase Successful" : "Purchase Failed",
+          custom_message ??
+              (purchase_success ? "Purchase Successful" : "Purchase Failed"),
           style: TextStyle(
             color: Colors.white,
           ),
@@ -331,7 +343,30 @@ class _ProductCatalogState extends State<ProductCatalog> {
                     ),
                   ),
                 )
-              : Container(),
+              : FractionallySizedBox(
+                  widthFactor: portrait ? 0.8 : 0.2,
+                  child: Container(
+                    height: 50,
+                    child: CustomCard(
+                      on_pressed: () async {
+                        // Restoring previous purchases.
+
+                        await InAppPurchase.instance.restorePurchases();
+                      },
+                      border_radius: 1000,
+                      splash_color: widget.text_color.withOpacity(0.3),
+                      child: Center(
+                        child: Text(
+                          "Restore Purchase",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: widget.background_color,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
           Expanded(
             flex: portrait ? 8 : 14,
             child: ListView.builder(
