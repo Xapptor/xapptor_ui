@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 import 'package:xapptor_router/initial_values_routing.dart';
@@ -56,21 +57,25 @@ class _ProductCatalogItemState extends State<ProductCatalogItem> {
   }
 
   buy_now() async {
-    bool product_was_acquired = await check_if_product_was_acquired(
-      user_id: widget.stripe_payment.user_id,
-      product_id: widget.stripe_payment.product_id,
-    );
-    if (product_was_acquired) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("You already bought this item"),
-        ),
-      );
+    if (FirebaseAuth.instance.currentUser == null) {
+      open_screen("login");
     } else {
-      if (widget.use_iap) {
-        call_iap();
+      bool product_was_acquired = await check_if_product_was_acquired(
+        user_id: widget.stripe_payment.user_id,
+        product_id: widget.stripe_payment.product_id,
+      );
+      if (product_was_acquired) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("You already bought this item"),
+          ),
+        );
       } else {
-        call_stripe();
+        if (widget.use_iap) {
+          call_iap();
+        } else {
+          call_stripe();
+        }
       }
     }
   }
