@@ -1,4 +1,5 @@
 # **Xapptor UI**
+[![pub package](https://img.shields.io/pub/v/xapptor_ui?color=blue)](https://pub.dartlang.org/packages/xapptor_ui)
 ### UI Module for a variety of useful Widgets.
 
 ## **Let's get started**
@@ -7,7 +8,7 @@
 ##### Add it to your package's pubspec.yaml file
 ```yml
 dependencies:
-    xapptor_ui: ^0.0.1
+    xapptor_ui: ^0.0.2
 ```
 
 ### **2 - Install it**
@@ -18,202 +19,12 @@ flutter pub get
 
 ### **3 - Learn it like a charm**
 
-#### **Certificates Visualizer**
-```dart
-
-List certificates_id = [];
-List courses_id = [];
-List<CourseCertificate> certificates = [];
-Map<String, dynamic> user_info = {};
-String user_id = "";
-
-@override
-  void initState() {
-    super.initState();
-    set_user_info();
-}
-
-set_user_info() async {
-    user_id = FirebaseAuth.instance.currentUser!.uid;
-    user_info = await get_user_info(user_id);
-    setState(() {});
-    check_user_courses();
-    get_certificates();
-}
-
-// Checking for user courses.
-
-check_user_courses() {
-    if (user_info["products_acquired"] != null) {
-        if (user_info["products_acquired"].length > 0) {
-            courses_id = List.from(user_info["products_acquired"]);
-            for (var course_id in courses_id) {
-                check_if_course_was_completed(
-                    course_id: course_id,
-                    user_info: user_info,
-                    context: context,
-                );
-            }
-        }
-    }
-}
-
-get_certificates() async {
-    certificates.clear();
-    if (user_info["certificates"] != null) {
-        if (user_info["certificates"].length > 0) {
-        certificates_id = List.from(user_info["certificates"]);
-
-        for (var certificate_id in certificates_id) {
-            await FirebaseFirestore.instance
-                .collection("certificates")
-                .doc(certificate_id)
-                .get()
-                .then((snapshot_certificate) async {
-                    Map<String, dynamic> data_certificate =
-                        snapshot_certificate.data()!;
-
-                    await FirebaseFirestore.instance
-                        .collection("courses")
-                        .doc(data_certificate["course_id"])
-                        .get()
-                        .then((snapshot_course) {
-                            Map<String, dynamic> data_course = snapshot_course.data()!;
-
-                            certificates.add(
-                            CourseCertificate(
-                                id: certificate_id,
-                                date: timestamp_to_date(data_certificate["date"]),
-                                course_name: data_course["name"],
-                                user_name:
-                                    user_info["firstname"] + " " + user_info["lastname"],
-                                user_id: user_id,
-                            ),
-                        );
-                        setState(() {});
-                    });
-                });
-            }
-        }
-    }
-}
-
-// Finally calling Certificates Visualizer
-
-CertificatesVisualizer(
-    certificate: certificates[i],
-    topbar_color: Colors.blue,
-    pdf_converter_url: 'https://yourmicroservice.com/yourpdfconverter',
-    local_host_pdf_converter_url: 'http://localhost:8080/yourpdfconverter',
-);
-```
-
-#### **Certificates and Rewards**
-```dart
-CertificatesAndRewards(
-    button_color_1: Colors.green,
-    button_color_2: Colors.cyan,
-    text_color: Colors.black,
-    topbar_color: Colors.blue,
-    pdf_converter_url:
-        "https://us-central1-your-firebase-project-or-microservice.cloudfunctions.net/convert_html_to_pdf",
-    local_host_pdf_converter_url:
-        "http://localhost:5001/your-firebase-project-or-microservice/us-central1/convert_html_to_pdf",
-);
-```
-
-#### **Class Quiz**
-```dart
-ClassQuiz(
-    course_id: course_id,
-    course_name: course_name,
-    unit_id: unit_id,
-    last_unit: false,
-    language_picker_items_text_color: Colors.cyan,
-    language_picker: false,
-    text_color: Colors.black,
-    topbar_color: Colors.blue,
-);
-```
-
-#### **Class Session**
-```dart
-ClassSession(
-    course_id: course_id,
-    course_name: course_name,
-    unit_id: unit_id,
-    language_picker_items_text_color: Colors.cyan,
-    language_picker: false,
-    topbar_color: Colors.blue,
-    text_color: Colors.black,
-);
-```
-
-#### **Dispenser Details**
-```dart
-DispenserDetails(
-    product: product,
-    dispenser: dispenser,
-    dispenser_id: dispenser_id,
-    allow_edit: true,
-    update_enabled_in_dispenser: update_enabled_in_dispenser_function,
-);
-```
-
-#### **Payment Webview**
-```dart
-PaymentWebview(
-    url_base: url,
-);
-```
-
 #### **Privacy Policy**
 ```dart
 PrivacyPolicy(
     base_url: "https://www.yourdomain.com",
     use_topbar: false,
     topbar_color: Colors.blue,
-);
-```
-
-#### **Product Catalog**
-```dart
-ProductCatalog(
-    topbar_color: Colors.blue,
-    language_picker_items_text_color: Colors.cyan,
-    products: products,
-    linear_gradients: linear_gradients,
-    texts: text_list_product_catalog,
-    background_color: Colors.blue,
-    title_color: Colors.white,
-    subtitle_color: Colors.white,
-    text_color: Colors.white,
-    button_color: Colors.cyan,
-    success_url: "https://www.yourdomain.com/home?payment_success=true",
-    cancel_url: "https://www.yourdomain.com/home?payment_success=false",
-);
-```
-
-#### **Product Details**
-```dart
-ProductDetails(
-    product: product,
-    is_editing: true,
-    text_color: Colors.black,
-    title_color: Colors.blue,
-);
-```
-
-#### **Product List**
-```dart
-ProductList(
-    vending_machine_id: vending_machine_id,
-    allow_edit: false,
-    has_topbar: false,
-    for_dispensers: true,
-    text_color: Colors.blue,
-    topbar_color: Colors.cyan,
-    title_color: Color.green,
 );
 ```
 
@@ -249,16 +60,6 @@ QRScanner(
 ```dart
 UnknownScreen(
     logo_path: "assets/images/your_logo.png",
-);
-```
-
-#### **Vending Machine Details**
-```dart
-VendingMachineDetails(
-    vending_machine: vending_machine,
-    text_color: Colors.black,
-    topbar_color: Colors.blue,
-    textfield_color: Colors.black,
 );
 ```
 
@@ -378,14 +179,6 @@ Resume(
 Webview(
     id: Uuid().v4(),
     src: image_src,
-);
-```
-
-#### **Admin Analytics**
-```dart
-AdminAnalytics(
-    text_color: Colors.black,
-    icon_color: Colors.blue,
 );
 ```
 
@@ -516,28 +309,6 @@ encourage_give_permission(
 );
 ```
 
-#### **Class Quiz Question**
-```dart
-ClassQuizQuestion(
-    question_title: questions_object[i]["question_title"],
-    answers: final_possible_answers,
-    demos: questions_object[i]["demos"],
-    class_quiz: this,
-    correct_answer: questions_object[i]["correct_answer"].toString(),
-    question_id: i,
-    text_color: Colors.black,
-);
-```
-
-#### **Class Quiz Result**
-```dart
-ClassQuizResult(
-    button_text: button_text,
-    class_quiz: this,
-    text_color: Colors.black,
-);
-```
-
 #### **Comming Soon Container**
 ```dart
 ComingSoonContainer(
@@ -569,16 +340,6 @@ ContactUsContainer(
         Colors.black.withOpacity(0.6),
     ],
     border_radius: 10,
-);
-```
-
-#### **Courses List**
-```dart
-CoursesList(
-    language_picker_items_text_color: Colors.cyan,
-    language_picker: false,
-    text_color: Colors.black,
-    topbar_color: Colors.blue,
 );
 ```
 

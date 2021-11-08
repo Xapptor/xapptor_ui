@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:xapptor_ui/models/resume.dart';
-import 'package:xapptor_ui/models/resume_section.dart';
+import 'package:xapptor_ui/widgets/resume/models/resume.dart';
+import 'package:xapptor_ui/widgets/resume/models/resume_section.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 

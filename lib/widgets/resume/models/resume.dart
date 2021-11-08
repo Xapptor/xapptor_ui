@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/models/resume_section.dart';
+import 'resume_section.dart';
 import 'resume_skill.dart';
 
 // Resume model.

@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:xapptor_logic/random_number_with_range.dart';
-import 'package:xapptor_ui/models/resume_skill.dart' as SkillData;
+import 'package:xapptor_ui/widgets/resume/models/resume_skill.dart'
+    as SkillData;
 import 'package:pdf/widgets.dart' as pw;
 
 // Resume, skill widget por PDF.
