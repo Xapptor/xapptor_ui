@@ -9,5 +9,5 @@ Future<String> current_app_version() async {
         1,
         packageInfo.appName.length,
       );
-  return "Xapptor 3.0.8 - ${app_name} ${packageInfo.version}";
+  return "Xapptor Core 3.0.9 - ${app_name} ${packageInfo.version}";
 }
