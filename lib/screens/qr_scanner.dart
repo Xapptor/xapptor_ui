@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:xapptor_router/app_screens.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
@@ -27,8 +25,9 @@ class QRScanner extends StatefulWidget {
     required this.validate_button_text,
     required this.fail_message,
     required this.textfield_color,
-    required this.login_button_text,
-    required this.show_login_button,
+    required this.show_main_button,
+    required this.main_button_text,
+    required this.main_button_function,
   });
 
   final String descriptive_text;
@@ -46,8 +45,9 @@ class QRScanner extends StatefulWidget {
   final String validate_button_text;
   final String fail_message;
   final Color textfield_color;
-  final String login_button_text;
-  final bool show_login_button;
+  final bool show_main_button;
+  final String main_button_text;
+  final Function main_button_function;
 
   @override
   State<StatefulWidget> createState() => _QRScannerState();
@@ -88,15 +88,13 @@ class _QRScannerState extends State<QRScanner> {
     );
   }
 
-  // Show login button on QRScanner.
+  // Show main button on QRScanner.
 
-  Widget login_button() {
+  Widget main_button() {
     return TextButton(
-      onPressed: () {
-        open_screen("login");
-      },
+      onPressed: () => widget.main_button_function(),
       child: Text(
-        widget.login_button_text,
+        widget.main_button_text,
         style: TextStyle(
           color: widget.border_color,
           fontWeight: FontWeight.bold,
@@ -169,10 +167,10 @@ class _QRScannerState extends State<QRScanner> {
                         linear_gradient: widget.button_linear_gradient,
                       ),
                     ),
-                    widget.show_login_button
+                    widget.show_main_button
                         ? Container(
                             height: 50,
-                            child: login_button(),
+                            child: main_button(),
                           )
                         : Container(),
                   ],
@@ -190,10 +188,7 @@ class _QRScannerState extends State<QRScanner> {
                     });
                     controller.scannedDataStream.listen((data_scanned) {
                       // Listen when a QR code was scan and update the code value.
-
-                      setState(() {
-                        widget.update_qr_value(data_scanned.code);
-                      });
+                      widget.update_qr_value(data_scanned.code);
                     });
                   },
                   overlay: QrScannerOverlayShape(
@@ -217,7 +212,7 @@ class _QRScannerState extends State<QRScanner> {
                         ),
                       ),
                       Spacer(flex: 6),
-                      widget.show_login_button ? login_button() : Container(),
+                      widget.show_main_button ? main_button() : Container(),
                       Spacer(flex: 1),
                     ],
                   ),
