@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart';
 
 enum TimeFrame {
-  Day,
-  Week,
-  Month,
-  Year,
-  Beginning,
+  day,
+  week,
+  month,
+  year,
+  beginning,
 }
 
 double get_max_x({
@@ -13,15 +13,15 @@ double get_max_x({
   required int first_year,
 }) {
   switch (timeframe) {
-    case TimeFrame.Day:
+    case TimeFrame.day:
       return 24;
-    case TimeFrame.Week:
+    case TimeFrame.week:
       return 7;
-    case TimeFrame.Month:
+    case TimeFrame.month:
       return 30;
-    case TimeFrame.Year:
+    case TimeFrame.year:
       return 12;
-    case TimeFrame.Beginning:
+    case TimeFrame.beginning:
       return 3;
   }
 }
@@ -32,32 +32,32 @@ DateTime get_timeframe_date({
 }) {
   DateTime date_now = DateTime.now();
   switch (timeframe) {
-    case TimeFrame.Day:
+    case TimeFrame.day:
       return DateTime(
         date_now.year,
         date_now.month,
         date_now.day,
         date_now.hour - 24,
       );
-    case TimeFrame.Week:
+    case TimeFrame.week:
       return DateTime(
         date_now.year,
         date_now.month,
         date_now.day - 7,
       );
-    case TimeFrame.Month:
+    case TimeFrame.month:
       return DateTime(
         date_now.year,
         date_now.month,
         date_now.day - 30,
       );
-    case TimeFrame.Year:
+    case TimeFrame.year:
       return DateTime(
         date_now.year,
         date_now.month - 12,
       );
 
-    case TimeFrame.Beginning:
+    case TimeFrame.beginning:
       return DateTime(
         date_now.year - first_year,
       );
@@ -76,7 +76,7 @@ List<String> get_bottom_labels({
     String current_label = "";
 
     switch (timeframe) {
-      case TimeFrame.Day:
+      case TimeFrame.day:
         current_date = DateTime(
           date_now.year,
           date_now.month,
@@ -85,7 +85,7 @@ List<String> get_bottom_labels({
         );
         current_label = DateFormat("h a").format(current_date);
         break;
-      case TimeFrame.Week:
+      case TimeFrame.week:
         current_date = DateTime(
           date_now.year,
           date_now.month,
@@ -93,7 +93,7 @@ List<String> get_bottom_labels({
         );
         current_label = DateFormat("d").format(current_date);
         break;
-      case TimeFrame.Month:
+      case TimeFrame.month:
         current_date = DateTime(
           date_now.year,
           date_now.month,
@@ -101,14 +101,14 @@ List<String> get_bottom_labels({
         );
         current_label = DateFormat("d").format(current_date);
         break;
-      case TimeFrame.Year:
+      case TimeFrame.year:
         current_date = DateTime(
           date_now.year,
           date_now.month - i,
         );
         current_label = DateFormat("MMM").format(current_date);
         break;
-      case TimeFrame.Beginning:
+      case TimeFrame.beginning:
         current_date = DateTime(
           date_now.year - i,
         );
