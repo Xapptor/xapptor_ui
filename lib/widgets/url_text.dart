@@ -7,10 +7,12 @@ class PdfUrlText extends pw.StatelessWidget {
   PdfUrlText({
     required this.text,
     required this.url,
+    font_size = 10,
   });
 
   String text;
   String url;
+  double? font_size;
 
   @override
   pw.Widget build(pw.Context context) {
@@ -19,7 +21,7 @@ class PdfUrlText extends pw.StatelessWidget {
       child: pw.Text(
         text,
         style: pw.TextStyle(
-          fontSize: 10,
+          fontSize: font_size,
           decoration: pw.TextDecoration.underline,
           color: PdfColors.blue,
         ),
