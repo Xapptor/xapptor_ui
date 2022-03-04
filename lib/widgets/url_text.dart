@@ -7,12 +7,12 @@ class PdfUrlText extends pw.StatelessWidget {
   PdfUrlText({
     required this.text,
     required this.url,
-    font_size = 10,
+    this.font_size = 10,
   });
 
-  String text;
-  String url;
-  double? font_size;
+  final String text;
+  final String url;
+  final double? font_size;
 
   @override
   pw.Widget build(pw.Context context) {
