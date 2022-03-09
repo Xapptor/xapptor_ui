@@ -75,11 +75,8 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
       );
 
       String file_name = uri.pathSegments.last.split('/').last;
-
       String file_path = directory + "/" + file_name;
-
       File file = File(file_path);
-
       FileDownloader.save(
           src: base64Encode(await file.readAsBytes()), file_name: file_name);
     } else {
@@ -145,6 +142,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
                   initialOptions: InAppWebViewGroupOptions(
                     crossPlatform: InAppWebViewOptions(
                       useOnDownloadStart: true,
+                      cacheEnabled: false,
                     ),
                   ),
                   onWebViewCreated: (InAppWebViewController controller) {
