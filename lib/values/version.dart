@@ -20,5 +20,5 @@ Future<String> current_app_version() async {
     platform_char = "wb";
   }
 
-  return "Xapptor Core 3.0.9 - ${app_name} ${packageInfo.version}_p_$platform_char";
+  return "Xapptor Core 3.1.0 - ${app_name} ${packageInfo.version}_p_$platform_char";
 }
