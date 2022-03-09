@@ -30,7 +30,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   check_src() async {
     src = UniversalPlatform.isWeb
         ? await rootBundle.loadString("assets/privacy_policy.html")
-        : "${widget.base_url}/#/privacy_policy";
+        : "${widget.base_url}/privacy_policy";
     setState(() {});
   }
 
