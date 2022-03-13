@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'dart:math' as math;
 
 @immutable
@@ -10,12 +9,16 @@ class ExpandableFab extends StatefulWidget {
     required this.distance,
     required this.children,
     required this.background_color,
-  }) : super(key: key);
+    required this.main_fab_icon,
+    required this.main_fab_background_color,
+  });
 
   final bool? initial_open;
   final double distance;
   final List<Widget> children;
   final Color background_color;
+  final IconData main_fab_icon;
+  final Color main_fab_background_color;
 
   @override
   _ExpandableFabState createState() => _ExpandableFabState();
@@ -100,7 +103,7 @@ class _ExpandableFabState extends State<ExpandableFab>
   }
 
   List<Widget> _build_expanding_action_buttons() {
-    final children = <Widget>[];
+    var children = <Widget>[];
     final count = widget.children.length;
     final step = 90.0 / (count - 1);
     for (var i = 0, angle_in_degrees = 0.0;
@@ -115,6 +118,7 @@ class _ExpandableFabState extends State<ExpandableFab>
         ),
       );
     }
+    children = children.reversed.toList();
     return children;
   }
 
@@ -138,8 +142,8 @@ class _ExpandableFabState extends State<ExpandableFab>
             backgroundColor: widget.background_color,
             onPressed: _toggle,
             child: Icon(
-              FontAwesome.facebook,
-              color: Colors.white,
+              widget.main_fab_icon,
+              color: widget.main_fab_background_color,
               size: 16,
             ),
           ),
