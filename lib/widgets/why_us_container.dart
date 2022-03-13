@@ -39,6 +39,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
     return Container(
       margin: EdgeInsets.only(
         top: screen_height / 16,
+        bottom: screen_height / 16,
       ),
       height: widget.custom_height != null
           ? widget.custom_height

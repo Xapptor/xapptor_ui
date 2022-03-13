@@ -119,9 +119,9 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
                 activeDotColor: current_page < widget.dot_colors_active.length
                     ? widget.dot_colors_active[current_page]
                     : widget.dot_colors_active.last,
-                spacing: 20,
-                dotHeight: 13,
-                dotWidth: 13,
+                spacing: portrait ? 12 : 20,
+                dotHeight: portrait ? 10 : 13,
+                dotWidth: portrait ? 10 : 13,
               ),
             ),
           ),
