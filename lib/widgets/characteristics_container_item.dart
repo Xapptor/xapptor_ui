@@ -40,6 +40,9 @@ class _CharacteristicsContainerItemState
     bool portrait = is_portrait(context);
 
     return Container(
+      margin: EdgeInsets.only(
+        top: screen_height / 20,
+      ),
       color: widget.color,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +80,7 @@ class _CharacteristicsContainerItemState
                 ),
               ),
               Container(
-                width: ((screen_width / (portrait ? 1 : 3)) * 0.85),
+                width: ((screen_width / (portrait ? 1 : 3)) * 0.8),
                 margin: EdgeInsets.all(10),
                 child: Text(
                   widget.description,

@@ -32,9 +32,20 @@ class WhyUsContainer extends StatefulWidget {
 class _WhyUsContainerState extends State<WhyUsContainer> {
   @override
   Widget build(BuildContext context) {
+    double screen_height = MediaQuery.of(context).size.height;
+    double screen_width = MediaQuery.of(context).size.width;
     bool portrait = is_portrait(context);
 
     return Container(
+      margin: EdgeInsets.only(
+        top: screen_height / 16,
+      ),
+      height: widget.custom_height != null
+          ? widget.custom_height
+          : portrait
+              ? (MediaQuery.of(context).size.height * 2)
+              : (MediaQuery.of(context).size.height),
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         image: widget.background_image.isNotEmpty
             ? DecorationImage(
@@ -46,17 +57,10 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
             : null,
         color: widget.background_color,
       ),
-      height: widget.custom_height != null
-          ? widget.custom_height
-          : portrait
-              ? (MediaQuery.of(context).size.height * 4)
-              : (MediaQuery.of(context).size.height),
-      width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 60),
             child: Text(
               widget.texts[0],
               textAlign: TextAlign.center,
@@ -82,6 +86,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
           ),
           Flex(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             direction: portrait ? Axis.vertical : Axis.horizontal,
             children: [
               CharacteristicsContainerItem(

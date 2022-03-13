@@ -13,7 +13,7 @@ class CardHolder extends StatefulWidget {
     this.image_fit = BoxFit.fitWidth,
     this.background_image_alignment = Alignment.center,
     this.icon,
-    this.icon_background_color = Colors.blue,
+    this.icon_background_color = Colors.white,
     this.elevation = 3,
     this.border_radius = 20,
     this.is_focused = false,
