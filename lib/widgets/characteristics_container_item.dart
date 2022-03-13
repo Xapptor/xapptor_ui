@@ -41,7 +41,8 @@ class _CharacteristicsContainerItemState
 
     return Container(
       margin: EdgeInsets.only(
-        top: screen_height / 20,
+        top: screen_height / 40,
+        bottom: screen_height / 40,
       ),
       color: widget.color,
       child: Row(

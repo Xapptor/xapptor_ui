@@ -11,12 +11,14 @@ class PrivacyPolicy extends StatefulWidget {
     required this.use_topbar,
     this.logo_color,
     required this.topbar_color,
+    this.logo_path = "assets/images/logo.png",
   });
 
   final String base_url;
   final bool use_topbar;
   final Color? logo_color;
   final Color topbar_color;
+  final String logo_path;
 
   @override
   _PrivacyPolicyState createState() => _PrivacyPolicyState();
@@ -49,7 +51,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               has_back_button: true,
               actions: [],
               custom_leading: null,
-              logo_path: "assets/images/logo.png",
+              logo_path: widget.logo_path,
               logo_color: widget.logo_color,
             )
           : null,
