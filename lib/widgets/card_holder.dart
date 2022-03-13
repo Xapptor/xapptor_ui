@@ -120,9 +120,14 @@ class _CardHolderState extends State<CardHolder> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.topCenter,
+                  alignment: widget.title.isEmpty && widget.subtitle.isEmpty
+                      ? Alignment.center
+                      : Alignment.topCenter,
                   child: AnimatedContainer(
-                    height: (constraints.maxHeight / (portrait ? 2.2 : 1.8)),
+                    height: widget.title.isEmpty && widget.subtitle.isEmpty
+                        ? (constraints.maxHeight *
+                            (widget.is_focused ? 1 : size_multiplier))
+                        : (constraints.maxHeight / (portrait ? 2.2 : 1.8)),
                     width: constraints.maxWidth *
                         (widget.is_focused ? 1 : size_multiplier),
                     duration: animation_duration,

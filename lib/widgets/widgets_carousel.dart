@@ -116,7 +116,9 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
               count: widget.children.length,
               effect: SwapEffect(
                 dotColor: widget.dot_color_inactive,
-                activeDotColor: widget.dot_colors_active[current_page.toInt()],
+                activeDotColor: current_page < widget.dot_colors_active.length
+                    ? widget.dot_colors_active[current_page]
+                    : widget.dot_colors_active.last,
                 spacing: 20,
                 dotHeight: 13,
                 dotWidth: 13,

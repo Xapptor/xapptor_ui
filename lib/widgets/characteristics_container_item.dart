@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 
 class CharacteristicsContainerItem extends StatefulWidget {
   const CharacteristicsContainerItem({
@@ -34,82 +35,62 @@ class _CharacteristicsContainerItemState
     extends State<CharacteristicsContainerItem> {
   @override
   Widget build(BuildContext context) {
+    double screen_height = MediaQuery.of(context).size.height;
+    double screen_width = MediaQuery.of(context).size.width;
+    bool portrait = is_portrait(context);
+
     return Container(
       color: widget.color,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           widget.side_icon
-              ? Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Icon(
-                          widget.icon,
-                          color: widget.icon_color,
-                          size: 40,
-                        ),
-                      ),
-                      Spacer(flex: 3),
-                    ],
-                  ),
+              ? Icon(
+                  widget.icon,
+                  color: widget.icon_color,
+                  size: 40,
                 )
               : Container(),
-          Expanded(
-            flex: 5,
-            child: Column(
-              crossAxisAlignment: widget.side_icon
-                  ? CrossAxisAlignment.start
-                  : CrossAxisAlignment.center,
-              children: <Widget>[
-                !widget.side_icon ? Spacer(flex: 1) : Container(),
-                !widget.side_icon
-                    ? Expanded(
-                        flex: 5,
-                        child: Icon(
-                          widget.icon,
-                          color: widget.icon_color,
-                          size: 40,
-                        ),
-                      )
-                    : Container(),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 4,
-                  child: Text(
-                    widget.title,
-                    textAlign:
-                        widget.side_icon ? TextAlign.left : TextAlign.center,
-                    style: TextStyle(
-                      color: widget.title_color,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+          Column(
+            crossAxisAlignment: widget.side_icon
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.center,
+            children: [
+              !widget.side_icon
+                  ? Icon(
+                      widget.icon,
+                      color: widget.icon_color,
+                      size: 40,
+                    )
+                  : Container(),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  widget.title,
+                  textAlign:
+                      widget.side_icon ? TextAlign.left : TextAlign.center,
+                  style: TextStyle(
+                    color: widget.title_color,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: widget.large_description ? 50 : 3,
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8,
-                    child: SingleChildScrollView(
-                      child: Text(
-                        widget.description,
-                        textAlign: widget.align_to_left_description
-                            ? TextAlign.left
-                            : TextAlign.center,
-                        style: TextStyle(
-                          color: widget.subtitle_color,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
+              ),
+              Container(
+                width: ((screen_width / (portrait ? 1 : 3)) * 0.85),
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  widget.description,
+                  textAlign: widget.align_to_left_description
+                      ? TextAlign.left
+                      : TextAlign.center,
+                  style: TextStyle(
+                    color: widget.subtitle_color,
+                    fontSize: 16,
                   ),
                 ),
-                Spacer(flex: 1),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
