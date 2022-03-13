@@ -6,7 +6,7 @@ import 'custom_card.dart';
 class CardHolder extends StatefulWidget {
   CardHolder({
     required this.on_pressed,
-    this.title = "",
+    this.title,
     this.subtitle = "",
     this.text_color = Colors.black,
     this.image_src = "",
@@ -20,7 +20,7 @@ class CardHolder extends StatefulWidget {
   });
 
   final Function() on_pressed;
-  final String title;
+  final String? title;
   final String subtitle;
   final Color text_color;
   final String image_src;
@@ -90,7 +90,7 @@ class _CardHolderState extends State<CardHolder> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             AutoSizeText(
-                              widget.title,
+                              widget.title ?? "",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: widget.text_color,
@@ -120,11 +120,11 @@ class _CardHolderState extends State<CardHolder> {
                   ),
                 ),
                 Align(
-                  alignment: widget.title.isEmpty && widget.subtitle.isEmpty
+                  alignment: widget.title == null && widget.subtitle.isEmpty
                       ? Alignment.center
                       : Alignment.topCenter,
                   child: AnimatedContainer(
-                    height: widget.title.isEmpty && widget.subtitle.isEmpty
+                    height: widget.title == null && widget.subtitle.isEmpty
                         ? (constraints.maxHeight *
                             (widget.is_focused ? 1 : size_multiplier))
                         : (constraints.maxHeight / (portrait ? 2.2 : 1.8)),
