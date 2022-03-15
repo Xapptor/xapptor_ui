@@ -62,7 +62,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: Text(
+            child: SelectableText(
               widget.texts[0],
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -76,7 +76,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
               top: 60,
               bottom: 30,
             ),
-            child: Text(
+            child: SelectableText(
               widget.texts[1],
               textAlign: TextAlign.center,
               style: TextStyle(

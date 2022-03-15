@@ -81,7 +81,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
               flex: 1,
               child: FractionallySizedBox(
                 widthFactor: 0.7,
-                child: Text(
+                child: SelectableText(
                   widget.texts[0],
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -95,7 +95,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
               flex: portrait ? 2 : 1,
               child: FractionallySizedBox(
                 widthFactor: 0.55,
-                child: Text(
+                child: SelectableText(
                   widget.texts[1],
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -256,7 +256,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
                                                   SnackBar(
-                                                    content: Text(
+                                                    content: SelectableText(
                                                       widget.feedback_message,
                                                     ),
                                                     duration:
@@ -281,7 +281,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                 Spacer(flex: 1),
                                                 Expanded(
                                                   flex: 7,
-                                                  child: Text(
+                                                  child: SelectableText(
                                                     widget.texts[6],
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(

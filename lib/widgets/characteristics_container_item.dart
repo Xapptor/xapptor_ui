@@ -69,7 +69,7 @@ class _CharacteristicsContainerItemState
                   : Container(),
               Container(
                 margin: EdgeInsets.all(10),
-                child: Text(
+                child: SelectableText(
                   widget.title,
                   textAlign:
                       widget.side_icon ? TextAlign.left : TextAlign.center,
@@ -83,7 +83,7 @@ class _CharacteristicsContainerItemState
               Container(
                 width: ((screen_width / (portrait ? 1 : 3)) * 0.8),
                 margin: EdgeInsets.all(10),
-                child: Text(
+                child: SelectableText(
                   widget.description,
                   textAlign: widget.align_to_left_description
                       ? TextAlign.left
