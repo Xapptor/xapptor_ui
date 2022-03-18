@@ -19,17 +19,17 @@ class CardHolder extends StatefulWidget {
     this.is_focused = false,
   });
 
-  final Function() on_pressed;
-  final String? title;
-  final String subtitle;
-  final Color text_color;
-  final String image_src;
-  final BoxFit image_fit;
-  final Alignment background_image_alignment;
-  final IconData? icon;
-  final Color? icon_background_color;
-  final double elevation;
-  final double border_radius;
+  Function() on_pressed;
+  String? title;
+  String subtitle;
+  Color text_color;
+  String image_src;
+  BoxFit image_fit;
+  Alignment background_image_alignment;
+  IconData? icon;
+  Color? icon_background_color;
+  double elevation;
+  double border_radius;
   bool is_focused;
 
   @override
