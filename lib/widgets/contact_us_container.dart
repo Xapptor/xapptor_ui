@@ -147,7 +147,6 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                   child: TextFormField(
                                     controller: name_input_controller,
                                     decoration: InputDecoration(
-                                      hintText: 'What do people call you?',
                                       labelText: widget.texts[2],
                                     ),
                                     onSaved: (value) {},

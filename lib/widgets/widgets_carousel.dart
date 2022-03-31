@@ -17,7 +17,7 @@ class WidgetsCarousel extends StatefulWidget {
   final Color dot_color_inactive;
   final List<Widget> children;
   final bool auto_scroll;
-  final Function(int current_page) update_current_page;
+  final Function(int new_current_page) update_current_page;
 
   @override
   _WidgetsCarouselState createState() => _WidgetsCarouselState();
