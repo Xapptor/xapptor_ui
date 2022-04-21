@@ -118,7 +118,8 @@ List<String> get_bottom_labels({
 
     bottom_labels.add(current_label);
   }
-  return List.from(bottom_labels.reversed);
+  bottom_labels = bottom_labels.reversed.toList();
+  return bottom_labels;
 }
 
 int last_day_of_month(DateTime month) {
