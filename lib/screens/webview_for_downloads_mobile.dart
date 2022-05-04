@@ -74,11 +74,15 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
         saveInPublicStorage: true,
       );
 
-      String file_name = uri.pathSegments.last.split('/').last;
+      String file_name = uri.pathSegments.last
+          .split('/')
+          .last; // <--- You are expecting a url referencing a file
       String file_path = directory + "/" + file_name;
       File file = File(file_path);
       FileDownloader.save(
-          src: base64Encode(await file.readAsBytes()), file_name: file_name);
+        src: base64Encode(await file.readAsBytes()),
+        file_name: file_name,
+      );
     } else {
       print('Permission Denied');
     }
