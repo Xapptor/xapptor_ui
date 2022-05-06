@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -10,7 +8,6 @@ import 'dart:isolate';
 import 'dart:ui';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:xapptor_logic/file_downloader/file_downloader.dart';
 
 class WebviewForDownloadsMobile extends StatefulWidget {
   WebviewForDownloadsMobile({
@@ -48,7 +45,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
     FlutterDownloader.registerCallback(download_callback);
   }
 
-  static void download_callback(
+  static download_callback(
     String id,
     DownloadTaskStatus status,
     int progress,
@@ -72,16 +69,6 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
         showNotification: true,
         openFileFromNotification: true,
         saveInPublicStorage: true,
-      );
-
-      String file_name = uri.pathSegments.last
-          .split('/')
-          .last; // <--- You are expecting a url referencing a file
-      String file_path = directory + "/" + file_name;
-      File file = File(file_path);
-      FileDownloader.save(
-        src: base64Encode(await file.readAsBytes()),
-        file_name: file_name,
       );
     } else {
       print('Permission Denied');
@@ -158,7 +145,11 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
                   onLoadStart: (InAppWebViewController controller, Uri? uri) {},
                   onLoadStop: (InAppWebViewController controller, Uri? uri) {},
                   onDownloadStart: (controller, uri) {
-                    download(uri);
+                    if (uri.toString().contains("http")) {
+                      download(uri);
+                    } else {
+                      print("Current Uri does not contain a Url");
+                    }
                   },
                 ),
               ),

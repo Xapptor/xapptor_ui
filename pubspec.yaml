@@ -35,8 +35,8 @@ dependencies:
   url_launcher: ^6.0.12
 
   webview_flutter: ^3.0.1
-  flutter_inappwebview: ^5.3.2
-  flutter_downloader: ^1.7.2
+  flutter_inappwebview: ^5.4.3+4
+  flutter_downloader: ^1.7.3
 
   xapptor_logic: ^0.0.3
   xapptor_router: ^0.0.2
