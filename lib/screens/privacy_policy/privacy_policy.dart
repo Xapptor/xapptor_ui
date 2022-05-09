@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:xapptor_logic/is_portrait.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_model.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_values.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
@@ -37,6 +38,10 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
 
   @override
   Widget build(BuildContext context) {
+    double screen_height = MediaQuery.of(context).size.height;
+    double screen_width = MediaQuery.of(context).size.width;
+    bool portrait = is_portrait(context);
+
     return Scaffold(
       appBar: widget.use_topbar
           ? TopBar(
@@ -50,65 +55,62 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           : null,
       body: SafeArea(
         child: Container(
+          width: screen_width,
           color: Colors.white,
-          child: FractionallySizedBox(
-            widthFactor: widget.use_topbar ? 0.9 : 1,
-            child: Container(
-              color: Colors.white,
-              child: UniversalPlatform.isWeb
-                  ? SingleChildScrollView(
-                      child: Container(
-                        margin: const EdgeInsets.all(30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //
-                            privacy_policy.introduction(
-                              last_update_date:
-                                  widget.last_update_date ?? DateTime.now(),
-                            ),
-                            //
-                            privacy_policy.interpretation_definitions(
-                              app_name: widget.privacy_policy_model.app_name,
-                              company_name:
-                                  widget.privacy_policy_model.company_name,
-                              company_address:
-                                  widget.privacy_policy_model.company_address,
-                              company_country:
-                                  widget.privacy_policy_model.company_country,
-                              website: widget.privacy_policy_model.website,
-                            ),
-                            //
-                            privacy_policy.personal_data(),
-                            privacy_policy.usage_data(),
-                            privacy_policy.information_collected(),
-                            privacy_policy.use_of_personal_data(),
-                            privacy_policy.retention_personal_data(),
-                            privacy_policy.transfer_personal_data(),
-                            privacy_policy.disclosure_personal_data(),
-                            //
-                            privacy_policy.security_personal_data(),
-                            privacy_policy.children_privacy(),
-                            privacy_policy.links_to_other_websites(),
-                            privacy_policy.changes(),
-                            privacy_policy.contact_us(
-                              email: widget.privacy_policy_model.email,
-                              phone_number:
-                                  widget.privacy_policy_model.phone_number,
-                              website: widget.privacy_policy_model.website,
-                            ),
-                            //
-                          ],
+          child: UniversalPlatform.isWeb
+              ? SingleChildScrollView(
+                  child: FractionallySizedBox(
+                    widthFactor: portrait ? 0.85 : 0.5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 50),
+                        //
+                        privacy_policy.introduction(
+                          last_update_date:
+                              widget.last_update_date ?? DateTime.now(),
                         ),
-                      ),
-                    )
-                  : Webview(
-                      src:
-                          "${widget.privacy_policy_model.website}/privacy_policy",
-                      id: Uuid().v4(),
+                        //
+                        privacy_policy.interpretation(),
+                        privacy_policy.definitions(
+                          app_name: widget.privacy_policy_model.app_name,
+                          company_name:
+                              widget.privacy_policy_model.company_name,
+                          company_address:
+                              widget.privacy_policy_model.company_address,
+                          company_country:
+                              widget.privacy_policy_model.company_country,
+                          website: widget.privacy_policy_model.website,
+                        ),
+                        //
+                        privacy_policy.personal_data(),
+                        privacy_policy.usage_data(),
+                        privacy_policy.information_collected(),
+                        privacy_policy.use_of_personal_data(),
+                        privacy_policy.retention_personal_data(),
+                        privacy_policy.transfer_personal_data(),
+                        privacy_policy.disclosure_personal_data(),
+                        //
+                        privacy_policy.security_personal_data(),
+                        privacy_policy.children_privacy(),
+                        privacy_policy.links_to_other_websites(),
+                        privacy_policy.changes(),
+                        privacy_policy.contact_us(
+                          email: widget.privacy_policy_model.email,
+                          phone_number:
+                              widget.privacy_policy_model.phone_number,
+                          website: widget.privacy_policy_model.website,
+                        ),
+                        //
+                        SizedBox(height: 50),
+                      ],
                     ),
-            ),
-          ),
+                  ),
+                )
+              : Webview(
+                  src: "${widget.privacy_policy_model.website}/privacy_policy",
+                  id: Uuid().v4(),
+                ),
         ),
       ),
     );

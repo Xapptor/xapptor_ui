@@ -9,6 +9,7 @@ var margin_text = const EdgeInsets.only(bottom: 4);
 
 Widget custom_title_1(String text) {
   return Container(
+    color: Colors.white,
     margin: margin_title,
     child: SelectableText(
       text,
@@ -23,6 +24,7 @@ Widget custom_title_1(String text) {
 
 Widget custom_title_2(String text) {
   return Container(
+    color: Colors.white,
     margin: margin_title,
     child: SelectableText(
       text,
@@ -37,6 +39,7 @@ Widget custom_title_2(String text) {
 
 Widget custom_title_3(String text) {
   return Container(
+    color: Colors.white,
     margin: margin_title,
     child: SelectableText(
       text,
@@ -51,6 +54,7 @@ Widget custom_title_3(String text) {
 
 Widget custom_text(String text) {
   return Container(
+    color: Colors.white,
     margin: margin_text,
     child: SelectableText(
       text,
@@ -68,6 +72,7 @@ class PrivacypolicyValues {
     required DateTime last_update_date,
   }) {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +94,28 @@ class PrivacypolicyValues {
     );
   }
 
-  Widget interpretation_definitions({
+  Widget interpretation() {
+    return Container(
+      color: Colors.white,
+      margin: margin,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          custom_title_1(
+            "Interpretation and Definitions",
+          ),
+          custom_title_2(
+            "Interpretation",
+          ),
+          custom_text(
+            "The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget definitions({
     required String app_name,
     required String company_name,
     required String company_address,
@@ -125,19 +151,11 @@ class PrivacypolicyValues {
     }
 
     Widget current_widget = Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
-            "Interpretation and Definitions",
-          ),
-          custom_title_2(
-            "Interpretation",
-          ),
-          custom_text(
-            "The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.",
-          ),
           custom_title_2(
             "Definitions",
           ),
@@ -153,6 +171,7 @@ class PrivacypolicyValues {
 
   Widget personal_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,6 +204,7 @@ class PrivacypolicyValues {
 
   Widget usage_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,6 +231,7 @@ class PrivacypolicyValues {
 
   Widget information_collected() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,6 +258,7 @@ class PrivacypolicyValues {
 
   Widget use_of_personal_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,6 +321,7 @@ class PrivacypolicyValues {
 
   Widget retention_personal_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,6 +342,7 @@ class PrivacypolicyValues {
 
   Widget transfer_personal_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,6 +366,7 @@ class PrivacypolicyValues {
 
   Widget disclosure_personal_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,6 +414,7 @@ class PrivacypolicyValues {
 
   Widget security_personal_data() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,6 +432,7 @@ class PrivacypolicyValues {
 
   Widget children_privacy() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -426,6 +453,7 @@ class PrivacypolicyValues {
 
   Widget links_to_other_websites() {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -448,6 +476,7 @@ class PrivacypolicyValues {
     bool we_will_notify = false,
   }) {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -462,7 +491,9 @@ class PrivacypolicyValues {
               ? custom_text(
                   "We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the Last updated date at the top of this Privacy Policy.",
                 )
-              : Container(),
+              : Container(
+                  color: Colors.white,
+                ),
           custom_text(
             "You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.",
           ),
@@ -477,6 +508,7 @@ class PrivacypolicyValues {
     required String website,
   }) {
     return Container(
+      color: Colors.white,
       margin: margin,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
