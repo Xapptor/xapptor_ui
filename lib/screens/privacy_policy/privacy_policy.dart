@@ -1,59 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_model.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_values.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_ui/widgets/topbar.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:universal_platform/universal_platform.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({
-    required this.app_name,
-    required this.company_name,
-    required this.company_address,
-    required this.company_country,
-    required this.website,
-    required this.email,
-    required this.phone_number,
+    required this.privacy_policy_model,
     required this.use_topbar,
-    this.logo_color,
     required this.topbar_color,
+    this.logo_color,
     this.logo_path = "assets/images/logo.png",
+    this.last_update_date,
   });
 
-  final String app_name;
-  final String company_name;
-  final String company_address;
-  final String company_country;
-  final String website;
-  final String email;
-  final String phone_number;
+  final PrivacyPolicyModel privacy_policy_model;
   final bool use_topbar;
-  final Color? logo_color;
   final Color topbar_color;
+  final Color? logo_color;
   final String logo_path;
+  final DateTime? last_update_date;
 
   @override
   _PrivacyPolicyState createState() => _PrivacyPolicyState();
 }
 
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
-  String src = "";
   PrivacypolicyValues privacy_policy = PrivacypolicyValues();
-
-  // Selecting privacy policy source for each platform.
-
-  check_src() async {
-    src = UniversalPlatform.isWeb
-        ? await rootBundle.loadString("assets/privacy_policy.html")
-        : "${widget.website}/privacy_policy";
-    setState(() {});
-  }
 
   @override
   void initState() {
     super.initState();
-    check_src();
   }
 
   @override
@@ -72,57 +51,62 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
       body: SafeArea(
         child: Container(
           color: Colors.white,
-          child: Center(
-            child: FractionallySizedBox(
-              widthFactor: widget.use_topbar ? 0.9 : 1,
-              child: Container(
-                color: Colors.white,
-                child: UniversalPlatform.isWeb
-                    ? Column(
-                        children: [
-                          //
-                          privacy_policy.introduction(
-                            last_update_date: DateTime(
-                              2022,
-                              5,
-                              1,
+          child: FractionallySizedBox(
+            widthFactor: widget.use_topbar ? 0.9 : 1,
+            child: Container(
+              color: Colors.white,
+              child: UniversalPlatform.isWeb
+                  ? SingleChildScrollView(
+                      child: Container(
+                        margin: const EdgeInsets.all(30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //
+                            privacy_policy.introduction(
+                              last_update_date:
+                                  widget.last_update_date ?? DateTime.now(),
                             ),
-                          ),
-                          //
-                          privacy_policy.interpretation_definitions(
-                            app_name: widget.app_name,
-                            company_name: widget.company_name,
-                            company_address: widget.company_address,
-                            company_country: widget.company_country,
-                            website: widget.website,
-                          ),
-                          //
-                          privacy_policy.collecting_data(),
-                          privacy_policy.personal_data(),
-                          privacy_policy.usage_data(),
-                          privacy_policy.information_collected(),
-                          privacy_policy.use_of_personal_data(),
-                          privacy_policy.retention_personal_data(),
-                          privacy_policy.transfer_personal_data(),
-                          privacy_policy.disclosure_personal_data(),
-                          //
-                          privacy_policy.security_personal_data(),
-                          privacy_policy.children_privacy(),
-                          privacy_policy.links_to_other_websites(),
-                          privacy_policy.changes(),
-                          privacy_policy.contact_us(
-                            email: widget.website,
-                            phone_number: widget.phone_number,
-                            website: widget.website,
-                          ),
-                          //
-                        ],
-                      )
-                    : Webview(
-                        src: src,
-                        id: Uuid().v4(),
+                            //
+                            privacy_policy.interpretation_definitions(
+                              app_name: widget.privacy_policy_model.app_name,
+                              company_name:
+                                  widget.privacy_policy_model.company_name,
+                              company_address:
+                                  widget.privacy_policy_model.company_address,
+                              company_country:
+                                  widget.privacy_policy_model.company_country,
+                              website: widget.privacy_policy_model.website,
+                            ),
+                            //
+                            privacy_policy.personal_data(),
+                            privacy_policy.usage_data(),
+                            privacy_policy.information_collected(),
+                            privacy_policy.use_of_personal_data(),
+                            privacy_policy.retention_personal_data(),
+                            privacy_policy.transfer_personal_data(),
+                            privacy_policy.disclosure_personal_data(),
+                            //
+                            privacy_policy.security_personal_data(),
+                            privacy_policy.children_privacy(),
+                            privacy_policy.links_to_other_websites(),
+                            privacy_policy.changes(),
+                            privacy_policy.contact_us(
+                              email: widget.privacy_policy_model.email,
+                              phone_number:
+                                  widget.privacy_policy_model.phone_number,
+                              website: widget.privacy_policy_model.website,
+                            ),
+                            //
+                          ],
+                        ),
                       ),
-              ),
+                    )
+                  : Webview(
+                      src:
+                          "${widget.privacy_policy_model.website}/privacy_policy",
+                      id: Uuid().v4(),
+                    ),
             ),
           ),
         ),

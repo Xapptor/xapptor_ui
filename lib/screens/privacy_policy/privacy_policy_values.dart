@@ -3,52 +3,62 @@ import 'package:intl/intl.dart';
 
 DateFormat label_date_formatter = DateFormat.yMMMMd('en_US');
 
-var margin = const EdgeInsets.all(20);
+var margin = const EdgeInsets.only(top: 10, bottom: 10);
+var margin_title = const EdgeInsets.only(bottom: 10);
+var margin_text = const EdgeInsets.only(bottom: 4);
 
-Text custom_title_1(String text) {
-  return Text(
-    text,
-    maxLines: 20,
-    textAlign: TextAlign.left,
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 30,
+Widget custom_title_1(String text) {
+  return Container(
+    margin: margin_title,
+    child: SelectableText(
+      text,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
     ),
   );
 }
 
-Text custom_title_2(String text) {
-  return Text(
-    text,
-    maxLines: 20,
-    textAlign: TextAlign.left,
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 24,
+Widget custom_title_2(String text) {
+  return Container(
+    margin: margin_title,
+    child: SelectableText(
+      text,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
     ),
   );
 }
 
-Text custom_title_3(String text) {
-  return Text(
-    text,
-    maxLines: 20,
-    textAlign: TextAlign.left,
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
+Widget custom_title_3(String text) {
+  return Container(
+    margin: margin_title,
+    child: SelectableText(
+      text,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
     ),
   );
 }
 
-Text custom_text(String text) {
-  return Text(
-    text,
-    maxLines: 20,
-    textAlign: TextAlign.left,
-    style: TextStyle(
-      fontWeight: FontWeight.normal,
-      fontSize: 16,
+Widget custom_text(String text) {
+  return Container(
+    margin: margin_text,
+    child: SelectableText(
+      text,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        fontWeight: FontWeight.normal,
+        fontSize: 14,
+      ),
     ),
   );
 }
@@ -60,17 +70,18 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Privacy Policy",
           ),
-          Text(
+          custom_text(
             "Last updated: ${label_date_formatter.format(last_update_date)}",
           ),
-          Text(
+          custom_text(
             "This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.",
           ),
-          Text(
+          custom_text(
             "We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.",
           ),
         ],
@@ -116,6 +127,7 @@ class PrivacypolicyValues {
     Widget current_widget = Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Interpretation and Definitions",
@@ -139,10 +151,11 @@ class PrivacypolicyValues {
     return current_widget;
   }
 
-  Widget collecting_data() {
+  Widget personal_data() {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Collecting and Using Your Personal Data",
@@ -150,16 +163,6 @@ class PrivacypolicyValues {
           custom_title_2(
             "Types of Data Collected",
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget personal_data() {
-    return Container(
-      margin: margin,
-      child: Column(
-        children: [
           custom_title_3(
             "Personal Data",
           ),
@@ -184,6 +187,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_3(
             "Usage Data",
@@ -209,6 +213,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_3(
             "Information Collected while Using the Application",
@@ -234,6 +239,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_2(
             "Use of Your Personal Data",
@@ -295,6 +301,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_2(
             "Retention of Your Personal Data",
@@ -314,6 +321,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_2(
             "Transfer of Your Personal Data",
@@ -336,6 +344,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_2(
             "Disclosure of Your Personal Data",
@@ -382,6 +391,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_2(
             "Security of Your Personal Data",
@@ -398,6 +408,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Children's Privacy",
@@ -417,6 +428,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Links to Other Websites",
@@ -432,10 +444,13 @@ class PrivacypolicyValues {
     );
   }
 
-  Widget changes() {
+  Widget changes({
+    bool we_will_notify = false,
+  }) {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Changes to this Privacy Policy",
@@ -443,9 +458,11 @@ class PrivacypolicyValues {
           custom_text(
             "We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.",
           ),
-          custom_text(
-            "We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the Last updated date at the top of this Privacy Policy.",
-          ),
+          we_will_notify
+              ? custom_text(
+                  "We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the Last updated date at the top of this Privacy Policy.",
+                )
+              : Container(),
           custom_text(
             "You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.",
           ),
@@ -462,6 +479,7 @@ class PrivacypolicyValues {
     return Container(
       margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           custom_title_1(
             "Contact Us",
