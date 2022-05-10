@@ -405,22 +405,22 @@ class PrivacypolicyValues {
           custom_title_3(
             "Other legal requirements",
           ),
-          custom_text_2(
+          custom_text(
             "The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:",
           ),
-          custom_text_2(
+          custom_text(
             "Comply with a legal obligation",
           ),
-          custom_text_2(
+          custom_text(
             "Protect and defend the rights or property of the Company",
           ),
-          custom_text_2(
+          custom_text(
             "Prevent or investigate possible wrongdoing in connection with the Service",
           ),
-          custom_text_2(
+          custom_text(
             "Protect the personal safety of Users of the Service or the public",
           ),
-          custom_text_2(
+          custom_text(
             "Protect against legal liability",
           ),
         ],
