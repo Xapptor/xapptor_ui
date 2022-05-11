@@ -5,8 +5,7 @@ DateFormat label_date_formatter = DateFormat.yMMMMd('en_US');
 
 var margin = const EdgeInsets.only(top: 10, bottom: 10);
 var margin_title = const EdgeInsets.only(bottom: 10);
-var margin_text = const EdgeInsets.only(bottom: 4);
-var margin_text_2 = const EdgeInsets.only(bottom: 10);
+var margin_text_2 = const EdgeInsets.only(bottom: 20);
 
 Widget custom_title_1(String text) {
   return Container(
@@ -53,25 +52,13 @@ Widget custom_title_3(String text) {
   );
 }
 
-Widget custom_text(String text) {
+Widget custom_text(
+  String text, {
+  EdgeInsets margin = const EdgeInsets.only(bottom: 4),
+}) {
   return Container(
     color: Colors.white,
-    margin: margin_text,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: TextStyle(
-        fontWeight: FontWeight.normal,
-        fontSize: 14,
-      ),
-    ),
-  );
-}
-
-Widget custom_text_2(String text) {
-  return Container(
-    color: Colors.white,
-    margin: margin_text_2,
+    margin: margin,
     child: SelectableText(
       text,
       textAlign: TextAlign.left,
@@ -393,14 +380,16 @@ class PrivacypolicyValues {
           custom_title_3(
             "Business Transactions",
           ),
-          custom_text_2(
+          custom_text(
             "If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.",
+            margin: margin_text_2,
           ),
           custom_title_3(
             "Law enforcement",
           ),
-          custom_text_2(
+          custom_text(
             "Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).",
+            margin: margin_text_2,
           ),
           custom_title_3(
             "Other legal requirements",
