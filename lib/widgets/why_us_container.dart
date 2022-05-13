@@ -12,7 +12,6 @@ class WhyUsContainer extends StatefulWidget {
     required this.characteristic_icon_colors,
     required this.title_color,
     required this.subtitle_color,
-    this.custom_height,
   });
 
   final List<String> texts;
@@ -23,7 +22,6 @@ class WhyUsContainer extends StatefulWidget {
   final List<Color> characteristic_icon_colors;
   final Color title_color;
   final Color subtitle_color;
-  final double? custom_height;
 
   @override
   _WhyUsContainerState createState() => _WhyUsContainerState();
@@ -37,16 +35,6 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
     bool portrait = is_portrait(context);
 
     return Container(
-      margin: EdgeInsets.only(
-        top: screen_height / 16,
-        bottom: screen_height / 16,
-      ),
-      height: widget.custom_height != null
-          ? widget.custom_height
-          : portrait
-              ? (MediaQuery.of(context).size.height * 2)
-              : (MediaQuery.of(context).size.height),
-      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         image: widget.background_image.isNotEmpty
             ? DecorationImage(
@@ -67,7 +55,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: widget.title_color,
-                fontSize: 40,
+                fontSize: portrait ? 30 : 40,
               ),
             ),
           ),
