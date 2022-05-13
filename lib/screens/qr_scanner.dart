@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
 import 'package:xapptor_logic/is_portrait.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({
@@ -54,27 +54,26 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> {
-  Barcode? result;
-  late QRViewController controller;
-  final GlobalKey qr_key = GlobalKey(debugLabel: 'QR');
+  late MobileScannerController mobile_scanner_controller =
+      MobileScannerController();
   TextEditingController _controller_code_id = TextEditingController();
 
   @override
   void dispose() {
-    controller.dispose();
+    mobile_scanner_controller.dispose();
     _controller_code_id.dispose();
     super.dispose();
   }
 
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller.resumeCamera();
-    }
-  }
+  // @override
+  // void reassemble() {
+  //   super.reassemble();
+  //   if (Platform.isAndroid) {
+  //     mobile_scanner_controller.stop();
+  //   } else if (Platform.isIOS) {
+  //     mobile_scanner_controller.start();
+  //   }
+  // }
 
   @override
   void initState() {
@@ -180,24 +179,29 @@ class _QRScannerState extends State<QRScanner> {
           : Stack(
               alignment: Alignment.center,
               children: [
-                QRView(
-                  key: qr_key,
-                  onQRViewCreated: (QRViewController controller) {
-                    setState(() {
-                      this.controller = controller;
-                    });
-                    controller.scannedDataStream.listen((data_scanned) {
-                      // Listen when a QR code was scan and update the code value.
-                      widget.update_qr_value(data_scanned.code);
-                    });
+                MobileScanner(
+                  allowDuplicates: false,
+                  controller: mobile_scanner_controller,
+                  onDetect: (barcode, args) {
+                    if (barcode.rawValue == null) {
+                      debugPrint('Failed to scan Barcode');
+                    } else {
+                      final String code = barcode.rawValue!;
+                      setState(() {
+                        this.mobile_scanner_controller =
+                            mobile_scanner_controller;
+                      });
+                      widget.update_qr_value(barcode.rawValue!);
+                    }
                   },
-                  overlay: QrScannerOverlayShape(
-                    borderColor: widget.border_color,
-                    borderRadius: widget.border_radius,
-                    borderLength: widget.border_length,
-                    borderWidth: widget.border_width,
-                    cutOutSize: widget.cut_out_size,
-                  ),
+
+                  // overlay: QrScannerOverlayShape(
+                  //   borderColor: widget.border_color,
+                  //   borderRadius: widget.border_radius,
+                  //   borderLength: widget.border_length,
+                  //   borderWidth: widget.border_width,
+                  //   cutOutSize: widget.cut_out_size,
+                  // ),
                 ),
                 Container(
                   child: Column(
