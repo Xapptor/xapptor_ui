@@ -222,49 +222,70 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                             ),
                                             border_radius: 1000,
                                             on_pressed: () {
-                                              String newMessage =
-                                                  name_input_controller.text +
-                                                      " has a message for you! \n\n Email: " +
-                                                      email_input_controller
-                                                          .text +
-                                                      "\n\n Message: " +
-                                                      message_input_controller
-                                                          .text;
+                                              if (name_input_controller
+                                                      .text.isNotEmpty &&
+                                                  email_input_controller
+                                                      .text.isNotEmpty &&
+                                                  subject_input_controller
+                                                      .text.isNotEmpty &&
+                                                  message_input_controller
+                                                      .text.isNotEmpty) {
+                                                String newMessage =
+                                                    name_input_controller.text +
+                                                        " has a message for you! \n\n Email: " +
+                                                        email_input_controller
+                                                            .text +
+                                                        "\n\n Message: " +
+                                                        message_input_controller
+                                                            .text;
 
-                                              FirebaseFirestore.instance
-                                                  .collection("emails")
-                                                  .doc()
-                                                  .set({
-                                                "to": widget.email,
-                                                "message": {
-                                                  "subject":
-                                                      "Message from contact us section: " +
-                                                          '"' +
-                                                          subject_input_controller
-                                                              .text +
-                                                          '"',
-                                                  "text": newMessage,
-                                                }
-                                              }).then((value) {
-                                                name_input_controller.clear();
-                                                email_input_controller.clear();
-                                                subject_input_controller
-                                                    .clear();
-                                                message_input_controller
-                                                    .clear();
+                                                FirebaseFirestore.instance
+                                                    .collection("emails")
+                                                    .doc()
+                                                    .set({
+                                                  "to": widget.email,
+                                                  "message": {
+                                                    "subject":
+                                                        "Message from contact us section: " +
+                                                            '"' +
+                                                            subject_input_controller
+                                                                .text +
+                                                            '"',
+                                                    "text": newMessage,
+                                                  }
+                                                }).then((value) {
+                                                  name_input_controller.clear();
+                                                  email_input_controller
+                                                      .clear();
+                                                  subject_input_controller
+                                                      .clear();
+                                                  message_input_controller
+                                                      .clear();
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: SelectableText(
+                                                        widget.feedback_message,
+                                                      ),
+                                                      duration:
+                                                          Duration(seconds: 2),
+                                                    ),
+                                                  );
+                                                }).catchError((err) {
+                                                  print(err);
+                                                });
+                                              } else {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
                                                   SnackBar(
                                                     content: SelectableText(
-                                                      widget.feedback_message,
+                                                      widget.texts[10],
                                                     ),
                                                     duration:
                                                         Duration(seconds: 2),
                                                   ),
                                                 );
-                                              }).catchError((err) {
-                                                print(err);
-                                              });
+                                              }
                                             },
                                             child: Row(
                                               children: <Widget>[
