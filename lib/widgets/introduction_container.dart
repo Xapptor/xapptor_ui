@@ -29,6 +29,7 @@ class IntroductionContainer extends StatefulWidget {
 
 class IntroductionContainerState extends State<IntroductionContainer> {
   bool lower_the_icon = true;
+  Timer lower_the_icon_timer = Timer(Duration.zero, () {});
 
   @override
   void initState() {
@@ -36,10 +37,16 @@ class IntroductionContainerState extends State<IntroductionContainer> {
     init_animation();
   }
 
+  @override
+  void dispose() {
+    lower_the_icon_timer.cancel();
+    super.dispose();
+  }
+
   // Init icon animation.
 
   init_animation() {
-    Timer(Duration(seconds: 3), () {
+    lower_the_icon_timer = Timer(Duration(seconds: 3), () {
       lower_the_icon = !lower_the_icon;
       setState(() {});
     });
@@ -160,7 +167,8 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                               curve: Curves.ease,
                               onEnd: () {
                                 if (lower_the_icon) {
-                                  Timer(Duration(seconds: 1), () {
+                                  lower_the_icon_timer =
+                                      Timer(Duration(seconds: 1), () {
                                     lower_the_icon = !lower_the_icon;
                                     setState(() {});
                                   });

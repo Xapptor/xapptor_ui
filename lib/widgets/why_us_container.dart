@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xapptor_ui/values/ui.dart';
 import 'characteristics_container_item.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
@@ -49,6 +50,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          SizedBox(height: sized_box_space * 2),
           Container(
             child: SelectableText(
               widget.texts[0],
@@ -116,6 +118,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
               ),
             ],
           ),
+          SizedBox(height: sized_box_space * 2),
         ],
       ),
     );
