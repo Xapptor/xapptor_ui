@@ -21,7 +21,7 @@ AppBar TopBar({
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(await current_app_version()),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 4),
           ),
         );
       },
