@@ -512,6 +512,7 @@ switch_button(
 #### **Topbar**
 ```dart
 appBar: TopBar(
+    context: context,
     background_color: Colors.blue,
     has_back_button: false,
     actions: [

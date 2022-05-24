@@ -45,6 +45,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     return Scaffold(
       appBar: widget.use_topbar
           ? TopBar(
+              context: context,
               background_color: widget.topbar_color,
               has_back_button: true,
               actions: [],
