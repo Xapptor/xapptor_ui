@@ -91,7 +91,7 @@ List<Widget> generate_card_holders({
   for (var i = 0; i < length; i++) {
     card_holders.add(
       CardHolder(
-        title: i % title_mod == 0 ? text_list.last : null,
+        title: i % title_mod == 0 && title_mod != -1 ? text_list.last : null,
         image_src: image_src_list.length > 1
             ? image_src_list[index + i]
             : image_src_list.first + "_${index + i + 1}.$image_extension",
