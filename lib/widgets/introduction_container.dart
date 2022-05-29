@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:xapptor_logic/is_portrait.dart';
 
 class IntroductionContainer extends StatefulWidget {
@@ -13,6 +12,8 @@ class IntroductionContainer extends StatefulWidget {
     required this.scroll_icon,
     required this.scroll_icon_color,
     required this.height,
+    this.image_border_radius = 0,
+    this.apply_aspect_ratio = false,
   });
 
   final List<String> texts;
@@ -22,6 +23,8 @@ class IntroductionContainer extends StatefulWidget {
   final IconData scroll_icon;
   final Color scroll_icon_color;
   final double height;
+  final double image_border_radius;
+  final bool apply_aspect_ratio;
 
   @override
   IntroductionContainerState createState() => IntroductionContainerState();
@@ -56,6 +59,27 @@ class IntroductionContainerState extends State<IntroductionContainer> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
+    var image_container = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          widget.image_border_radius,
+        ),
+        image: DecorationImage(
+          fit: BoxFit.fitHeight,
+          image: AssetImage(
+            widget.logo_image!,
+          ),
+        ),
+      ),
+    );
+
+    var image_widget = widget.apply_aspect_ratio
+        ? AspectRatio(
+            aspectRatio: 1,
+            child: image_container,
+          )
+        : image_container;
+
     return Container(
       height: widget.height,
       width: MediaQuery.of(context).size.width,
@@ -85,17 +109,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                                   (widget.texts.length == 1 && !portrait))
                           ? Expanded(
                               flex: 12,
-                              child: Container(
-                                //width: portrait ? 200 : 400,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.fitHeight,
-                                    image: AssetImage(
-                                      widget.logo_image!,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              child: image_widget,
                             )
                           : Spacer(flex: 14),
                       Spacer(flex: 1),
