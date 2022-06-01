@@ -13,8 +13,8 @@ class CardGallery extends StatefulWidget {
     required this.update_current_page,
     required this.on_pressed,
     required this.current_page,
-    required this.how_many_carousels,
-    required this.carousel_length,
+    this.how_many_carousels = 1,
+    this.carousel_length,
     required this.title_mod,
     required this.image_src_list,
     this.add_initial_space = false,
@@ -31,7 +31,7 @@ class CardGallery extends StatefulWidget {
   final Function on_pressed;
   final int current_page;
   final int how_many_carousels;
-  final int carousel_length;
+  final int? carousel_length;
   final int title_mod;
   final List<String> image_src_list;
   final bool add_initial_space;
@@ -89,7 +89,7 @@ class _CardGalleryState extends State<CardGallery> {
         ),
       );
       reverse = !reverse;
-      index += widget.carousel_length;
+      index += new_gallery.length;
     }
 
     card_gallery = Column(children: card_holders);
@@ -114,7 +114,25 @@ class _CardGalleryState extends State<CardGallery> {
     image_names.forEach((images_name) {
       int image_names_index = image_names.indexOf(images_name);
 
-      if (image_names_index < widget.carousel_length) {
+      if (widget.carousel_length != null) {
+        if (image_names_index < widget.carousel_length!) {
+          card_holders.add(
+            CardHolder(
+              title: image_names_index % widget.title_mod == 0 &&
+                      widget.title_mod != -1
+                  ? widget.text_list.last
+                  : null,
+              image_src: images_name,
+              background_image_alignment: Alignment.center,
+              image_fit: BoxFit.cover,
+              on_pressed: () => widget.on_pressed(),
+              elevation: elevation,
+              border_radius: border_radius,
+              is_focused: widget.current_page == image_names_index,
+            ),
+          );
+        }
+      } else {
         card_holders.add(
           CardHolder(
             title: image_names_index % widget.title_mod == 0 &&
