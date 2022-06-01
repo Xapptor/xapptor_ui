@@ -13,7 +13,12 @@ class IntroductionContainer extends StatefulWidget {
     required this.scroll_icon_color,
     required this.height,
     this.image_border_radius = 0,
-    this.apply_aspect_ratio = false,
+    this.aspect_ratio,
+    this.height_factor = 1,
+    this.width_factor = 1,
+    this.image_fit = BoxFit.fitHeight,
+    this.image_background_color = Colors.transparent,
+    this.opacity = 1,
   });
 
   final List<String> texts;
@@ -24,7 +29,12 @@ class IntroductionContainer extends StatefulWidget {
   final Color scroll_icon_color;
   final double height;
   final double image_border_radius;
-  final bool apply_aspect_ratio;
+  final double? aspect_ratio;
+  final double height_factor;
+  final double width_factor;
+  final BoxFit image_fit;
+  final Color image_background_color;
+  final double opacity;
 
   @override
   IntroductionContainerState createState() => IntroductionContainerState();
@@ -59,23 +69,36 @@ class IntroductionContainerState extends State<IntroductionContainer> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    var image_container = Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          widget.image_border_radius,
-        ),
-        image: DecorationImage(
-          fit: BoxFit.fitHeight,
-          image: AssetImage(
-            widget.logo_image!,
+    var image_container = FractionallySizedBox(
+      heightFactor: widget.height_factor,
+      widthFactor: widget.width_factor,
+      child: Container(
+        decoration: BoxDecoration(
+          color: widget.image_background_color == Colors.transparent
+              ? widget.image_background_color
+              : widget.image_background_color.withOpacity(widget.opacity),
+          borderRadius: BorderRadius.circular(
+            widget.image_border_radius,
+          ),
+          image: DecorationImage(
+            fit: widget.image_fit,
+            image: AssetImage(
+              widget.logo_image!,
+            ),
+            colorFilter: widget.image_background_color == Colors.transparent
+                ? null
+                : ColorFilter.mode(
+                    widget.image_background_color.withOpacity(widget.opacity),
+                    BlendMode.dstATop,
+                  ),
           ),
         ),
       ),
     );
 
-    var image_widget = widget.apply_aspect_ratio
+    var image_widget = widget.aspect_ratio != null
         ? AspectRatio(
-            aspectRatio: 1,
+            aspectRatio: widget.aspect_ratio!,
             child: image_container,
           )
         : image_container;
