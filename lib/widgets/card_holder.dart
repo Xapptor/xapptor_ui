@@ -17,8 +17,8 @@ class CardHolder extends StatefulWidget {
     this.elevation = 3,
     this.border_radius = 20,
     this.is_focused = false,
-    this.has_delete_button = false,
-    this.has_edit_button = false,
+    this.delete_function,
+    this.edit_function,
   });
 
   Function() on_pressed;
@@ -33,8 +33,8 @@ class CardHolder extends StatefulWidget {
   double elevation;
   double border_radius;
   bool is_focused;
-  bool has_delete_button;
-  bool has_edit_button;
+  Function? delete_function;
+  Function? edit_function;
 
   @override
   _CardHolderState createState() => _CardHolderState();
@@ -162,12 +162,19 @@ class _CardHolderState extends State<CardHolder> {
                                         borderRadius: BorderRadius.circular(
                                           widget.border_radius,
                                         ),
-                                        child: Image.asset(
-                                          widget.image_src,
-                                          fit: widget.image_fit,
-                                          alignment:
-                                              widget.background_image_alignment,
-                                        ),
+                                        child: widget.image_src.contains('http')
+                                            ? Image.network(
+                                                widget.image_src,
+                                                fit: widget.image_fit,
+                                                alignment: widget
+                                                    .background_image_alignment,
+                                              )
+                                            : Image.asset(
+                                                widget.image_src,
+                                                fit: widget.image_fit,
+                                                alignment: widget
+                                                    .background_image_alignment,
+                                              ),
                                       )
                                     : Container(),
                           ),
@@ -180,24 +187,62 @@ class _CardHolderState extends State<CardHolder> {
             );
           },
         ),
-        IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            //
-          },
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.delete,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            //
-          },
-        ),
+        widget.delete_function != null
+            ? Container(
+                alignment: Alignment.topLeft,
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  left: 25,
+                ),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      splashColor: Colors.blueGrey.withOpacity(0.5),
+                      onTap: () {
+                        widget.delete_function!();
+                      },
+                      child: SizedBox(
+                        width: 56,
+                        height: 56,
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
+        widget.edit_function != null
+            ? Container(
+                alignment: Alignment.topRight,
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  right: 25,
+                ),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      splashColor: Colors.blueGrey.withOpacity(0.5),
+                      onTap: () {
+                        widget.edit_function!();
+                      },
+                      child: SizedBox(
+                        width: 56,
+                        height: 56,
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
       ],
     );
   }
