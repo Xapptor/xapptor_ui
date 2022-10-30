@@ -1,10 +1,10 @@
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:xapptor_logic/url_launcher.dart';
+import 'package:xapptor_ui/widgets/url_launcher.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'custom_card.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class ContactUsContainer extends StatefulWidget {
   const ContactUsContainer({

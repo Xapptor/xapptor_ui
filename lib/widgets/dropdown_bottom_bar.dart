@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class DropdownBottomBar extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
-import 'package:xapptor_logic/get_assets_names.dart';
+import 'package:xapptor_ui/widgets/get_assets_names.dart';
 import 'card_holder.dart';
 
 class CardGallery extends StatefulWidget {

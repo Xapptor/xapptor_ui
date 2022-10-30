@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/version.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Display Xapptor and App version

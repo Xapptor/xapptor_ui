@@ -9,12 +9,14 @@ class Webview extends StatefulWidget {
     required this.id,
     this.controller_callback,
     this.loaded_callback,
+    this.page_loaded_set_state = true,
   });
 
   final String src;
   final String id;
   final Function? controller_callback;
   final Function(String url)? loaded_callback;
+  final bool page_loaded_set_state;
 
   @override
   _WebviewState createState() => _WebviewState();
@@ -31,7 +33,7 @@ class _WebviewState extends State<Webview> {
     new_stream = _iframe_element.onLoad;
 
     new_stream.listen((event) {
-      if (!page_loaded) {
+      if (!page_loaded && widget.page_loaded_set_state) {
         page_loaded = true;
         setState(() {});
       }

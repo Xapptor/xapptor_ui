@@ -23,7 +23,7 @@ dependencies:
   font_awesome_flutter: ^10.1.0
 
   mobile_scanner: ^1.1.0
-  permission_handler: ^8.1.6
+  permission_handler: ^10.2.0
   google_fonts: ^2.1.0
   animated_text_kit: ^4.2.1
   pdf: ^3.6.0
@@ -39,12 +39,12 @@ dependencies:
   flutter_downloader: ^1.7.3
   pointer_interceptor: ^0.9.3+1
 
-  xapptor_logic: ^0.0.3
+  # xapptor_logic: ^0.0.3
   xapptor_router: ^0.0.2
 
 dependency_overrides:
-  xapptor_logic:
-    path: ../xapptor_logic
+  # xapptor_logic:
+  #   path: ../xapptor_logic
   xapptor_router:
     path: ../xapptor_router
 

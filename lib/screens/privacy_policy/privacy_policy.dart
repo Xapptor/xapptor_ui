@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_model.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_values.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';

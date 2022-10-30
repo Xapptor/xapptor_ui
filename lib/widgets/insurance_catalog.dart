@@ -1,7 +1,7 @@
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'insurance_catalog_item.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class InsuranceCatalog extends StatefulWidget {
   const InsuranceCatalog({

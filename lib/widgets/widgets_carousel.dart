@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:xapptor_logic/random_number_with_range.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/random_number_with_range.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class WidgetsCarousel extends StatefulWidget {
   const WidgetsCarousel({

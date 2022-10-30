@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'characteristics_container_item.dart';
-import 'package:xapptor_logic/is_portrait.dart';
+import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class WhyUsContainer extends StatefulWidget {
   const WhyUsContainer({
