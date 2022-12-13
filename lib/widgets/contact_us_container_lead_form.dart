@@ -590,7 +590,7 @@ class _ContactUsContainerLeadFormState
                                 Expanded(
                                   flex: 4,
                                   child: SelectableText(
-                                    "community-mgmt@abeinstitute.com",
+                                    "it-support@abeinstitute.com",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.black,

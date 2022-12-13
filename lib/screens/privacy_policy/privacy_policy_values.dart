@@ -509,7 +509,7 @@ class PrivacypolicyValues {
 
   Widget contact_us({
     required String email,
-    required String phone_number,
+    required String? phone_number,
     required String website,
   }) {
     return Container(
@@ -530,10 +530,12 @@ class PrivacypolicyValues {
           custom_text(
             "By visiting this page on our website: $website",
           ),
-          custom_text(
-            "By phone number: $phone_number",
-          ),
-        ],
+          phone_number != null
+              ? custom_text(
+                  "By phone number: $phone_number",
+                )
+              : null,
+        ].whereType<Widget>().toList(),
       ),
     );
   }
