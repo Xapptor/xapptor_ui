@@ -4,11 +4,13 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 // Page not found screen.
 
 class UnknownScreen extends StatelessWidget {
+  final String logo_path;
+  final Color topbar_color;
+
   const UnknownScreen({
     required this.logo_path,
+    required this.topbar_color,
   });
-
-  final String logo_path;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,9 @@ class UnknownScreen extends StatelessWidget {
     bool portrait = is_portrait(context);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: topbar_color,
+      ),
       body: Container(
         height: screen_height,
         width: screen_width,
