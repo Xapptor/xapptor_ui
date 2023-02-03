@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
@@ -500,7 +500,7 @@ class _ContactUsContainerLeadFormState
                                               Expanded(
                                                 flex: 5,
                                                 child: Icon(
-                                                  FontAwesome.paper_plane,
+                                                  FontAwesomeIcons.paperPlane,
                                                   color: Colors.white,
                                                   size: 16,
                                                 ),
@@ -613,8 +613,8 @@ class _ContactUsContainerLeadFormState
                                                   widget.facebook_url!,
                                                   widget.facebook_url_fallback!
                                                 ],
-                                                icon: FontAwesome
-                                                    .facebook_squared,
+                                                icon: FontAwesomeIcons
+                                                    .squareFacebook,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -627,7 +627,7 @@ class _ContactUsContainerLeadFormState
                                                   widget.youtube_url!,
                                                   widget.youtube_url!
                                                 ],
-                                                icon: FontAwesome.youtube_play,
+                                                icon: FontAwesomeIcons.youtube,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -640,7 +640,8 @@ class _ContactUsContainerLeadFormState
                                                   widget.instagram_url!,
                                                   widget.instagram_url!
                                                 ],
-                                                icon: FontAwesome.instagram,
+                                                icon:
+                                                    FontAwesomeIcons.instagram,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -653,7 +654,7 @@ class _ContactUsContainerLeadFormState
                                                   widget.twitter_url!,
                                                   widget.twitter_url!
                                                 ],
-                                                icon: FontAwesome.twitter,
+                                                icon: FontAwesomeIcons.twitter,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )

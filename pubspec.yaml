@@ -19,7 +19,6 @@ dependencies:
   auto_size_text_pk: ^3.0.0
   uuid: ^3.0.6
 
-  fluttericon: ^2.0.0
   font_awesome_flutter: ^10.3.0
 
   mobile_scanner: ^2.1.0
