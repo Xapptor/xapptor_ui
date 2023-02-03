@@ -31,7 +31,7 @@ dependencies:
   device_info_plus: ^3.2.3
   package_info_plus: ^1.4.2
   universal_platform: ^1.0.0+1
-  intl: ^0.18.0
+  intl: ^0.17.0
   url_launcher: ^6.1.2
 
   webview_flutter: ^3.0.1
@@ -39,12 +39,11 @@ dependencies:
   flutter_downloader: ^1.7.3
   pointer_interceptor: ^0.9.3+1
 
-  xapptor_router: ^0.0.2
+  # xapptor_router: ^0.0.2
 
-dependency_overrides:
   xapptor_router:
     path: ../xapptor_router
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
