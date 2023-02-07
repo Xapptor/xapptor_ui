@@ -14,7 +14,7 @@ AppBar TopBar({
 }) {
   double topbar_height = 65;
   return AppBar(
-    leading: !has_back_button ? Container() : custom_leading,
+    leading: has_back_button ? custom_leading : Container(),
     centerTitle: false,
     title: GestureDetector(
       onLongPress: () async {
