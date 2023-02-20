@@ -1,4 +1,4 @@
-var countries_phone_codes = [
+var country_phone_codes = [
   {
     "name": "Afghanistan",
     "dial_code": "+93",
@@ -1232,4 +1232,4 @@ class CountryPhoneCode {
 }
 
 List<CountryPhoneCode> country_phone_code_list =
-    countries_phone_codes.map((e) => CountryPhoneCode.from_map(e)).toList();
+    country_phone_codes.map((e) => CountryPhoneCode.from_map(e)).toList();
