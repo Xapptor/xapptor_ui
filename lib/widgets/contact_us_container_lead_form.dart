@@ -87,7 +87,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
       firstDate: first_date,
       lastDate: over_18,
     ));
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selected_date = picked;
 
@@ -95,6 +95,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
         String date_now_formatted = date_formatter.format(selected_date);
         birthday_label = date_now_formatted;
       });
+    }
   }
 
   @override
