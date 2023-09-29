@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:universal_platform/universal_platform.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'get_source_for_webview_mobile.dart';
 
 class Webview extends StatefulWidget {
   const Webview({
+    super.key,
     required this.src,
     required this.id,
     this.controller_callback,
@@ -23,35 +22,23 @@ class Webview extends StatefulWidget {
 
 class _WebviewState extends State<Webview> {
   bool page_loaded = false;
-  late WebViewController controller;
   String current_url = "";
+
+  final WebViewController _webview_controller = WebViewController();
 
   @override
   void initState() {
     super.initState();
-    if (UniversalPlatform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        WebView(
-          onWebViewCreated: (WebViewController webview_controller) {
-            controller = webview_controller;
-            if (widget.controller_callback != null) {
-              widget.controller_callback!(controller);
-            }
-          },
-          initialUrl: get_source_for_webview_mobile(widget.src),
-          javascriptMode: JavascriptMode.unrestricted,
-          navigationDelegate: (action) {
-            current_url = action.url;
+    _webview_controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (url) {
+            current_url = url;
             if (widget.loaded_callback != null) {
               widget.loaded_callback!(current_url);
             }
-            return NavigationDecision.navigate;
           },
           onPageFinished: (value) {
             if (!page_loaded) {
@@ -60,6 +47,29 @@ class _WebviewState extends State<Webview> {
               setState(() {});
             }
           },
+        ),
+      );
+
+    _on_webview_created();
+  }
+
+  _on_webview_created() async {
+    if (widget.controller_callback != null) {
+      widget.controller_callback!(_webview_controller);
+    }
+
+    _webview_controller.loadRequest(
+      Uri.parse(get_source_for_webview_mobile(widget.src)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        WebViewWidget(
+          controller: _webview_controller,
         ),
         !page_loaded
             ? CircularProgressIndicator(

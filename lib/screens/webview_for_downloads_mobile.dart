@@ -3,14 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:path_provider/path_provider.dart';
 
 class WebviewForDownloadsMobile extends StatefulWidget {
-  WebviewForDownloadsMobile({
+  const WebviewForDownloadsMobile({
+    super.key,
     required this.url,
     required this.topbar_color,
     required this.native_screen,
@@ -21,25 +22,23 @@ class WebviewForDownloadsMobile extends StatefulWidget {
   final Widget native_screen;
 
   @override
-  _WebviewForDownloadsMobileState createState() =>
-      _WebviewForDownloadsMobileState();
+  _WebviewForDownloadsMobileState createState() => _WebviewForDownloadsMobileState();
 }
 
 class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
   late InAppWebViewController webview;
-  ReceivePort _port = ReceivePort();
+  final ReceivePort _port = ReceivePort();
   bool mobile_webview = false;
 
   register_port() async {
     await FlutterDownloader.initialize(debug: true);
 
-    IsolateNameServer.registerPortWithName(
-        _port.sendPort, 'downloader_send_port');
+    IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-      setState(() {});
+      // String id = data[0];
+      // DownloadTaskStatus status = data[1];
+      // int progress = data[2];
+      // setState(() {});
     });
 
     FlutterDownloader.registerCallback(download_callback);
@@ -47,11 +46,10 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
 
   static download_callback(
     String id,
-    DownloadTaskStatus status,
+    int status,
     int progress,
   ) {
-    final SendPort send =
-        IsolateNameServer.lookupPortByName('downloader_send_port')!;
+    final SendPort send = IsolateNameServer.lookupPortByName('downloader_send_port')!;
     send.send([id, status, progress]);
   }
 
@@ -63,7 +61,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
           ? (await getExternalStorageDirectory())!.path
           : (await getApplicationDocumentsDirectory()).absolute.path;
 
-      final task_id = await FlutterDownloader.enqueue(
+      await FlutterDownloader.enqueue(
         url: uri.toString(),
         savedDir: directory,
         showNotification: true,
@@ -71,7 +69,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
         saveInPublicStorage: true,
       );
     } else {
-      print('Permission Denied');
+      debugPrint('Permission Denied');
     }
   }
 
@@ -82,19 +80,14 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
   }
 
   check_if_webview_is_enabled() async {
-    var app_snap = await FirebaseFirestore.instance
-        .collection("metadata")
-        .doc("app")
-        .get();
+    var app_snap = await FirebaseFirestore.instance.collection("metadata").doc("app").get();
 
     Map<String, dynamic>? app_data = app_snap.data();
 
     if (app_data != null) {
-      mobile_webview = app_data["mobile_webview"]
-              [UniversalPlatform.isAndroid ? "android" : "ios"] ??
-          false;
+      mobile_webview = app_data["mobile_webview"][UniversalPlatform.isAndroid ? "android" : "ios"] ?? false;
       if (mobile_webview) {
-        Timer(Duration(milliseconds: 800), () {
+        Timer(const Duration(milliseconds: 800), () {
           setState(() {});
         });
         init_config();
@@ -138,17 +131,17 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
                   ),
                   onWebViewCreated: (InAppWebViewController controller) {
                     webview = controller;
-                    Timer(Duration(milliseconds: 1500), () {
+                    Timer(const Duration(milliseconds: 1500), () {
                       webview.reload();
                     });
                   },
                   onLoadStart: (InAppWebViewController controller, Uri? uri) {},
                   onLoadStop: (InAppWebViewController controller, Uri? uri) {},
-                  onDownloadStart: (controller, uri) {
-                    if (uri.toString().contains("http")) {
-                      download(uri);
+                  onDownloadStartRequest: (controller, request) {
+                    if (request.url.toString().contains("http")) {
+                      download(request.url);
                     } else {
-                      print("Current Uri does not contain a Url");
+                      debugPrint("Current Uri does not contain a Url");
                     }
                   },
                 ),

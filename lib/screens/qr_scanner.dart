@@ -9,6 +9,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({
+    super.key,
     required this.descriptive_text,
     required this.update_qr_value,
     required this.border_color,
@@ -53,9 +54,8 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> {
-  late MobileScannerController mobile_scanner_controller =
-      MobileScannerController();
-  TextEditingController _controller_code_id = TextEditingController();
+  late MobileScannerController mobile_scanner_controller = MobileScannerController();
+  final TextEditingController _controller_code_id = TextEditingController();
 
   @override
   void dispose() {
@@ -133,20 +133,10 @@ class _QRScannerState extends State<QRScanner> {
                     SizedBox(
                       height: sized_box_space * 2,
                     ),
-                    Container(
+                    SizedBox(
                       height: 50,
                       width: screen_width / (portrait ? 2 : 8),
                       child: CustomCard(
-                        child: Center(
-                          child: Text(
-                            widget.validate_button_text,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
                         border_radius: MediaQuery.of(context).size.width,
                         on_pressed: () {
                           if (_controller_code_id.text != "") {
@@ -156,17 +146,26 @@ class _QRScannerState extends State<QRScanner> {
                           } else {
                             SnackBar snackBar = SnackBar(
                               content: Text(widget.fail_message),
-                              duration: Duration(seconds: 2),
+                              duration: const Duration(seconds: 2),
                             );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           }
                         },
                         linear_gradient: widget.button_linear_gradient,
+                        child: Center(
+                          child: Text(
+                            widget.validate_button_text,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     widget.show_main_button
-                        ? Container(
+                        ? SizedBox(
                             height: 50,
                             child: main_button(),
                           )
@@ -179,18 +178,16 @@ class _QRScannerState extends State<QRScanner> {
               alignment: Alignment.center,
               children: [
                 MobileScanner(
-                  allowDuplicates: false,
                   controller: mobile_scanner_controller,
-                  onDetect: (barcode, args) {
-                    if (barcode.rawValue == null) {
+                  onDetect: (BarcodeCapture barcodes) {
+                    if (barcodes.raw == null) {
                       debugPrint('Failed to scan Barcode');
                     } else {
-                      final String code = barcode.rawValue!;
+                      final String code = barcodes.raw!;
                       setState(() {
-                        this.mobile_scanner_controller =
-                            mobile_scanner_controller;
+                        mobile_scanner_controller = mobile_scanner_controller;
                       });
-                      widget.update_qr_value(barcode.rawValue!);
+                      widget.update_qr_value(code);
                     }
                   },
 
@@ -205,7 +202,7 @@ class _QRScannerState extends State<QRScanner> {
                 Container(
                   child: Column(
                     children: [
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Text(
                         widget.descriptive_text,
                         textAlign: TextAlign.center,
@@ -214,9 +211,9 @@ class _QRScannerState extends State<QRScanner> {
                           fontSize: 18,
                         ),
                       ),
-                      Spacer(flex: 6),
+                      const Spacer(flex: 6),
                       widget.show_main_button ? main_button() : Container(),
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                     ],
                   ),
                 ),
