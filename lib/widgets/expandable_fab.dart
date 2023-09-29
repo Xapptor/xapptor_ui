@@ -155,7 +155,7 @@ class _ExpandableFabState extends State<ExpandableFab>
 
 @immutable
 class _ExpandingActionButton extends StatelessWidget {
-  _ExpandingActionButton({
+  const _ExpandingActionButton({
     Key? key,
     required this.direction_in_degrees,
     required this.max_distance,

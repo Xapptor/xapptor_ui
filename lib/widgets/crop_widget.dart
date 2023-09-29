@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CropWidget extends StatefulWidget {
-  CropWidget({super.key, 
+  const CropWidget({super.key, 
     required this.child,
     required this.general_alignment,
     required this.vertical_alignment,

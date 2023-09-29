@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Display Xapptor and App version
 
 class AppVersionContainer extends StatefulWidget {
-  AppVersionContainer({super.key, 
+  const AppVersionContainer({super.key, 
     required this.text_color,
     required this.background_color,
     this.url,
