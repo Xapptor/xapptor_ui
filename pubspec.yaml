@@ -4,7 +4,7 @@ repository: https://github.com/Xapptor/xapptor_ui
 version: 0.0.4
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -14,34 +14,34 @@ dependencies:
   firebase_auth: ^4.10.0
   cloud_firestore: ^4.9.2
 
-  smooth_page_indicator: ^1.0.0+2
+  smooth_page_indicator: ^1.1.0
   auto_size_text_pk: ^3.0.0
   uuid: ^3.0.7
 
-  font_awesome_flutter: ^10.3.0
+  font_awesome_flutter: ^10.5.0
 
-  mobile_scanner: ^3.3.0
+  mobile_scanner: ^3.4.1
   permission_handler: ^11.0.0
   google_fonts: ^6.1.0
-  animated_text_kit: ^4.2.1
-  pdf: ^3.6.0
+  animated_text_kit: ^4.2.2
+  pdf: ^3.10.4
   printing: ^5.11.0
-  device_info_plus: ^9.0.2
-  package_info_plus: ^4.0.2
+  device_info_plus: ^9.0.3
+  package_info_plus: ^4.1.0
   universal_platform: ^1.0.0+1
   intl: ^0.18.1
   url_launcher: ^6.1.14
 
   webview_flutter: ^4.2.4
-  flutter_inappwebview: ^5.4.3+4
-  flutter_downloader: ^1.10.4
-  pointer_interceptor: ^0.9.3+1
+  flutter_inappwebview: ^5.7.2+3
+  flutter_downloader: ^1.11.3
+  pointer_interceptor: ^0.9.3+6
 
   # xapptor_router: ^0.0.2
 
   xapptor_router:
     path: ../xapptor_router
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
