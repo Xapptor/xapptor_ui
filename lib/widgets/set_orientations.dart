@@ -10,7 +10,7 @@ set_orientations({required Function callback}) async {
 
   if (UniversalPlatform.isIOS) {
     IosDeviceInfo info = await deviceInfo.iosInfo;
-    if (info.name!.toLowerCase().contains("ipad")) {
+    if (info.name.toLowerCase().contains("ipad")) {
       print("this is a ipad 5");
       preferred_orientations = [
         DeviceOrientation.landscapeRight,
