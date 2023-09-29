@@ -8,7 +8,8 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'custom_card.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
-  const ContactUsContainerLeadForm({super.key, 
+  const ContactUsContainerLeadForm({
+    super.key,
     required this.landing_class,
     required this.icon_color,
     required this.container_background_color,
@@ -43,12 +44,10 @@ class ContactUsContainerLeadForm extends StatefulWidget {
   final double border_radius;
 
   @override
-  _ContactUsContainerLeadFormState createState() =>
-      _ContactUsContainerLeadFormState();
+  _ContactUsContainerLeadFormState createState() => _ContactUsContainerLeadFormState();
 }
 
-class _ContactUsContainerLeadFormState
-    extends State<ContactUsContainerLeadForm> {
+class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> {
   static List<String> insurance_type_values = [
     "¿Qué seguro te interesa?",
     "Seguro de Vida",
@@ -72,19 +71,16 @@ class _ContactUsContainerLeadFormState
   TextEditingController name_input_controller = TextEditingController();
   TextEditingController address_input_controller = TextEditingController();
   TextEditingController zip_code_input_controller = TextEditingController();
-  TextEditingController telephone_number_input_controller =
-      TextEditingController();
+  TextEditingController telephone_number_input_controller = TextEditingController();
   TextEditingController email_input_controller = TextEditingController();
 
   String birthday_label = "Fecha de Nacimiento";
 
-  static DateTime over_18 = DateTime(
-      DateTime.now().year - 18, DateTime.now().month, DateTime.now().day);
-  static DateTime first_date = DateTime(
-      DateTime.now().year - 150, DateTime.now().month, DateTime.now().day);
+  static DateTime over_18 = DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day);
+  static DateTime first_date = DateTime(DateTime.now().year - 150, DateTime.now().month, DateTime.now().day);
   DateTime selected_date = over_18;
 
-  Future<Null> _select_date(BuildContext context) async {
+  Future _select_date(BuildContext context) async {
     final DateTime? picked = (await showDatePicker(
       context: context,
       initialDate: selected_date,
@@ -105,9 +101,7 @@ class _ContactUsContainerLeadFormState
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    double height = portrait
-        ? (MediaQuery.of(context).size.height * 2)
-        : (MediaQuery.of(context).size.height);
+    double height = portrait ? (MediaQuery.of(context).size.height * 2) : (MediaQuery.of(context).size.height);
 
     return Container(
       height: height,
@@ -193,9 +187,7 @@ class _ContactUsContainerLeadFormState
                                 Expanded(
                                   flex: portrait ? 30 : 8,
                                   child: Flex(
-                                    direction: portrait
-                                        ? Axis.vertical
-                                        : Axis.horizontal,
+                                    direction: portrait ? Axis.vertical : Axis.horizontal,
                                     children: [
                                       Expanded(
                                         flex: 10,
@@ -204,8 +196,7 @@ class _ContactUsContainerLeadFormState
                                             Expanded(
                                               flex: 2,
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
                                                   const Spacer(flex: 2),
                                                   DropdownButton<String>(
@@ -222,17 +213,12 @@ class _ContactUsContainerLeadFormState
                                                     ),
                                                     onChanged: (new_value) {
                                                       setState(() {
-                                                        insurance_type_value =
-                                                            new_value!;
+                                                        insurance_type_value = new_value!;
                                                       });
                                                     },
                                                     items: insurance_type_values
-                                                        .map<
-                                                            DropdownMenuItem<
-                                                                String>>((String
-                                                            value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
+                                                        .map<DropdownMenuItem<String>>((String value) {
+                                                      return DropdownMenuItem<String>(
                                                         value: value,
                                                         child: Text(value),
                                                       );
@@ -253,16 +239,12 @@ class _ContactUsContainerLeadFormState
                                                     ),
                                                     onChanged: (new_value) {
                                                       setState(() {
-                                                        schedule_value =
-                                                            new_value!;
+                                                        schedule_value = new_value!;
                                                       });
                                                     },
-                                                    items: schedule_values.map<
-                                                            DropdownMenuItem<
-                                                                String>>(
-                                                        (String value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
+                                                    items:
+                                                        schedule_values.map<DropdownMenuItem<String>>((String value) {
+                                                      return DropdownMenuItem<String>(
                                                         value: value,
                                                         child: Text(value),
                                                       );
@@ -275,32 +257,26 @@ class _ContactUsContainerLeadFormState
                                             Expanded(
                                               flex: 1,
                                               child: TextFormField(
-                                                controller:
-                                                    name_input_controller,
+                                                controller: name_input_controller,
                                                 decoration: const InputDecoration(
                                                   labelText: "Nombre completo",
                                                 ),
                                                 onSaved: (value) {},
                                                 validator: (value) {
-                                                  return value!.contains('@')
-                                                      ? 'Do not use the @ char.'
-                                                      : null;
+                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
                                                 },
                                               ),
                                             ),
                                             Expanded(
                                               flex: 1,
                                               child: TextFormField(
-                                                controller:
-                                                    address_input_controller,
+                                                controller: address_input_controller,
                                                 decoration: const InputDecoration(
                                                   labelText: "Dirección",
                                                 ),
                                                 onSaved: (value) {},
                                                 validator: (value) {
-                                                  return value!.contains('@')
-                                                      ? 'Do not use the @ char.'
-                                                      : null;
+                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
                                                 },
                                               ),
                                             ),
@@ -315,59 +291,46 @@ class _ContactUsContainerLeadFormState
                                             Expanded(
                                               flex: 1,
                                               child: TextFormField(
-                                                controller:
-                                                    zip_code_input_controller,
+                                                controller: zip_code_input_controller,
                                                 decoration: const InputDecoration(
                                                   labelText: "Código postal",
                                                 ),
                                                 onSaved: (value) {},
                                                 validator: (value) {
-                                                  return value!.contains('@')
-                                                      ? 'Do not use the @ char.'
-                                                      : null;
+                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
                                                 },
                                               ),
                                             ),
                                             Expanded(
                                               flex: 1,
                                               child: TextFormField(
-                                                controller:
-                                                    telephone_number_input_controller,
+                                                controller: telephone_number_input_controller,
                                                 decoration: const InputDecoration(
-                                                  labelText:
-                                                      "Número de teléfono",
+                                                  labelText: "Número de teléfono",
                                                 ),
                                                 onSaved: (value) {},
                                                 validator: (value) {
-                                                  return value!.contains('@')
-                                                      ? 'Do not use the @ char.'
-                                                      : null;
+                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
                                                 },
                                               ),
                                             ),
                                             Expanded(
                                               flex: 1,
                                               child: TextFormField(
-                                                controller:
-                                                    email_input_controller,
+                                                controller: email_input_controller,
                                                 decoration: const InputDecoration(
-                                                  labelText:
-                                                      "Correo electrónico",
+                                                  labelText: "Correo electrónico",
                                                 ),
                                                 onSaved: (value) {},
                                                 validator: (value) {
-                                                  return value!.contains('@')
-                                                      ? 'Do not use the @ char.'
-                                                      : null;
+                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
                                                 },
                                               ),
                                             ),
                                             Expanded(
                                               flex: 1,
                                               child: Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
+                                                width: MediaQuery.of(context).size.width,
                                                 child: TextButton(
                                                   onPressed: () {
                                                     _select_date(context);
@@ -404,54 +367,33 @@ class _ContactUsContainerLeadFormState
                                           ),
                                           border_radius: 1000,
                                           on_pressed: () {
-                                            if (insurance_type_value !=
-                                                    "¿Qué seguro te interesa?" &&
-                                                schedule_value !=
-                                                    "¿A qué hora te gustaría que te llamaran?" &&
-                                                birthday_label !=
-                                                    "Fecha de Nacimiento") {
+                                            if (insurance_type_value != "¿Qué seguro te interesa?" &&
+                                                schedule_value != "¿A qué hora te gustaría que te llamaran?" &&
+                                                birthday_label != "Fecha de Nacimiento") {
                                               String newMessage =
-                                                  "${name_input_controller.text} has a message for you! \n\nYou have a new Lead: \n\n Insurance Type: $insurance_type_value\nSchedule: $schedule_value\nName: ${name_input_controller
-                                                          .text}\nAddress: ${address_input_controller
-                                                          .text}\nZip Code: ${zip_code_input_controller
-                                                          .text}\nTelephone Number: ${telephone_number_input_controller
-                                                          .text}\nEmail: ${email_input_controller
-                                                          .text}\nDate of Birth: $birthday_label";
+                                                  "${name_input_controller.text} has a message for you! \n\nYou have a new Lead: \n\n Insurance Type: $insurance_type_value\nSchedule: $schedule_value\nName: ${name_input_controller.text}\nAddress: ${address_input_controller.text}\nZip Code: ${zip_code_input_controller.text}\nTelephone Number: ${telephone_number_input_controller.text}\nEmail: ${email_input_controller.text}\nDate of Birth: $birthday_label";
 
-                                              FirebaseFirestore.instance
-                                                  .collection("emails")
-                                                  .doc()
-                                                  .set({
+                                              FirebaseFirestore.instance.collection("emails").doc().set({
                                                 "to": widget.email,
                                                 "message": {
-                                                  "subject":
-                                                      "You have a new Lead: ${name_input_controller
-                                                              .text}",
+                                                  "subject": "You have a new Lead: ${name_input_controller.text}",
                                                   "text": newMessage,
                                                 }
                                               }).then((value) {
-                                                insurance_type_value =
-                                                    insurance_type_values[0];
-                                                schedule_value =
-                                                    schedule_values[0];
+                                                insurance_type_value = insurance_type_values[0];
+                                                schedule_value = schedule_values[0];
                                                 name_input_controller.clear();
-                                                address_input_controller
-                                                    .clear();
-                                                zip_code_input_controller
-                                                    .clear();
-                                                telephone_number_input_controller
-                                                    .clear();
+                                                address_input_controller.clear();
+                                                zip_code_input_controller.clear();
+                                                telephone_number_input_controller.clear();
                                                 email_input_controller.clear();
-                                                birthday_label =
-                                                    "Fecha de Nacimiento";
+                                                birthday_label = "Fecha de Nacimiento";
 
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
+                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                                   content: Text(
                                                     widget.feedback_message,
                                                   ),
-                                                  duration:
-                                                      const Duration(seconds: 2),
+                                                  duration: const Duration(seconds: 2),
                                                 ));
 
                                                 setState(() {});
@@ -459,8 +401,7 @@ class _ContactUsContainerLeadFormState
                                                 print(err);
                                               });
                                             } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
+                                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                                 content: Text(
                                                   "Debes seleccionar seguro de interés, horario de contacto y fecha de nacimiento",
                                                 ),
@@ -583,12 +524,8 @@ class _ContactUsContainerLeadFormState
                                           ? Expanded(
                                               flex: 5,
                                               child: custom_icon_button(
-                                                urls: [
-                                                  widget.facebook_url!,
-                                                  widget.facebook_url_fallback!
-                                                ],
-                                                icon: FontAwesomeIcons
-                                                    .squareFacebook,
+                                                urls: [widget.facebook_url!, widget.facebook_url_fallback!],
+                                                icon: FontAwesomeIcons.squareFacebook,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -597,10 +534,7 @@ class _ContactUsContainerLeadFormState
                                           ? Expanded(
                                               flex: 5,
                                               child: custom_icon_button(
-                                                urls: [
-                                                  widget.youtube_url!,
-                                                  widget.youtube_url!
-                                                ],
+                                                urls: [widget.youtube_url!, widget.youtube_url!],
                                                 icon: FontAwesomeIcons.youtube,
                                                 icon_color: widget.icon_color,
                                               ),
@@ -610,12 +544,8 @@ class _ContactUsContainerLeadFormState
                                           ? Expanded(
                                               flex: 5,
                                               child: custom_icon_button(
-                                                urls: [
-                                                  widget.instagram_url!,
-                                                  widget.instagram_url!
-                                                ],
-                                                icon:
-                                                    FontAwesomeIcons.instagram,
+                                                urls: [widget.instagram_url!, widget.instagram_url!],
+                                                icon: FontAwesomeIcons.instagram,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -624,10 +554,7 @@ class _ContactUsContainerLeadFormState
                                           ? Expanded(
                                               flex: 5,
                                               child: custom_icon_button(
-                                                urls: [
-                                                  widget.twitter_url!,
-                                                  widget.twitter_url!
-                                                ],
+                                                urls: [widget.twitter_url!, widget.twitter_url!],
                                                 icon: FontAwesomeIcons.twitter,
                                                 icon_color: widget.icon_color,
                                               ),
