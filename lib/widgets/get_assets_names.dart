@@ -10,12 +10,12 @@ Future<List<String>> get_assets_names({
 
   List<String> assets_paths = [];
 
-  filter_keys.forEach((filter_key) {
+  for (var filter_key in filter_keys) {
     assets_paths += manifest_map.keys
         .where(
             (String manifest_map_key) => manifest_map_key.contains(filter_key))
         .toList();
-  });
+  }
 
   return assets_paths;
 }

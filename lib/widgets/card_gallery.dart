@@ -111,7 +111,7 @@ class _CardGalleryState extends State<CardGallery> {
     }
 
     List<Widget> card_holders = [];
-    image_names.forEach((images_name) {
+    for (var images_name in image_names) {
       int image_names_index = image_names.indexOf(images_name);
 
       if (widget.carousel_length != null) {
@@ -149,7 +149,7 @@ class _CardGalleryState extends State<CardGallery> {
           ),
         );
       }
-    });
+    }
 
     if (widget.reverse) {
       card_holders = card_holders.reversed.toList();
