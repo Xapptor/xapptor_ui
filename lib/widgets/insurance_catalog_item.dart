@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class InsuranceCatalogItem extends StatefulWidget {
-  const InsuranceCatalogItem({
+  const InsuranceCatalogItem({super.key, 
     required this.texts,
     required this.icon_color,
     required this.card_background_color,

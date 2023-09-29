@@ -8,7 +8,7 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class PrivacyPolicy extends StatefulWidget {
-  const PrivacyPolicy({
+  const PrivacyPolicy({super.key, 
     required this.privacy_policy_model,
     required this.use_topbar,
     required this.topbar_color,

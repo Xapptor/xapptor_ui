@@ -3,7 +3,7 @@ import 'characteristics_container_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class CharacteristicsContainer extends StatefulWidget {
-  const CharacteristicsContainer({
+  const CharacteristicsContainer({super.key, 
     required this.texts,
   });
 

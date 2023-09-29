@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class IntroductionContainer extends StatefulWidget {
-  const IntroductionContainer({
+  const IntroductionContainer({super.key, 
     required this.texts,
     required this.text_color,
     required this.background_image,

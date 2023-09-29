@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RedirectView extends StatefulWidget {
-  const RedirectView({
+  const RedirectView({super.key, 
     required this.redirect_url,
     required this.screen_name,
   });

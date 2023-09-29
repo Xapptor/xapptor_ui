@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'dart:ui' as ui;
 
 class Webview extends StatefulWidget {
-  const Webview({
+  const Webview({super.key, 
     required this.src,
     required this.id,
     this.controller_callback,

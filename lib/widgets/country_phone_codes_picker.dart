@@ -7,7 +7,7 @@ class CountryPhoneCodesPicker extends StatefulWidget {
   final Color text_color;
   final Function setState;
 
-  const CountryPhoneCodesPicker({
+  const CountryPhoneCodesPicker({super.key, 
     required this.current_phone_code,
     required this.text_color,
     required this.setState,

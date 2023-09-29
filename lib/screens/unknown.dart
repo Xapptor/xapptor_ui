@@ -7,7 +7,7 @@ class UnknownScreen extends StatelessWidget {
   final String logo_path;
   final Color topbar_color;
 
-  const UnknownScreen({
+  const UnknownScreen({super.key, 
     required this.logo_path,
     required this.topbar_color,
   });

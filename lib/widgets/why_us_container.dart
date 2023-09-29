@@ -4,7 +4,7 @@ import 'characteristics_container_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class WhyUsContainer extends StatefulWidget {
-  const WhyUsContainer({
+  const WhyUsContainer({super.key, 
     required this.texts,
     required this.background_image,
     required this.background_color,

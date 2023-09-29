@@ -4,7 +4,7 @@ import 'package:xapptor_ui/widgets/get_assets_names.dart';
 import 'card_holder.dart';
 
 class CardGallery extends StatefulWidget {
-  const CardGallery({
+  const CardGallery({super.key, 
     required this.screen_height,
     required this.text_list,
     required this.dot_colors_active,

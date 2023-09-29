@@ -31,7 +31,7 @@ class PdfUrlText extends pw.StatelessWidget {
 }
 
 class UrlText extends StatelessWidget {
-  const UrlText({
+  const UrlText({super.key, 
     required this.text,
     required this.url,
   });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatefulWidget {
-  const CustomCard({
+  const CustomCard({super.key, 
     required this.child,
     required this.on_pressed,
     this.elevation = 3,

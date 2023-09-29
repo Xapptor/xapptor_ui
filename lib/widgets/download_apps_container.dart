@@ -5,7 +5,7 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class DownloadAppsContainer extends StatefulWidget {
-  const DownloadAppsContainer({
+  const DownloadAppsContainer({super.key, 
     required this.texts,
     required this.background_image,
     required this.button_background_color,

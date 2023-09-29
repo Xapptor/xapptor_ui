@@ -4,7 +4,7 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class DropdownBottomBar extends StatefulWidget {
-  const DropdownBottomBar({
+  const DropdownBottomBar({super.key, 
     required this.child,
     required this.bottom_bar_color,
     this.title,

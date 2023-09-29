@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class LoadingContainer extends StatefulWidget {
-  const LoadingContainer({
+  const LoadingContainer({super.key, 
     required this.loading,
     required this.background_color,
     required this.progress_indicator_color,

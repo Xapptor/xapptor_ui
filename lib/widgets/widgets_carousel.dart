@@ -5,7 +5,7 @@ import 'package:xapptor_ui/widgets/random_number_with_range.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class WidgetsCarousel extends StatefulWidget {
-  const WidgetsCarousel({
+  const WidgetsCarousel({super.key, 
     required this.dot_colors_active,
     required this.dot_color_inactive,
     required this.children,

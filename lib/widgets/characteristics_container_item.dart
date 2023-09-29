@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class CharacteristicsContainerItem extends StatefulWidget {
-  const CharacteristicsContainerItem({
+  const CharacteristicsContainerItem({super.key, 
     required this.title,
     required this.description,
     required this.icon,

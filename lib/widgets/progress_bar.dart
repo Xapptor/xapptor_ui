@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatefulWidget {
-  const ProgressBar({
+  const ProgressBar({super.key, 
     required this.color,
     required this.background_color,
     required this.height,

@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 @immutable
 class ExpandableFab extends StatefulWidget {
-  const ExpandableFab({
+  const ExpandableFab({super.key, 
     Key? key,
     this.initial_open,
     required this.distance,

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BackgroundImageWithGradientColor extends StatelessWidget {
-  const BackgroundImageWithGradientColor({
+  const BackgroundImageWithGradientColor({super.key, 
     required this.child,
     required this.height,
     required this.image_path,

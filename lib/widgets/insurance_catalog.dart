@@ -4,7 +4,7 @@ import 'insurance_catalog_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class InsuranceCatalog extends StatefulWidget {
-  const InsuranceCatalog({
+  const InsuranceCatalog({super.key, 
     required this.texts,
     required this.icon_color,
     required this.container_background_color,

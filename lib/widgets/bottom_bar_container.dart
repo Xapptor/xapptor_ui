@@ -4,7 +4,7 @@ import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class BottomBarContainer extends StatefulWidget {
-  const BottomBarContainer({
+  const BottomBarContainer({super.key, 
     required this.bottom_bar_buttons,
     required this.initial_page,
     required this.current_page_callback,

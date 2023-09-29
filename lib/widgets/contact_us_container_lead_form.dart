@@ -8,7 +8,7 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'custom_card.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
-  const ContactUsContainerLeadForm({
+  const ContactUsContainerLeadForm({super.key, 
     required this.landing_class,
     required this.icon_color,
     required this.container_background_color,

@@ -4,7 +4,7 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'custom_card.dart';
 
 class CardHolder extends StatefulWidget {
-  CardHolder({
+  CardHolder({super.key, 
     required this.on_pressed,
     this.title,
     this.subtitle = "",

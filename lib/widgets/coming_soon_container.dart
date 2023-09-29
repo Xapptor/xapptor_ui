@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ComingSoonContainer extends StatelessWidget {
-  const ComingSoonContainer({
+  const ComingSoonContainer({super.key, 
     required this.text,
     this.child,
     required this.enable_cover,
