@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/version.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Display Xapptor and App version
 
 class AppVersionContainer extends StatefulWidget {
-  const AppVersionContainer({super.key, 
+  const AppVersionContainer({
+    super.key,
     required this.text_color,
     required this.background_color,
     this.url,
@@ -16,7 +16,7 @@ class AppVersionContainer extends StatefulWidget {
   final Color background_color;
   final String? url;
   @override
-  _AppVersionContainerState createState() => _AppVersionContainerState();
+  State<AppVersionContainer> createState() => _AppVersionContainerState();
 }
 
 class _AppVersionContainerState extends State<AppVersionContainer> {
@@ -34,15 +34,12 @@ class _AppVersionContainerState extends State<AppVersionContainer> {
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = is_portrait(context);
     double view_padding_bottom = MediaQuery.of(context).viewPadding.bottom;
 
     return GestureDetector(
       onTap: widget.url != null
           ? () async {
-              await launch(
-                widget.url!,
-              );
+              await launchUrl(Uri.parse(widget.url!));
             }
           : null,
       child: Align(

@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatefulWidget {
-  const ProgressBar({super.key, 
+  const ProgressBar({
+    super.key,
     required this.color,
     required this.background_color,
     required this.height,
@@ -29,7 +30,7 @@ class ProgressBar extends StatefulWidget {
   final Alignment alignment;
 
   @override
-  _ProgressBarState createState() => _ProgressBarState();
+  State<ProgressBar> createState() => _ProgressBarState();
 }
 
 class _ProgressBarState extends State<ProgressBar> {
@@ -41,9 +42,7 @@ class _ProgressBarState extends State<ProgressBar> {
   void initState() {
     super.initState();
 
-    percentage_text_color = widget.background_color.computeLuminance() > 0.5
-        ? Colors.black
-        : Colors.white;
+    percentage_text_color = widget.background_color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 
     current_percentage = widget.initial_percentage;
     Timer(Duration(seconds: widget.animation_delay), () {

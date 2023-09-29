@@ -21,7 +21,7 @@ class ExpandableFab extends StatefulWidget {
   final Color main_fab_background_color;
 
   @override
-  _ExpandableFabState createState() => _ExpandableFabState();
+  State<ExpandableFab> createState() => _ExpandableFabState();
 }
 
 class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProviderStateMixin {

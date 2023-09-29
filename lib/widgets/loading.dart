@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class LoadingContainer extends StatefulWidget {
-  const LoadingContainer({super.key, 
+  const LoadingContainer({
+    super.key,
     required this.loading,
     required this.background_color,
     required this.progress_indicator_color,
@@ -17,7 +18,7 @@ class LoadingContainer extends StatefulWidget {
   final Widget child;
 
   @override
-  _LoadingContainerState createState() => _LoadingContainerState();
+  State<LoadingContainer> createState() => _LoadingContainerState();
 }
 
 class _LoadingContainerState extends State<LoadingContainer> {
@@ -32,8 +33,7 @@ class _LoadingContainerState extends State<LoadingContainer> {
     double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
     double loading_size = (portrait ? screen_width : screen_height) * 0.1;
-    double loading_stroke_width =
-        widget.stroke_width == 0 ? loading_size * 0.1 : widget.stroke_width;
+    double loading_stroke_width = widget.stroke_width == 0 ? loading_size * 0.1 : widget.stroke_width;
 
     List<Widget> stack_children = [widget.child];
 

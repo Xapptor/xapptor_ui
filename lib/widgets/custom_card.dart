@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatefulWidget {
-  const CustomCard({super.key, 
+  const CustomCard({
+    super.key,
     required this.child,
     required this.on_pressed,
     this.elevation = 3,
@@ -29,7 +30,7 @@ class CustomCard extends StatefulWidget {
   final String? tooltip;
 
   @override
-  _CustomCardState createState() => _CustomCardState();
+  State createState() => _CustomCardState();
 }
 
 class _CustomCardState extends State<CustomCard> {

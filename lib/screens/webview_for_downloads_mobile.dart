@@ -22,7 +22,7 @@ class WebviewForDownloadsMobile extends StatefulWidget {
   final Widget native_screen;
 
   @override
-  _WebviewForDownloadsMobileState createState() => _WebviewForDownloadsMobileState();
+  State<WebviewForDownloadsMobile> createState() => _WebviewForDownloadsMobileState();
 }
 
 class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {

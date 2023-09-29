@@ -31,7 +31,8 @@ class PdfUrlText extends pw.StatelessWidget {
 }
 
 class UrlText extends StatelessWidget {
-  const UrlText({super.key, 
+  const UrlText({
+    super.key,
     required this.text,
     required this.url,
   });
@@ -45,7 +46,7 @@ class UrlText extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          launch(url);
+          launchUrl(Uri.parse(url));
         },
         child: Text(
           text,

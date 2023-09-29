@@ -7,15 +7,15 @@ class CountryPhoneCodesPicker extends StatefulWidget {
   final Color text_color;
   final Function setState;
 
-  const CountryPhoneCodesPicker({super.key, 
+  const CountryPhoneCodesPicker({
+    super.key,
     required this.current_phone_code,
     required this.text_color,
     required this.setState,
   });
 
   @override
-  _CountryPhoneCodesPickerState createState() =>
-      _CountryPhoneCodesPickerState();
+  State<CountryPhoneCodesPicker> createState() => _CountryPhoneCodesPickerState();
 }
 
 class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
@@ -50,8 +50,7 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: widget.current_phone_code.value ==
-                                country_phone_code_list[index]
+                        color: widget.current_phone_code.value == country_phone_code_list[index]
                             ? widget.text_color
                             : Colors.transparent,
                       ),
@@ -59,14 +58,11 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      widget.current_phone_code.value =
-                          country_phone_code_list[index];
+                      widget.current_phone_code.value = country_phone_code_list[index];
 
-                      double inital_offset =
-                          (item_height * index) - alert_height / 2;
+                      double inital_offset = (item_height * index) - alert_height / 2;
 
-                      scroll_controller =
-                          ScrollController(initialScrollOffset: inital_offset);
+                      scroll_controller = ScrollController(initialScrollOffset: inital_offset);
 
                       widget.setState(() {});
                       Navigator.pop(context);

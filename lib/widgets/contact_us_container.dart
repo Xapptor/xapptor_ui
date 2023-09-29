@@ -7,7 +7,8 @@ import 'custom_card.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class ContactUsContainer extends StatefulWidget {
-  const ContactUsContainer({super.key, 
+  const ContactUsContainer({
+    super.key,
     required this.texts,
     required this.landing_class,
     required this.icon_color,
@@ -44,7 +45,7 @@ class ContactUsContainer extends StatefulWidget {
   final double border_radius;
 
   @override
-  _ContactUsContainerState createState() => _ContactUsContainerState();
+  State<ContactUsContainer> createState() => _ContactUsContainerState();
 }
 
 class _ContactUsContainerState extends State<ContactUsContainer> {
@@ -57,9 +58,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    double height = portrait
-        ? (MediaQuery.of(context).size.height * 2)
-        : (MediaQuery.of(context).size.height);
+    double height = portrait ? (MediaQuery.of(context).size.height * 2) : (MediaQuery.of(context).size.height);
 
     return SizedBox(
       height: height,
@@ -151,9 +150,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     ),
                                     onSaved: (value) {},
                                     validator: (value) {
-                                      return value!.contains('@')
-                                          ? 'Do not use the @ char.'
-                                          : null;
+                                      return value!.contains('@') ? 'Do not use the @ char.' : null;
                                     },
                                   ),
                                 ),
@@ -166,9 +163,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     ),
                                     onSaved: (value) {},
                                     validator: (value) {
-                                      return value!.contains('@')
-                                          ? 'Do not use the @ char.'
-                                          : null;
+                                      return value!.contains('@') ? 'Do not use the @ char.' : null;
                                     },
                                   ),
                                 ),
@@ -181,9 +176,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     ),
                                     onSaved: (value) {},
                                     validator: (value) {
-                                      return value!.contains('@')
-                                          ? 'Do not use the @ char.'
-                                          : null;
+                                      return value!.contains('@') ? 'Do not use the @ char.' : null;
                                     },
                                   ),
                                 ),
@@ -196,9 +189,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     ),
                                     onSaved: (value) {},
                                     validator: (value) {
-                                      return value!.contains('@')
-                                          ? 'Do not use the @ char.'
-                                          : null;
+                                      return value!.contains('@') ? 'Do not use the @ char.' : null;
                                     },
                                   ),
                                 ),
@@ -208,9 +199,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     heightFactor: portrait ? 0.5 : 0.5,
                                     child: Row(
                                       children: <Widget>[
-                                        portrait
-                                            ? const Spacer(flex: 1)
-                                            : Container(),
+                                        portrait ? const Spacer(flex: 1) : Container(),
                                         Expanded(
                                           flex: 2,
                                           child: CustomCard(
@@ -222,62 +211,44 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                             ),
                                             border_radius: 1000,
                                             on_pressed: () {
-                                              if (name_input_controller
-                                                      .text.isNotEmpty &&
-                                                  email_input_controller
-                                                      .text.isNotEmpty &&
-                                                  subject_input_controller
-                                                      .text.isNotEmpty &&
-                                                  message_input_controller
-                                                      .text.isNotEmpty) {
+                                              if (name_input_controller.text.isNotEmpty &&
+                                                  email_input_controller.text.isNotEmpty &&
+                                                  subject_input_controller.text.isNotEmpty &&
+                                                  message_input_controller.text.isNotEmpty) {
                                                 String newMessage =
-                                                    "${name_input_controller.text} has a message for you! \n\n Email: ${email_input_controller
-                                                            .text}\n\n Message: ${message_input_controller
-                                                            .text}";
+                                                    "${name_input_controller.text} has a message for you! \n\n Email: ${email_input_controller.text}\n\n Message: ${message_input_controller.text}";
 
-                                                FirebaseFirestore.instance
-                                                    .collection("emails")
-                                                    .doc()
-                                                    .set({
+                                                FirebaseFirestore.instance.collection("emails").doc().set({
                                                   "to": widget.email,
                                                   "message": {
-                                                    "subject":
-                                                        "Message from contact us section: " '"' +
-                                                            subject_input_controller
-                                                                .text +
-                                                            '"',
+                                                    "subject": "Message from contact us section: " '"' +
+                                                        subject_input_controller.text +
+                                                        '"',
                                                     "text": newMessage,
                                                   }
                                                 }).then((value) {
                                                   name_input_controller.clear();
-                                                  email_input_controller
-                                                      .clear();
-                                                  subject_input_controller
-                                                      .clear();
-                                                  message_input_controller
-                                                      .clear();
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
+                                                  email_input_controller.clear();
+                                                  subject_input_controller.clear();
+                                                  message_input_controller.clear();
+                                                  ScaffoldMessenger.of(context).showSnackBar(
                                                     SnackBar(
                                                       content: SelectableText(
                                                         widget.feedback_message,
                                                       ),
-                                                      duration:
-                                                          const Duration(seconds: 2),
+                                                      duration: const Duration(seconds: 2),
                                                     ),
                                                   );
                                                 }).catchError((err) {
-                                                  print(err);
+                                                  debugPrint(err);
                                                 });
                                               } else {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
+                                                ScaffoldMessenger.of(context).showSnackBar(
                                                   SnackBar(
                                                     content: SelectableText(
                                                       widget.texts[10],
                                                     ),
-                                                    duration:
-                                                        const Duration(seconds: 2),
+                                                    duration: const Duration(seconds: 2),
                                                   ),
                                                 );
                                               }
@@ -396,10 +367,9 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                               child: custom_icon_button(
                                                 urls: [
                                                   widget.facebook_url!,
-                                                  widget.facebook_url_fallback!
+                                                  widget.facebook_url_fallback!,
                                                 ],
-                                                icon: FontAwesomeIcons
-                                                    .squareFacebook,
+                                                icon: FontAwesomeIcons.squareFacebook,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -410,7 +380,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                               child: custom_icon_button(
                                                 urls: [
                                                   widget.youtube_url!,
-                                                  widget.youtube_url!
+                                                  widget.youtube_url!,
                                                 ],
                                                 icon: FontAwesomeIcons.youtube,
                                                 icon_color: widget.icon_color,
@@ -423,10 +393,9 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                               child: custom_icon_button(
                                                 urls: [
                                                   widget.instagram_url!,
-                                                  widget.instagram_url!
+                                                  widget.instagram_url!,
                                                 ],
-                                                icon:
-                                                    FontAwesomeIcons.instagram,
+                                                icon: FontAwesomeIcons.instagram,
                                                 icon_color: widget.icon_color,
                                               ),
                                             )
@@ -437,7 +406,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                               child: custom_icon_button(
                                                 urls: [
                                                   widget.twitter_url!,
-                                                  widget.twitter_url!
+                                                  widget.twitter_url!,
                                                 ],
                                                 icon: FontAwesomeIcons.twitter,
                                                 icon_color: widget.icon_color,

@@ -40,14 +40,12 @@ description_card({
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: SelectableText(
-              description_card.title,
-              style: TextStyle(
-                color: description_card.text_color,
-                fontSize: portrait ? 20 : 24,
-                fontWeight: FontWeight.bold,
-              ),
+          SelectableText(
+            description_card.title,
+            style: TextStyle(
+              color: description_card.text_color,
+              fontSize: portrait ? 20 : 24,
+              fontWeight: FontWeight.bold,
             ),
           ),
           Container(
@@ -63,23 +61,21 @@ description_card({
               ),
             ),
           ),
-          Container(
-            child: TextButton(
-              onPressed: () {
-                launch(description_card.url);
-              },
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(0),
-              ),
-              child: Text(
-                description_card.url_title,
-                style: TextStyle(
-                  color: description_card.text_color,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  decoration: TextDecoration.underline,
-                ),
+          TextButton(
+            onPressed: () {
+              launchUrl(Uri.parse(description_card.url));
+            },
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(0),
+            ),
+            child: Text(
+              description_card.url_title,
+              style: TextStyle(
+                color: description_card.text_color,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
+                decoration: TextDecoration.underline,
               ),
             ),
           ),
@@ -88,10 +84,8 @@ description_card({
     ),
   ];
 
-  bool card_visible = description_card.current_offset >=
-          (description_card.visible_offset - (screen_height * 1.05)) &&
-      description_card.current_offset <=
-          (description_card.visible_offset - (screen_height * 0.35));
+  bool card_visible = description_card.current_offset >= (description_card.visible_offset - (screen_height * 1.05)) &&
+      description_card.current_offset <= (description_card.visible_offset - (screen_height * 0.35));
 
   return Stack(
     alignment: Alignment.center,
@@ -112,16 +106,13 @@ description_card({
             width: screen_width,
             //color: Colors.orange,
             child: Flex(
-              direction:
-                  portrait ? description_card.direction : Axis.horizontal,
+              direction: portrait ? description_card.direction : Axis.horizontal,
               mainAxisAlignment: portrait
                   ? description_card.reversed
                       ? MainAxisAlignment.end
                       : MainAxisAlignment.start
                   : MainAxisAlignment.center,
-              children: description_card.reversed
-                  ? widgets.reversed.toList()
-                  : widgets,
+              children: description_card.reversed ? widgets.reversed.toList() : widgets,
             ),
           ),
         ),

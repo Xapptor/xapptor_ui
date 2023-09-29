@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class DropdownBottomBar extends StatefulWidget {
-  const DropdownBottomBar({super.key, 
+  const DropdownBottomBar({
+    super.key,
     required this.child,
     required this.bottom_bar_color,
     this.title,
@@ -18,8 +18,7 @@ class DropdownBottomBar extends StatefulWidget {
   State<DropdownBottomBar> createState() => _DropdownBottomBarState();
 }
 
-class _DropdownBottomBarState extends State<DropdownBottomBar>
-    with TickerProviderStateMixin {
+class _DropdownBottomBarState extends State<DropdownBottomBar> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -32,16 +31,12 @@ class _DropdownBottomBarState extends State<DropdownBottomBar>
 
   @override
   Widget build(BuildContext context) {
-    bool portrait = is_portrait(context);
     double screen_height = MediaQuery.of(context).size.height;
-    double screen_width = MediaQuery.of(context).size.width;
 
     return Container(
       color: Colors.white,
       child: AnimatedContainer(
-        height: show_animated_container
-            ? (screen_height * 0.6) + bottom_bar_height
-            : bottom_bar_height,
+        height: show_animated_container ? (screen_height * 0.6) + bottom_bar_height : bottom_bar_height,
         color: Colors.white,
         duration: const Duration(milliseconds: 300),
         child: PointerInterceptor(

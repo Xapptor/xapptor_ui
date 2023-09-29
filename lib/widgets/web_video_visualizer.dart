@@ -1,10 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
 import 'package:xapptor_router/get_last_path_segment.dart';
 
 class WebVideoVisualizer extends StatefulWidget {
-  WebVideoVisualizer({super.key, 
+  WebVideoVisualizer({
+    super.key,
     required this.base_url,
     this.id,
   });

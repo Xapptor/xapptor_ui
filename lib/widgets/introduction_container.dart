@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class IntroductionContainer extends StatefulWidget {
-  const IntroductionContainer({super.key, 
+  const IntroductionContainer({
+    super.key,
     required this.texts,
     required this.text_color,
     required this.background_image,
@@ -122,110 +123,93 @@ class IntroductionContainerState extends State<IntroductionContainer> {
         child: Center(
           child: Stack(
             children: <Widget>[
-              Container(
-                child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      const Spacer(flex: 10),
-                      widget.logo_image != null &&
-                              (widget.texts.length > 1 ||
-                                  (widget.texts.length == 1 && !portrait))
-                          ? Expanded(
-                              flex: 12,
-                              child: image_widget,
-                            )
-                          : const Spacer(flex: 14),
-                      const Spacer(flex: 1),
-                      Expanded(
-                        flex: portrait ? 12 : 5,
-                        child: FractionallySizedBox(
-                          widthFactor: portrait ? 0.9 : 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: portrait ? 6 : 12,
-                                child: SelectableText(
-                                  widget.texts[0],
-                                  toolbarOptions: const ToolbarOptions(
-                                    copy: true,
-                                    paste: true,
-                                    selectAll: true,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: widget.text_color,
-                                    fontSize: portrait
-                                        ? widget.texts.length > 1
-                                            ? 28
-                                            : 20
-                                        : widget.texts.length > 1
-                                            ? 36
-                                            : 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+              Center(
+                child: Column(
+                  children: <Widget>[
+                    const Spacer(flex: 10),
+                    widget.logo_image != null && (widget.texts.length > 1 || (widget.texts.length == 1 && !portrait))
+                        ? Expanded(
+                            flex: 12,
+                            child: image_widget,
+                          )
+                        : const Spacer(flex: 14),
+                    const Spacer(flex: 1),
+                    Expanded(
+                      flex: portrait ? 12 : 5,
+                      child: FractionallySizedBox(
+                        widthFactor: portrait ? 0.9 : 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              flex: portrait ? 6 : 12,
+                              child: SelectableText(
+                                widget.texts[0],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: widget.text_color,
+                                  fontSize: portrait
+                                      ? widget.texts.length > 1
+                                          ? 28
+                                          : 20
+                                      : widget.texts.length > 1
+                                          ? 36
+                                          : 24,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              widget.texts.length > 1
-                                  ? const Spacer(flex: 2)
-                                  : Container(),
-                              widget.texts.length > 1
-                                  ? Expanded(
-                                      flex: portrait ? 4 : 10,
-                                      child: SelectableText(
-                                        widget.texts[1],
-                                        toolbarOptions: const ToolbarOptions(
-                                          copy: true,
-                                          paste: true,
-                                          selectAll: true,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: widget.text_color,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            AnimatedPositioned(
-                              duration: const Duration(milliseconds: 300),
-                              top: lower_the_icon ? 0 : 30,
-                              width: MediaQuery.of(context).size.width,
-                              curve: Curves.ease,
-                              onEnd: () {
-                                if (lower_the_icon) {
-                                  lower_the_icon_timer =
-                                      Timer(const Duration(seconds: 1), () {
-                                    lower_the_icon = !lower_the_icon;
-                                    setState(() {});
-                                  });
-                                } else {
-                                  lower_the_icon = !lower_the_icon;
-                                  setState(() {});
-                                }
-                              },
-                              child: Icon(
-                                widget.scroll_icon,
-                                color: widget.scroll_icon_color,
-                                size: 40,
-                              ),
                             ),
+                            widget.texts.length > 1 ? const Spacer(flex: 2) : Container(),
+                            widget.texts.length > 1
+                                ? Expanded(
+                                    flex: portrait ? 4 : 10,
+                                    child: SelectableText(
+                                      widget.texts[1],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: widget.text_color,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),
-                      const Spacer(flex: 3),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AnimatedPositioned(
+                            duration: const Duration(milliseconds: 300),
+                            top: lower_the_icon ? 0 : 30,
+                            width: MediaQuery.of(context).size.width,
+                            curve: Curves.ease,
+                            onEnd: () {
+                              if (lower_the_icon) {
+                                lower_the_icon_timer = Timer(const Duration(seconds: 1), () {
+                                  lower_the_icon = !lower_the_icon;
+                                  setState(() {});
+                                });
+                              } else {
+                                lower_the_icon = !lower_the_icon;
+                                setState(() {});
+                              }
+                            },
+                            child: Icon(
+                              widget.scroll_icon,
+                              color: widget.scroll_icon_color,
+                              size: 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(flex: 3),
+                  ],
                 ),
               ),
               /*Container(

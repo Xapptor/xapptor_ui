@@ -4,7 +4,8 @@ import 'package:xapptor_ui/models/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 
 class BottomBarContainer extends StatefulWidget {
-  const BottomBarContainer({super.key, 
+  const BottomBarContainer({
+    super.key,
     required this.bottom_bar_buttons,
     required this.initial_page,
     required this.current_page_callback,
@@ -14,7 +15,7 @@ class BottomBarContainer extends StatefulWidget {
   final Function(int i) current_page_callback;
 
   @override
-  _BottomBarContainerState createState() => _BottomBarContainerState();
+  State<BottomBarContainer> createState() => _BottomBarContainerState();
 }
 
 class _BottomBarContainerState extends State<BottomBarContainer> {
@@ -47,10 +48,9 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
     pages = [];
     buttons = [];
     for (var button in widget.bottom_bar_buttons) {
-      Color final_foreground_color =
-          current_page == widget.bottom_bar_buttons.indexOf(button)
-              ? button.foreground_color
-              : button.foreground_color.withOpacity(0.5);
+      Color final_foreground_color = current_page == widget.bottom_bar_buttons.indexOf(button)
+          ? button.foreground_color
+          : button.foreground_color.withOpacity(0.5);
 
       pages.add(button.page);
       buttons.add(
@@ -73,8 +73,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
               ],
             ),
             child: Container(
-              padding:
-                  EdgeInsets.only(bottom: has_view_padding_bottom ? 10 : 0),
+              padding: EdgeInsets.only(bottom: has_view_padding_bottom ? 10 : 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -96,31 +95,29 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       );
     }
 
-    return Container(
-      child: Column(
-        children: [
-          Expanded(
-            flex: has_view_padding_bottom ? 28 : 11,
-            child: PageView(
-              onPageChanged: (int page) {
-                setState(() {
-                  current_page = page;
-                  widget.current_page_callback(current_page);
-                });
-              },
-              controller: page_controller,
-              children: pages,
-            ),
+    return Column(
+      children: [
+        Expanded(
+          flex: has_view_padding_bottom ? 28 : 11,
+          child: PageView(
+            onPageChanged: (int page) {
+              setState(() {
+                current_page = page;
+                widget.current_page_callback(current_page);
+              });
+            },
+            controller: page_controller,
+            children: pages,
           ),
-          Expanded(
-            flex: has_view_padding_bottom ? 3 : 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: buttons,
-            ),
+        ),
+        Expanded(
+          flex: has_view_padding_bottom ? 3 : 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: buttons,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

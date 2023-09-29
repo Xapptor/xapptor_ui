@@ -1,10 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'custom_card.dart';
 
 class CardHolder extends StatefulWidget {
-  CardHolder({super.key, 
+  CardHolder({
+    super.key,
     required this.on_pressed,
     this.title,
     this.subtitle = "",
@@ -37,7 +40,7 @@ class CardHolder extends StatefulWidget {
   Function? edit_function;
 
   @override
-  _CardHolderState createState() => _CardHolderState();
+  State<CardHolder> createState() => _CardHolderState();
 }
 
 class _CardHolderState extends State<CardHolder> {
@@ -77,10 +80,8 @@ class _CardHolderState extends State<CardHolder> {
                   children: <Widget>[
                     AnimatedContainer(
                       duration: animation_duration,
-                      height: constraints.maxHeight *
-                          (widget.is_focused ? 1 : size_multiplier),
-                      width: constraints.maxWidth *
-                          (widget.is_focused ? 1 : size_multiplier),
+                      height: constraints.maxHeight * (widget.is_focused ? 1 : size_multiplier),
+                      width: constraints.maxWidth * (widget.is_focused ? 1 : size_multiplier),
                       child: CustomCard(
                         animation_duration: animation_duration,
                         on_pressed: widget.on_pressed,
@@ -127,16 +128,13 @@ class _CardHolderState extends State<CardHolder> {
                       ),
                     ),
                     Align(
-                      alignment: widget.title == null && widget.subtitle.isEmpty
-                          ? Alignment.center
-                          : Alignment.topCenter,
+                      alignment:
+                          widget.title == null && widget.subtitle.isEmpty ? Alignment.center : Alignment.topCenter,
                       child: AnimatedContainer(
                         height: widget.title == null && widget.subtitle.isEmpty
-                            ? (constraints.maxHeight *
-                                (widget.is_focused ? 1 : size_multiplier))
+                            ? (constraints.maxHeight * (widget.is_focused ? 1 : size_multiplier))
                             : (constraints.maxHeight / (portrait ? 2.2 : 1.8)),
-                        width: constraints.maxWidth *
-                            (widget.is_focused ? 1 : size_multiplier),
+                        width: constraints.maxWidth * (widget.is_focused ? 1 : size_multiplier),
                         duration: animation_duration,
                         curve: Curves.linear,
                         child: CustomCard(
@@ -154,8 +152,7 @@ class _CardHolderState extends State<CardHolder> {
                                 ? Icon(
                                     widget.icon,
                                     color: Colors.white.withOpacity(1.0),
-                                    size:
-                                        MediaQuery.of(context).size.height / 20,
+                                    size: MediaQuery.of(context).size.height / 20,
                                   )
                                 : widget.image_src != ""
                                     ? ClipRRect(
@@ -166,14 +163,12 @@ class _CardHolderState extends State<CardHolder> {
                                             ? Image.network(
                                                 widget.image_src,
                                                 fit: widget.image_fit,
-                                                alignment: widget
-                                                    .background_image_alignment,
+                                                alignment: widget.background_image_alignment,
                                               )
                                             : Image.asset(
                                                 widget.image_src,
                                                 fit: widget.image_fit,
-                                                alignment: widget
-                                                    .background_image_alignment,
+                                                alignment: widget.background_image_alignment,
                                               ),
                                       )
                                     : Container(),

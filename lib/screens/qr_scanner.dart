@@ -199,23 +199,21 @@ class _QRScannerState extends State<QRScanner> {
                   //   cutOutSize: widget.cut_out_size,
                   // ),
                 ),
-                Container(
-                  child: Column(
-                    children: [
-                      const Spacer(flex: 1),
-                      Text(
-                        widget.descriptive_text,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.4),
-                          fontSize: 18,
-                        ),
+                Column(
+                  children: [
+                    const Spacer(flex: 1),
+                    Text(
+                      widget.descriptive_text,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.4),
+                        fontSize: 18,
                       ),
-                      const Spacer(flex: 6),
-                      widget.show_main_button ? main_button() : Container(),
-                      const Spacer(flex: 1),
-                    ],
-                  ),
+                    ),
+                    const Spacer(flex: 6),
+                    widget.show_main_button ? main_button() : Container(),
+                    const Spacer(flex: 1),
+                  ],
                 ),
               ],
             ),

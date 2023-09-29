@@ -5,7 +5,8 @@ import 'package:xapptor_ui/widgets/random_number_with_range.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class WidgetsCarousel extends StatefulWidget {
-  const WidgetsCarousel({super.key, 
+  const WidgetsCarousel({
+    super.key,
     required this.dot_colors_active,
     required this.dot_color_inactive,
     required this.children,
@@ -20,7 +21,7 @@ class WidgetsCarousel extends StatefulWidget {
   final Function(int new_current_page) update_current_page;
 
   @override
-  _WidgetsCarouselState createState() => _WidgetsCarouselState();
+  State<WidgetsCarousel> createState() => _WidgetsCarouselState();
 }
 
 class _WidgetsCarouselState extends State<WidgetsCarousel> {
@@ -82,51 +83,47 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
 
     page_controller = new_page_controller;
 
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 8,
-            child: Container(
-              child: PageView.builder(
-                controller: page_controller,
-                itemCount: widget.children.length,
-                onPageChanged: (int page) {
-                  setState(() {
-                    current_page = page;
-                    widget.update_current_page(page);
-                  });
-                },
-                itemBuilder: (
-                  BuildContext context,
-                  int index,
-                ) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: widget.children[index],
-                  );
-                },
-              ),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 8,
+          child: PageView.builder(
+            controller: page_controller,
+            itemCount: widget.children.length,
+            onPageChanged: (int page) {
+              setState(() {
+                current_page = page;
+                widget.update_current_page(page);
+              });
+            },
+            itemBuilder: (
+              BuildContext context,
+              int index,
+            ) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: widget.children[index],
+              );
+            },
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: SmoothPageIndicator(
+            controller: page_controller,
+            count: widget.children.length,
+            effect: SwapEffect(
+              dotColor: widget.dot_color_inactive,
+              activeDotColor: current_page < widget.dot_colors_active.length
+                  ? widget.dot_colors_active[current_page]
+                  : widget.dot_colors_active.last,
+              spacing: portrait ? 12 : 20,
+              dotHeight: portrait ? 10 : 13,
+              dotWidth: portrait ? 10 : 13,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: SmoothPageIndicator(
-              controller: page_controller,
-              count: widget.children.length,
-              effect: SwapEffect(
-                dotColor: widget.dot_color_inactive,
-                activeDotColor: current_page < widget.dot_colors_active.length
-                    ? widget.dot_colors_active[current_page]
-                    : widget.dot_colors_active.last,
-                spacing: portrait ? 12 : 20,
-                dotHeight: portrait ? 10 : 13,
-                dotWidth: portrait ? 10 : 13,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

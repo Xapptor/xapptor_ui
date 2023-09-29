@@ -577,7 +577,7 @@ List<Widget> carousel_items = [
         icon: null,
         icon_background_color: null,
         on_pressed: () {
-        launch("https://www.abeinstitute.com");
+        launchUrl("https://www.abeinstitute.com");
         },
         elevation: elevation,
         border_radius: border_radius,
@@ -592,7 +592,7 @@ List<Widget> carousel_items = [
         icon: null,
         icon_background_color: null,
         on_pressed: () {
-        launch("https://apps.apple.com/mx/app/lum/id1582217429?l=en");
+        launchUrl("https://apps.apple.com/mx/app/lum/id1582217429?l=en");
         },
         elevation: elevation,
         border_radius: border_radius,
@@ -607,7 +607,7 @@ List<Widget> carousel_items = [
         icon: null,
         icon_background_color: null,
         on_pressed: () {
-        launch("https://apps.apple.com/mx/app/mo/id1530448416?l=en");
+        launchUrl("https://apps.apple.com/mx/app/mo/id1530448416?l=en");
         },
         elevation: elevation,
         border_radius: border_radius,
@@ -622,7 +622,7 @@ List<Widget> carousel_items = [
         icon: null,
         icon_background_color: null,
         on_pressed: () {
-        launch("https://apps.apple.com/mx/app/claro-pay/id1502765283?l=en");
+        launchUrl("https://apps.apple.com/mx/app/claro-pay/id1502765283?l=en");
         },
         elevation: elevation,
         border_radius: border_radius,

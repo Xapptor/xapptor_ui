@@ -17,7 +17,7 @@ class Webview extends StatefulWidget {
   final Function(String url)? loaded_callback;
 
   @override
-  _WebviewState createState() => _WebviewState();
+  State<Webview> createState() => _WebviewState();
 }
 
 class _WebviewState extends State<Webview> {

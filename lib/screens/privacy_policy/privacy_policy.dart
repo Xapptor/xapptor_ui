@@ -8,7 +8,8 @@ import 'package:xapptor_ui/widgets/topbar.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class PrivacyPolicy extends StatefulWidget {
-  const PrivacyPolicy({super.key, 
+  const PrivacyPolicy({
+    super.key,
     required this.privacy_policy_model,
     required this.use_topbar,
     required this.topbar_color,
@@ -25,7 +26,7 @@ class PrivacyPolicy extends StatefulWidget {
   final DateTime? last_update_date;
 
   @override
-  _PrivacyPolicyState createState() => _PrivacyPolicyState();
+  State<PrivacyPolicy> createState() => _PrivacyPolicyState();
 }
 
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
@@ -38,7 +39,6 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
 
   @override
   Widget build(BuildContext context) {
-    double screen_height = MediaQuery.of(context).size.height;
     double screen_width = MediaQuery.of(context).size.width;
     bool portrait = is_portrait(context);
 
@@ -68,19 +68,15 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         const SizedBox(height: 50),
                         //
                         privacy_policy.introduction(
-                          last_update_date:
-                              widget.last_update_date ?? DateTime.now(),
+                          last_update_date: widget.last_update_date ?? DateTime.now(),
                         ),
                         //
                         privacy_policy.interpretation(),
                         privacy_policy.definitions(
                           app_name: widget.privacy_policy_model.app_name,
-                          company_name:
-                              widget.privacy_policy_model.company_name,
-                          company_address:
-                              widget.privacy_policy_model.company_address,
-                          company_country:
-                              widget.privacy_policy_model.company_country,
+                          company_name: widget.privacy_policy_model.company_name,
+                          company_address: widget.privacy_policy_model.company_address,
+                          company_country: widget.privacy_policy_model.company_country,
                           website: widget.privacy_policy_model.website,
                         ),
                         //
@@ -98,8 +94,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         privacy_policy.changes(),
                         privacy_policy.contact_us(
                           email: widget.privacy_policy_model.email,
-                          phone_number:
-                              widget.privacy_policy_model.phone_number,
+                          phone_number: widget.privacy_policy_model.phone_number,
                           website: widget.privacy_policy_model.website,
                         ),
                         //

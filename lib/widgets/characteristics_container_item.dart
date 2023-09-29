@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class CharacteristicsContainerItem extends StatefulWidget {
-  const CharacteristicsContainerItem({super.key, 
+  const CharacteristicsContainerItem({
+    super.key,
     required this.title,
     required this.description,
     required this.icon,
@@ -27,12 +28,10 @@ class CharacteristicsContainerItem extends StatefulWidget {
   final bool align_to_left_description;
 
   @override
-  _CharacteristicsContainerItemState createState() =>
-      _CharacteristicsContainerItemState();
+  State<CharacteristicsContainerItem> createState() => _CharacteristicsContainerItemState();
 }
 
-class _CharacteristicsContainerItemState
-    extends State<CharacteristicsContainerItem> {
+class _CharacteristicsContainerItemState extends State<CharacteristicsContainerItem> {
   @override
   Widget build(BuildContext context) {
     double screen_height = MediaQuery.of(context).size.height;
@@ -56,9 +55,7 @@ class _CharacteristicsContainerItemState
                 )
               : Container(),
           Column(
-            crossAxisAlignment: widget.side_icon
-                ? CrossAxisAlignment.start
-                : CrossAxisAlignment.center,
+            crossAxisAlignment: widget.side_icon ? CrossAxisAlignment.start : CrossAxisAlignment.center,
             children: [
               !widget.side_icon
                   ? Icon(
@@ -71,8 +68,7 @@ class _CharacteristicsContainerItemState
                 margin: const EdgeInsets.all(10),
                 child: SelectableText(
                   widget.title,
-                  textAlign:
-                      widget.side_icon ? TextAlign.left : TextAlign.center,
+                  textAlign: widget.side_icon ? TextAlign.left : TextAlign.center,
                   style: TextStyle(
                     color: widget.title_color,
                     fontSize: 24,
@@ -85,9 +81,7 @@ class _CharacteristicsContainerItemState
                 margin: const EdgeInsets.all(10),
                 child: SelectableText(
                   widget.description,
-                  textAlign: widget.align_to_left_description
-                      ? TextAlign.left
-                      : TextAlign.center,
+                  textAlign: widget.align_to_left_description ? TextAlign.left : TextAlign.center,
                   style: TextStyle(
                     color: widget.subtitle_color,
                     fontSize: 16,

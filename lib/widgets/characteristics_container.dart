@@ -3,15 +3,15 @@ import 'characteristics_container_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class CharacteristicsContainer extends StatefulWidget {
-  const CharacteristicsContainer({super.key, 
+  const CharacteristicsContainer({
+    super.key,
     required this.texts,
   });
 
   final List<String> texts;
 
   @override
-  _CharacteristicsContainerState createState() =>
-      _CharacteristicsContainerState();
+  State<CharacteristicsContainer> createState() => _CharacteristicsContainerState();
 }
 
 class _CharacteristicsContainerState extends State<CharacteristicsContainer> {

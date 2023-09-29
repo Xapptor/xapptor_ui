@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'dart:ui' as ui;
 
 class Webview extends StatefulWidget {
-  const Webview({super.key, 
+  const Webview({
+    super.key,
     required this.src,
     required this.id,
     this.controller_callback,
@@ -19,7 +20,7 @@ class Webview extends StatefulWidget {
   final bool page_loaded_set_state;
 
   @override
-  _WebviewState createState() => _WebviewState();
+  State<Webview> createState() => _WebviewState();
 }
 
 class _WebviewState extends State<Webview> {
@@ -54,7 +55,7 @@ class _WebviewState extends State<Webview> {
     _iframe_element.style.width = '100%';
 
     if (widget.src.toLowerCase().contains("</html>")) {
-      //print("webview source 1");
+      //debugPrint("webview source 1");
       current_src = """
                   <!DOCTYPE html>
                   <html lang="en">
@@ -78,28 +79,16 @@ class _WebviewState extends State<Webview> {
                     """;
       _iframe_element.srcdoc = current_src;
     } else if (widget.src.toLowerCase().contains("http")) {
-      //print("webview source 2");
+      //debugPrint("webview source 2");
       _iframe_element.src = current_src;
     }
 
     _iframe_element.style.border = 'none';
 
     return Center(
-      child: Container(
-        // child: !page_loaded
-        //     ? CircularProgressIndicator(
-        //         valueColor: AlwaysStoppedAnimation<Color>(
-        //           Theme.of(context).primaryColor,
-        //         ),
-        //       )
-        //     : HtmlElementView(
-        //         key: UniqueKey(),
-        //         viewType: 'iframeElement-${widget.id}',
-        //       ),
-        child: HtmlElementView(
-          key: UniqueKey(),
-          viewType: 'iframeElement-${widget.id}',
-        ),
+      child: HtmlElementView(
+        key: UniqueKey(),
+        viewType: 'iframeElement-${widget.id}',
       ),
     );
   }

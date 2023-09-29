@@ -5,7 +5,8 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class DownloadAppsContainer extends StatefulWidget {
-  const DownloadAppsContainer({super.key, 
+  const DownloadAppsContainer({
+    super.key,
     required this.texts,
     required this.background_image,
     required this.button_background_color,
@@ -28,7 +29,7 @@ class DownloadAppsContainer extends StatefulWidget {
   final String ios_url;
 
   @override
-  _DownloadAppsContainerState createState() => _DownloadAppsContainerState();
+  State createState() => _DownloadAppsContainerState();
 }
 
 class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
@@ -46,13 +47,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
           elevation: 5,
           border_radius: 10,
           on_pressed: null,
-          child: Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                widget.image_1,
-                fit: BoxFit.fitWidth,
-              ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              widget.image_1,
+              fit: BoxFit.fitWidth,
             ),
           ),
         ),
@@ -92,9 +91,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
               )
             : null,
       ),
-      height: portrait
-          ? (MediaQuery.of(context).size.height * 2)
-          : (MediaQuery.of(context).size.height),
+      height: portrait ? (MediaQuery.of(context).size.height * 2) : (MediaQuery.of(context).size.height),
       child: FractionallySizedBox(
         widthFactor: portrait ? 0.8 : 1,
         child: Column(
@@ -117,58 +114,53 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
             portrait ? Container() : const Spacer(flex: 1),
             Expanded(
               flex: 6,
-              child: Flex(
-                  direction: portrait ? Axis.vertical : Axis.horizontal,
-                  children: <Widget>[
-                    const Spacer(flex: 2),
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                        children: <Widget>[
-                          const Spacer(flex: 1),
-                          Expanded(
-                            flex: portrait ? 4 : 1,
-                            child: Text(
-                              widget.texts[1],
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: widget.subtitle_color,
-                                fontSize: 22,
-                              ),
-                            ),
-                          ),
-                          const Spacer(flex: 1),
-                        ],
-                      ),
-                    ),
-                    const Spacer(flex: 1),
-                    Expanded(
-                      flex: portrait ? 6 : 4,
-                      child: CustomCard(
-                        elevation: 5,
-                        border_radius: 10,
-                        on_pressed: null,
-                        child: Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              widget.image_2,
-                              fit: BoxFit.fitWidth,
-                            ),
+              child: Flex(direction: portrait ? Axis.vertical : Axis.horizontal, children: <Widget>[
+                const Spacer(flex: 2),
+                Expanded(
+                  flex: 4,
+                  child: Column(
+                    children: <Widget>[
+                      const Spacer(flex: 1),
+                      Expanded(
+                        flex: portrait ? 4 : 1,
+                        child: Text(
+                          widget.texts[1],
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: widget.subtitle_color,
+                            fontSize: 22,
                           ),
                         ),
                       ),
+                      const Spacer(flex: 1),
+                    ],
+                  ),
+                ),
+                const Spacer(flex: 1),
+                Expanded(
+                  flex: portrait ? 6 : 4,
+                  child: CustomCard(
+                    elevation: 5,
+                    border_radius: 10,
+                    on_pressed: null,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        widget.image_2,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                    const Spacer(flex: 2),
-                  ]),
+                  ),
+                ),
+                const Spacer(flex: 2),
+              ]),
             ),
             portrait ? Container() : const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(
                 direction: portrait ? Axis.vertical : Axis.horizontal,
-                children:
-                    portrait ? widgets_list.reversed.toList() : widgets_list,
+                children: portrait ? widgets_list.reversed.toList() : widgets_list,
               ),
             ),
             portrait ? Container() : const Spacer(flex: 1),
@@ -254,7 +246,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
           end: Alignment.bottomCenter,
         ),
         on_pressed: () {
-          launch(download_url);
+          launchUrl(download_url);
         },
         child: FractionallySizedBox(
           heightFactor: icon_size_factor,

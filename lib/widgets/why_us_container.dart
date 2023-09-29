@@ -4,7 +4,8 @@ import 'characteristics_container_item.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 
 class WhyUsContainer extends StatefulWidget {
-  const WhyUsContainer({super.key, 
+  const WhyUsContainer({
+    super.key,
     required this.texts,
     required this.background_image,
     required this.background_color,
@@ -25,14 +26,12 @@ class WhyUsContainer extends StatefulWidget {
   final Color subtitle_color;
 
   @override
-  _WhyUsContainerState createState() => _WhyUsContainerState();
+  State<WhyUsContainer> createState() => _WhyUsContainerState();
 }
 
 class _WhyUsContainerState extends State<WhyUsContainer> {
   @override
   Widget build(BuildContext context) {
-    double screen_height = MediaQuery.of(context).size.height;
-    double screen_width = MediaQuery.of(context).size.width;
     bool portrait = is_portrait(context);
 
     return Container(
@@ -51,14 +50,12 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: sized_box_space * 2),
-          Container(
-            child: SelectableText(
-              widget.texts[0],
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: widget.title_color,
-                fontSize: portrait ? 30 : 40,
-              ),
+          SelectableText(
+            widget.texts[0],
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: widget.title_color,
+              fontSize: portrait ? 30 : 40,
             ),
           ),
           Container(
