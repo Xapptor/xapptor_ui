@@ -242,8 +242,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                   "to": widget.email,
                                                   "message": {
                                                     "subject":
-                                                        "Message from contact us section: " +
-                                                            '"' +
+                                                        "Message from contact us section: " '"' +
                                                             subject_input_controller
                                                                 .text +
                                                             '"',
