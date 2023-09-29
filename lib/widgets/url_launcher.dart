@@ -9,7 +9,6 @@ launch_url(String url, String fallback_url) async {
         Uri.parse(fallback_url),
       );
     }
-    ;
   } catch (e) {
     print(e);
     await launchUrl(
