@@ -72,7 +72,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
           colors: widget.linear_gradient_colors,
-          stops: [0.0, 1.0],
+          stops: const [0.0, 1.0],
         ),
         child: Column(
           children: <Widget>[

@@ -117,7 +117,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
             Colors.lightBlueAccent.withOpacity(0.0),
             Colors.blue.withOpacity(0.0),
           ],
-          stops: [0.0, 1.0],
+          stops: const [0.0, 1.0],
         ),
         child: Center(
           child: Stack(
