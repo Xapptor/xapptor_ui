@@ -492,10 +492,10 @@ Widget custom_icon_button({
         urls[1],
       );
     },
+    shape: BoxShape.circle,
     child: Icon(
       icon,
       color: icon_color,
     ),
-    shape: BoxShape.circle,
   );
 }
