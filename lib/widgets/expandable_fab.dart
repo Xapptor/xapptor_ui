@@ -3,8 +3,8 @@ import 'dart:math' as math;
 
 @immutable
 class ExpandableFab extends StatefulWidget {
-  const ExpandableFab({super.key, 
-    Key? key,
+  const ExpandableFab({
+    super.key,
     this.initial_open,
     required this.distance,
     required this.children,
@@ -24,8 +24,7 @@ class ExpandableFab extends StatefulWidget {
   _ExpandableFabState createState() => _ExpandableFabState();
 }
 
-class _ExpandableFabState extends State<ExpandableFab>
-    with SingleTickerProviderStateMixin {
+class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _expand_animation;
   bool _open = false;
@@ -106,9 +105,7 @@ class _ExpandableFabState extends State<ExpandableFab>
     var children = <Widget>[];
     final count = widget.children.length;
     final step = 90.0 / (count - 1);
-    for (var i = 0, angle_in_degrees = 0.0;
-        i < count;
-        i++, angle_in_degrees += step) {
+    for (var i = 0, angle_in_degrees = 0.0; i < count; i++, angle_in_degrees += step) {
       children.add(
         _ExpandingActionButton(
           direction_in_degrees: angle_in_degrees,
