@@ -26,9 +26,7 @@ class _WebVideoVisualizerState extends State<WebVideoVisualizer> {
   }
 
   check_url() async {
-    if (widget.id == null) {
-      widget.id = get_last_path_segment();
-    }
+    widget.id ??= get_last_path_segment();
     complete_url = widget.base_url + widget.id!;
     setState(() {});
   }
