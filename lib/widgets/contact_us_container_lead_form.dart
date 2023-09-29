@@ -411,37 +411,12 @@ class _ContactUsContainerLeadFormState
                                                 birthday_label !=
                                                     "Fecha de Nacimiento") {
                                               String newMessage =
-                                                  name_input_controller.text +
-                                                      " has a message for you! \n\n" +
-                                                      "You have a new Lead: \n\n " +
-                                                      "Insurance Type: " +
-                                                      insurance_type_value +
-                                                      "\n" +
-                                                      "Schedule: " +
-                                                      schedule_value +
-                                                      "\n" +
-                                                      "Name: " +
-                                                      name_input_controller
-                                                          .text +
-                                                      "\n" +
-                                                      "Address: " +
-                                                      address_input_controller
-                                                          .text +
-                                                      "\n" +
-                                                      "Zip Code: " +
-                                                      zip_code_input_controller
-                                                          .text +
-                                                      "\n" +
-                                                      "Telephone Number: " +
-                                                      telephone_number_input_controller
-                                                          .text +
-                                                      "\n" +
-                                                      "Email: " +
-                                                      email_input_controller
-                                                          .text +
-                                                      "\n" +
-                                                      "Date of Birth: " +
-                                                      birthday_label;
+                                                  "${name_input_controller.text} has a message for you! \n\nYou have a new Lead: \n\n Insurance Type: $insurance_type_value\nSchedule: $schedule_value\nName: ${name_input_controller
+                                                          .text}\nAddress: ${address_input_controller
+                                                          .text}\nZip Code: ${zip_code_input_controller
+                                                          .text}\nTelephone Number: ${telephone_number_input_controller
+                                                          .text}\nEmail: ${email_input_controller
+                                                          .text}\nDate of Birth: $birthday_label";
 
                                               FirebaseFirestore.instance
                                                   .collection("emails")
@@ -450,9 +425,8 @@ class _ContactUsContainerLeadFormState
                                                 "to": widget.email,
                                                 "message": {
                                                   "subject":
-                                                      "You have a new Lead: " +
-                                                          name_input_controller
-                                                              .text,
+                                                      "You have a new Lead: ${name_input_controller
+                                                              .text}",
                                                   "text": newMessage,
                                                 }
                                               }).then((value) {

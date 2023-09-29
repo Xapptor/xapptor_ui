@@ -231,13 +231,9 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                   message_input_controller
                                                       .text.isNotEmpty) {
                                                 String newMessage =
-                                                    name_input_controller.text +
-                                                        " has a message for you! \n\n Email: " +
-                                                        email_input_controller
-                                                            .text +
-                                                        "\n\n Message: " +
-                                                        message_input_controller
-                                                            .text;
+                                                    "${name_input_controller.text} has a message for you! \n\n Email: ${email_input_controller
+                                                            .text}\n\n Message: ${message_input_controller
+                                                            .text}";
 
                                                 FirebaseFirestore.instance
                                                     .collection("emails")

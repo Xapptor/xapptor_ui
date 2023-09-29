@@ -72,9 +72,7 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      country_phone_code_list[index].name.split(',').first +
-                          ' ' +
-                          country_phone_code_list[index].dial_code,
+                      '${country_phone_code_list[index].name.split(',').first} ${country_phone_code_list[index].dial_code}',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: widget.text_color,
@@ -95,9 +93,7 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
     return TextButton(
       onPressed: show_alert,
       child: Text(
-        widget.current_phone_code.value.name.split(',').first +
-            ' ' +
-            widget.current_phone_code.value.dial_code,
+        '${widget.current_phone_code.value.name.split(',').first} ${widget.current_phone_code.value.dial_code}',
         style: TextStyle(
           color: widget.text_color,
         ),

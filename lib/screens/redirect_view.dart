@@ -28,7 +28,7 @@ class _RedirectViewState extends State<RedirectView> {
     int screen_name_index = current_url.indexOf(widget.screen_name);
 
     String new_url =
-        widget.redirect_url + "/" + current_url.substring(screen_name_index);
+        "${widget.redirect_url}/${current_url.substring(screen_name_index)}";
 
     await launchUrl(Uri.parse("https://flutter.io"));
   }
