@@ -39,7 +39,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
     bool portrait = is_portrait(context);
 
     var widgets_list = <Widget>[
-      Spacer(flex: 2),
+      const Spacer(flex: 2),
       Expanded(
         flex: portrait ? 6 : 4,
         child: CustomCard(
@@ -57,12 +57,12 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
           ),
         ),
       ),
-      Spacer(flex: 1),
+      const Spacer(flex: 1),
       Expanded(
         flex: 4,
         child: Column(
           children: <Widget>[
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
             Expanded(
               flex: portrait ? 4 : 1,
               child: Text(
@@ -74,11 +74,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 ),
               ),
             ),
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
           ],
         ),
       ),
-      Spacer(flex: 2),
+      const Spacer(flex: 2),
     ];
 
     return Container(
@@ -99,7 +99,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
         widthFactor: portrait ? 0.8 : 1,
         child: Column(
           children: <Widget>[
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
             Expanded(
               flex: 2,
               child: AutoSizeText(
@@ -114,18 +114,18 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 overflow: TextOverflow.clip,
               ),
             ),
-            portrait ? Container() : Spacer(flex: 1),
+            portrait ? Container() : const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(
                   direction: portrait ? Axis.vertical : Axis.horizontal,
                   children: <Widget>[
-                    Spacer(flex: 2),
+                    const Spacer(flex: 2),
                     Expanded(
                       flex: 4,
                       child: Column(
                         children: <Widget>[
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                           Expanded(
                             flex: portrait ? 4 : 1,
                             child: Text(
@@ -137,11 +137,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                               ),
                             ),
                           ),
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                         ],
                       ),
                     ),
-                    Spacer(flex: 1),
+                    const Spacer(flex: 1),
                     Expanded(
                       flex: portrait ? 6 : 4,
                       child: CustomCard(
@@ -159,10 +159,10 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                         ),
                       ),
                     ),
-                    Spacer(flex: 2),
+                    const Spacer(flex: 2),
                   ]),
             ),
-            portrait ? Container() : Spacer(flex: 1),
+            portrait ? Container() : const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(
@@ -171,18 +171,18 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                     portrait ? widgets_list.reversed.toList() : widgets_list,
               ),
             ),
-            portrait ? Container() : Spacer(flex: 1),
+            portrait ? Container() : const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(
                 direction: portrait ? Axis.vertical : Axis.horizontal,
                 children: <Widget>[
-                  Spacer(flex: 2),
+                  const Spacer(flex: 2),
                   Expanded(
                     flex: 4,
                     child: Column(
                       children: <Widget>[
-                        portrait ? Container() : Spacer(flex: 1),
+                        portrait ? Container() : const Spacer(flex: 1),
                         Expanded(
                           flex: portrait ? 20 : 1,
                           child: Text(
@@ -194,11 +194,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                             ),
                           ),
                         ),
-                        Spacer(flex: 1),
+                        const Spacer(flex: 1),
                       ],
                     ),
                   ),
-                  Spacer(flex: 1),
+                  const Spacer(flex: 1),
                   Expanded(
                     flex: portrait ? 6 : 4,
                     child: FractionallySizedBox(
@@ -214,7 +214,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                               tooltip: "Android App",
                             ),
                           ),
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                           Expanded(
                             flex: 4,
                             child: download_button(
@@ -227,11 +227,11 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                       ),
                     ),
                   ),
-                  Spacer(flex: 2),
+                  const Spacer(flex: 2),
                 ],
               ),
             ),
-            portrait ? Container() : Spacer(flex: 2),
+            portrait ? Container() : const Spacer(flex: 2),
           ],
         ),
       ),

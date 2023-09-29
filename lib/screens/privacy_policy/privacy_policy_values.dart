@@ -14,7 +14,7 @@ Widget custom_title_1(String text) {
     child: SelectableText(
       text,
       textAlign: TextAlign.left,
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 20,
       ),
@@ -29,7 +29,7 @@ Widget custom_title_2(String text) {
     child: SelectableText(
       text,
       textAlign: TextAlign.left,
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
@@ -44,7 +44,7 @@ Widget custom_title_3(String text) {
     child: SelectableText(
       text,
       textAlign: TextAlign.left,
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 16,
       ),
@@ -62,7 +62,7 @@ Widget custom_text(
     child: SelectableText(
       text,
       textAlign: TextAlign.left,
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.normal,
         fontSize: 14,
       ),

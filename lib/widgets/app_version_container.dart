@@ -51,7 +51,7 @@ class _AppVersionContainerState extends State<AppVersionContainer> {
           height: view_padding_bottom + (view_padding_bottom > 0 ? 10 : 30),
           width: MediaQuery.of(context).size.width,
           color: widget.background_color,
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: Text(
             software_version,
             textAlign: TextAlign.center,

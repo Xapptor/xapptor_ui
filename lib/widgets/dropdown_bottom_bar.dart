@@ -54,7 +54,7 @@ class _DropdownBottomBarState extends State<DropdownBottomBar>
                     show_animated_container = true;
                     setState(() {});
 
-                    Timer(Duration(milliseconds: 350), () {
+                    Timer(const Duration(milliseconds: 350), () {
                       show_child = true;
                       setState(() {});
                     });
@@ -78,7 +78,7 @@ class _DropdownBottomBarState extends State<DropdownBottomBar>
                       widget.title != null
                           ? Text(
                               widget.title!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),

@@ -68,7 +68,7 @@ class _CharacteristicsContainerItemState
                     )
                   : Container(),
               Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: SelectableText(
                   widget.title,
                   textAlign:
@@ -82,7 +82,7 @@ class _CharacteristicsContainerItemState
               ),
               Container(
                 width: ((screen_width / (portrait ? 1 : 3)) * 0.8),
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: SelectableText(
                   widget.description,
                   textAlign: widget.align_to_left_description

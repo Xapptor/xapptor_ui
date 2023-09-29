@@ -41,13 +41,13 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     timer = Timer(Duration(seconds: delay_seconds), () {
       if (current_page < widget.children.length - 1) {
         page_controller.nextPage(
-          duration: Duration(milliseconds: 900),
+          duration: const Duration(milliseconds: 900),
           curve: animation_curve,
         );
       } else {
         page_controller.animateToPage(
           0,
-          duration: Duration(milliseconds: 900),
+          duration: const Duration(milliseconds: 900),
           curve: animation_curve,
         );
       }
@@ -102,7 +102,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
                   int index,
                 ) {
                   return Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
                     child: widget.children[index],
                   );
                 },

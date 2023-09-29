@@ -32,7 +32,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
   // Update current page.
 
   update_current_page() {
-    Timer(Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 500), () {
       current_page = widget.initial_page;
       page_controller.jumpToPage(current_page);
       setState(() {});
@@ -61,7 +61,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
               int new_page_index = pages.indexOf(button.page);
               page_controller.animateToPage(
                 new_page_index,
-                duration: Duration(milliseconds: 150),
+                duration: const Duration(milliseconds: 150),
                 curve: Curves.linear,
               );
             },

@@ -124,8 +124,8 @@ class _ContactUsContainerLeadFormState
         ),
         child: Column(
           children: <Widget>[
-            Spacer(flex: 1),
-            Expanded(
+            const Spacer(flex: 1),
+            const Expanded(
               flex: 1,
               child: FractionallySizedBox(
                 widthFactor: 0.7,
@@ -141,7 +141,7 @@ class _ContactUsContainerLeadFormState
             ),
             Expanded(
               flex: portrait ? 2 : 1,
-              child: FractionallySizedBox(
+              child: const FractionallySizedBox(
                 widthFactor: 0.55,
                 child: Text(
                   "Mandanos tu información para ofrecerte el mejor servicio",
@@ -184,12 +184,12 @@ class _ContactUsContainerLeadFormState
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                           Expanded(
                             flex: 10,
                             child: Column(
                               children: <Widget>[
-                                portrait ? Container() : Spacer(flex: 1),
+                                portrait ? Container() : const Spacer(flex: 1),
                                 Expanded(
                                   flex: portrait ? 30 : 8,
                                   child: Flex(
@@ -207,7 +207,7 @@ class _ContactUsContainerLeadFormState
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Spacer(flex: 2),
+                                                  const Spacer(flex: 2),
                                                   DropdownButton<String>(
                                                     isExpanded: true,
                                                     value: insurance_type_value,
@@ -238,7 +238,7 @@ class _ContactUsContainerLeadFormState
                                                       );
                                                     }).toList(),
                                                   ),
-                                                  Spacer(flex: 10),
+                                                  const Spacer(flex: 10),
                                                   DropdownButton<String>(
                                                     isExpanded: true,
                                                     value: schedule_value,
@@ -268,7 +268,7 @@ class _ContactUsContainerLeadFormState
                                                       );
                                                     }).toList(),
                                                   ),
-                                                  Spacer(flex: 8),
+                                                  const Spacer(flex: 8),
                                                 ],
                                               ),
                                             ),
@@ -277,7 +277,7 @@ class _ContactUsContainerLeadFormState
                                               child: TextFormField(
                                                 controller:
                                                     name_input_controller,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   labelText: "Nombre completo",
                                                 ),
                                                 onSaved: (value) {},
@@ -293,7 +293,7 @@ class _ContactUsContainerLeadFormState
                                               child: TextFormField(
                                                 controller:
                                                     address_input_controller,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   labelText: "Dirección",
                                                 ),
                                                 onSaved: (value) {},
@@ -307,7 +307,7 @@ class _ContactUsContainerLeadFormState
                                           ],
                                         ),
                                       ),
-                                      Spacer(flex: 1),
+                                      const Spacer(flex: 1),
                                       Expanded(
                                         flex: 10,
                                         child: Column(
@@ -317,7 +317,7 @@ class _ContactUsContainerLeadFormState
                                               child: TextFormField(
                                                 controller:
                                                     zip_code_input_controller,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   labelText: "Código postal",
                                                 ),
                                                 onSaved: (value) {},
@@ -333,7 +333,7 @@ class _ContactUsContainerLeadFormState
                                               child: TextFormField(
                                                 controller:
                                                     telephone_number_input_controller,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   labelText:
                                                       "Número de teléfono",
                                                 ),
@@ -350,7 +350,7 @@ class _ContactUsContainerLeadFormState
                                               child: TextFormField(
                                                 controller:
                                                     email_input_controller,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                   labelText:
                                                       "Correo electrónico",
                                                 ),
@@ -387,12 +387,12 @@ class _ContactUsContainerLeadFormState
                                     ],
                                   ),
                                 ),
-                                !portrait ? Container() : Spacer(flex: 1),
+                                !portrait ? Container() : const Spacer(flex: 1),
                                 Expanded(
                                   flex: portrait ? 3 : 1,
                                   child: Row(
                                     children: <Widget>[
-                                      portrait ? Spacer(flex: 1) : Container(),
+                                      portrait ? const Spacer(flex: 1) : Container(),
                                       Expanded(
                                         flex: 2,
                                         child: CustomCard(
@@ -477,7 +477,7 @@ class _ContactUsContainerLeadFormState
                                                     widget.feedback_message,
                                                   ),
                                                   duration:
-                                                      Duration(seconds: 2),
+                                                      const Duration(seconds: 2),
                                                 ));
 
                                                 setState(() {});
@@ -486,7 +486,7 @@ class _ContactUsContainerLeadFormState
                                               });
                                             } else {
                                               ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
+                                                  .showSnackBar(const SnackBar(
                                                 content: Text(
                                                   "Debes seleccionar seguro de interés, horario de contacto y fecha de nacimiento",
                                                 ),
@@ -494,7 +494,7 @@ class _ContactUsContainerLeadFormState
                                               ));
                                             }
                                           },
-                                          child: Row(
+                                          child: const Row(
                                             children: <Widget>[
                                               Spacer(flex: 1),
                                               Expanded(
@@ -527,11 +527,11 @@ class _ContactUsContainerLeadFormState
                                     ],
                                   ),
                                 ),
-                                portrait ? Container() : Spacer(flex: 1),
+                                portrait ? Container() : const Spacer(flex: 1),
                               ],
                             ),
                           ),
-                          portrait ? Container() : Spacer(flex: 1),
+                          portrait ? Container() : const Spacer(flex: 1),
                           Expanded(
                             flex: portrait ? 5 : 4,
                             child: Column(
@@ -544,8 +544,8 @@ class _ContactUsContainerLeadFormState
                                     color: widget.icon_color,
                                   ),
                                 ),
-                                Spacer(flex: 1),
-                                Expanded(
+                                const Spacer(flex: 1),
+                                const Expanded(
                                   flex: 3,
                                   child: SelectableText(
                                     "Miami, FL, U.S.A.",
@@ -557,7 +557,7 @@ class _ContactUsContainerLeadFormState
                                     ),
                                   ),
                                 ),
-                                Spacer(flex: 2),
+                                const Spacer(flex: 2),
                                 Expanded(
                                   flex: 1,
                                   child: Icon(
@@ -565,8 +565,8 @@ class _ContactUsContainerLeadFormState
                                     color: widget.icon_color,
                                   ),
                                 ),
-                                Spacer(flex: 1),
-                                Expanded(
+                                const Spacer(flex: 1),
+                                const Expanded(
                                   flex: 2,
                                   child: SelectableText(
                                     "+1 (954) 995-9592",
@@ -578,7 +578,7 @@ class _ContactUsContainerLeadFormState
                                     ),
                                   ),
                                 ),
-                                Spacer(flex: 2),
+                                const Spacer(flex: 2),
                                 Expanded(
                                   flex: 1,
                                   child: Icon(
@@ -586,8 +586,8 @@ class _ContactUsContainerLeadFormState
                                     color: widget.icon_color,
                                   ),
                                 ),
-                                Spacer(flex: 1),
-                                Expanded(
+                                const Spacer(flex: 1),
+                                const Expanded(
                                   flex: 4,
                                   child: SelectableText(
                                     "it-support@abeinstitute.com",
@@ -599,12 +599,12 @@ class _ContactUsContainerLeadFormState
                                     ),
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                const Spacer(flex: 1),
                                 Expanded(
                                   flex: 3,
                                   child: Row(
                                     children: <Widget>[
-                                      Spacer(flex: 1),
+                                      const Spacer(flex: 1),
                                       widget.facebook_url != null
                                           ? Expanded(
                                               flex: 5,
@@ -659,15 +659,15 @@ class _ContactUsContainerLeadFormState
                                               ),
                                             )
                                           : Container(),
-                                      Spacer(flex: 1),
+                                      const Spacer(flex: 1),
                                     ],
                                   ),
                                 ),
-                                portrait ? Container() : Spacer(flex: 6),
+                                portrait ? Container() : const Spacer(flex: 6),
                               ],
                             ),
                           ),
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                         ],
                       ),
                     ),
@@ -675,7 +675,7 @@ class _ContactUsContainerLeadFormState
                 ),
               ),
             ),
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
           ],
         ),
       ),

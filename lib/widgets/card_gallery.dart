@@ -53,7 +53,7 @@ class _CardGalleryState extends State<CardGallery> {
 
     if (widget.add_initial_space) {
       card_holders.add(
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
       );

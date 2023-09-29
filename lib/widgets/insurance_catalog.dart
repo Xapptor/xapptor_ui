@@ -66,7 +66,7 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
                   child: Text(
                     widget.texts[0],
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 36,
                       //fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
                               widget.more_information_function,
                         ),
                       ),
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Expanded(
                         flex: 6,
                         child: InsuranceCatalogItem(
@@ -106,7 +106,7 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
                               widget.more_information_function,
                         ),
                       ),
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Expanded(
                         flex: 6,
                         child: InsuranceCatalogItem(
@@ -123,7 +123,7 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
                 ),
               ),
             ),
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
           ],
         ),
       ),

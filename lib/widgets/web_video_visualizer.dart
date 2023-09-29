@@ -40,7 +40,7 @@ class _WebVideoVisualizerState extends State<WebVideoVisualizer> {
         child: complete_url.isNotEmpty
             ? Webview(
                 src: complete_url,
-                id: Uuid().v4(),
+                id: const Uuid().v4(),
               )
             : Container(),
       ),

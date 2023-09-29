@@ -34,7 +34,7 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
         alert_height = screen_height * (portrait ? 0.7 : 0.5);
 
         return AlertDialog(
-          title: Text("Choose phone country code"),
+          title: const Text("Choose phone country code"),
           content: Container(
             height: alert_height,
             width: screen_width * (portrait ? 1 : 0.3),

@@ -20,13 +20,13 @@ Widget switch_button({
     ),
     child: Row(
       children: [
-        Spacer(flex: 1),
+        const Spacer(flex: 1),
         Expanded(
           flex: 9,
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ Widget switch_button({
             inactiveThumbColor: inactive_color,
           ),
         ),
-        Spacer(flex: 2),
+        const Spacer(flex: 2),
       ],
     ),
   );

@@ -48,7 +48,7 @@ class _InsuranceCatalogItemState extends State<InsuranceCatalogItem> {
                 child: AutoSizeText(
                   widget.texts[0],
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -71,7 +71,7 @@ class _InsuranceCatalogItemState extends State<InsuranceCatalogItem> {
                       child: AutoSizeText(
                         widget.texts[1],
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                         minFontSize: 10,
@@ -85,7 +85,7 @@ class _InsuranceCatalogItemState extends State<InsuranceCatalogItem> {
                       child: AutoSizeText(
                         widget.texts[2],
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                         minFontSize: 10,
@@ -99,7 +99,7 @@ class _InsuranceCatalogItemState extends State<InsuranceCatalogItem> {
                       child: AutoSizeText(
                         widget.texts[3],
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                         minFontSize: 10,
@@ -147,7 +147,7 @@ class _InsuranceCatalogItemState extends State<InsuranceCatalogItem> {
                 ),
               ),
             ),
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
           ],
         ),
       ),

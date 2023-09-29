@@ -21,7 +21,7 @@ AppBar TopBar({
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(await current_app_version()),
-            duration: Duration(seconds: 4),
+            duration: const Duration(seconds: 4),
           ),
         );
       },
@@ -32,7 +32,7 @@ AppBar TopBar({
                   width: topbar_height,
                   child: Webview(
                     src: logo_path,
-                    id: Uuid().v4(),
+                    id: const Uuid().v4(),
                   ),
                 )
               : Image.asset(

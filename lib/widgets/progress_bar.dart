@@ -95,7 +95,7 @@ class _ProgressBarState extends State<ProgressBar> {
                 child: AnimatedContainer(
                   height: widget.height,
                   width: (widget.parent_width * current_percentage) / 100,
-                  duration: Duration(milliseconds: 600),
+                  duration: const Duration(milliseconds: 600),
                   curve: Curves.fastOutSlowIn,
                   decoration: BoxDecoration(
                     color: widget.color,

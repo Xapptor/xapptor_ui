@@ -76,7 +76,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
         ),
         child: Column(
           children: <Widget>[
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
             Expanded(
               flex: 1,
               child: FractionallySizedBox(
@@ -84,7 +84,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                 child: SelectableText(
                   widget.texts[0],
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                   ),
@@ -98,7 +98,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                 child: SelectableText(
                   widget.texts[1],
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                   ),
@@ -136,12 +136,12 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                           Expanded(
                             flex: 10,
                             child: Column(
                               children: <Widget>[
-                                portrait ? Container() : Spacer(flex: 1),
+                                portrait ? Container() : const Spacer(flex: 1),
                                 Expanded(
                                   flex: 1,
                                   child: TextFormField(
@@ -209,7 +209,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     child: Row(
                                       children: <Widget>[
                                         portrait
-                                            ? Spacer(flex: 1)
+                                            ? const Spacer(flex: 1)
                                             : Container(),
                                         Expanded(
                                           flex: 2,
@@ -268,7 +268,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                         widget.feedback_message,
                                                       ),
                                                       duration:
-                                                          Duration(seconds: 2),
+                                                          const Duration(seconds: 2),
                                                     ),
                                                   );
                                                 }).catchError((err) {
@@ -282,15 +282,15 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                       widget.texts[10],
                                                     ),
                                                     duration:
-                                                        Duration(seconds: 2),
+                                                        const Duration(seconds: 2),
                                                   ),
                                                 );
                                               }
                                             },
                                             child: Row(
                                               children: <Widget>[
-                                                Spacer(flex: 1),
-                                                Expanded(
+                                                const Spacer(flex: 1),
+                                                const Expanded(
                                                   flex: 5,
                                                   child: Icon(
                                                     FontAwesomeIcons.paperPlane,
@@ -298,19 +298,19 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                     size: 16,
                                                   ),
                                                 ),
-                                                Spacer(flex: 1),
+                                                const Spacer(flex: 1),
                                                 Expanded(
                                                   flex: 7,
                                                   child: SelectableText(
                                                     widget.texts[6],
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 12,
                                                     ),
                                                   ),
                                                 ),
-                                                Spacer(flex: 1),
+                                                const Spacer(flex: 1),
                                               ],
                                             ),
                                           ),
@@ -320,11 +320,11 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     ),
                                   ),
                                 ),
-                                portrait ? Container() : Spacer(flex: 1),
+                                portrait ? Container() : const Spacer(flex: 1),
                               ],
                             ),
                           ),
-                          portrait ? Container() : Spacer(flex: 1),
+                          portrait ? Container() : const Spacer(flex: 1),
                           Expanded(
                             flex: portrait ? 10 : 4,
                             child: Column(
@@ -337,19 +337,19 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     color: widget.icon_color,
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                const Spacer(flex: 1),
                                 Expanded(
                                   flex: 3,
                                   child: SelectableText(
                                     widget.texts[7],
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
                                   ),
                                 ),
-                                Spacer(flex: 2),
+                                const Spacer(flex: 2),
                                 Expanded(
                                   flex: 1,
                                   child: Icon(
@@ -357,19 +357,19 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     color: widget.icon_color,
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                const Spacer(flex: 1),
                                 Expanded(
                                   flex: 2,
                                   child: SelectableText(
                                     widget.texts[8],
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
                                   ),
                                 ),
-                                Spacer(flex: 2),
+                                const Spacer(flex: 2),
                                 Expanded(
                                   flex: 1,
                                   child: Icon(
@@ -377,24 +377,24 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                     color: widget.icon_color,
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                const Spacer(flex: 1),
                                 Expanded(
                                   flex: 4,
                                   child: SelectableText(
                                     widget.texts[9],
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                const Spacer(flex: 1),
                                 Expanded(
                                   flex: 3,
                                   child: Row(
                                     children: <Widget>[
-                                      Spacer(flex: 1),
+                                      const Spacer(flex: 1),
                                       widget.facebook_url != null
                                           ? Expanded(
                                               flex: 5,
@@ -449,15 +449,15 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                               ),
                                             )
                                           : Container(),
-                                      Spacer(flex: 1),
+                                      const Spacer(flex: 1),
                                     ],
                                   ),
                                 ),
-                                portrait ? Container() : Spacer(flex: 6),
+                                portrait ? Container() : const Spacer(flex: 6),
                               ],
                             ),
                           ),
-                          Spacer(flex: 1),
+                          const Spacer(flex: 1),
                         ],
                       ),
                     ),
@@ -465,7 +465,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                 ),
               ),
             ),
-            Spacer(flex: 1),
+            const Spacer(flex: 1),
           ],
         ),
       ),
@@ -480,7 +480,7 @@ Widget custom_icon_button({
 }) {
   return CustomCard(
     splash_color: icon_color.withOpacity(0.3),
-    linear_gradient: LinearGradient(
+    linear_gradient: const LinearGradient(
       colors: [
         Colors.transparent,
         Colors.transparent,

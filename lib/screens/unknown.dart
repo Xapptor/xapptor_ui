@@ -30,7 +30,7 @@ class UnknownScreen extends StatelessWidget {
           heightFactor: portrait ? 1 : 0.6,
           widthFactor: portrait ? 1 : 0.6,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
                 fit: BoxFit.contain,

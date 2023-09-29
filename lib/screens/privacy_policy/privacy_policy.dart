@@ -65,7 +65,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                         //
                         privacy_policy.introduction(
                           last_update_date:
@@ -103,14 +103,14 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                           website: widget.privacy_policy_model.website,
                         ),
                         //
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                       ],
                     ),
                   ),
                 )
               : Webview(
                   src: "${widget.privacy_policy_model.website}/privacy_policy",
-                  id: Uuid().v4(),
+                  id: const Uuid().v4(),
                 ),
         ),
       ),

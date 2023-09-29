@@ -49,7 +49,7 @@ class UrlText extends StatelessWidget {
         },
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             decoration: TextDecoration.underline,
             color: Colors.blue,

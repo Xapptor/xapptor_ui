@@ -51,7 +51,7 @@ description_card({
             ),
           ),
           Container(
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               top: 10,
               bottom: 10,
             ),
@@ -69,7 +69,7 @@ description_card({
                 launch(description_card.url);
               },
               style: TextButton.styleFrom(
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
               ),
               child: Text(
                 description_card.url_title,
@@ -97,7 +97,7 @@ description_card({
     alignment: Alignment.center,
     children: [
       AnimatedPositioned(
-        duration: Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 1000),
         curve: Curves.easeInOut,
         left: card_visible
             ? 0

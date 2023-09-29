@@ -42,7 +42,7 @@ class CardHolder extends StatefulWidget {
 
 class _CardHolderState extends State<CardHolder> {
   double size_multiplier = 0.85;
-  Duration animation_duration = Duration(milliseconds: 100);
+  Duration animation_duration = const Duration(milliseconds: 100);
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _CardHolderState extends State<CardHolder> {
                 setState(() {});
               },
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Stack(
                   alignment: Alignment.center,
                   children: <Widget>[
@@ -202,7 +202,7 @@ class _CardHolderState extends State<CardHolder> {
                       onTap: () {
                         widget.delete_function!();
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 56,
                         height: 56,
                         child: Icon(
@@ -230,7 +230,7 @@ class _CardHolderState extends State<CardHolder> {
                       onTap: () {
                         widget.edit_function!();
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 56,
                         height: 56,
                         child: Icon(

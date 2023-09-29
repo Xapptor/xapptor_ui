@@ -59,7 +59,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
   // Init icon animation.
 
   init_animation() {
-    lower_the_icon_timer = Timer(Duration(seconds: 3), () {
+    lower_the_icon_timer = Timer(const Duration(seconds: 3), () {
       lower_the_icon = !lower_the_icon;
       setState(() {});
     });
@@ -126,7 +126,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                 child: Center(
                   child: Column(
                     children: <Widget>[
-                      Spacer(flex: 10),
+                      const Spacer(flex: 10),
                       widget.logo_image != null &&
                               (widget.texts.length > 1 ||
                                   (widget.texts.length == 1 && !portrait))
@@ -134,8 +134,8 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                               flex: 12,
                               child: image_widget,
                             )
-                          : Spacer(flex: 14),
-                      Spacer(flex: 1),
+                          : const Spacer(flex: 14),
+                      const Spacer(flex: 1),
                       Expanded(
                         flex: portrait ? 12 : 5,
                         child: FractionallySizedBox(
@@ -147,7 +147,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                                 flex: portrait ? 6 : 12,
                                 child: SelectableText(
                                   widget.texts[0],
-                                  toolbarOptions: ToolbarOptions(
+                                  toolbarOptions: const ToolbarOptions(
                                     copy: true,
                                     paste: true,
                                     selectAll: true,
@@ -167,14 +167,14 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                                 ),
                               ),
                               widget.texts.length > 1
-                                  ? Spacer(flex: 2)
+                                  ? const Spacer(flex: 2)
                                   : Container(),
                               widget.texts.length > 1
                                   ? Expanded(
                                       flex: portrait ? 4 : 10,
                                       child: SelectableText(
                                         widget.texts[1],
-                                        toolbarOptions: ToolbarOptions(
+                                        toolbarOptions: const ToolbarOptions(
                                           copy: true,
                                           paste: true,
                                           selectAll: true,
@@ -198,14 +198,14 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                           alignment: Alignment.center,
                           children: [
                             AnimatedPositioned(
-                              duration: Duration(milliseconds: 300),
+                              duration: const Duration(milliseconds: 300),
                               top: lower_the_icon ? 0 : 30,
                               width: MediaQuery.of(context).size.width,
                               curve: Curves.ease,
                               onEnd: () {
                                 if (lower_the_icon) {
                                   lower_the_icon_timer =
-                                      Timer(Duration(seconds: 1), () {
+                                      Timer(const Duration(seconds: 1), () {
                                     lower_the_icon = !lower_the_icon;
                                     setState(() {});
                                   });
@@ -223,7 +223,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                           ],
                         ),
                       ),
-                      Spacer(flex: 3),
+                      const Spacer(flex: 3),
                     ],
                   ),
                 ),
