@@ -44,7 +44,7 @@ class _LoadingContainerState extends State<LoadingContainer> {
           width: double.maxFinite,
           color: widget.background_color,
           child: Center(
-            child: Container(
+            child: SizedBox(
               height: loading_size,
               width: loading_size,
               child: CircularProgressIndicator(

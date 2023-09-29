@@ -88,7 +88,7 @@ class _CustomCardState extends State<CustomCard> {
       child: ink_well_widget(widget.child),
     );
 
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: widget.tooltip == null

@@ -103,7 +103,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
 
     double height = portrait ? (MediaQuery.of(context).size.height * 2) : (MediaQuery.of(context).size.height);
 
-    return Container(
+    return SizedBox(
       height: height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(
@@ -329,7 +329,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                             ),
                                             Expanded(
                                               flex: 1,
-                                              child: Container(
+                                              child: SizedBox(
                                                 width: MediaQuery.of(context).size.width,
                                                 child: TextButton(
                                                   onPressed: () {

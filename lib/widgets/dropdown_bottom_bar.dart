@@ -88,7 +88,7 @@ class _DropdownBottomBarState extends State<DropdownBottomBar>
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: show_child ? (screen_height * 0.6) : 0,
                 child: show_child ? widget.child : Container(),
               ),

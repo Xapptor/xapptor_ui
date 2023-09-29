@@ -20,7 +20,7 @@ class _CharacteristicsContainerState extends State<CharacteristicsContainer> {
     bool portrait = is_portrait(context);
     double fractional_Factor = 0.5;
 
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Flex(
         direction: portrait ? Axis.vertical : Axis.horizontal,

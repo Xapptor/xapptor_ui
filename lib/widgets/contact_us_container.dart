@@ -61,7 +61,7 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
         ? (MediaQuery.of(context).size.height * 2)
         : (MediaQuery.of(context).size.height);
 
-    return Container(
+    return SizedBox(
       height: height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(

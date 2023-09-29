@@ -27,7 +27,7 @@ AppBar TopBar({
       },
       child: logo_path != null && logo_path.isNotEmpty
           ? logo_path.contains("https")
-              ? Container(
+              ? SizedBox(
                   height: topbar_height,
                   width: topbar_height,
                   child: Webview(

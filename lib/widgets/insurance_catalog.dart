@@ -41,7 +41,7 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
         ? (MediaQuery.of(context).size.height * 3.5)
         : (MediaQuery.of(context).size.height);
 
-    return Container(
+    return SizedBox(
       height: height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(

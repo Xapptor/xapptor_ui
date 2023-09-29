@@ -103,7 +103,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
           )
         : image_container;
 
-    return Container(
+    return SizedBox(
       height: widget.height,
       width: MediaQuery.of(context).size.width,
       child: BackgroundImageWithGradientColor(

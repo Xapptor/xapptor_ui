@@ -11,7 +11,7 @@ description_card({
   bool portrait = screen_height > screen_width;
 
   List<Widget> widgets = [
-    Container(
+    SizedBox(
       //color: Colors.orange,
       width: screen_width *
           (description_card.direction == Axis.horizontal
@@ -26,7 +26,7 @@ description_card({
         fit: BoxFit.contain,
       ),
     ),
-    Container(
+    SizedBox(
       width: screen_width *
           (description_card.direction == Axis.horizontal
               ? portrait
@@ -107,7 +107,7 @@ description_card({
         child: AnimatedOpacity(
           opacity: card_visible ? 1 : 0,
           duration: Duration(milliseconds: card_visible ? 1000 : 500),
-          child: Container(
+          child: SizedBox(
             height: (screen_height * 0.7),
             width: screen_width,
             //color: Colors.orange,
