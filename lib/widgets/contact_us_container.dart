@@ -221,9 +221,8 @@ class _ContactUsContainerState extends State<ContactUsContainer> {
                                                 FirebaseFirestore.instance.collection("emails").doc().set({
                                                   "to": widget.email,
                                                   "message": {
-                                                    "subject": "Message from contact us section: " '"' +
-                                                        subject_input_controller.text +
-                                                        '"',
+                                                    "subject":
+                                                        "Message from contact us section: \"${subject_input_controller.text}\"",
                                                     "text": newMessage,
                                                   }
                                                 }).then((value) {
