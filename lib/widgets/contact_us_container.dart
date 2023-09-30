@@ -28,6 +28,7 @@ class ContactUsContainer extends StatefulWidget {
   });
 
   final List<String> texts;
+  // ignore: prefer_typing_uninitialized_variables
   final landing_class;
   final Color icon_color;
   final Color container_background_color;

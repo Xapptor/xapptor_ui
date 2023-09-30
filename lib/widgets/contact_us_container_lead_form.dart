@@ -27,6 +27,7 @@ class ContactUsContainerLeadForm extends StatefulWidget {
     this.border_radius = 0,
   });
 
+  // ignore: prefer_typing_uninitialized_variables
   final landing_class;
   final Color icon_color;
   final Color container_background_color;

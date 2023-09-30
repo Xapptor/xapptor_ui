@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+
 import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,7 +28,7 @@ class Webview extends StatefulWidget {
 class _WebviewState extends State<Webview> {
   final IFrameElement _iframe_element = IFrameElement();
   bool page_loaded = false;
-  var new_stream;
+  late ElementStream new_stream;
 
   @override
   void initState() {
