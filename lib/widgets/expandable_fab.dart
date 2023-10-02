@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'dart:math';
 
-@immutable
 class ExpandableFab extends StatefulWidget {
+  final bool? initial_open;
+  final double distance;
+  final List<Widget> children;
+  final Color background_color;
+  final IconData main_fab_icon;
+  final Color main_fab_background_color;
+
   const ExpandableFab({
     super.key,
     this.initial_open,
@@ -12,13 +18,6 @@ class ExpandableFab extends StatefulWidget {
     required this.main_fab_icon,
     required this.main_fab_background_color,
   });
-
-  final bool? initial_open;
-  final double distance;
-  final List<Widget> children;
-  final Color background_color;
-  final IconData main_fab_icon;
-  final Color main_fab_background_color;
 
   @override
   State<ExpandableFab> createState() => _ExpandableFabState();
@@ -72,7 +71,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
           _build_tap_to_close_fab(),
           ..._build_expanding_action_buttons(),
           _build_tap_to_open_fab(),
-        ],
+        ].reversed.toList(),
       ),
     );
   }
@@ -152,6 +151,11 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
 
 @immutable
 class _ExpandingActionButton extends StatelessWidget {
+  final double direction_in_degrees;
+  final double max_distance;
+  final Animation<double> progress;
+  final Widget child;
+
   const _ExpandingActionButton({
     Key? key,
     required this.direction_in_degrees,
@@ -160,25 +164,20 @@ class _ExpandingActionButton extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  final double direction_in_degrees;
-  final double max_distance;
-  final Animation<double> progress;
-  final Widget child;
-
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: progress,
       builder: (context, child) {
         final offset = Offset.fromDirection(
-          direction_in_degrees * (math.pi / 180.0),
+          direction_in_degrees * (pi / 180.0),
           progress.value * max_distance,
         );
         return Positioned(
           right: 4.0 + offset.dx,
           bottom: 4.0 + offset.dy,
           child: Transform.rotate(
-            angle: (1.0 - progress.value) * math.pi / 2,
+            angle: (1.0 - progress.value) * pi / 2,
             child: child!,
           ),
         );
@@ -193,16 +192,18 @@ class _ExpandingActionButton extends StatelessWidget {
 
 @immutable
 class ActionButton extends StatelessWidget {
+  final VoidCallback? on_pressed;
+  final Widget icon;
+  final Color icon_color;
+  final String? tooltip;
+
   const ActionButton({
     Key? key,
     this.on_pressed,
     required this.icon_color,
     required this.icon,
+    this.tooltip,
   }) : super(key: key);
-
-  final VoidCallback? on_pressed;
-  final Widget icon;
-  final Color icon_color;
 
   @override
   Widget build(BuildContext context) {
@@ -214,6 +215,7 @@ class ActionButton extends StatelessWidget {
       child: IconButton(
         onPressed: on_pressed,
         icon: icon,
+        tooltip: tooltip,
       ),
     );
   }
