@@ -3,7 +3,7 @@
 import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:ui' as ui;
+import 'dart:ui_web';
 
 class Webview extends StatefulWidget {
   const Webview({
@@ -47,8 +47,7 @@ class _WebviewState extends State<Webview> {
   Widget build(BuildContext context) {
     String current_src = widget.src;
 
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(
+    platformViewRegistry.registerViewFactory(
       'iframeElement-${widget.id}',
       (int view_id) => _iframe_element,
     );
