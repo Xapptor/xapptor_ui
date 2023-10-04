@@ -18,7 +18,7 @@ class CustomTextField extends StatefulWidget {
   String? validate() {
     String? validated;
     if (model.validator != null) {
-      validated = model.validator!(model.text_editing_controller.text);
+      validated = model.validator!(model.controller.text);
     }
     return validated;
   }
@@ -38,7 +38,7 @@ class CustomTextFieldState extends State<CustomTextField> {
 
   void custom_validate() {
     on_custom_textfield_changed(
-      value: widget.model.text_editing_controller.text,
+      value: widget.model.controller.text,
       custom_textfield_model: widget.model,
       setState: setState,
       enabled_border_color: enabled_border_color,
@@ -54,7 +54,7 @@ class CustomTextFieldState extends State<CustomTextField> {
     super.initState();
     helper_text.value = widget.model.description;
 
-    String textfield_value = widget.model.text_editing_controller.text;
+    String textfield_value = widget.model.controller.text;
 
     if (widget.model.on_changed != null) {
       widget.model.on_changed!(textfield_value);
@@ -108,7 +108,7 @@ class CustomTextFieldState extends State<CustomTextField> {
               helper_icon: helper_icon.value,
               length_limit: widget.model.length_limit,
               show_length_limit_counter: widget.model.show_length_limit_counter,
-              text_length: widget.model.text_editing_controller.text.length,
+              text_length: widget.model.controller.text.length,
             ),
           ],
         ),

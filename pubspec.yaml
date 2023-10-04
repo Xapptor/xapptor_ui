@@ -87,12 +87,12 @@ flutter:
   fonts:
     - family: FontAwesomeRegular
       fonts:
-        - asset: lib/fonts/fa-regular-400.ttf
+        - asset: fonts/fa-regular-400.ttf
           weight: 400
 
     - family: FontAwesomeLight
       fonts:
-        - asset: lib/fonts/fa-light-300.ttf
+        - asset: fonts/fa-light-300.ttf
           weight: 300
   #
   # For details regarding fonts in packages, see

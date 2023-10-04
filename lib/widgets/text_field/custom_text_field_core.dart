@@ -56,7 +56,7 @@ custom_textfield_core({
         ),
       ),
     ),
-    controller: model.text_editing_controller,
+    controller: model.controller,
     focusNode: model.focus_node,
     onFieldSubmitted: model.on_field_submitted,
     keyboardType: model.keyboard_type,

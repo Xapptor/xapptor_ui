@@ -10,7 +10,7 @@ class CustomTextFieldModel {
   final TextInputType? keyboard_type;
   final int? max_lines;
   final String description;
-  final TextEditingController text_editing_controller;
+  final TextEditingController controller;
   final int? length_limit;
   final Widget? suffix_icon;
   final bool enabled;
@@ -34,7 +34,7 @@ class CustomTextFieldModel {
     this.keyboard_type = TextInputType.text,
     this.max_lines,
     this.description = "",
-    required this.text_editing_controller,
+    required this.controller,
     this.length_limit,
     this.suffix_icon,
     this.enabled = true,

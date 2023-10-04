@@ -19,7 +19,7 @@ on_custom_textfield_changed({
   if (custom_textfield_model.validator != null) {
     if (custom_textfield_model.autovalidate_mode == AutovalidateMode.always ||
         (custom_textfield_model.autovalidate_mode == AutovalidateMode.onUserInteraction && has_interacted_by_user)) {
-      String current_text = custom_textfield_model.text_editing_controller.text;
+      String current_text = custom_textfield_model.controller.text;
       String? validation = custom_textfield_model.validator!(current_text);
 
       if (validation != null) {
