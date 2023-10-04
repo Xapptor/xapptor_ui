@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/additional_colors.dart';
-import 'package:xapptor_ui/values/dimensions.dart';
 import 'package:xapptor_ui/values/text_theme.dart';
 import 'package:xapptor_ui/values/xapptor_color_scheme.dart';
 import 'package:xapptor_ui/values/xapptor_colors.dart';
@@ -13,9 +12,9 @@ final xapptor_theme = ThemeData.light().copyWith(
   cardTheme: const CardTheme(
     color: Colors.white,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(Dimensions.d16)),
+      borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
-    elevation: Dimensions.d4,
+    elevation: 4,
     shadowColor: XapptorColors.cultured,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(

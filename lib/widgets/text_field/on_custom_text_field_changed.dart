@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 export 'package:xapptor_ui/values/icons/font_awesome_flutter.dart';
-import 'package:xapptor_ui/values/dimensions.dart';
 import 'package:xapptor_ui/values/icons/font_awesome_flutter.dart';
 import 'package:xapptor_ui/values/xapptor_colors.dart';
 import 'package:xapptor_ui/widgets/text_field/custom_text_field_model.dart';
@@ -29,7 +28,7 @@ on_custom_textfield_changed({
         helper_icon.value = const Icon(
           FontAwesomeIcons.circleX,
           color: XapptorColors.error,
-          size: Dimensions.d16,
+          size: 16,
         );
       } else {
         enabled_border_color.value = XapptorColors.neutral[800]!;

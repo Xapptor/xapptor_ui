@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/values/dimensions.dart';
 
 custom_textfield_helper({
   required BuildContext context,
@@ -12,7 +11,7 @@ custom_textfield_helper({
 }) {
   return Container(
     margin: const EdgeInsets.only(
-      top: Dimensions.d4,
+      top: 4,
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,7 +23,7 @@ custom_textfield_helper({
               Container(
                 width: MediaQuery.of(context).size.width * 0.75,
                 margin: EdgeInsets.only(
-                  left: helper_icon == null ? 0 : Dimensions.d4,
+                  left: helper_icon == null ? 0 : 4,
                 ),
                 child: Text(
                   helper_text,
