@@ -14,19 +14,20 @@ Future<bool> check_permission({
   bool must_encourage_give_permission = false;
 
   if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
-    if (await permission_type.request().isDenied ||
-        await permission_type.request().isPermanentlyDenied) {
+    if (await permission_type.request().isDenied || await permission_type.request().isPermanentlyDenied) {
       must_encourage_give_permission = true;
     }
   }
 
   if (must_encourage_give_permission) {
-    encourage_give_permission(
-      context: context,
-      message: message,
-      message_no: message_no,
-      message_yes: message_yes,
-    );
+    if (context.mounted) {
+      encourage_give_permission(
+        context: context,
+        message: message,
+        message_no: message_no,
+        message_yes: message_yes,
+      );
+    }
     return !must_encourage_give_permission;
   } else {
     return !must_encourage_give_permission;
