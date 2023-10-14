@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
-import 'contact_us_container.dart';
+import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_button.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'custom_card.dart';
 

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:xapptor_ui/screens/privacy_policy/contact_us.dart';
+import 'package:xapptor_ui/screens/privacy_policy/disclosure_personal_data.dart';
+import 'package:xapptor_ui/screens/privacy_policy/information_collected.dart';
+import 'package:xapptor_ui/screens/privacy_policy/personal_data.dart';
+import 'package:xapptor_ui/screens/privacy_policy/use_of_personal_data.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_model.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_values.dart';

@@ -1,74 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:xapptor_ui/screens/privacy_policy/custom_text.dart';
+import 'package:xapptor_ui/screens/privacy_policy/custom_title.dart';
 
 DateFormat label_date_formatter = DateFormat.yMMMMd('en_US');
 
 var margin = const EdgeInsets.only(top: 10, bottom: 10);
-var margin_title = const EdgeInsets.only(bottom: 10);
 var margin_text_2 = const EdgeInsets.only(bottom: 20);
-
-Widget custom_title_1(String text) {
-  return Container(
-    color: Colors.white,
-    margin: margin_title,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-      ),
-    ),
-  );
-}
-
-Widget custom_title_2(String text) {
-  return Container(
-    color: Colors.white,
-    margin: margin_title,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-      ),
-    ),
-  );
-}
-
-Widget custom_title_3(String text) {
-  return Container(
-    color: Colors.white,
-    margin: margin_title,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-    ),
-  );
-}
-
-Widget custom_text(
-  String text, {
-  EdgeInsets margin = const EdgeInsets.only(bottom: 4),
-}) {
-  return Container(
-    color: Colors.white,
-    margin: margin,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontWeight: FontWeight.normal,
-        fontSize: 14,
-      ),
-    ),
-  );
-}
 
 class PrivacypolicyValues {
   Widget introduction({
@@ -148,39 +86,6 @@ class PrivacypolicyValues {
     return current_widget;
   }
 
-  Widget personal_data() {
-    return Container(
-      color: Colors.white,
-      margin: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          custom_title_1(
-            "Collecting and Using Your Personal Data",
-          ),
-          custom_title_2(
-            "Types of Data Collected",
-          ),
-          custom_title_3(
-            "Personal Data",
-          ),
-          custom_text(
-            "While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:",
-          ),
-          custom_text(
-            "Email address",
-          ),
-          custom_text(
-            "First name and last name",
-          ),
-          custom_text(
-            "Usage Data",
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget usage_data() {
     return Container(
       color: Colors.white,
@@ -202,96 +107,6 @@ class PrivacypolicyValues {
           ),
           custom_text(
             "We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget information_collected() {
-    return Container(
-      color: Colors.white,
-      margin: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          custom_title_3(
-            "Information Collected while Using the Application",
-          ),
-          custom_text(
-            "While using Our Application, in order to provide features of Our Application, We may collect, with Your prior permission:",
-          ),
-          custom_text(
-            "Pictures and other information from your Device's camera and photo library",
-          ),
-          custom_text(
-            "We use this information to provide features of Our Service, to improve and customize Our Service. The information may be uploaded to the Company's servers and/or a Service Provider's server or it may be simply stored on Your device.",
-          ),
-          custom_text(
-            "You can enable or disable access to this information at any time, through Your Device settings.",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget use_of_personal_data() {
-    return Container(
-      color: Colors.white,
-      margin: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          custom_title_2(
-            "Use of Your Personal Data",
-          ),
-          custom_text(
-            "The Company may use Personal Data for the following purposes:",
-          ),
-          custom_text(
-            "To provide and maintain our Service, including to monitor the usage of our Service.",
-          ),
-          custom_text(
-            "To manage Your Account: to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.",
-          ),
-          custom_text(
-            "For the performance of a contract: the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.",
-          ),
-          custom_text(
-            "To contact You: To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.",
-          ),
-          custom_text(
-            "To provide You with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.",
-          ),
-          custom_text(
-            "To manage Your requests: To attend and manage Your requests to Us.",
-          ),
-          custom_text(
-            "For business transfers: We may use Your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of Our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which Personal Data held by Us about our Service users is among the assets transferred.",
-          ),
-          custom_text(
-            "For other purposes: We may use Your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of our promotional campaigns and to evaluate and improve our Service, products, services, marketing and your experience.",
-          ),
-          custom_text(
-            "We may share Your personal information in the following situations:",
-          ),
-          custom_text(
-            "With Service Providers: We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You.",
-          ),
-          custom_text(
-            "For business transfers: We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.",
-          ),
-          custom_text(
-            "With Affiliates: We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.",
-          ),
-          custom_text(
-            "With business partners: We may share Your information with Our business partners to offer You certain products, services or promotions.",
-          ),
-          custom_text(
-            "With other users: when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside.",
-          ),
-          custom_text(
-            "With Your consent: We may disclose Your personal information for any other purpose with Your consent.",
           ),
         ],
       ),
@@ -337,56 +152,6 @@ class PrivacypolicyValues {
           ),
           custom_text(
             "The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget disclosure_personal_data() {
-    return Container(
-      color: Colors.white,
-      margin: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          custom_title_2(
-            "Disclosure of Your Personal Data",
-          ),
-          custom_title_3(
-            "Business Transactions",
-          ),
-          custom_text(
-            "If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.",
-            margin: margin_text_2,
-          ),
-          custom_title_3(
-            "Law enforcement",
-          ),
-          custom_text(
-            "Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).",
-            margin: margin_text_2,
-          ),
-          custom_title_3(
-            "Other legal requirements",
-          ),
-          custom_text(
-            "The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:",
-          ),
-          custom_text(
-            "Comply with a legal obligation",
-          ),
-          custom_text(
-            "Protect and defend the rights or property of the Company",
-          ),
-          custom_text(
-            "Prevent or investigate possible wrongdoing in connection with the Service",
-          ),
-          custom_text(
-            "Protect the personal safety of Users of the Service or the public",
-          ),
-          custom_text(
-            "Protect against legal liability",
           ),
         ],
       ),
@@ -479,39 +244,6 @@ class PrivacypolicyValues {
             "You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.",
           ),
         ],
-      ),
-    );
-  }
-
-  Widget contact_us({
-    required String email,
-    required String? phone_number,
-    required String website,
-  }) {
-    return Container(
-      color: Colors.white,
-      margin: margin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          custom_title_1(
-            "Contact Us",
-          ),
-          custom_text(
-            "If you have any questions about this Privacy Policy, You can contact us:",
-          ),
-          custom_text(
-            "By email: $email",
-          ),
-          custom_text(
-            "By visiting this page on our website: $website",
-          ),
-          phone_number != null
-              ? custom_text(
-                  "By phone number: $phone_number",
-                )
-              : null,
-        ].whereType<Widget>().toList(),
       ),
     );
   }
