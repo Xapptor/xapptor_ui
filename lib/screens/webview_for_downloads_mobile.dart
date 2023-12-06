@@ -111,10 +111,10 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
   @override
   Widget build(BuildContext context) {
     return mobile_webview
-        ? WillPopScope(
-            onWillPop: () async {
+        ? PopScope(
+            canPop: false,
+            onPopInvoked: (did_pop) async {
               if (await webview.canGoBack()) webview.goBack();
-              return false;
             },
             child: Container(
               color: widget.topbar_color,
