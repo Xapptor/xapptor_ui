@@ -5,6 +5,10 @@ import 'package:url_launcher/url_launcher.dart';
 // Display Xapptor and App version
 
 class AppVersionContainer extends StatefulWidget {
+  final Color text_color;
+  final Color? background_color;
+  final String? url;
+
   const AppVersionContainer({
     super.key,
     required this.text_color,
@@ -12,9 +16,6 @@ class AppVersionContainer extends StatefulWidget {
     this.url,
   });
 
-  final Color text_color;
-  final Color background_color;
-  final String? url;
   @override
   State<AppVersionContainer> createState() => _AppVersionContainerState();
 }
@@ -24,12 +25,13 @@ class _AppVersionContainerState extends State<AppVersionContainer> {
 
   get_software_version() async {
     software_version = await current_app_version();
+    setState(() {});
   }
 
   @override
   void initState() {
-    get_software_version();
     super.initState();
+    get_software_version();
   }
 
   @override
