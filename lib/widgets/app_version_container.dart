@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xapptor_ui/utils/copy_to_clipboard.dart';
 import 'package:xapptor_ui/values/version.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,6 +45,13 @@ class _AppVersionContainerState extends State<AppVersionContainer> {
               await launchUrl(Uri.parse(widget.url!));
             }
           : null,
+      onLongPress: () {
+        copy_to_clipboard(
+          data: software_version,
+          message: "Version copied to clipboard",
+          context: context,
+        );
+      },
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
