@@ -13,7 +13,7 @@ class IntroductionContainer extends StatefulWidget {
     required this.scroll_icon,
     required this.scroll_icon_color,
     required this.height,
-    this.image_border_radius = 0,
+    required this.image_border_radius,
     this.aspect_ratio,
     this.height_factor = 1,
     this.width_factor = 1,
