@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/values/version.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
@@ -14,7 +15,18 @@ AppBar TopBar({
 }) {
   double topbar_height = 65;
   return AppBar(
-    leading: has_back_button ? custom_leading : Container(),
+    leading: has_back_button
+        ? custom_leading ??
+            IconButton(
+              icon: const Icon(
+                FontAwesomeIcons.angleLeft,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+        : Container(),
     centerTitle: false,
     title: GestureDetector(
       onLongPress: () async {
