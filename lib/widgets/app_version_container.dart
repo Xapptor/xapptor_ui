@@ -46,6 +46,7 @@ class _AppVersionContainerState extends State<AppVersionContainer> {
             }
           : null,
       onLongPress: () {
+        Navigator.of(context).pop();
         copy_to_clipboard(
           data: software_version,
           message: "Version copied to clipboard",
