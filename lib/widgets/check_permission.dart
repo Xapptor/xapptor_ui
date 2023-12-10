@@ -14,7 +14,8 @@ Future<bool> check_permission({
   bool must_encourage_give_permission = false;
 
   if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
-    if (await permission_type.request().isDenied || await permission_type.request().isPermanentlyDenied) {
+    PermissionStatus status = await permission_type.request();
+    if (!status.isGranted) {
       must_encourage_give_permission = true;
     }
   }
