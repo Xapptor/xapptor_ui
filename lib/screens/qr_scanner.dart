@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
@@ -65,16 +66,6 @@ class _QRScannerState extends State<QRScanner> {
     super.dispose();
   }
 
-  // @override
-  // void reassemble() {
-  //   super.reassemble();
-  //   if (Platform.isAndroid) {
-  //     mobile_scanner_controller.stop();
-  //   } else if (Platform.isIOS) {
-  //     mobile_scanner_controller.start();
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -86,8 +77,6 @@ class _QRScannerState extends State<QRScanner> {
       permission_type: Permission.camera,
     );
   }
-
-  // Show main button on QRScanner.
 
   Widget main_button() {
     return TextButton(
@@ -181,24 +170,35 @@ class _QRScannerState extends State<QRScanner> {
                 MobileScanner(
                   controller: mobile_scanner_controller,
                   onDetect: (BarcodeCapture barcodes) {
+                    //debugPrint(barcodes.raw.toString());
+
                     if (barcodes.raw == null) {
                       debugPrint('Failed to scan Barcode');
                     } else {
-                      final String code = barcodes.raw['rawValue'];
+                      String code = "";
+
+                      if (UniversalPlatform.isWeb) {
+                        code = barcodes.raw['rawValue'];
+                      } else {
+                        code = barcodes.raw[0]['displayValue'];
+                      }
                       setState(() {
                         mobile_scanner_controller = mobile_scanner_controller;
                       });
                       widget.update_qr_value(code);
                     }
                   },
-
-                  // overlay: QrScannerOverlayShape(
-                  //   borderColor: widget.border_color,
-                  //   borderRadius: widget.border_radius,
-                  //   borderLength: widget.border_length,
-                  //   borderWidth: widget.border_width,
-                  //   cutOutSize: widget.cut_out_size,
-                  // ),
+                  overlay: Container(
+                    height: widget.cut_out_size,
+                    width: widget.cut_out_size,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(widget.border_radius),
+                      border: Border.all(
+                        color: widget.border_color,
+                        width: widget.border_width,
+                      ),
+                    ),
+                  ),
                 ),
                 Column(
                   children: [
