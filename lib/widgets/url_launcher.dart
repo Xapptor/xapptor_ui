@@ -6,9 +6,15 @@ import 'package:url_launcher/url_launcher.dart';
 launch_url(String url, String fallback_url) async {
   try {
     if (await canLaunchUrl(Uri.parse(url))) {
-      launchUrl(Uri.parse(url));
+      launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
     } else {
-      await launchUrl(Uri.parse(fallback_url));
+      await launchUrl(
+        Uri.parse(fallback_url),
+        mode: LaunchMode.externalApplication,
+      );
     }
   } catch (e) {
     debugPrint(e.toString());
