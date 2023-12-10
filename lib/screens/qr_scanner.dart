@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:universal_platform/universal_platform.dart';
 import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
@@ -8,6 +7,26 @@ import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScanner extends StatefulWidget {
+  final String descriptive_text;
+  final Function(String new_qr_value) update_qr_value;
+  final Color border_color;
+  final double border_radius;
+  final double border_length;
+  final double border_width;
+  final double cut_out_size;
+  final LinearGradient button_linear_gradient;
+  final String permission_message;
+  final String permission_message_no;
+  final String permission_message_yes;
+  final String enter_code_text;
+  final String validate_button_text;
+  final String fail_message;
+  final Color textfield_color;
+  final bool show_main_button;
+  final String main_button_text;
+  final Function main_button_function;
+  final bool use_manual_mode;
+
   const QRScanner({
     super.key,
     required this.descriptive_text,
@@ -28,26 +47,8 @@ class QRScanner extends StatefulWidget {
     required this.show_main_button,
     required this.main_button_text,
     required this.main_button_function,
+    this.use_manual_mode = false,
   });
-
-  final String descriptive_text;
-  final Function(String new_qr_value) update_qr_value;
-  final Color border_color;
-  final double border_radius;
-  final double border_length;
-  final double border_width;
-  final double cut_out_size;
-  final LinearGradient button_linear_gradient;
-  final String permission_message;
-  final String permission_message_no;
-  final String permission_message_yes;
-  final String enter_code_text;
-  final String validate_button_text;
-  final String fail_message;
-  final Color textfield_color;
-  final bool show_main_button;
-  final String main_button_text;
-  final Function main_button_function;
 
   @override
   State<StatefulWidget> createState() => _QRScannerState();
@@ -108,7 +109,7 @@ class _QRScannerState extends State<QRScanner> {
     double screen_width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: UniversalPlatform.isWeb
+      body: widget.use_manual_mode
           ? Center(
               child: FractionallySizedBox(
                 widthFactor: portrait ? 0.7 : 0.2,
@@ -183,7 +184,7 @@ class _QRScannerState extends State<QRScanner> {
                     if (barcodes.raw == null) {
                       debugPrint('Failed to scan Barcode');
                     } else {
-                      final String code = barcodes.raw!;
+                      final String code = barcodes.raw['rawValue'];
                       setState(() {
                         mobile_scanner_controller = mobile_scanner_controller;
                       });
