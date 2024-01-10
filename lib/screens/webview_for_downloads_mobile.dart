@@ -75,7 +75,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
 
   init_config() async {
     if (UniversalPlatform.isAndroid) {
-      await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+      await InAppWebViewController.setWebContentsDebuggingEnabled(true);
     }
   }
 
@@ -121,13 +121,13 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
               child: SafeArea(
                 child: InAppWebView(
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(widget.url),
-                  ),
-                  initialOptions: InAppWebViewGroupOptions(
-                    crossPlatform: InAppWebViewOptions(
-                      useOnDownloadStart: true,
-                      cacheEnabled: false,
+                    url: WebUri.uri(
+                      Uri.parse(widget.url),
                     ),
+                  ),
+                  initialSettings: InAppWebViewSettings(
+                    useOnDownloadStart: true,
+                    cacheEnabled: false,
                   ),
                   onWebViewCreated: (InAppWebViewController controller) {
                     webview = controller;

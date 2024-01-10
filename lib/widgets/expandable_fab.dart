@@ -157,12 +157,11 @@ class _ExpandingActionButton extends StatelessWidget {
   final Widget child;
 
   const _ExpandingActionButton({
-    Key? key,
     required this.direction_in_degrees,
     required this.max_distance,
     required this.progress,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -198,12 +197,12 @@ class ActionButton extends StatelessWidget {
   final String? tooltip;
 
   const ActionButton({
-    Key? key,
+    super.key,
     this.on_pressed,
     required this.icon_color,
     required this.icon,
     this.tooltip,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
