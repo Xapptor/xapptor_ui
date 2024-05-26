@@ -105,7 +105,7 @@ class CustomTextFieldState extends State<CustomTextField> {
               context: context,
               helper_text: helper_text.value,
               helper_text_color: helper_text_Color.value,
-              helper_icon: helper_icon.value,
+              helper_icon: helper_icon,
               length_limit: widget.model.length_limit,
               show_length_limit_counter: widget.model.show_length_limit_counter,
               text_length: widget.model.controller.text.length,

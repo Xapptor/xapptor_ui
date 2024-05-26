@@ -6,8 +6,6 @@ const xapptor_color_scheme_light = ColorScheme.light(
   onPrimary: XapptorColors.white,
   surface: XapptorColors.white,
   onSurface: XapptorColors.deep_space_sparkle,
-  surfaceVariant: XapptorColors.bright_gray,
+  surfaceContainerHighest: XapptorColors.bright_gray,
   onSurfaceVariant: XapptorColors.deep_space_sparkle,
-  background: XapptorColors.white,
-  onBackground: XapptorColors.japanese_indigo,
 );

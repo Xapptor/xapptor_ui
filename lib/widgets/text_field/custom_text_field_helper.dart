@@ -4,7 +4,7 @@ custom_textfield_helper({
   required BuildContext context,
   required String helper_text,
   required Color helper_text_color,
-  required Icon? helper_icon,
+  required ValueNotifier<Icon?> helper_icon,
   required int? length_limit,
   required bool show_length_limit_counter,
   required int text_length,
@@ -18,12 +18,11 @@ custom_textfield_helper({
       children: [
         Row(
           children: [
-            helper_icon ?? Container(),
+            helper_icon.value ?? Container(),
             if (helper_text.isNotEmpty)
               Container(
-                width: MediaQuery.of(context).size.width * 0.75,
                 margin: EdgeInsets.only(
-                  left: helper_icon == null ? 0 : 4,
+                  left: helper_icon.value == null ? 0 : 4,
                 ),
                 child: Text(
                   helper_text,
