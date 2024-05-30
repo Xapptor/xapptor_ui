@@ -175,30 +175,32 @@ class _QRScannerState extends State<QRScanner> {
                     if (barcodes.raw == null) {
                       debugPrint('Failed to scan Barcode');
                     } else {
-                      String code = "";
+                      String? code = "";
 
                       if (UniversalPlatform.isWeb) {
-                        code = barcodes.raw['rawValue'];
+                        code = barcodes.barcodes.firstOrNull?.rawValue;
                       } else {
-                        code = barcodes.raw[0]['displayValue'];
+                        code = barcodes.barcodes.firstOrNull?.displayValue;
                       }
                       setState(() {
                         mobile_scanner_controller = mobile_scanner_controller;
                       });
-                      widget.update_qr_value(code);
+                      widget.update_qr_value(code ?? "");
                     }
                   },
-                  overlay: Container(
-                    height: widget.cut_out_size,
-                    width: widget.cut_out_size,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(widget.border_radius),
-                      border: Border.all(
-                        color: widget.border_color,
-                        width: widget.border_width,
+                  overlayBuilder: (context, constraints) {
+                    return Container(
+                      height: widget.cut_out_size,
+                      width: widget.cut_out_size,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(widget.border_radius),
+                        border: Border.all(
+                          color: widget.border_color,
+                          width: widget.border_width,
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 Column(
                   children: [
