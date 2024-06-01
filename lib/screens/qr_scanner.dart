@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -6,6 +8,8 @@ import 'package:xapptor_ui/widgets/custom_card.dart';
 import 'package:xapptor_ui/widgets/check_permission.dart';
 import 'package:xapptor_ui/widgets/is_portrait.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:xapptor_ui/utils/get_platform_name.dart';
+import 'package:xapptor_ui/utils/get_browser_name.dart';
 
 class QRScanner extends StatefulWidget {
   final String descriptive_text;
@@ -69,7 +73,13 @@ class _QRScannerState extends State<QRScanner> {
   @override
   void initState() {
     super.initState();
+    _call_check_permission();
+  }
+
+  _call_check_permission() async {
     check_permission(
+      platform_name: get_platform_name(),
+      browser_name: await get_browser_name(),
       context: context,
       message: widget.permission_message,
       message_no: widget.permission_message_no,

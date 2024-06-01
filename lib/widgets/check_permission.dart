@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -10,6 +8,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 // Check permission.
 
 Future<bool> check_permission({
+  required String platform_name,
+  required String browser_name,
   required BuildContext context,
   required String message,
   required String message_no,
@@ -38,6 +38,8 @@ Future<bool> check_permission({
     if (must_encourage_give_permission) {
       if (context.mounted) {
         _check_platform_and_browser(
+          platform_name: platform_name,
+          browser_name: browser_name,
           context: context,
           message: message,
           message_no: message_no,
@@ -53,50 +55,50 @@ Future<bool> check_permission({
 }
 
 _check_platform_and_browser({
+  required String platform_name,
+  required String browser_name,
   required BuildContext context,
   required String message,
   required String message_no,
   required String message_yes,
   required Permission permission_type,
-}) async {
-  String platform_name = defaultTargetPlatform.name.toLowerCase();
-  debugPrint("platform_name: $platform_name");
-
-  String? browser_name;
-
+}) {
   if (UniversalPlatform.isWeb) {
-    DeviceInfoPlugin device_info_plugin = DeviceInfoPlugin();
-    BaseDeviceInfo device_info = await device_info_plugin.deviceInfo;
-    Map<String, dynamic> device_info_map = device_info.data;
-    String browser_name = device_info_map["browserName"].toString().toLowerCase();
-
-    if (browser_name.contains(".")) {
-      browser_name = browser_name.split(".").last;
-    }
-    debugPrint("browser_name: $browser_name");
-
     if (platform_name.contains("macos") && browser_name.contains("safari")) {
       _call_macos_safari_alert(
+        platform_name: platform_name,
+        browser_name: browser_name,
         context: context,
         message_yes: message_yes,
         permission_type: permission_type,
       );
-      return;
+    } else {
+      _encourage_give_permission(
+        platform_name: platform_name,
+        browser_name: browser_name,
+        context: context,
+        message: message,
+        message_no: message_no,
+        message_yes: message_yes,
+        permission_type: permission_type,
+      );
     }
+  } else {
+    _encourage_give_permission(
+      platform_name: platform_name,
+      browser_name: browser_name,
+      context: context,
+      message: message,
+      message_no: message_no,
+      message_yes: message_yes,
+      permission_type: permission_type,
+    );
   }
-
-  _encourage_give_permission(
-    platform_name: platform_name,
-    browser_name: browser_name,
-    context: context,
-    message: message,
-    message_no: message_no,
-    message_yes: message_yes,
-    permission_type: permission_type,
-  );
 }
 
 _call_macos_safari_alert({
+  required String platform_name,
+  required String browser_name,
   required BuildContext context,
   required String message_yes,
   required Permission permission_type,
@@ -135,7 +137,7 @@ _call_macos_safari_alert({
 
 _encourage_give_permission({
   required String platform_name,
-  required String? browser_name,
+  required String browser_name,
   required BuildContext context,
   required String message,
   required String message_no,
@@ -183,7 +185,7 @@ _encourage_give_permission({
 
 _platform_dependant_action({
   required String platform_name,
-  required String? browser_name,
+  required String browser_name,
   required BuildContext context,
   required String message_yes,
   required Permission permission_type,
@@ -198,7 +200,7 @@ _platform_dependant_action({
       Navigator.of(context).pop();
     } else {
       _desktop_browser_dependant_action(
-        browser_name: browser_name!,
+        browser_name: browser_name,
         context: context,
         message_yes: message_yes,
         permission_type: permission_type,
