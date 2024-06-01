@@ -27,19 +27,17 @@ Future<bool> check_permission({
     return new_status;
   });
 
-  //if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
   is_granted = status.isGranted;
   if (!is_granted) {
     must_encourage_give_permission = true;
   }
-  //}
 
   if (is_granted) {
     return true;
   } else {
     if (must_encourage_give_permission) {
       if (context.mounted) {
-        _encourage_give_permission(
+        _check_platform_and_browser(
           context: context,
           message: message,
           message_no: message_no,
@@ -54,136 +52,51 @@ Future<bool> check_permission({
   }
 }
 
-// Open alert dialog to encourage give permission.
-
-_encourage_give_permission({
+_check_platform_and_browser({
   required BuildContext context,
   required String message,
   required String message_no,
   required String message_yes,
   required Permission permission_type,
-}) {
-  Widget button_no = TextButton(
-    child: Text(message_no),
-    onPressed: () {
-      Navigator.of(context).pop();
-    },
-  );
-  Widget button_yes = TextButton(
-    child: Text(message_yes),
-    onPressed: () {
-      Navigator.of(context).pop();
-      _platform_and_browser_dependant_action(
+}) async {
+  String platform_name = defaultTargetPlatform.name.toLowerCase();
+  debugPrint("platform_name: $platform_name");
+
+  String? browser_name;
+
+  if (UniversalPlatform.isWeb) {
+    DeviceInfoPlugin device_info_plugin = DeviceInfoPlugin();
+    BaseDeviceInfo device_info = await device_info_plugin.deviceInfo;
+    Map<String, dynamic> device_info_map = device_info.data;
+    String browser_name = device_info_map["browserName"].toString().toLowerCase();
+
+    if (browser_name.contains(".")) {
+      browser_name = browser_name.split(".").last;
+    }
+    debugPrint("browser_name: $browser_name");
+
+    if (platform_name.contains("macos") && browser_name.contains("safari")) {
+      _call_macos_safari_alert(
         context: context,
         message_yes: message_yes,
         permission_type: permission_type,
       );
-    },
-  );
+      return;
+    }
+  }
 
-  AlertDialog alert = AlertDialog(
-    title: const Text("Permission Required"),
-    content: Text(message),
-    actions: [
-      button_no,
-      button_yes,
-    ],
-  );
-
-  showDialog(
+  _encourage_give_permission(
+    platform_name: platform_name,
+    browser_name: browser_name,
     context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
+    message: message,
+    message_no: message_no,
+    message_yes: message_yes,
+    permission_type: permission_type,
   );
 }
 
-// Platform and Browser dependant action.
-
-_platform_and_browser_dependant_action({
-  required BuildContext context,
-  required String message_yes,
-  required Permission permission_type,
-}) async {
-  if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
-    openAppSettings();
-  } else if (UniversalPlatform.isWeb) {
-    String platform_name = defaultTargetPlatform.name.toLowerCase();
-
-    DeviceInfoPlugin device_info_plugin = DeviceInfoPlugin();
-    BaseDeviceInfo device_info = await device_info_plugin.deviceInfo;
-    Map<String, dynamic> device_info_map = device_info.data;
-
-    String browser_name = device_info_map["browserName"].toString();
-    browser_name = browser_name.toLowerCase();
-    if (browser_name.contains(".")) {
-      browser_name = browser_name.split(".").last;
-    }
-
-    debugPrint("platform_name: $platform_name");
-    debugPrint("browser_name: $browser_name");
-
-    if (platform_name == "ios") {
-      String settings_path = "prefs:root=SAFARI&path=${permission_type.toString().split(".").last}";
-      launchUrlString(settings_path);
-    } else if (platform_name == "android") {
-      openAppSettings();
-    } else if (platform_name == "macos") {
-      if (browser_name == "safari") {
-        _call_safari_alert(
-          context: context,
-          message_yes: message_yes,
-          permission_type: permission_type,
-        );
-      } else if (browser_name == "chrome" ||
-          browser_name == "edge" ||
-          browser_name == "opera" ||
-          browser_name == "brave") {
-        _call_settings_path(
-          browser_name: browser_name,
-          permission_type: permission_type,
-        );
-      } else if (browser_name == "firefox") {
-        _call_settings_path(
-          browser_name: browser_name,
-          permission_type: permission_type,
-        );
-      } else if (browser_name == "samsunginternet") {
-        _call_settings_path(
-          browser_name: browser_name,
-          permission_type: permission_type,
-        );
-      } else if (browser_name == "duckduckgobrowser") {
-        _call_settings_path(
-          browser_name: browser_name,
-          permission_type: permission_type,
-        );
-      } else if (browser_name == "chromium") {
-        _call_settings_path(
-          browser_name: browser_name,
-          permission_type: permission_type,
-        );
-      }
-    }
-  }
-}
-
-_call_settings_path({
-  required String browser_name,
-  required Permission permission_type,
-}) {
-  String settings_path = "";
-
-  if (browser_name == "safari") {
-  } else if (browser_name == "firefox" || browser_name == "tor") {
-    settings_path = "about:preferences";
-  } else {
-    settings_path = "$browser_name://settings/content/${permission_type.toString().split(".").last}";
-  }
-  launchUrlString(settings_path);
-}
-
-_call_safari_alert({
+_call_macos_safari_alert({
   required BuildContext context,
   required String message_yes,
   required Permission permission_type,
@@ -216,4 +129,99 @@ _call_safari_alert({
       return alert;
     },
   );
+}
+
+// Open alert dialog to encourage give permission.
+
+_encourage_give_permission({
+  required String platform_name,
+  required String? browser_name,
+  required BuildContext context,
+  required String message,
+  required String message_no,
+  required String message_yes,
+  required Permission permission_type,
+}) {
+  Widget button_no = TextButton(
+    child: Text(message_no),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget button_yes = TextButton(
+    child: Text(message_yes),
+    onPressed: () {
+      Navigator.of(context).pop();
+      _platform_dependant_action(
+        platform_name: platform_name,
+        browser_name: browser_name,
+        context: context,
+        message_yes: message_yes,
+        permission_type: permission_type,
+      );
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: const Text("Permission Required"),
+    content: Text(message),
+    actions: [
+      button_no,
+      button_yes,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+// Platform and Browser dependant action.
+
+_platform_dependant_action({
+  required String platform_name,
+  required String? browser_name,
+  required BuildContext context,
+  required String message_yes,
+  required Permission permission_type,
+}) {
+  if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
+    openAppSettings();
+  } else if (UniversalPlatform.isWeb) {
+    if (platform_name.contains("ios")) {
+      String settings_path = "prefs:root=SAFARI&path=${permission_type.toString().split(".").last}";
+      launchUrlString(settings_path);
+    } else if (platform_name.contains("android")) {
+      Navigator.of(context).pop();
+    } else {
+      _desktop_browser_dependant_action(
+        browser_name: browser_name!,
+        context: context,
+        message_yes: message_yes,
+        permission_type: permission_type,
+      );
+    }
+  }
+}
+
+_desktop_browser_dependant_action({
+  required String browser_name,
+  required BuildContext context,
+  required String message_yes,
+  required Permission permission_type,
+}) {
+  String settings_path = "";
+
+  if (browser_name.contains("firefox") || browser_name.contains("tor")) {
+    settings_path = "about:preferences";
+    launchUrlString(settings_path);
+  } else if (browser_name.contains("duckduckgo")) {
+    Navigator.pop(context);
+  } else {
+    settings_path = "$browser_name://settings/content/${permission_type.toString().split(".").last}";
+    launchUrlString(settings_path);
+  }
 }
