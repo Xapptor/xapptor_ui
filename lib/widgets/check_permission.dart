@@ -65,11 +65,18 @@ _check_platform_and_browser({
 }) {
   if (UniversalPlatform.isWeb) {
     if (platform_name.contains("macos") && browser_name.contains("safari")) {
-      _call_macos_safari_alert(
+      String message = """
+1) Click on "Safari" in the menu bar at the top left of the screen.
+2) Select "Settings" from the drop-down menu.
+3) Click on Website -> $permission_type_label
+""";
+
+      _call_info_settings_alert(
         platform_name: platform_name,
         browser_name: browser_name,
         context: context,
         title: title,
+        message: message,
         label_yes: label_yes,
         permission_type_label: permission_type_label,
         callback: callback,
@@ -100,25 +107,19 @@ _check_platform_and_browser({
   }
 }
 
-_call_macos_safari_alert({
+_call_info_settings_alert({
   required String platform_name,
   required String browser_name,
   required BuildContext context,
   required String title,
+  required String message,
   required String label_yes,
   required String permission_type_label,
   required Function callback,
 }) {
-  String message = """
-1) Click on "Safari" in the menu bar at the top left of the screen.
-2) Select "Settings" from the drop-down menu.
-3) Click on Website -> $permission_type_label
-""";
-
   Widget button_yes = TextButton(
     child: Text(label_yes),
     onPressed: () {
-      Navigator.of(context).pop();
       callback();
     },
   );
@@ -151,16 +152,31 @@ _platform_dependant_action({
   required String permission_type_label,
   required Function callback,
 }) {
-  if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
+  if (UniversalPlatform.isMobile) {
     openAppSettings();
   } else if (UniversalPlatform.isWeb) {
     if (platform_name.contains("ios")) {
       String settings_path = "prefs:root=SAFARI&path=$permission_type_label";
       launchUrlString(settings_path);
     } else if (platform_name.contains("android")) {
-      Navigator.of(context).pop();
+      String message = """
+1) To the right of the address bar, tap More and then Settings.
+2) Under "Advanced," tap Site settings.
+3) Tap the $permission_type_label permission.
+""";
+
+      _call_info_settings_alert(
+        platform_name: platform_name,
+        browser_name: browser_name,
+        context: context,
+        title: title,
+        message: message,
+        label_yes: label_yes,
+        permission_type_label: permission_type_label,
+        callback: callback,
+      );
     } else {
-      _encourage_give_permission(
+      _encourage_give_web_permission(
         platform_name: platform_name,
         browser_name: browser_name,
         context: context,
@@ -176,7 +192,7 @@ _platform_dependant_action({
 
 // Open alert dialog to encourage give permission.
 
-_encourage_give_permission({
+_encourage_give_web_permission({
   required String platform_name,
   required String browser_name,
   required BuildContext context,
@@ -201,7 +217,7 @@ _encourage_give_permission({
   Widget button_yes = TextButton(
     child: Text(label_yes),
     onPressed: () {
-      Navigator.of(context).pop();
+      Navigator.pop(context);
       if (copy_settings_to_clipboard) {
         copy_to_clipboard(
           data: settings_path,
