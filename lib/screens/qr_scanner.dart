@@ -20,9 +20,9 @@ class QRScanner extends StatefulWidget {
   final double border_width;
   final double cut_out_size;
   final LinearGradient button_linear_gradient;
-  final String permission_message;
-  final String permission_message_no;
-  final String permission_message_yes;
+  final String permission_title;
+  final String permission_label_no;
+  final String permission_label_yes;
   final String enter_code_text;
   final String validate_button_text;
   final String fail_message;
@@ -42,9 +42,9 @@ class QRScanner extends StatefulWidget {
     required this.border_width,
     required this.cut_out_size,
     required this.button_linear_gradient,
-    required this.permission_message,
-    required this.permission_message_no,
-    required this.permission_message_yes,
+    required this.permission_title,
+    required this.permission_label_no,
+    required this.permission_label_yes,
     required this.enter_code_text,
     required this.validate_button_text,
     required this.fail_message,
@@ -81,9 +81,9 @@ class _QRScannerState extends State<QRScanner> {
       platform_name: get_platform_name(),
       browser_name: await get_browser_name(),
       context: context,
-      message: widget.permission_message,
-      message_no: widget.permission_message_no,
-      message_yes: widget.permission_message_yes,
+      title: widget.permission_title,
+      label_no: widget.permission_label_no,
+      label_yes: widget.permission_label_yes,
       permission_type: Permission.camera,
     );
   }

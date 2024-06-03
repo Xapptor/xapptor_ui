@@ -45,8 +45,8 @@ QRScanner(
       ],
     ),
     permission_message: "You must give permission to the camera to capture QR codes",
-    permission_message_no: "Cancel",
-    permission_message_yes: "Accept",
+    permission_label_no: "Cancel",
+    permission_label_yes: "Accept",
     enter_code_text: "Enter your code",
     validate_button_text: "Validate",
     fail_message: "You must enter a code",
@@ -296,16 +296,16 @@ CharacteristicsContainer(
 check_permission(
     context: context,
     message: permission_message,
-    message_no: permission_message_no,
-    message_yes: permission_message_yes,
+    label_no: permission_label_no,
+    label_yes: permission_label_yes,
     permission_type: Permission.camera,
 );
 
 encourage_give_permission(
     context: context,
     message: message,
-    message_no: message_no,
-    message_yes: message_yes,
+    label_no: label_no,
+    label_yes: label_yes,
 );
 ```
 
