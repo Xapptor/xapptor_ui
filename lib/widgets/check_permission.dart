@@ -16,7 +16,6 @@ Future<bool> check_permission({
   required String label_no,
   required String label_yes,
   required Permission permission_type,
-  bool is_last_permission_asked = true,
   Function(bool granted)? callback,
 }) async {
   PermissionStatus permission_status = await permission_type.request();
@@ -42,9 +41,6 @@ Future<bool> check_permission({
         callback: () {
           if (callback != null) {
             callback(permission_status.isGranted);
-            if (is_last_permission_asked) {
-              Navigator.pop(context);
-            }
           }
         },
       );
@@ -120,6 +116,7 @@ _call_info_settings_alert({
   Widget button_yes = TextButton(
     child: Text(label_yes),
     onPressed: () {
+      Navigator.pop(context);
       callback();
     },
   );
@@ -137,6 +134,7 @@ _call_info_settings_alert({
     builder: (BuildContext context) {
       return alert;
     },
+    barrierDismissible: false,
   );
 }
 
@@ -247,5 +245,6 @@ _encourage_give_web_permission({
     builder: (BuildContext context) {
       return alert;
     },
+    barrierDismissible: false,
   );
 }
