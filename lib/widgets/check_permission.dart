@@ -204,7 +204,7 @@ _encourage_give_web_permission({
   bool copy_settings_to_clipboard = true;
 
   if (browser_name.contains("firefox") || browser_name.contains("tor")) {
-    settings_path = "about:preferences";
+    settings_path = "about:preferences#privacy";
   } else if (browser_name.contains("duckduckgo")) {
     settings_path = "Left side of the SearchBar";
     copy_settings_to_clipboard = false;
