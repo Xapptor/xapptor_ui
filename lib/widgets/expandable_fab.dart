@@ -101,7 +101,7 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
   }
 
   List<Widget> _build_expanding_action_buttons() {
-    var children = <Widget>[];
+    List<Widget> children = [];
     final count = widget.children.length;
     final step = 90.0 / (count - 1);
     for (var i = 0, angle_in_degrees = 0.0; i < count; i++, angle_in_degrees += step) {

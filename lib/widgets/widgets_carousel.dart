@@ -84,7 +84,7 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
     page_controller = new_page_controller;
 
     return Column(
-      children: <Widget>[
+      children: [
         Expanded(
           flex: 8,
           child: PageView.builder(

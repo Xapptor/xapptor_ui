@@ -122,10 +122,10 @@ class IntroductionContainerState extends State<IntroductionContainer> {
         ),
         child: Center(
           child: Stack(
-            children: <Widget>[
+            children: [
               Center(
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     const Spacer(flex: 10),
                     widget.logo_image != null && (widget.texts.length > 1 || (widget.texts.length == 1 && !portrait))
                         ? Expanded(

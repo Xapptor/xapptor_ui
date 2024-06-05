@@ -77,7 +77,7 @@ class _CardHolderState extends State<CardHolder> {
                 padding: const EdgeInsets.all(20),
                 child: Stack(
                   alignment: Alignment.center,
-                  children: <Widget>[
+                  children: [
                     AnimatedContainer(
                       duration: animation_duration,
                       height: constraints.maxHeight * (widget.is_focused ? 1 : size_multiplier),
@@ -96,7 +96,7 @@ class _CardHolderState extends State<CardHolder> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
+                              children: [
                                 AutoSizeText(
                                   widget.title ?? "",
                                   textAlign: TextAlign.left,

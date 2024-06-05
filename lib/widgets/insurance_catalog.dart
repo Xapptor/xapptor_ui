@@ -54,7 +54,7 @@ class _InsuranceCatalogState extends State<InsuranceCatalog> {
           stops: const [0.0, 1.0],
         ),
         child: Column(
-          children: <Widget>[
+          children: [
             SizedBox(height: MediaQuery.of(context).size.height / 10),
             Expanded(
               flex: 1,

@@ -24,11 +24,11 @@ class _CharacteristicsContainerState extends State<CharacteristicsContainer> {
       height: MediaQuery.of(context).size.height,
       child: Flex(
         direction: portrait ? Axis.vertical : Axis.horizontal,
-        children: <Widget>[
+        children: [
           Expanded(
             flex: 1,
             child: Column(
-              children: <Widget>[
+              children: [
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -83,7 +83,7 @@ class _CharacteristicsContainerState extends State<CharacteristicsContainer> {
           Expanded(
             flex: 1,
             child: Column(
-              children: <Widget>[
+              children: [
                 Expanded(
                   flex: 1,
                   child: Container(

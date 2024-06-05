@@ -5,7 +5,7 @@ import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_button.dart'
 
 extension StateExtension on ContactUsContainerState {
   custom_icon_buttons() => Row(
-        children: <Widget>[
+        children: [
           const Spacer(flex: 1),
           widget.facebook_url != null
               ? Expanded(

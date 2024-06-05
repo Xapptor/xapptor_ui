@@ -12,7 +12,7 @@ show_custom_dialog({
       return AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: <Widget>[
+        actions: [
           TextButton(
             child: Text(button_text),
             onPressed: () {

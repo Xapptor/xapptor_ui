@@ -29,7 +29,7 @@ class BackgroundImageWithGradientColor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
-      children: <Widget>[
+      children: [
         SizedBox(
           height: height,
           width: MediaQuery.of(context).size.width,

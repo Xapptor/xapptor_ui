@@ -74,7 +74,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
           stops: const [0.0, 1.0],
         ),
         child: Column(
-          children: <Widget>[
+          children: [
             const Spacer(flex: 1),
             Expanded(
               flex: 1,
@@ -134,12 +134,12 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                         direction: portrait ? Axis.vertical : Axis.horizontal,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
+                        children: [
                           const Spacer(flex: 1),
                           Expanded(
                             flex: 10,
                             child: Column(
-                              children: <Widget>[
+                              children: [
                                 portrait ? Container() : const Spacer(flex: 1),
                                 text_form_fields(),
                                 Expanded(
@@ -147,7 +147,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                                   child: FractionallySizedBox(
                                     heightFactor: portrait ? 0.5 : 0.5,
                                     child: Row(
-                                      children: <Widget>[
+                                      children: [
                                         portrait ? const Spacer(flex: 1) : Container(),
                                         Expanded(
                                           flex: 2,
@@ -161,7 +161,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                                             border_radius: 1000,
                                             on_pressed: () => send_button(),
                                             child: Row(
-                                              children: <Widget>[
+                                              children: [
                                                 const Spacer(flex: 1),
                                                 const Expanded(
                                                   flex: 5,
@@ -201,7 +201,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                           Expanded(
                             flex: portrait ? 10 : 4,
                             child: Column(
-                              children: <Widget>[
+                              children: [
                                 Spacer(flex: portrait ? 1 : 4),
                                 selectable_texts(),
                                 const Spacer(flex: 1),

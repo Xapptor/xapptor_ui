@@ -88,7 +88,7 @@ class _ProgressBarState extends State<ProgressBar> {
           ),
           child: Stack(
             alignment: Alignment.center,
-            children: <Widget>[
+            children: [
               Align(
                 alignment: widget.alignment,
                 child: AnimatedContainer(

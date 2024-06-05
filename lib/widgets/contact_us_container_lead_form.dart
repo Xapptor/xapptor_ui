@@ -119,7 +119,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
           stops: const [0.0, 1.0],
         ),
         child: Column(
-          children: <Widget>[
+          children: [
             const Spacer(flex: 1),
             const Expanded(
               flex: 1,
@@ -179,12 +179,12 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                         direction: portrait ? Axis.vertical : Axis.horizontal,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
+                        children: [
                           const Spacer(flex: 1),
                           Expanded(
                             flex: 10,
                             child: Column(
-                              children: <Widget>[
+                              children: [
                                 portrait ? Container() : const Spacer(flex: 1),
                                 Expanded(
                                   flex: portrait ? 30 : 8,
@@ -194,7 +194,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                       Expanded(
                                         flex: 10,
                                         child: Column(
-                                          children: <Widget>[
+                                          children: [
                                             Expanded(
                                               flex: 2,
                                               child: Column(
@@ -289,7 +289,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                       Expanded(
                                         flex: 10,
                                         child: Column(
-                                          children: <Widget>[
+                                          children: [
                                             Expanded(
                                               flex: 1,
                                               child: TextFormField(
@@ -356,7 +356,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                 Expanded(
                                   flex: portrait ? 3 : 1,
                                   child: Row(
-                                    children: <Widget>[
+                                    children: [
                                       portrait ? const Spacer(flex: 1) : Container(),
                                       Expanded(
                                         flex: 2,
@@ -412,7 +412,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                             }
                                           },
                                           child: const Row(
-                                            children: <Widget>[
+                                            children: [
                                               Spacer(flex: 1),
                                               Expanded(
                                                 flex: 5,
@@ -452,7 +452,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                           Expanded(
                             flex: portrait ? 5 : 4,
                             child: Column(
-                              children: <Widget>[
+                              children: [
                                 Spacer(flex: portrait ? 1 : 4),
                                 Expanded(
                                   flex: 1,
@@ -520,7 +520,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                 Expanded(
                                   flex: 3,
                                   child: Row(
-                                    children: <Widget>[
+                                    children: [
                                       const Spacer(flex: 1),
                                       widget.facebook_url != null
                                           ? Expanded(

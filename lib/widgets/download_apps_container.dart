@@ -39,7 +39,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
 
-    var widgets_list = <Widget>[
+    var widgets_list = [
       const Spacer(flex: 2),
       Expanded(
         flex: portrait ? 6 : 4,
@@ -60,7 +60,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
       Expanded(
         flex: 4,
         child: Column(
-          children: <Widget>[
+          children: [
             const Spacer(flex: 1),
             Expanded(
               flex: portrait ? 4 : 1,
@@ -95,7 +95,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
       child: FractionallySizedBox(
         widthFactor: portrait ? 0.8 : 1,
         child: Column(
-          children: <Widget>[
+          children: [
             const Spacer(flex: 1),
             Expanded(
               flex: 2,
@@ -114,12 +114,12 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
             portrait ? Container() : const Spacer(flex: 1),
             Expanded(
               flex: 6,
-              child: Flex(direction: portrait ? Axis.vertical : Axis.horizontal, children: <Widget>[
+              child: Flex(direction: portrait ? Axis.vertical : Axis.horizontal, children: [
                 const Spacer(flex: 2),
                 Expanded(
                   flex: 4,
                   child: Column(
-                    children: <Widget>[
+                    children: [
                       const Spacer(flex: 1),
                       Expanded(
                         flex: portrait ? 4 : 1,
@@ -168,12 +168,12 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
               flex: 6,
               child: Flex(
                 direction: portrait ? Axis.vertical : Axis.horizontal,
-                children: <Widget>[
+                children: [
                   const Spacer(flex: 2),
                   Expanded(
                     flex: 4,
                     child: Column(
-                      children: <Widget>[
+                      children: [
                         portrait ? Container() : const Spacer(flex: 1),
                         Expanded(
                           flex: portrait ? 20 : 1,
@@ -197,7 +197,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                       heightFactor: 0.7,
                       widthFactor: 0.7,
                       child: Row(
-                        children: <Widget>[
+                        children: [
                           Expanded(
                             flex: 4,
                             child: download_button(

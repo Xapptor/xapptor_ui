@@ -48,7 +48,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
+        children: [
           SizedBox(height: sized_box_space * 2),
           SelectableText(
             widget.texts[0],

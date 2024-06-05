@@ -46,7 +46,7 @@ class _CharacteristicsContainerItemState extends State<CharacteristicsContainerI
       color: widget.color,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        children: [
           widget.side_icon
               ? Icon(
                   widget.icon,
