@@ -135,8 +135,13 @@ class _LokiTextEffectCharState extends State<LokiTextEffectChar> {
       fontWeight: FontWeight.bold,
     );
 
+    String char = widget.char;
+    if (random_number_with_range(0, 10) == 0) {
+      char = char.toUpperCase();
+    }
+
     return Text(
-      widget.char,
+      char,
       textAlign: TextAlign.center,
       style: text_style,
     );
