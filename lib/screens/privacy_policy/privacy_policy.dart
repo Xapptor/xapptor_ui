@@ -110,7 +110,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 )
               : Webview(
                   src: "${widget.privacy_policy_model.website}/privacy_policy",
-                  id: const Uuid().v4(),
+                  id: const Uuid().v8(),
                 ),
         ),
       ),

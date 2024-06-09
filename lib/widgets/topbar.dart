@@ -44,7 +44,7 @@ AppBar TopBar({
                   width: topbar_height,
                   child: Webview(
                     src: logo_path,
-                    id: const Uuid().v4(),
+                    id: const Uuid().v8(),
                   ),
                 )
               : Image.asset(
