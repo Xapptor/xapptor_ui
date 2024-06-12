@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CropWidget extends StatefulWidget {
+  final Widget child;
+  final Alignment general_alignment;
+  final Alignment vertical_alignment;
+  final Alignment horizontal_alignment;
+  final double height_factor;
+  final double width_factor;
+
   const CropWidget({
     super.key,
     required this.child,
@@ -10,13 +17,6 @@ class CropWidget extends StatefulWidget {
     required this.height_factor,
     required this.width_factor,
   });
-
-  final Widget child;
-  final Alignment general_alignment;
-  final Alignment vertical_alignment;
-  final Alignment horizontal_alignment;
-  final double height_factor;
-  final double width_factor;
 
   @override
   State<CropWidget> createState() => _CropWidgetState();

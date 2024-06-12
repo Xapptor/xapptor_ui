@@ -1,8 +1,14 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class InsuranceCatalogItem extends StatefulWidget {
+  final List<String> texts;
+  final Color icon_color;
+  final Color card_background_color;
+  final String insurance_image_path;
+  final Function more_information_function;
+
   const InsuranceCatalogItem({
     super.key,
     required this.texts,
@@ -11,12 +17,6 @@ class InsuranceCatalogItem extends StatefulWidget {
     required this.insurance_image_path,
     required this.more_information_function,
   });
-
-  final List<String> texts;
-  final Color icon_color;
-  final Color card_background_color;
-  final String insurance_image_path;
-  final Function more_information_function;
 
   @override
   State<InsuranceCatalogItem> createState() => _InsuranceCatalogItemState();

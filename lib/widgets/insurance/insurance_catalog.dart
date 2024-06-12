@@ -1,9 +1,20 @@
-import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
+import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'insurance_catalog_item.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class InsuranceCatalog extends StatefulWidget {
+  final List<String> texts;
+  final Color icon_color;
+  final Color container_background_color;
+  final String container_background_image;
+  final Color card_background_color;
+  final List<Color> linear_gradient_colors;
+  final String insurance_image_path_1;
+  final String insurance_image_path_2;
+  final String insurance_image_path_3;
+  final Function more_information_function;
+
   const InsuranceCatalog({
     super.key,
     required this.texts,
@@ -17,17 +28,6 @@ class InsuranceCatalog extends StatefulWidget {
     required this.insurance_image_path_3,
     required this.more_information_function,
   });
-
-  final List<String> texts;
-  final Color icon_color;
-  final Color container_background_color;
-  final String container_background_image;
-  final Color card_background_color;
-  final List<Color> linear_gradient_colors;
-  final String insurance_image_path_1;
-  final String insurance_image_path_2;
-  final String insurance_image_path_3;
-  final Function more_information_function;
 
   @override
   State<InsuranceCatalog> createState() => _InsuranceCatalogState();

@@ -1,6 +1,12 @@
 import 'package:flutter/widgets.dart';
 
 class Webview extends StatefulWidget {
+  final String src;
+  final String id;
+  final Function? controller_callback;
+  final Function(String url)? loaded_callback;
+  final bool page_loaded_set_state;
+
   const Webview({
     super.key,
     required this.src,
@@ -9,12 +15,6 @@ class Webview extends StatefulWidget {
     this.loaded_callback,
     this.page_loaded_set_state = true,
   });
-
-  final String src;
-  final String id;
-  final Function? controller_callback;
-  final Function(String url)? loaded_callback;
-  final bool page_loaded_set_state;
 
   @override
   State<Webview> createState() => _WebviewState();

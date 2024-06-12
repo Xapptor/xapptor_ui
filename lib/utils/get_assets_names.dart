@@ -9,13 +9,9 @@ Future<List<String>> get_assets_names({
   final Map<String, dynamic> manifest_map = json.decode(manifestContent);
 
   List<String> assets_paths = [];
-
   for (var filter_key in filter_keys) {
-    assets_paths += manifest_map.keys
-        .where(
-            (String manifest_map_key) => manifest_map_key.contains(filter_key))
-        .toList();
+    assets_paths +=
+        manifest_map.keys.where((String manifest_map_key) => manifest_map_key.contains(filter_key)).toList();
   }
-
   return assets_paths;
 }

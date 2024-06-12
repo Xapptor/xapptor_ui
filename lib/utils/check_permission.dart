@@ -6,8 +6,6 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xapptor_ui/utils/copy_to_clipboard.dart';
 
-// Check permission.
-
 Future<bool> check_permission({
   required String platform_name,
   required String browser_name,
@@ -138,8 +136,6 @@ _call_info_settings_alert({
   );
 }
 
-// Platform and Browser dependant action.
-
 _platform_dependant_action({
   required String platform_name,
   required String browser_name,
@@ -187,8 +183,6 @@ _platform_dependant_action({
     }
   }
 }
-
-// Open alert dialog to encourage give permission.
 
 _encourage_give_web_permission({
   required String platform_name,

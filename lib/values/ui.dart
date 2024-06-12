@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 // General UI data.
 

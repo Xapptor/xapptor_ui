@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/ui.dart';
-import 'characteristics_container_item.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'characteristics/characteristics_container_item.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class WhyUsContainer extends StatefulWidget {
+  final List<String> texts;
+  final String background_image;
+  final Color background_color;
+  final List<String> characteristic_titles;
+  final List<IconData> characteristic_icons;
+  final List<Color> characteristic_icon_colors;
+  final Color title_color;
+  final Color subtitle_color;
+
   const WhyUsContainer({
     super.key,
     required this.texts,
@@ -15,15 +24,6 @@ class WhyUsContainer extends StatefulWidget {
     required this.title_color,
     required this.subtitle_color,
   });
-
-  final List<String> texts;
-  final String background_image;
-  final Color background_color;
-  final List<String> characteristic_titles;
-  final List<IconData> characteristic_icons;
-  final List<Color> characteristic_icon_colors;
-  final Color title_color;
-  final Color subtitle_color;
 
   @override
   State<WhyUsContainer> createState() => _WhyUsContainerState();

@@ -15,8 +15,9 @@ extension PrivacypolicyValuesExtension on PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
+          custom_title(
             "Contact Us",
+            type: CustomTitleType.type1,
           ),
           custom_text(
             "If you have any questions about this Privacy Policy, You can contact us:",

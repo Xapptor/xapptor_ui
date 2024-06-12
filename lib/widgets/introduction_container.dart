@@ -1,9 +1,24 @@
 import 'dart:async';
-import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
+import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class IntroductionContainer extends StatefulWidget {
+  final List<String> texts;
+  final Color text_color;
+  final String background_image;
+  final String? logo_image;
+  final IconData scroll_icon;
+  final Color scroll_icon_color;
+  final double height;
+  final double image_border_radius;
+  final double? aspect_ratio;
+  final double height_factor;
+  final double width_factor;
+  final BoxFit image_fit;
+  final Color image_background_color;
+  final double opacity;
+
   const IntroductionContainer({
     super.key,
     required this.texts,
@@ -21,21 +36,6 @@ class IntroductionContainer extends StatefulWidget {
     this.image_background_color = Colors.transparent,
     this.opacity = 1,
   });
-
-  final List<String> texts;
-  final Color text_color;
-  final String background_image;
-  final String? logo_image;
-  final IconData scroll_icon;
-  final Color scroll_icon_color;
-  final double height;
-  final double image_border_radius;
-  final double? aspect_ratio;
-  final double height_factor;
-  final double width_factor;
-  final BoxFit image_fit;
-  final Color image_background_color;
-  final double opacity;
 
   @override
   IntroductionContainerState createState() => IntroductionContainerState();
@@ -56,8 +56,6 @@ class IntroductionContainerState extends State<IntroductionContainer> {
     lower_the_icon_timer.cancel();
     super.dispose();
   }
-
-  // Init icon animation.
 
   init_animation() {
     lower_the_icon_timer = Timer(const Duration(seconds: 3), () {

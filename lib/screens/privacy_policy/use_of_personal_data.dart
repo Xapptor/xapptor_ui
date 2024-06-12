@@ -11,8 +11,9 @@ extension PrivacypolicyValuesExtension on PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_2(
+          custom_title(
             "Use of Your Personal Data",
+            type: CustomTitleType.type2,
           ),
           custom_text(
             "The Company may use Personal Data for the following purposes:",

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'characteristics_container_item.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class CharacteristicsContainer extends StatefulWidget {
+  final List<String> texts;
+
   const CharacteristicsContainer({
     super.key,
     required this.texts,
   });
-
-  final List<String> texts;
 
   @override
   State<CharacteristicsContainer> createState() => _CharacteristicsContainerState();

@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class CharacteristicsContainerItem extends StatefulWidget {
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color color;
+  final Color title_color;
+  final Color subtitle_color;
+  final Color icon_color;
+  final bool side_icon;
+  final bool large_description;
+  final bool align_to_left_description;
+
   const CharacteristicsContainerItem({
     super.key,
     required this.title,
@@ -15,17 +26,6 @@ class CharacteristicsContainerItem extends StatefulWidget {
     required this.large_description,
     required this.align_to_left_description,
   });
-
-  final String title;
-  final String description;
-  final IconData icon;
-  final Color color;
-  final Color title_color;
-  final Color subtitle_color;
-  final Color icon_color;
-  final bool side_icon;
-  final bool large_description;
-  final bool align_to_left_description;
 
   @override
   State<CharacteristicsContainerItem> createState() => _CharacteristicsContainerItemState();

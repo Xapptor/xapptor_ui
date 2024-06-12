@@ -1,47 +1,30 @@
 import 'package:flutter/material.dart';
 
-var margin_title = const EdgeInsets.only(bottom: 10);
+var _margin_title = const EdgeInsets.only(bottom: 10);
 
-Widget custom_title_1(String text) {
-  return Container(
-    color: Colors.white,
-    margin: margin_title,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-      ),
-    ),
-  );
+enum CustomTitleType {
+  type1,
+  type2,
+  type3,
 }
 
-Widget custom_title_2(String text) {
+Widget custom_title(
+  String text, {
+  required CustomTitleType type,
+}) {
   return Container(
     color: Colors.white,
-    margin: margin_title,
+    margin: _margin_title,
     child: SelectableText(
       text,
       textAlign: TextAlign.left,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 18,
-      ),
-    ),
-  );
-}
-
-Widget custom_title_3(String text) {
-  return Container(
-    color: Colors.white,
-    margin: margin_title,
-    child: SelectableText(
-      text,
-      textAlign: TextAlign.left,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: type == CustomTitleType.type1
+            ? 20
+            : type == CustomTitleType.type2
+                ? 18
+                : 16,
       ),
     ),
   );

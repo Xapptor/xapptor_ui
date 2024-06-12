@@ -2,10 +2,25 @@
 
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 import 'custom_card.dart';
 
 class CardHolder extends StatefulWidget {
+  Function() on_pressed;
+  String? title;
+  String subtitle;
+  Color text_color;
+  String image_src;
+  BoxFit image_fit;
+  Alignment background_image_alignment;
+  IconData? icon;
+  Color? icon_background_color;
+  double elevation;
+  double border_radius;
+  bool is_focused;
+  Function? delete_function;
+  Function? edit_function;
+
   CardHolder({
     super.key,
     required this.on_pressed,
@@ -23,21 +38,6 @@ class CardHolder extends StatefulWidget {
     this.delete_function,
     this.edit_function,
   });
-
-  Function() on_pressed;
-  String? title;
-  String subtitle;
-  Color text_color;
-  String image_src;
-  BoxFit image_fit;
-  Alignment background_image_alignment;
-  IconData? icon;
-  Color? icon_background_color;
-  double elevation;
-  double border_radius;
-  bool is_focused;
-  Function? delete_function;
-  Function? edit_function;
 
   @override
   State<CardHolder> createState() => _CardHolderState();

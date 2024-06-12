@@ -2,6 +2,16 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BackgroundImageWithGradientColor extends StatelessWidget {
+  final Widget child;
+  final double height;
+  final String? image_path;
+  final LinearGradient linear_gradient;
+  final BoxFit box_fit;
+  final bool? blur_image;
+  final Color? blur_image_color;
+  final List<double>? blur_image_parameters;
+  final double border_radius;
+
   const BackgroundImageWithGradientColor({
     super.key,
     required this.child,
@@ -14,16 +24,6 @@ class BackgroundImageWithGradientColor extends StatelessWidget {
     this.blur_image_parameters,
     this.border_radius = 0,
   });
-
-  final Widget child;
-  final double height;
-  final String? image_path;
-  final LinearGradient linear_gradient;
-  final BoxFit box_fit;
-  final bool? blur_image;
-  final Color? blur_image_color;
-  final List<double>? blur_image_parameters;
-  final double border_radius;
 
   @override
   Widget build(BuildContext context) {

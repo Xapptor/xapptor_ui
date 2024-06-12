@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:xapptor_ui/screens/privacy_policy/custom_text.dart';
 import 'package:xapptor_ui/screens/privacy_policy/custom_title.dart';
 
-DateFormat label_date_formatter = DateFormat.yMMMMd('en_US');
+DateFormat _label_date_formatter = DateFormat.yMMMMd('en_US');
 
 var margin = const EdgeInsets.only(top: 10, bottom: 10);
 var margin_text_2 = const EdgeInsets.only(bottom: 20);
@@ -18,11 +18,12 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
+          custom_title(
             "Privacy Policy",
+            type: CustomTitleType.type1,
           ),
           custom_text(
-            "Last updated: ${label_date_formatter.format(last_update_date)}",
+            "Last updated: ${_label_date_formatter.format(last_update_date)}",
           ),
           custom_text(
             "This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.",
@@ -42,11 +43,13 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
+          custom_title(
             "Interpretation and Definitions",
+            type: CustomTitleType.type1,
           ),
-          custom_title_2(
+          custom_title(
             "Interpretation",
+            type: CustomTitleType.type2,
           ),
           custom_text(
             "The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.",
@@ -73,8 +76,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_2(
+          custom_title(
             "Definitions",
+            type: CustomTitleType.type2,
           ),
           custom_text(
             definitions(),
@@ -93,8 +97,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_3(
+          custom_title(
             "Usage Data",
+            type: CustomTitleType.type3,
           ),
           custom_text(
             "Usage Data is collected automatically when using the Service.",
@@ -120,8 +125,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_2(
+          custom_title(
             "Retention of Your Personal Data",
+            type: CustomTitleType.type2,
           ),
           custom_text(
             "The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.",
@@ -141,8 +147,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_2(
+          custom_title(
             "Transfer of Your Personal Data",
+            type: CustomTitleType.type2,
           ),
           custom_text(
             "Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.",
@@ -165,8 +172,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_2(
+          custom_title(
             "Security of Your Personal Data",
+            type: CustomTitleType.type2,
           ),
           custom_text(
             "The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.",
@@ -183,8 +191,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
+          custom_title(
             "Children's Privacy",
+            type: CustomTitleType.type1,
           ),
           custom_text(
             "Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, We take steps to remove that information from Our servers.",
@@ -204,8 +213,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
+          custom_title(
             "Links to Other Websites",
+            type: CustomTitleType.type1,
           ),
           custom_text(
             "Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party's site. We strongly advise You to review the Privacy Policy of every site You visit.",
@@ -227,8 +237,9 @@ class PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_1(
+          custom_title(
             "Changes to this Privacy Policy",
+            type: CustomTitleType.type1,
           ),
           custom_text(
             "We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.",

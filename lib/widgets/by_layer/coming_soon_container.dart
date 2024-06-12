@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ComingSoonContainer extends StatelessWidget {
-  const ComingSoonContainer({super.key, 
+  final String text;
+  final Widget? child;
+  final bool enable_cover;
+  final double border_radius;
+
+  const ComingSoonContainer({
+    super.key,
     required this.text,
     this.child,
     required this.enable_cover,
     this.border_radius = 0,
   });
-
-  final String text;
-  final Widget? child;
-  final bool enable_cover;
-  final double border_radius;
 
   @override
   Widget build(BuildContext context) {

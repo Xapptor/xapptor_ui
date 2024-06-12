@@ -5,14 +5,21 @@ import 'package:xapptor_ui/screens/privacy_policy/disclosure_personal_data.dart'
 import 'package:xapptor_ui/screens/privacy_policy/information_collected.dart';
 import 'package:xapptor_ui/screens/privacy_policy/personal_data.dart';
 import 'package:xapptor_ui/screens/privacy_policy/use_of_personal_data.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_model.dart';
 import 'package:xapptor_ui/screens/privacy_policy/privacy_policy_values.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
-import 'package:xapptor_ui/widgets/topbar.dart';
+import 'package:xapptor_ui/widgets/top_and_bottom/topbar.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class PrivacyPolicy extends StatefulWidget {
+  final PrivacyPolicyModel privacy_policy_model;
+  final bool use_topbar;
+  final Color topbar_color;
+  final Color? logo_color;
+  final String logo_path;
+  final DateTime? last_update_date;
+
   const PrivacyPolicy({
     super.key,
     required this.privacy_policy_model,
@@ -22,13 +29,6 @@ class PrivacyPolicy extends StatefulWidget {
     this.logo_path = "assets/images/logo.png",
     this.last_update_date,
   });
-
-  final PrivacyPolicyModel privacy_policy_model;
-  final bool use_topbar;
-  final Color topbar_color;
-  final Color? logo_color;
-  final String logo_path;
-  final DateTime? last_update_date;
 
   @override
   State<PrivacyPolicy> createState() => _PrivacyPolicyState();

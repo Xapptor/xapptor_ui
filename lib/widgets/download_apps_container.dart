@@ -1,10 +1,20 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:xapptor_ui/widgets/custom_card.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/widgets/card/custom_card.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class DownloadAppsContainer extends StatefulWidget {
+  final List<String> texts;
+  final String background_image;
+  final List<Color> button_background_color;
+  final Color title_color;
+  final Color subtitle_color;
+  final String image_1;
+  final String image_2;
+  final String android_url;
+  final String ios_url;
+
   const DownloadAppsContainer({
     super.key,
     required this.texts,
@@ -17,16 +27,6 @@ class DownloadAppsContainer extends StatefulWidget {
     required this.android_url,
     required this.ios_url,
   });
-
-  final List<String> texts;
-  final String background_image;
-  final List<Color> button_background_color;
-  final Color title_color;
-  final Color subtitle_color;
-  final String image_1;
-  final String image_2;
-  final String android_url;
-  final String ios_url;
 
   @override
   State createState() => _DownloadAppsContainerState();
@@ -200,7 +200,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: download_button(
+                            child: _download_button(
                               download_url: widget.android_url,
                               image_path: 'assets/images/logo_android.png',
                               tooltip: "Android App",
@@ -209,7 +209,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                           const Spacer(flex: 1),
                           Expanded(
                             flex: 4,
-                            child: download_button(
+                            child: _download_button(
                               download_url: widget.ios_url,
                               image_path: 'assets/images/logo_apple.png',
                               tooltip: "IOS App",
@@ -230,7 +230,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
     );
   }
 
-  Widget download_button({
+  Widget _download_button({
     required download_url,
     required image_path,
     required tooltip,

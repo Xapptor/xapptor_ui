@@ -149,7 +149,6 @@ class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProvider
   }
 }
 
-@immutable
 class _ExpandingActionButton extends StatelessWidget {
   final double direction_in_degrees;
   final double max_distance;
@@ -189,7 +188,6 @@ class _ExpandingActionButton extends StatelessWidget {
   }
 }
 
-@immutable
 class ActionButton extends StatelessWidget {
   final VoidCallback? on_pressed;
   final Widget icon;

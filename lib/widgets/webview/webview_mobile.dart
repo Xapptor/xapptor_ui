@@ -3,6 +3,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'get_source_for_webview_mobile.dart';
 
 class Webview extends StatefulWidget {
+  final String src;
+  final String id;
+  final Function? controller_callback;
+  final Function(String url)? loaded_callback;
+
   const Webview({
     super.key,
     required this.src,
@@ -10,11 +15,6 @@ class Webview extends StatefulWidget {
     this.controller_callback,
     this.loaded_callback,
   });
-
-  final String src;
-  final String id;
-  final Function? controller_callback;
-  final Function(String url)? loaded_callback;
 
   @override
   State<Webview> createState() => _WebviewState();
@@ -49,7 +49,6 @@ class _WebviewState extends State<Webview> {
           },
         ),
       );
-
     _on_webview_created();
   }
 

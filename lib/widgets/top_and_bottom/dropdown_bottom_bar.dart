@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class DropdownBottomBar extends StatefulWidget {
+  final Widget child;
+  final Color bottom_bar_color;
+  final String? title;
+
   const DropdownBottomBar({
     super.key,
     required this.child,
     required this.bottom_bar_color,
     this.title,
   });
-
-  final Widget child;
-  final Color bottom_bar_color;
-  final String? title;
 
   @override
   State<DropdownBottomBar> createState() => _DropdownBottomBarState();

@@ -17,7 +17,6 @@ set_orientations({required Function callback}) async {
       ];
     }
   }
-
   SystemChrome.setPreferredOrientations(preferred_orientations).then((value) {
     callback();
   });

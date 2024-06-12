@@ -2,6 +2,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatefulWidget {
+  final Color color;
+  final Color background_color;
+  final double height;
+  final double parent_width;
+  final double initial_percentage;
+  final double final_percentage;
+  final int animation_delay;
+  final bool show_percentage_text;
+  final double border_radius;
+  final double elevation;
+  final Alignment alignment;
+
   const ProgressBar({
     super.key,
     required this.color,
@@ -16,18 +28,6 @@ class ProgressBar extends StatefulWidget {
     required this.elevation,
     required this.alignment,
   });
-
-  final Color color;
-  final Color background_color;
-  final double height;
-  final double parent_width;
-  final double initial_percentage;
-  final double final_percentage;
-  final int animation_delay;
-  final bool show_percentage_text;
-  final double border_radius;
-  final double elevation;
-  final Alignment alignment;
 
   @override
   State<ProgressBar> createState() => _ProgressBarState();

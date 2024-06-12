@@ -6,6 +6,12 @@ import 'package:flutter/widgets.dart';
 import 'dart:ui_web';
 
 class Webview extends StatefulWidget {
+  final String src;
+  final String id;
+  final Function? controller_callback;
+  final Function(String url)? loaded_callback;
+  final bool page_loaded_set_state;
+
   const Webview({
     super.key,
     required this.src,
@@ -14,12 +20,6 @@ class Webview extends StatefulWidget {
     this.loaded_callback,
     this.page_loaded_set_state = true,
   });
-
-  final String src;
-  final String id;
-  final Function? controller_callback;
-  final Function(String url)? loaded_callback;
-  final bool page_loaded_set_state;
 
   @override
   State<Webview> createState() => _WebviewState();
@@ -56,7 +56,6 @@ class _WebviewState extends State<Webview> {
     _iframe_element.style.width = '100%';
 
     if (widget.src.toLowerCase().contains("</html>")) {
-      //debugPrint("webview source 1");
       current_src = """
                   <!DOCTYPE html>
                   <html lang="en">
@@ -80,7 +79,6 @@ class _WebviewState extends State<Webview> {
                     """;
       _iframe_element.srcdoc = current_src;
     } else if (widget.src.toLowerCase().contains("http")) {
-      //debugPrint("webview source 2");
       _iframe_element.src = current_src;
     }
 

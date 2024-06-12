@@ -1,10 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:xapptor_ui/widgets/random_number_with_range.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/random_number_with_range.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class WidgetsCarousel extends StatefulWidget {
+  final List<Color> dot_colors_active;
+  final Color dot_color_inactive;
+  final List<Widget> children;
+  final bool auto_scroll;
+  final Function(int new_current_page) update_current_page;
+
   const WidgetsCarousel({
     super.key,
     required this.dot_colors_active,
@@ -13,12 +19,6 @@ class WidgetsCarousel extends StatefulWidget {
     this.auto_scroll = false,
     required this.update_current_page,
   });
-
-  final List<Color> dot_colors_active;
-  final Color dot_color_inactive;
-  final List<Widget> children;
-  final bool auto_scroll;
-  final Function(int new_current_page) update_current_page;
 
   @override
   State<WidgetsCarousel> createState() => _WidgetsCarouselState();
@@ -33,8 +33,6 @@ class _WidgetsCarouselState extends State<WidgetsCarousel> {
   );
   Curve animation_curve = Curves.easeInOutCirc;
   late Timer timer;
-
-  // Auto scroll carousel.
 
   auto_scroll() {
     int delay_seconds = random_number_with_range(5, 9);

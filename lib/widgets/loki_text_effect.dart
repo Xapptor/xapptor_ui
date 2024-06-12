@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
-import 'package:xapptor_ui/widgets/random_number_with_range.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
+import 'package:xapptor_ui/utils/random_number_with_range.dart';
 
 class LokiTextEffect extends StatefulWidget {
   final String current_text;
@@ -139,7 +139,6 @@ class _LokiTextEffectCharState extends State<LokiTextEffectChar> {
     if (random_number_with_range(0, 10) == 0) {
       char = char.toUpperCase();
     }
-
     return Text(
       char,
       textAlign: TextAlign.center,

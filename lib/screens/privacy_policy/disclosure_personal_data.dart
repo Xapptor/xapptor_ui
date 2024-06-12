@@ -11,25 +11,29 @@ extension PrivacypolicyValuesExtension on PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_2(
+          custom_title(
             "Disclosure of Your Personal Data",
+            type: CustomTitleType.type2,
           ),
-          custom_title_3(
+          custom_title(
             "Business Transactions",
+            type: CustomTitleType.type3,
           ),
           custom_text(
             "If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.",
             margin: margin_text_2,
           ),
-          custom_title_3(
+          custom_title(
             "Law enforcement",
+            type: CustomTitleType.type3,
           ),
           custom_text(
             "Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).",
             margin: margin_text_2,
           ),
-          custom_title_3(
+          custom_title(
             "Other legal requirements",
+            type: CustomTitleType.type3,
           ),
           custom_text(
             "The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:",

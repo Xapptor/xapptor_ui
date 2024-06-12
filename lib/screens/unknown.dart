@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
-
-// Page not found screen.
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class UnknownScreen extends StatelessWidget {
   final String logo_path;
   final Color topbar_color;
 
-  const UnknownScreen({super.key, 
+  const UnknownScreen({
+    super.key,
     required this.logo_path,
     required this.topbar_color,
   });

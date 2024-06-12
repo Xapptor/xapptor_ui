@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class LoadingContainer extends StatefulWidget {
+  final bool loading;
+  final Color background_color;
+  final Color progress_indicator_color;
+  final double stroke_width;
+  final Widget child;
+
   const LoadingContainer({
     super.key,
     required this.loading,
@@ -11,22 +17,11 @@ class LoadingContainer extends StatefulWidget {
     required this.child,
   });
 
-  final bool loading;
-  final Color background_color;
-  final Color progress_indicator_color;
-  final double stroke_width;
-  final Widget child;
-
   @override
   State<LoadingContainer> createState() => _LoadingContainerState();
 }
 
 class _LoadingContainerState extends State<LoadingContainer> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
@@ -56,7 +51,6 @@ class _LoadingContainerState extends State<LoadingContainer> {
         ),
       );
     }
-
     return Stack(
       children: stack_children,
     );

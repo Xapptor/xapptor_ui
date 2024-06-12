@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/values/country_phone_codes.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class CountryPhoneCodesPicker extends StatefulWidget {
   final ValueNotifier<CountryPhoneCode> current_phone_code;

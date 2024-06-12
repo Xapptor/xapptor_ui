@@ -4,15 +4,15 @@ import 'package:pdf/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PdfUrlText extends pw.StatelessWidget {
+  final String text;
+  final String url;
+  final double? font_size;
+
   PdfUrlText({
     required this.text,
     required this.url,
     this.font_size = 10,
   });
-
-  final String text;
-  final String url;
-  final double? font_size;
 
   @override
   pw.Widget build(pw.Context context) {
@@ -31,14 +31,14 @@ class PdfUrlText extends pw.StatelessWidget {
 }
 
 class UrlText extends StatelessWidget {
+  final String text;
+  final String url;
+
   const UrlText({
     super.key,
     required this.text,
     required this.url,
   });
-
-  final String text;
-  final String url;
 
   @override
   Widget build(context) {

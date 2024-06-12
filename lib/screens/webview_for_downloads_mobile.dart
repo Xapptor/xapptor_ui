@@ -10,16 +10,16 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:path_provider/path_provider.dart';
 
 class WebviewForDownloadsMobile extends StatefulWidget {
+  final String url;
+  final Color topbar_color;
+  final Widget native_screen;
+
   const WebviewForDownloadsMobile({
     super.key,
     required this.url,
     required this.topbar_color,
     required this.native_screen,
   });
-
-  final String url;
-  final Color topbar_color;
-  final Widget native_screen;
 
   @override
   State<WebviewForDownloadsMobile> createState() => _WebviewForDownloadsMobileState();

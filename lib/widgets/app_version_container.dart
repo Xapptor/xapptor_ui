@@ -3,8 +3,6 @@ import 'package:xapptor_ui/utils/copy_to_clipboard.dart';
 import 'package:xapptor_ui/values/version.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// Display Xapptor and App version
-
 class AppVersionContainer extends StatefulWidget {
   final Color text_color;
   final Color? background_color;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/widgets/custom_card.dart';
-import 'package:xapptor_ui/widgets/url_launcher.dart';
+import 'package:xapptor_ui/widgets/card/custom_card.dart';
+import 'package:xapptor_ui/widgets/url/url_launcher.dart';
 
 Widget custom_icon_button({
   required List<String> urls,

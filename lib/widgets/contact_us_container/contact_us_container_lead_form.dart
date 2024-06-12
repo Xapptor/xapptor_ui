@@ -1,13 +1,31 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
+import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_button.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
-import 'custom_card.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
+import '../card/custom_card.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
+  final landing_class;
+  final Color icon_color;
+  final Color container_background_color;
+  final String container_background_image;
+  final Color card_background_color;
+  final String card_background_image;
+  final String? facebook_url;
+  final String? facebook_url_fallback;
+  final String? youtube_url;
+  final String? instagram_url;
+  final String? twitter_url;
+  final String email;
+  final String feedback_message;
+  final List<Color> linear_gradient_colors;
+  final double border_radius;
+
   const ContactUsContainerLeadForm({
     super.key,
     required this.landing_class,
@@ -26,23 +44,6 @@ class ContactUsContainerLeadForm extends StatefulWidget {
     required this.linear_gradient_colors,
     this.border_radius = 0,
   });
-
-  // ignore: prefer_typing_uninitialized_variables
-  final landing_class;
-  final Color icon_color;
-  final Color container_background_color;
-  final String container_background_image;
-  final Color card_background_color;
-  final String card_background_image;
-  final String? facebook_url;
-  final String? facebook_url_fallback;
-  final String? youtube_url;
-  final String? instagram_url;
-  final String? twitter_url;
-  final String email;
-  final String feedback_message;
-  final List<Color> linear_gradient_colors;
-  final double border_radius;
 
   @override
   State<ContactUsContainerLeadForm> createState() => _ContactUsContainerLeadFormState();

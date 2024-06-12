@@ -11,8 +11,9 @@ extension PrivacypolicyValuesExtension on PrivacypolicyValues {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          custom_title_3(
+          custom_title(
             "Information Collected while Using the Application",
+            type: CustomTitleType.type3,
           ),
           custom_text(
             "While using Our Application, in order to provide features of Our Application, We may collect, with Your prior permission:",

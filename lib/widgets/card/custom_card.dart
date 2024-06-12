@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatefulWidget {
+  final Widget child;
+  final Function()? on_pressed;
+  final double elevation;
+  final double border_radius;
+  final LinearGradient linear_gradient;
+  final Color splash_color;
+  final Duration animation_duration;
+  final BoxShape shape;
+  final String? tooltip;
+
   const CustomCard({
     super.key,
     required this.child,
@@ -18,16 +28,6 @@ class CustomCard extends StatefulWidget {
     this.shape = BoxShape.rectangle,
     this.tooltip,
   });
-
-  final Widget child;
-  final Function()? on_pressed;
-  final double elevation;
-  final double border_radius;
-  final LinearGradient linear_gradient;
-  final Color splash_color;
-  final Duration animation_duration;
-  final BoxShape shape;
-  final String? tooltip;
 
   @override
   State createState() => _CustomCardState();

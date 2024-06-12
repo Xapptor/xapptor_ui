@@ -1,14 +1,30 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:xapptor_ui/widgets/background_image_with_gradient_color.dart';
+import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_buttons.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/selectable_texts.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/send_button.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/text_form_fields.dart';
-import 'package:xapptor_ui/widgets/custom_card.dart';
-import 'package:xapptor_ui/widgets/is_portrait.dart';
+import 'package:xapptor_ui/widgets/card/custom_card.dart';
+import 'package:xapptor_ui/utils/is_portrait.dart';
 
 class ContactUsContainer extends StatefulWidget {
+  final List<String> texts;
+  final Color icon_color;
+  final Color container_background_color;
+  final String container_background_image;
+  final Color card_background_color;
+  final String card_background_image;
+  final String? facebook_url;
+  final String? facebook_url_fallback;
+  final String? youtube_url;
+  final String? instagram_url;
+  final String? twitter_url;
+  final String email;
+  final String feedback_message;
+  final List<Color> linear_gradient_colors;
+  final double border_radius;
+
   const ContactUsContainer({
     super.key,
     required this.texts,
@@ -27,23 +43,6 @@ class ContactUsContainer extends StatefulWidget {
     required this.linear_gradient_colors,
     this.border_radius = 0,
   });
-
-  final List<String> texts;
-
-  final Color icon_color;
-  final Color container_background_color;
-  final String container_background_image;
-  final Color card_background_color;
-  final String card_background_image;
-  final String? facebook_url;
-  final String? facebook_url_fallback;
-  final String? youtube_url;
-  final String? instagram_url;
-  final String? twitter_url;
-  final String email;
-  final String feedback_message;
-  final List<Color> linear_gradient_colors;
-  final double border_radius;
 
   @override
   State<ContactUsContainer> createState() => ContactUsContainerState();

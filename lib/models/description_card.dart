@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// DescriptionCard model.
-
 class DescriptionCard {
   final String image_src;
   final String title;

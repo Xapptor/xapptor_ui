@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
-import 'package:xapptor_ui/widgets/get_assets_names.dart';
+import 'package:xapptor_ui/utils/get_assets_names.dart';
 import 'card_holder.dart';
 
 class CardGallery extends StatefulWidget {
-  const CardGallery({super.key, 
+  final double screen_height;
+  final List<String> text_list;
+  final List<Color> dot_colors_active;
+  final Color dot_color_inactive;
+  final bool auto_scroll;
+
+  final Function({
+    required int new_current_page,
+  }) update_current_page;
+
+  final Function on_pressed;
+  final int current_page;
+  final int how_many_carousels;
+  final int? carousel_length;
+  final int title_mod;
+  final List<String> image_src_list;
+  final bool add_initial_space;
+  final bool shuffle_cards;
+  final bool reverse;
+
+  const CardGallery({
+    super.key,
     required this.screen_height,
     required this.text_list,
     required this.dot_colors_active,
@@ -21,22 +42,6 @@ class CardGallery extends StatefulWidget {
     this.shuffle_cards = false,
     this.reverse = false,
   });
-
-  final double screen_height;
-  final List<String> text_list;
-  final List<Color> dot_colors_active;
-  final Color dot_color_inactive;
-  final bool auto_scroll;
-  final Function({required int new_current_page}) update_current_page;
-  final Function on_pressed;
-  final int current_page;
-  final int how_many_carousels;
-  final int? carousel_length;
-  final int title_mod;
-  final List<String> image_src_list;
-  final bool add_initial_space;
-  final bool shuffle_cards;
-  final bool reverse;
 
   @override
   State<CardGallery> createState() => _CardGalleryState();
@@ -118,10 +123,7 @@ class _CardGalleryState extends State<CardGallery> {
         if (image_names_index < widget.carousel_length!) {
           card_holders.add(
             CardHolder(
-              title: image_names_index % widget.title_mod == 0 &&
-                      widget.title_mod != -1
-                  ? widget.text_list.last
-                  : null,
+              title: image_names_index % widget.title_mod == 0 && widget.title_mod != -1 ? widget.text_list.last : null,
               image_src: images_name,
               background_image_alignment: Alignment.center,
               image_fit: BoxFit.cover,
@@ -135,10 +137,7 @@ class _CardGalleryState extends State<CardGallery> {
       } else {
         card_holders.add(
           CardHolder(
-            title: image_names_index % widget.title_mod == 0 &&
-                    widget.title_mod != -1
-                ? widget.text_list.last
-                : null,
+            title: image_names_index % widget.title_mod == 0 && widget.title_mod != -1 ? widget.text_list.last : null,
             image_src: images_name,
             background_image_alignment: Alignment.center,
             image_fit: BoxFit.cover,
