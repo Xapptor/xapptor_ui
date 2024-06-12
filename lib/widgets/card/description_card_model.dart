@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DescriptionCard {
+class DescriptionCardModel {
   final String image_src;
   final String title;
   final String description;
@@ -12,7 +12,7 @@ class DescriptionCard {
   final double current_offset;
   final double visible_offset;
 
-  const DescriptionCard({
+  const DescriptionCardModel({
     required this.image_src,
     required this.title,
     required this.description,

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/models/bottom_bar_button.dart';
+import 'package:xapptor_ui/widgets/top_and_bottom/bottom_bar_button.dart';
 import 'package:xapptor_ui/widgets/card/custom_card.dart';
 
 class BottomBarContainer extends StatefulWidget {

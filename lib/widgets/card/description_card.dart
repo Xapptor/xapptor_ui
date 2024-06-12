@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:xapptor_ui/models/description_card.dart';
+import 'package:xapptor_ui/widgets/card/description_card_model.dart';
 
 description_card({
-  required DescriptionCard description_card,
+  required DescriptionCardModel model,
   required BuildContext context,
 }) {
   double screen_height = MediaQuery.of(context).size.height;
@@ -14,7 +14,7 @@ description_card({
     SizedBox(
       //color: Colors.orange,
       width: screen_width *
-          (description_card.direction == Axis.horizontal
+          (model.direction == Axis.horizontal
               ? portrait
                   ? 0.5
                   : 0.25
@@ -22,13 +22,13 @@ description_card({
                   ? 0.85
                   : 0.5),
       child: Image.asset(
-        description_card.image_src,
+        model.image_src,
         fit: BoxFit.contain,
       ),
     ),
     SizedBox(
       width: screen_width *
-          (description_card.direction == Axis.horizontal
+          (model.direction == Axis.horizontal
               ? portrait
                   ? 0.45
                   : 0.25
@@ -41,9 +41,9 @@ description_card({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SelectableText(
-            description_card.title,
+            model.title,
             style: TextStyle(
-              color: description_card.text_color,
+              color: model.text_color,
               fontSize: portrait ? 20 : 24,
               fontWeight: FontWeight.bold,
             ),
@@ -54,24 +54,24 @@ description_card({
               bottom: 10,
             ),
             child: SelectableText(
-              description_card.description,
+              model.description,
               style: TextStyle(
-                color: description_card.text_color,
+                color: model.text_color,
                 fontSize: portrait ? 14 : 16,
               ),
             ),
           ),
           TextButton(
             onPressed: () {
-              launchUrl(Uri.parse(description_card.url));
+              launchUrl(Uri.parse(model.url));
             },
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(0),
             ),
             child: Text(
-              description_card.url_title,
+              model.url_title,
               style: TextStyle(
-                color: description_card.text_color,
+                color: model.text_color,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
@@ -84,8 +84,8 @@ description_card({
     ),
   ];
 
-  bool card_visible = description_card.current_offset >= (description_card.visible_offset - (screen_height * 1.05)) &&
-      description_card.current_offset <= (description_card.visible_offset - (screen_height * 0.35));
+  bool card_visible = model.current_offset >= (model.visible_offset - (screen_height * 1.05)) &&
+      model.current_offset <= (model.visible_offset - (screen_height * 0.35));
 
   return Stack(
     alignment: Alignment.center,
@@ -95,7 +95,7 @@ description_card({
         curve: Curves.easeInOut,
         left: card_visible
             ? 0
-            : description_card.reversed
+            : model.reversed
                 ? -screen_width
                 : screen_width,
         child: AnimatedOpacity(
@@ -106,13 +106,13 @@ description_card({
             width: screen_width,
             //color: Colors.orange,
             child: Flex(
-              direction: portrait ? description_card.direction : Axis.horizontal,
+              direction: portrait ? model.direction : Axis.horizontal,
               mainAxisAlignment: portrait
-                  ? description_card.reversed
+                  ? model.reversed
                       ? MainAxisAlignment.end
                       : MainAxisAlignment.start
                   : MainAxisAlignment.center,
-              children: description_card.reversed ? widgets.reversed.toList() : widgets,
+              children: model.reversed ? widgets.reversed.toList() : widgets,
             ),
           ),
         ),
