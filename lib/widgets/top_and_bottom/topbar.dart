@@ -32,7 +32,9 @@ AppBar TopBar({
       onLongPress: () async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(await current_app_version()),
+            content: Text(
+              await current_app_version(),
+            ),
             duration: const Duration(seconds: 4),
           ),
         );
