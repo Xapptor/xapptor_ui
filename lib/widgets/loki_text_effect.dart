@@ -1,18 +1,18 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
 import 'package:xapptor_ui/utils/random_number_with_range.dart';
+import 'dart:async';
 
 class LokiTextEffect extends StatefulWidget {
-  final String current_text;
+  final List<String> introduction_texts;
   final Color text_color;
   final double text_blur_radius;
   final bool uniform_effect;
 
   const LokiTextEffect({
     super.key,
-    required this.current_text,
+    required this.introduction_texts,
     required this.text_color,
     required this.text_blur_radius,
     this.uniform_effect = true,
@@ -23,12 +23,29 @@ class LokiTextEffect extends StatefulWidget {
 }
 
 class _LokiTextEffectState extends State<LokiTextEffect> {
+  Timer? timer_introduction_text;
   Timer? timer_font_family;
   List<String> font_families = default_loki_font_families;
+  String current_text = "";
+
+  @override
+  void dispose() {
+    if (timer_introduction_text != null) timer_introduction_text!.cancel();
+    if (timer_font_family != null) timer_font_family!.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
+    current_text = widget.introduction_texts[random_number_with_range(0, widget.introduction_texts.length - 1)];
     super.initState();
+
+    timer_introduction_text = Timer.periodic(
+      const Duration(seconds: 3),
+      (timer) {
+        update_current_introduction_text();
+      },
+    );
 
     if (widget.uniform_effect) {
       timer_font_family = Timer.periodic(
@@ -40,10 +57,22 @@ class _LokiTextEffectState extends State<LokiTextEffect> {
     }
   }
 
-  @override
-  void dispose() {
-    if (timer_font_family != null) timer_font_family!.cancel();
-    super.dispose();
+  update_current_introduction_text() {
+    current_text = widget.introduction_texts[random_number_with_range(0, widget.introduction_texts.length - 1)];
+
+    int random_number = random_number_with_range(0, 20);
+    current_text = current_text.split('').join(' ');
+
+    if (random_number >= 1 && random_number <= 2) {
+      current_text += "  !";
+    } else if (random_number >= 3 && random_number <= 4) {
+      current_text += "  ;)";
+    } else if (random_number >= 17 && random_number <= 18) {
+      current_text += "  :O";
+    } else if (random_number >= 19 && random_number <= 20) {
+      current_text += "  :D";
+    }
+    setState(() {});
   }
 
   @override
@@ -51,10 +80,10 @@ class _LokiTextEffectState extends State<LokiTextEffect> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        widget.current_text.length,
+        current_text.length,
         (index) {
           return LokiTextEffectChar(
-            char: widget.current_text[index],
+            char: current_text[index],
             font_families: font_families,
             text_color: widget.text_color,
             text_blur_radius: widget.text_blur_radius,
