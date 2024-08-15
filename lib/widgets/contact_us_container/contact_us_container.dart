@@ -138,78 +138,78 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                           Expanded(
                             flex: 10,
                             child: Column(
-                              children: [
-                                portrait ? Container() : const Spacer(flex: 1),
-                                text_form_fields(),
-                                Expanded(
-                                  flex: 1,
-                                  child: FractionallySizedBox(
-                                    heightFactor: portrait ? 0.5 : 0.5,
-                                    child: Row(
-                                      children: [
-                                        portrait ? const Spacer(flex: 1) : Container(),
-                                        Expanded(
-                                          flex: 2,
-                                          child: CustomCard(
-                                            linear_gradient: LinearGradient(
-                                              colors: [
-                                                widget.icon_color,
-                                                widget.icon_color,
-                                              ],
-                                            ),
-                                            border_radius: 1000,
-                                            on_pressed: () => send_button(),
-                                            child: Row(
-                                              children: [
-                                                const Spacer(flex: 1),
-                                                const Expanded(
-                                                  flex: 5,
-                                                  child: Icon(
-                                                    FontAwesomeIcons.paperPlane,
-                                                    color: Colors.white,
-                                                    size: 16,
-                                                  ),
+                              children: <Widget>[portrait ? Container() : const Spacer(flex: 1)] +
+                                  text_form_fields() +
+                                  <Widget>[
+                                    Expanded(
+                                      flex: 1,
+                                      child: FractionallySizedBox(
+                                        heightFactor: portrait ? 0.5 : 0.5,
+                                        child: Row(
+                                          children: [
+                                            portrait ? const Spacer(flex: 1) : Container(),
+                                            Expanded(
+                                              flex: 2,
+                                              child: CustomCard(
+                                                linear_gradient: LinearGradient(
+                                                  colors: [
+                                                    widget.icon_color,
+                                                    widget.icon_color,
+                                                  ],
                                                 ),
-                                                const Spacer(flex: 1),
-                                                Expanded(
-                                                  flex: 7,
-                                                  child: SelectableText(
-                                                    widget.texts[6],
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 12,
+                                                border_radius: 1000,
+                                                on_pressed: () => send_button(),
+                                                child: Row(
+                                                  children: [
+                                                    const Spacer(flex: 1),
+                                                    const Expanded(
+                                                      flex: 5,
+                                                      child: Icon(
+                                                        FontAwesomeIcons.paperPlane,
+                                                        color: Colors.white,
+                                                        size: 16,
+                                                      ),
                                                     ),
-                                                  ),
+                                                    const Spacer(flex: 1),
+                                                    Expanded(
+                                                      flex: 7,
+                                                      child: SelectableText(
+                                                        widget.texts[6],
+                                                        textAlign: TextAlign.center,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const Spacer(flex: 1),
+                                                  ],
                                                 ),
-                                                const Spacer(flex: 1),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            Spacer(flex: portrait ? 1 : 9),
+                                          ],
                                         ),
-                                        Spacer(flex: portrait ? 1 : 9),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                portrait ? Container() : const Spacer(flex: 1),
-                              ],
+                                    portrait ? Container() : const Spacer(flex: 1),
+                                  ],
                             ),
                           ),
                           portrait ? Container() : const Spacer(flex: 1),
                           Expanded(
                             flex: portrait ? 10 : 4,
                             child: Column(
-                              children: [
-                                Spacer(flex: portrait ? 1 : 4),
-                                selectable_texts(),
-                                const Spacer(flex: 1),
-                                Expanded(
-                                  flex: 3,
-                                  child: custom_icon_buttons(),
-                                ),
-                                portrait ? Container() : const Spacer(flex: 6),
-                              ],
+                              children: <Widget>[Spacer(flex: portrait ? 1 : 4)] +
+                                  selectable_texts() +
+                                  [
+                                    const Spacer(flex: 1),
+                                    Expanded(
+                                      flex: 3,
+                                      child: custom_icon_buttons(),
+                                    ),
+                                    portrait ? Container() : const Spacer(flex: 6),
+                                  ],
                             ),
                           ),
                           const Spacer(flex: 1),
