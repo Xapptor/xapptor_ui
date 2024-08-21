@@ -113,7 +113,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
     return mobile_webview
         ? PopScope(
             canPop: false,
-            onPopInvoked: (did_pop) async {
+            onPopInvokedWithResult: (did_pop, result) async {
               if (await webview.canGoBack()) webview.goBack();
             },
             child: Container(
