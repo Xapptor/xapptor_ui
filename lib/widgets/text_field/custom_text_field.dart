@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:xapptor_ui/values/xapptor_theme.dart';
 import 'package:xapptor_ui/values/xapptor_colors.dart';
 import 'package:xapptor_ui/widgets/text_field/custom_text_field_core.dart';
@@ -33,7 +34,7 @@ class CustomTextFieldState extends State<CustomTextField> {
       ValueNotifier(widget.model.enabled_border_color ?? XapptorColors.neutral[800]!);
   ValueNotifier<String> helper_text = ValueNotifier("");
   ValueNotifier<Color> helper_text_Color = ValueNotifier(XapptorColors.neutral[800]!);
-  ValueNotifier<Icon?> helper_icon = ValueNotifier(null);
+  ValueNotifier<FaIcon?> helper_icon = ValueNotifier(null);
   ValueNotifier<bool> show_obscure_text = ValueNotifier(false);
 
   void custom_validate() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:xapptor_ui/widgets/text_field/custom_text_field_model.dart';
 import 'package:xapptor_ui/widgets/text_field/obscure_text_icon.dart';
 import 'package:xapptor_ui/widgets/text_field/on_custom_text_field_changed.dart';
@@ -11,7 +12,7 @@ custom_textfield_core({
   required ValueNotifier<Color> enabled_border_color,
   required ValueNotifier<String> helper_text,
   required ValueNotifier<Color> helper_text_color,
-  required ValueNotifier<Icon?> helper_icon,
+  required ValueNotifier<FaIcon?> helper_icon,
   required ValueNotifier<bool> show_obscure_text,
   required Color fill_color,
   required Function? on_changed,

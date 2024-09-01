@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomTextFieldModel {
   final String title;
@@ -15,7 +16,7 @@ class CustomTextFieldModel {
   final Widget? suffix_icon;
   final bool enabled;
   final String? Function(String?)? validator;
-  final Icon? helper_icon;
+  final FaIcon? helper_icon;
   final bool obscure_text;
   final String obscuring_character;
   final bool show_length_limit_counter;

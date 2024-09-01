@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 custom_textfield_helper({
   required BuildContext context,
   required String helper_text,
   required Color helper_text_color,
-  required ValueNotifier<Icon?> helper_icon,
+  required ValueNotifier<FaIcon?> helper_icon,
   required int? length_limit,
   required bool show_length_limit_counter,
   required int text_length,
