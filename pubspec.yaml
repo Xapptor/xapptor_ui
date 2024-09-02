@@ -42,8 +42,13 @@ dependencies:
 
   # xapptor_router: ^0.0.2
 
+  xapptor_db:
+    path: ../xapptor_db
   xapptor_router:
     path: ../xapptor_router
+
+dependency_overrides:
+  web: ^1.0.0
 
 dev_dependencies:
   flutter_test:

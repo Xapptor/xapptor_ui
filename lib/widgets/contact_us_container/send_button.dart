@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/contact_us_container.dart';
 
@@ -13,7 +13,7 @@ extension StateExtension on ContactUsContainerState {
       String newMessage =
           "${name_input_controller.text} has a message for you! \n\n Email: ${email_input_controller.text}\n\n Message: ${message_input_controller.text}";
 
-      FirebaseFirestore.instance.collection("emails").doc().set({
+      XapptorDB.instance.collection("emails").doc().set({
         "to": widget.email,
         "message": {
           "subject": "Message from contact us section: \"${subject_input_controller.text}\"",

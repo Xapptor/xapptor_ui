@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
@@ -378,7 +378,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                               String newMessage =
                                                   "${name_input_controller.text} has a message for you! \n\nYou have a new Lead: \n\n Insurance Type: $insurance_type_value\nSchedule: $schedule_value\nName: ${name_input_controller.text}\nAddress: ${address_input_controller.text}\nZip Code: ${zip_code_input_controller.text}\nTelephone Number: ${telephone_number_input_controller.text}\nEmail: ${email_input_controller.text}\nDate of Birth: $birthday_label";
 
-                                              FirebaseFirestore.instance.collection("emails").doc().set({
+                                              XapptorDB.instance.collection("emails").doc().set({
                                                 "to": widget.email,
                                                 "message": {
                                                   "subject": "You have a new Lead: ${name_input_controller.text}",

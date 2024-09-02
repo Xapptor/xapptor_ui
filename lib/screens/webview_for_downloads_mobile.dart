@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:xapptor_db/xapptor_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -80,7 +80,7 @@ class _WebviewForDownloadsMobileState extends State<WebviewForDownloadsMobile> {
   }
 
   check_if_webview_is_enabled() async {
-    var app_snap = await FirebaseFirestore.instance.collection("metadata").doc("app").get();
+    var app_snap = await XapptorDB.instance.collection("metadata").doc("app").get();
 
     Map<String, dynamic>? app_data = app_snap.data();
 
