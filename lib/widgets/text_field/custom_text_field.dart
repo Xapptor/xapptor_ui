@@ -55,6 +55,14 @@ class CustomTextFieldState extends State<CustomTextField> {
     super.initState();
     helper_text.value = widget.model.description;
 
+    check_on_changed();
+
+    widget.model.controller.addListener(() {
+      check_on_changed();
+    });
+  }
+
+  check_on_changed() {
     String textfield_value = widget.model.controller.text;
 
     if (widget.model.on_changed != null) {

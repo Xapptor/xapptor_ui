@@ -25,6 +25,8 @@ class PdfUrlText extends pw.StatelessWidget {
           decoration: pw.TextDecoration.underline,
           color: PdfColors.blue,
         ),
+        softWrap: true,
+        overflow: pw.TextOverflow.clip,
       ),
     );
   }
@@ -33,11 +35,13 @@ class PdfUrlText extends pw.StatelessWidget {
 class UrlText extends StatelessWidget {
   final String text;
   final String url;
+  final double? font_size;
 
   const UrlText({
     super.key,
     required this.text,
     required this.url,
+    this.font_size = 10,
   });
 
   @override
@@ -55,6 +59,8 @@ class UrlText extends StatelessWidget {
             decoration: TextDecoration.underline,
             color: Colors.blue,
           ),
+          softWrap: true,
+          overflow: TextOverflow.clip,
         ),
       ),
     );
