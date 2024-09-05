@@ -42,23 +42,22 @@ class BackgroundImageWithGradientColor extends StatelessWidget {
                     image_path!,
                     fit: box_fit,
                   )
-                : Container(),
+                : null,
           ),
         ),
-        blur_image != null && blur_image!
-            ? BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: blur_image_parameters![0],
-                  sigmaY: blur_image_parameters![1],
-                ),
-                child: Container(
-                  color: blur_image_color,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(border_radius),
-                  ),
-                ),
-              )
-            : Container(),
+        if (blur_image != null && blur_image!)
+          BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: blur_image_parameters![0],
+              sigmaY: blur_image_parameters![1],
+            ),
+            child: Container(
+              color: blur_image_color,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(border_radius),
+              ),
+            ),
+          ),
         Container(
           decoration: BoxDecoration(
             gradient: linear_gradient,

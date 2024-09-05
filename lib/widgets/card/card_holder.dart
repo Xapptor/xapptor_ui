@@ -171,7 +171,7 @@ class _CardHolderState extends State<CardHolder> {
                                                 alignment: widget.background_image_alignment,
                                               ),
                                       )
-                                    : Container(),
+                                    : null,
                           ),
                         ),
                       ),
@@ -182,62 +182,60 @@ class _CardHolderState extends State<CardHolder> {
             );
           },
         ),
-        widget.delete_function != null
-            ? Container(
-                alignment: Alignment.topLeft,
-                margin: const EdgeInsets.only(
-                  top: 10,
-                  left: 25,
-                ),
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.white,
-                    child: InkWell(
-                      splashColor: Colors.blueGrey.withOpacity(0.5),
-                      onTap: () {
-                        widget.delete_function!();
-                      },
-                      child: const SizedBox(
-                        width: 56,
-                        height: 56,
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                      ),
+        if (widget.delete_function != null)
+          Container(
+            alignment: Alignment.topLeft,
+            margin: const EdgeInsets.only(
+              top: 10,
+              left: 25,
+            ),
+            child: ClipOval(
+              child: Material(
+                color: Colors.white,
+                child: InkWell(
+                  splashColor: Colors.blueGrey.withOpacity(0.5),
+                  onTap: () {
+                    widget.delete_function!();
+                  },
+                  child: const SizedBox(
+                    width: 56,
+                    height: 56,
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.red,
                     ),
                   ),
                 ),
-              )
-            : Container(),
-        widget.edit_function != null
-            ? Container(
-                alignment: Alignment.topRight,
-                margin: const EdgeInsets.only(
-                  top: 10,
-                  right: 25,
-                ),
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.white,
-                    child: InkWell(
-                      splashColor: Colors.blueGrey.withOpacity(0.5),
-                      onTap: () {
-                        widget.edit_function!();
-                      },
-                      child: const SizedBox(
-                        width: 56,
-                        height: 56,
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.grey,
-                        ),
-                      ),
+              ),
+            ),
+          ),
+        if (widget.edit_function != null)
+          Container(
+            alignment: Alignment.topRight,
+            margin: const EdgeInsets.only(
+              top: 10,
+              right: 25,
+            ),
+            child: ClipOval(
+              child: Material(
+                color: Colors.white,
+                child: InkWell(
+                  splashColor: Colors.blueGrey.withOpacity(0.5),
+                  onTap: () {
+                    widget.edit_function!();
+                  },
+                  child: const SizedBox(
+                    width: 56,
+                    height: 56,
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
-              )
-            : Container(),
+              ),
+            ),
+          ),
       ],
     );
   }
