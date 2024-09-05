@@ -188,7 +188,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                             flex: 10,
                             child: Column(
                               children: [
-                                portrait ? Container() : const Spacer(flex: 1),
+                                if (!portrait) const Spacer(flex: 1),
                                 Expanded(
                                   flex: portrait ? 30 : 8,
                                   child: Flex(
@@ -355,12 +355,12 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                     ],
                                   ),
                                 ),
-                                !portrait ? Container() : const Spacer(flex: 1),
+                                if (portrait) const Spacer(flex: 1),
                                 Expanded(
                                   flex: portrait ? 3 : 1,
                                   child: Row(
                                     children: [
-                                      portrait ? const Spacer(flex: 1) : Container(),
+                                      if (portrait) const Spacer(flex: 1),
                                       Expanded(
                                         flex: 2,
                                         child: CustomCard(
@@ -447,11 +447,11 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                     ],
                                   ),
                                 ),
-                                portrait ? Container() : const Spacer(flex: 1),
+                                if (!portrait) const Spacer(flex: 1),
                               ],
                             ),
                           ),
-                          portrait ? Container() : const Spacer(flex: 1),
+                          if (!portrait) const Spacer(flex: 1),
                           Expanded(
                             flex: portrait ? 5 : 4,
                             child: Column(
@@ -525,51 +525,47 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                   child: Row(
                                     children: [
                                       const Spacer(flex: 1),
-                                      widget.facebook_url != null
-                                          ? Expanded(
-                                              flex: 5,
-                                              child: custom_icon_button(
-                                                urls: [widget.facebook_url!, widget.facebook_url_fallback!],
-                                                icon: FontAwesomeIcons.squareFacebook,
-                                                icon_color: widget.icon_color,
-                                              ),
-                                            )
-                                          : Container(),
-                                      widget.youtube_url != null
-                                          ? Expanded(
-                                              flex: 5,
-                                              child: custom_icon_button(
-                                                urls: [widget.youtube_url!, widget.youtube_url!],
-                                                icon: FontAwesomeIcons.youtube,
-                                                icon_color: widget.icon_color,
-                                              ),
-                                            )
-                                          : Container(),
-                                      widget.instagram_url != null
-                                          ? Expanded(
-                                              flex: 5,
-                                              child: custom_icon_button(
-                                                urls: [widget.instagram_url!, widget.instagram_url!],
-                                                icon: FontAwesomeIcons.instagram,
-                                                icon_color: widget.icon_color,
-                                              ),
-                                            )
-                                          : Container(),
-                                      widget.twitter_url != null
-                                          ? Expanded(
-                                              flex: 5,
-                                              child: custom_icon_button(
-                                                urls: [widget.twitter_url!, widget.twitter_url!],
-                                                icon: FontAwesomeIcons.twitter,
-                                                icon_color: widget.icon_color,
-                                              ),
-                                            )
-                                          : Container(),
+                                      if (widget.facebook_url != null)
+                                        Expanded(
+                                          flex: 5,
+                                          child: custom_icon_button(
+                                            urls: [widget.facebook_url!, widget.facebook_url_fallback!],
+                                            icon: FontAwesomeIcons.squareFacebook,
+                                            icon_color: widget.icon_color,
+                                          ),
+                                        ),
+                                      if (widget.youtube_url != null)
+                                        Expanded(
+                                          flex: 5,
+                                          child: custom_icon_button(
+                                            urls: [widget.youtube_url!, widget.youtube_url!],
+                                            icon: FontAwesomeIcons.youtube,
+                                            icon_color: widget.icon_color,
+                                          ),
+                                        ),
+                                      if (widget.instagram_url != null)
+                                        Expanded(
+                                          flex: 5,
+                                          child: custom_icon_button(
+                                            urls: [widget.instagram_url!, widget.instagram_url!],
+                                            icon: FontAwesomeIcons.instagram,
+                                            icon_color: widget.icon_color,
+                                          ),
+                                        ),
+                                      if (widget.twitter_url != null)
+                                        Expanded(
+                                          flex: 5,
+                                          child: custom_icon_button(
+                                            urls: [widget.twitter_url!, widget.twitter_url!],
+                                            icon: FontAwesomeIcons.twitter,
+                                            icon_color: widget.icon_color,
+                                          ),
+                                        ),
                                       const Spacer(flex: 1),
                                     ],
                                   ),
                                 ),
-                                portrait ? Container() : const Spacer(flex: 6),
+                                if (!portrait) const Spacer(flex: 6),
                               ],
                             ),
                           ),

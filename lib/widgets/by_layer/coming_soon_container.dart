@@ -21,30 +21,29 @@ class ComingSoonContainer extends StatelessWidget {
         Center(
           child: child,
         ),
-        enable_cover
-            ? Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(border_radius),
-                    color: Colors.blueGrey.shade500.withOpacity(0.7),
-                  ),
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: Center(
-                      child: Text(
-                        text,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+        if (enable_cover)
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(border_radius),
+                color: Colors.blueGrey.shade500.withOpacity(0.7),
+              ),
+              child: AbsorbPointer(
+                absorbing: true,
+                child: Center(
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              )
-            : Container(),
+              ),
+            ),
+          ),
       ],
     );
   }

@@ -138,7 +138,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                           Expanded(
                             flex: 10,
                             child: Column(
-                              children: <Widget>[portrait ? Container() : const Spacer(flex: 1)] +
+                              children: <Widget>[if (!portrait) const Spacer(flex: 1)] +
                                   text_form_fields() +
                                   <Widget>[
                                     Expanded(
@@ -147,7 +147,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                                         heightFactor: portrait ? 0.5 : 0.5,
                                         child: Row(
                                           children: [
-                                            portrait ? const Spacer(flex: 1) : Container(),
+                                            if (portrait) const Spacer(flex: 1),
                                             Expanded(
                                               flex: 2,
                                               child: CustomCard(
@@ -192,11 +192,11 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                                         ),
                                       ),
                                     ),
-                                    portrait ? Container() : const Spacer(flex: 1),
+                                    if (!portrait) const Spacer(flex: 1),
                                   ],
                             ),
                           ),
-                          portrait ? Container() : const Spacer(flex: 1),
+                          if (!portrait) const Spacer(flex: 1),
                           Expanded(
                             flex: portrait ? 10 : 4,
                             child: Column(
@@ -208,7 +208,7 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                                       flex: 3,
                                       child: custom_icon_buttons(),
                                     ),
-                                    portrait ? Container() : const Spacer(flex: 6),
+                                    if (!portrait) const Spacer(flex: 6),
                                   ],
                             ),
                           ),

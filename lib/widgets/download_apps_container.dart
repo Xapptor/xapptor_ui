@@ -111,7 +111,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 overflow: TextOverflow.clip,
               ),
             ),
-            portrait ? Container() : const Spacer(flex: 1),
+            if (!portrait) const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(direction: portrait ? Axis.vertical : Axis.horizontal, children: [
@@ -155,7 +155,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 const Spacer(flex: 2),
               ]),
             ),
-            portrait ? Container() : const Spacer(flex: 1),
+            if (!portrait) const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(
@@ -163,7 +163,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 children: portrait ? widgets_list.reversed.toList() : widgets_list,
               ),
             ),
-            portrait ? Container() : const Spacer(flex: 1),
+            if (!portrait) const Spacer(flex: 1),
             Expanded(
               flex: 6,
               child: Flex(
@@ -174,7 +174,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                     flex: 4,
                     child: Column(
                       children: [
-                        portrait ? Container() : const Spacer(flex: 1),
+                        if (!portrait) const Spacer(flex: 1),
                         Expanded(
                           flex: portrait ? 20 : 1,
                           child: Text(
@@ -223,7 +223,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                 ],
               ),
             ),
-            portrait ? Container() : const Spacer(flex: 2),
+            if (!portrait) const Spacer(flex: 2),
           ],
         ),
       ),

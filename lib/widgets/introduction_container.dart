@@ -157,21 +157,20 @@ class IntroductionContainerState extends State<IntroductionContainer> {
                                 ),
                               ),
                             ),
-                            widget.texts.length > 1 ? const Spacer(flex: 2) : Container(),
-                            widget.texts.length > 1
-                                ? Expanded(
-                                    flex: portrait ? 4 : 10,
-                                    child: SelectableText(
-                                      widget.texts[1],
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: widget.text_color,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
+                            if (widget.texts.length > 1) const Spacer(flex: 2),
+                            if (widget.texts.length > 1)
+                              Expanded(
+                                flex: portrait ? 4 : 10,
+                                child: SelectableText(
+                                  widget.texts[1],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: widget.text_color,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       ),
