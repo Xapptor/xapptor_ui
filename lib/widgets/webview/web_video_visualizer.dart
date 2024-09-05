@@ -43,7 +43,7 @@ class _WebVideoVisualizerState extends State<WebVideoVisualizer> {
                 src: complete_url,
                 id: const Uuid().v8(),
               )
-            : Container(),
+            : null,
       ),
     );
   }

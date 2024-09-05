@@ -70,23 +70,23 @@ class _DropdownBottomBarState extends State<DropdownBottomBar> with TickerProvid
                         show_child ? Icons.arrow_downward : Icons.arrow_upward,
                         color: Colors.white,
                       ),
-                      widget.title != null
-                          ? Text(
-                              widget.title!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          : Container(),
+                      if (widget.title != null)
+                        Text(
+                          widget.title!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: show_child ? (screen_height * 0.6) : 0,
-                child: show_child ? widget.child : Container(),
-              ),
+              if (show_child)
+                SizedBox(
+                  height: screen_height * 0.6,
+                  child: widget.child,
+                ),
             ],
           ),
         ),

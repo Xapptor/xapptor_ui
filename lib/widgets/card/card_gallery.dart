@@ -48,7 +48,7 @@ class CardGallery extends StatefulWidget {
 }
 
 class _CardGalleryState extends State<CardGallery> {
-  Widget card_gallery = Container();
+  late Column card_gallery;
 
   generate_card_gallery() async {
     int index = 0;

@@ -26,7 +26,7 @@ AppBar TopBar({
                 Navigator.pop(context);
               },
             )
-        : Container(),
+        : null,
     centerTitle: false,
     title: GestureDetector(
       onLongPress: () async {
@@ -55,7 +55,7 @@ AppBar TopBar({
                   width: topbar_height,
                   color: logo_color,
                 )
-          : Container(),
+          : null,
     ),
     backgroundColor: background_color,
     elevation: 0,
