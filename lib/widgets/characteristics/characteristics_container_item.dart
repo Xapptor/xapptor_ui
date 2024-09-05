@@ -47,23 +47,21 @@ class _CharacteristicsContainerItemState extends State<CharacteristicsContainerI
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          widget.side_icon
-              ? Icon(
-                  widget.icon,
-                  color: widget.icon_color,
-                  size: 40,
-                )
-              : Container(),
+          if (widget.side_icon)
+            Icon(
+              widget.icon,
+              color: widget.icon_color,
+              size: 40,
+            ),
           Column(
             crossAxisAlignment: widget.side_icon ? CrossAxisAlignment.start : CrossAxisAlignment.center,
             children: [
-              !widget.side_icon
-                  ? Icon(
-                      widget.icon,
-                      color: widget.icon_color,
-                      size: 40,
-                    )
-                  : Container(),
+              if (!widget.side_icon)
+                Icon(
+                  widget.icon,
+                  color: widget.icon_color,
+                  size: 40,
+                ),
               Container(
                 margin: const EdgeInsets.all(10),
                 child: SelectableText(

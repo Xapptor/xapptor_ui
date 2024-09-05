@@ -519,13 +519,12 @@ appBar: TopBar(
         Container(
             width: 150,
             margin: EdgeInsets.only(right: 20),
-            child: widget.language_picker
-                ? LanguagePicker(
+            child: if (widget.language_picker)
+                LanguagePicker(
                     translation_stream_list: translation_stream_list,
                     language_picker_items_text_color:
                         widget.language_picker_items_text_color,
-                )
-                : Container(),
+                ),
         ),
     ],
     custom_leading: null,

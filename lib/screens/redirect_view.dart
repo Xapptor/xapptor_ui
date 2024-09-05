@@ -32,8 +32,8 @@ class _RedirectViewState extends State<RedirectView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
+    return const Scaffold(
+      body: SizedBox(),
     );
   }
 }

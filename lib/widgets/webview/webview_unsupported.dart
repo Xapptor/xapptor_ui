@@ -23,6 +23,6 @@ class Webview extends StatefulWidget {
 class _WebviewState extends State<Webview> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const SizedBox();
   }
 }

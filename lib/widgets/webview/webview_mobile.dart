@@ -70,13 +70,12 @@ class _WebviewState extends State<Webview> {
         WebViewWidget(
           controller: _webview_controller,
         ),
-        !page_loaded
-            ? CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor,
-                ),
-              )
-            : Container(),
+        if (!page_loaded)
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Theme.of(context).primaryColor,
+            ),
+          ),
       ],
     );
   }

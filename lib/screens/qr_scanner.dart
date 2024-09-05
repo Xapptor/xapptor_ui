@@ -164,12 +164,11 @@ class _QRScannerState extends State<QRScanner> {
                         ),
                       ),
                     ),
-                    widget.show_main_button
-                        ? SizedBox(
-                            height: 50,
-                            child: main_button(),
-                          )
-                        : Container(),
+                    if (widget.show_main_button)
+                      SizedBox(
+                        height: 50,
+                        child: main_button(),
+                      ),
                   ],
                 ),
               ),
@@ -224,7 +223,7 @@ class _QRScannerState extends State<QRScanner> {
                       ),
                     ),
                     const Spacer(flex: 6),
-                    widget.show_main_button ? main_button() : Container(),
+                    if (widget.show_main_button) main_button(),
                     const Spacer(flex: 1),
                   ],
                 ),

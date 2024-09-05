@@ -19,7 +19,7 @@ custom_textfield_helper({
       children: [
         Row(
           children: [
-            helper_icon.value ?? Container(),
+            if (helper_icon.value != null) helper_icon.value!,
             if (helper_text.isNotEmpty)
               Container(
                 margin: EdgeInsets.only(
