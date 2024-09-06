@@ -55,7 +55,7 @@ AppBar TopBar({
                   width: topbar_height,
                   color: logo_color,
                 )
-          : null,
+          : const SizedBox(),
     ),
     backgroundColor: background_color,
     elevation: 0,
