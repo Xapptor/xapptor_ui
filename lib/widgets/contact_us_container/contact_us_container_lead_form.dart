@@ -5,9 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
+import 'package:xapptor_ui/widgets/card/custom_card.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_button.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
-import '../card/custom_card.dart';
 
 // TODO: Refactor and Modularize this widget
 
