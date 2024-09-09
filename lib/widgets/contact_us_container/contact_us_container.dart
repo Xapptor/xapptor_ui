@@ -201,7 +201,10 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                             flex: portrait ? 10 : 4,
                             child: Column(
                               children: <Widget>[Spacer(flex: portrait ? 1 : 4)] +
-                                  selectable_texts() +
+                                  selectable_texts(
+                                    texts: widget.texts,
+                                    icon_color: widget.icon_color,
+                                  ) +
                                   [
                                     const Spacer(flex: 1),
                                     Expanded(

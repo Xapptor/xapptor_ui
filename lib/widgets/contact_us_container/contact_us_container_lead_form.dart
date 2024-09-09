@@ -1,11 +1,11 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/card/custom_card.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_buttons.dart';
-import 'package:xapptor_ui/widgets/contact_us_container/selectable_texts_abeinsurance.dart';
+import 'package:xapptor_ui/widgets/contact_us_container/lead_form.dart';
+import 'package:xapptor_ui/widgets/contact_us_container/selectable_texts.dart';
 import 'package:xapptor_ui/widgets/contact_us_container/send_button_abeinsurance.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
@@ -71,32 +71,16 @@ class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> 
 
   String birthday_label = "Fecha de Nacimiento";
 
-  static DateTime over_18 = DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day);
-  static DateTime first_date = DateTime(DateTime.now().year - 150, DateTime.now().month, DateTime.now().day);
-  DateTime selected_date = over_18;
-
-  Future _select_date(BuildContext context) async {
-    final DateTime? picked = (await showDatePicker(
-      context: context,
-      initialDate: selected_date,
-      firstDate: first_date,
-      lastDate: over_18,
-    ));
-    if (picked != null) {
-      setState(() {
-        selected_date = picked;
-
-        DateFormat date_formatter = DateFormat.yMMMMd('en_US');
-        String date_now_formatted = date_formatter.format(selected_date);
-        birthday_label = date_now_formatted;
-      });
-    }
-  }
+  DateTime over_18 = DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day);
+  DateTime first_date = DateTime(DateTime.now().year - 150, DateTime.now().month, DateTime.now().day);
+  late DateTime selected_date;
 
   @override
   void initState() {
     insurance_type_value = insurance_type_values[0];
     schedule_value = schedule_values[0];
+    selected_date = over_18;
+
     super.initState();
   }
 
@@ -131,7 +115,7 @@ class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> 
               flex: 1,
               child: FractionallySizedBox(
                 widthFactor: 0.7,
-                child: Text(
+                child: SelectableText(
                   widget.texts[0],
                   textAlign: TextAlign.center,
                   style: const TextStyle(
@@ -145,7 +129,7 @@ class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> 
               flex: portrait ? 2 : 1,
               child: FractionallySizedBox(
                 widthFactor: 0.55,
-                child: Text(
+                child: SelectableText(
                   widget.texts[1],
                   textAlign: TextAlign.center,
                   style: const TextStyle(
@@ -194,168 +178,8 @@ class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> 
                                 if (!portrait) const Spacer(flex: 1),
                                 Expanded(
                                   flex: portrait ? 30 : 8,
-                                  child: Flex(
-                                    direction: portrait ? Axis.vertical : Axis.horizontal,
-                                    children: [
-                                      Expanded(
-                                        flex: 10,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              flex: 2,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  const Spacer(flex: 2),
-                                                  DropdownButton<String>(
-                                                    isExpanded: true,
-                                                    value: insurance_type_value,
-                                                    iconSize: 24,
-                                                    elevation: 16,
-                                                    style: TextStyle(
-                                                      color: widget.icon_color,
-                                                    ),
-                                                    underline: Container(
-                                                      height: 1,
-                                                      color: widget.icon_color,
-                                                    ),
-                                                    onChanged: (new_value) {
-                                                      setState(() {
-                                                        insurance_type_value = new_value!;
-                                                      });
-                                                    },
-                                                    items: insurance_type_values
-                                                        .map<DropdownMenuItem<String>>((String value) {
-                                                      return DropdownMenuItem<String>(
-                                                        value: value,
-                                                        child: Text(value),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                  const Spacer(flex: 10),
-                                                  DropdownButton<String>(
-                                                    isExpanded: true,
-                                                    value: schedule_value,
-                                                    iconSize: 24,
-                                                    elevation: 16,
-                                                    style: TextStyle(
-                                                      color: widget.icon_color,
-                                                    ),
-                                                    underline: Container(
-                                                      height: 1,
-                                                      color: widget.icon_color,
-                                                    ),
-                                                    onChanged: (new_value) {
-                                                      setState(() {
-                                                        schedule_value = new_value!;
-                                                      });
-                                                    },
-                                                    items:
-                                                        schedule_values.map<DropdownMenuItem<String>>((String value) {
-                                                      return DropdownMenuItem<String>(
-                                                        value: value,
-                                                        child: Text(value),
-                                                      );
-                                                    }).toList(),
-                                                  ),
-                                                  const Spacer(flex: 8),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: TextFormField(
-                                                controller: name_input_controller,
-                                                decoration: const InputDecoration(
-                                                  labelText: "Nombre completo",
-                                                ),
-                                                onSaved: (value) {},
-                                                validator: (value) {
-                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
-                                                },
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: TextFormField(
-                                                controller: address_input_controller,
-                                                decoration: const InputDecoration(
-                                                  labelText: "Dirección",
-                                                ),
-                                                onSaved: (value) {},
-                                                validator: (value) {
-                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Spacer(flex: 1),
-                                      Expanded(
-                                        flex: 10,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: TextFormField(
-                                                controller: zip_code_input_controller,
-                                                decoration: const InputDecoration(
-                                                  labelText: "Código postal",
-                                                ),
-                                                onSaved: (value) {},
-                                                validator: (value) {
-                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
-                                                },
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: TextFormField(
-                                                controller: telephone_number_input_controller,
-                                                decoration: const InputDecoration(
-                                                  labelText: "Número de teléfono",
-                                                ),
-                                                onSaved: (value) {},
-                                                validator: (value) {
-                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
-                                                },
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: TextFormField(
-                                                controller: email_input_controller,
-                                                decoration: const InputDecoration(
-                                                  labelText: "Correo electrónico",
-                                                ),
-                                                onSaved: (value) {},
-                                                validator: (value) {
-                                                  return value!.contains('@') ? 'Do not use the @ char.' : null;
-                                                },
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: SizedBox(
-                                                width: MediaQuery.of(context).size.width,
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    _select_date(context);
-                                                  },
-                                                  child: Text(
-                                                    birthday_label,
-                                                    style: TextStyle(
-                                                      color: widget.icon_color,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                  child: lead_form(
+                                    portrait: portrait,
                                   ),
                                 ),
                                 if (portrait) const Spacer(flex: 1),
@@ -389,7 +213,7 @@ class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> 
                                               Spacer(flex: 1),
                                               Expanded(
                                                 flex: 7,
-                                                child: Text(
+                                                child: SelectableText(
                                                   "Enviar",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -417,7 +241,10 @@ class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> 
                             flex: portrait ? 10 : 4,
                             child: Column(
                               children: <Widget>[Spacer(flex: portrait ? 1 : 4)] +
-                                  selectable_texts() +
+                                  selectable_texts(
+                                    texts: widget.texts,
+                                    icon_color: widget.icon_color,
+                                  ) +
                                   [
                                     const Spacer(flex: 1),
                                     Expanded(
