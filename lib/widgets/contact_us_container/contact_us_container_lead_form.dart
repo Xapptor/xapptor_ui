@@ -1,18 +1,15 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
-
-import 'package:xapptor_db/xapptor_db.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:xapptor_ui/widgets/by_layer/background_image_with_gradient_color.dart';
 import 'package:flutter/material.dart';
 import 'package:xapptor_ui/widgets/card/custom_card.dart';
-import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_button.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
-
-// TODO: Refactor and Modularize this widget
+import 'package:xapptor_ui/widgets/contact_us_container/custom_icon_buttons.dart';
+import 'package:xapptor_ui/widgets/contact_us_container/selectable_texts_abeinsurance.dart';
+import 'package:xapptor_ui/widgets/contact_us_container/send_button_abeinsurance.dart';
 
 class ContactUsContainerLeadForm extends StatefulWidget {
-  final landing_class;
+  final List<String> texts;
   final Color icon_color;
   final Color container_background_color;
   final String container_background_image;
@@ -30,7 +27,7 @@ class ContactUsContainerLeadForm extends StatefulWidget {
 
   const ContactUsContainerLeadForm({
     super.key,
-    required this.landing_class,
+    required this.texts,
     required this.icon_color,
     required this.container_background_color,
     required this.container_background_image,
@@ -48,18 +45,18 @@ class ContactUsContainerLeadForm extends StatefulWidget {
   });
 
   @override
-  State<ContactUsContainerLeadForm> createState() => _ContactUsContainerLeadFormState();
+  State<ContactUsContainerLeadForm> createState() => ContactUsContainerLeadFormState();
 }
 
-class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> {
-  static List<String> insurance_type_values = [
+class ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm> {
+  List<String> insurance_type_values = [
     "¿Qué seguro te interesa?",
     "Seguro de Vida",
     "Protección de Hipoteca",
     "Gastos Funerarios",
   ];
 
-  static List<String> schedule_values = [
+  List<String> schedule_values = [
     "¿A qué hora te gustaría que te llamaran?",
     "6 AM - 9 AM",
     "9 AM - 12 PM",
@@ -69,14 +66,8 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
     "9 PM - 12 AM",
   ];
 
-  String insurance_type_value = insurance_type_values[0];
-  String schedule_value = schedule_values[0];
-
-  TextEditingController name_input_controller = TextEditingController();
-  TextEditingController address_input_controller = TextEditingController();
-  TextEditingController zip_code_input_controller = TextEditingController();
-  TextEditingController telephone_number_input_controller = TextEditingController();
-  TextEditingController email_input_controller = TextEditingController();
+  late String insurance_type_value;
+  late String schedule_value;
 
   String birthday_label = "Fecha de Nacimiento";
 
@@ -103,9 +94,21 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
   }
 
   @override
+  void initState() {
+    insurance_type_value = insurance_type_values[0];
+    schedule_value = schedule_values[0];
+    super.initState();
+  }
+
+  TextEditingController name_input_controller = TextEditingController();
+  TextEditingController address_input_controller = TextEditingController();
+  TextEditingController zip_code_input_controller = TextEditingController();
+  TextEditingController telephone_number_input_controller = TextEditingController();
+  TextEditingController email_input_controller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     bool portrait = is_portrait(context);
-
     double height = portrait ? (MediaQuery.of(context).size.height * 2) : (MediaQuery.of(context).size.height);
 
     return SizedBox(
@@ -124,14 +127,14 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
         child: Column(
           children: [
             const Spacer(flex: 1),
-            const Expanded(
+            Expanded(
               flex: 1,
               child: FractionallySizedBox(
                 widthFactor: 0.7,
                 child: Text(
-                  "Contacto",
+                  widget.texts[0],
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                   ),
@@ -140,12 +143,12 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
             ),
             Expanded(
               flex: portrait ? 2 : 1,
-              child: const FractionallySizedBox(
+              child: FractionallySizedBox(
                 widthFactor: 0.55,
                 child: Text(
-                  "Mandanos tu información para ofrecerte el mejor servicio",
+                  widget.texts[1],
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                   ),
@@ -371,49 +374,7 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                                             ],
                                           ),
                                           border_radius: 1000,
-                                          on_pressed: () {
-                                            if (insurance_type_value != "¿Qué seguro te interesa?" &&
-                                                schedule_value != "¿A qué hora te gustaría que te llamaran?" &&
-                                                birthday_label != "Fecha de Nacimiento") {
-                                              String newMessage =
-                                                  "${name_input_controller.text} has a message for you! \n\nYou have a new Lead: \n\n Insurance Type: $insurance_type_value\nSchedule: $schedule_value\nName: ${name_input_controller.text}\nAddress: ${address_input_controller.text}\nZip Code: ${zip_code_input_controller.text}\nTelephone Number: ${telephone_number_input_controller.text}\nEmail: ${email_input_controller.text}\nDate of Birth: $birthday_label";
-
-                                              XapptorDB.instance.collection("emails").doc().set({
-                                                "to": widget.email,
-                                                "message": {
-                                                  "subject": "You have a new Lead: ${name_input_controller.text}",
-                                                  "text": newMessage,
-                                                }
-                                              }).then((value) {
-                                                insurance_type_value = insurance_type_values[0];
-                                                schedule_value = schedule_values[0];
-                                                name_input_controller.clear();
-                                                address_input_controller.clear();
-                                                zip_code_input_controller.clear();
-                                                telephone_number_input_controller.clear();
-                                                email_input_controller.clear();
-                                                birthday_label = "Fecha de Nacimiento";
-
-                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                  content: Text(
-                                                    widget.feedback_message,
-                                                  ),
-                                                  duration: const Duration(seconds: 2),
-                                                ));
-
-                                                setState(() {});
-                                              }).catchError((err) {
-                                                debugPrint(err);
-                                              });
-                                            } else {
-                                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                                content: Text(
-                                                  "Debes seleccionar seguro de interés, horario de contacto y fecha de nacimiento",
-                                                ),
-                                                duration: Duration(seconds: 2),
-                                              ));
-                                            }
-                                          },
+                                          on_pressed: () => send_button(),
                                           child: const Row(
                                             children: [
                                               Spacer(flex: 1),
@@ -453,120 +414,25 @@ class _ContactUsContainerLeadFormState extends State<ContactUsContainerLeadForm>
                           ),
                           if (!portrait) const Spacer(flex: 1),
                           Expanded(
-                            flex: portrait ? 5 : 4,
+                            flex: portrait ? 10 : 4,
                             child: Column(
-                              children: [
-                                Spacer(flex: portrait ? 1 : 4),
-                                Expanded(
-                                  flex: 1,
-                                  child: Icon(
-                                    Icons.location_on,
-                                    color: widget.icon_color,
-                                  ),
-                                ),
-                                const Spacer(flex: 1),
-                                const Expanded(
-                                  flex: 3,
-                                  child: SelectableText(
-                                    "Miami, FL, U.S.A.",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      //fontWeight: FontWeight.bold,
+                              children: <Widget>[Spacer(flex: portrait ? 1 : 4)] +
+                                  selectable_texts() +
+                                  [
+                                    const Spacer(flex: 1),
+                                    Expanded(
+                                      flex: 3,
+                                      child: custom_icon_buttons(
+                                        facebook_url: widget.facebook_url,
+                                        facebook_url_fallback: widget.facebook_url_fallback,
+                                        youtube_url: widget.youtube_url,
+                                        instagram_url: widget.instagram_url,
+                                        twitter_url: widget.twitter_url,
+                                        icon_color: widget.icon_color,
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                const Spacer(flex: 2),
-                                Expanded(
-                                  flex: 1,
-                                  child: Icon(
-                                    Icons.phone,
-                                    color: widget.icon_color,
-                                  ),
-                                ),
-                                const Spacer(flex: 1),
-                                const Expanded(
-                                  flex: 2,
-                                  child: SelectableText(
-                                    "+1 (954) 995-9592",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      //fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const Spacer(flex: 2),
-                                Expanded(
-                                  flex: 1,
-                                  child: Icon(
-                                    Icons.email,
-                                    color: widget.icon_color,
-                                  ),
-                                ),
-                                const Spacer(flex: 1),
-                                const Expanded(
-                                  flex: 4,
-                                  child: SelectableText(
-                                    "it-support@abeinstitute.com",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      //fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const Spacer(flex: 1),
-                                Expanded(
-                                  flex: 3,
-                                  child: Row(
-                                    children: [
-                                      const Spacer(flex: 1),
-                                      if (widget.facebook_url != null)
-                                        Expanded(
-                                          flex: 5,
-                                          child: custom_icon_button(
-                                            urls: [widget.facebook_url!, widget.facebook_url_fallback!],
-                                            icon: FontAwesomeIcons.squareFacebook,
-                                            icon_color: widget.icon_color,
-                                          ),
-                                        ),
-                                      if (widget.youtube_url != null)
-                                        Expanded(
-                                          flex: 5,
-                                          child: custom_icon_button(
-                                            urls: [widget.youtube_url!, widget.youtube_url!],
-                                            icon: FontAwesomeIcons.youtube,
-                                            icon_color: widget.icon_color,
-                                          ),
-                                        ),
-                                      if (widget.instagram_url != null)
-                                        Expanded(
-                                          flex: 5,
-                                          child: custom_icon_button(
-                                            urls: [widget.instagram_url!, widget.instagram_url!],
-                                            icon: FontAwesomeIcons.instagram,
-                                            icon_color: widget.icon_color,
-                                          ),
-                                        ),
-                                      if (widget.twitter_url != null)
-                                        Expanded(
-                                          flex: 5,
-                                          child: custom_icon_button(
-                                            urls: [widget.twitter_url!, widget.twitter_url!],
-                                            icon: FontAwesomeIcons.twitter,
-                                            icon_color: widget.icon_color,
-                                          ),
-                                        ),
-                                      const Spacer(flex: 1),
-                                    ],
-                                  ),
-                                ),
-                                if (!portrait) const Spacer(flex: 6),
-                              ],
+                                    if (!portrait) const Spacer(flex: 6),
+                                  ],
                             ),
                           ),
                           const Spacer(flex: 1),

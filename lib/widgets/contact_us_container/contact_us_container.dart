@@ -206,7 +206,14 @@ class ContactUsContainerState extends State<ContactUsContainer> {
                                     const Spacer(flex: 1),
                                     Expanded(
                                       flex: 3,
-                                      child: custom_icon_buttons(),
+                                      child: custom_icon_buttons(
+                                        facebook_url: widget.facebook_url,
+                                        facebook_url_fallback: widget.facebook_url_fallback,
+                                        youtube_url: widget.youtube_url,
+                                        instagram_url: widget.instagram_url,
+                                        twitter_url: widget.twitter_url,
+                                        icon_color: widget.icon_color,
+                                      ),
                                     ),
                                     if (!portrait) const Spacer(flex: 6),
                                   ],
