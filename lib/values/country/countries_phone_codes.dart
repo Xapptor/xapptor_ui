@@ -1,4 +1,4 @@
-var country_phone_codes = [
+var countries_phone_codes = [
   {
     "name": "Afghanistan",
     "dial_code": "+93",
@@ -132,7 +132,12 @@ var country_phone_codes = [
   {
     "name": "Bolivia, Plurinational State of",
     "dial_code": "+591",
-    "code": "BO"
+    "code": "BO",
+  },
+  {
+    "name": "Bonaire, Sint Eustatius and Saba",
+    "dial_code": "+599",
+    "code": "BQ",
   },
   {
     "name": "Bosnia and Herzegovina",
@@ -143,6 +148,11 @@ var country_phone_codes = [
     "name": "Botswana",
     "dial_code": "+267",
     "code": "BW",
+  },
+  {
+    "name": "Bouvet Island",
+    "dial_code": "+47",
+    "code": "BV",
   },
   {
     "name": "Brazil",
@@ -244,11 +254,7 @@ var country_phone_codes = [
     "dial_code": "+242",
     "code": "CG",
   },
-  {
-    "name": "Congo, The Democratic Republic of the Congo",
-    "dial_code": "+243",
-    "code": "CD"
-  },
+  {"name": "Congo, The Democratic Republic of the Congo", "dial_code": "+243", "code": "CD"},
   {
     "name": "Cook Islands",
     "dial_code": "+682",
@@ -375,6 +381,11 @@ var country_phone_codes = [
     "code": "PF",
   },
   {
+    "name": "French Southern Territories",
+    "dial_code": "+262",
+    "code": "TF",
+  },
+  {
     "name": "Gabon",
     "dial_code": "+241",
     "code": "GA",
@@ -460,6 +471,11 @@ var country_phone_codes = [
     "code": "HT",
   },
   {
+    "name": "Heard Island and McDonald Islands",
+    "dial_code": "+672",
+    "code": "HM",
+  },
+  {
     "name": "Holy See (Vatican City State)",
     "dial_code": "+379",
     "code": "VA",
@@ -494,11 +510,7 @@ var country_phone_codes = [
     "dial_code": "+62",
     "code": "ID",
   },
-  {
-    "name": "Iran, Islamic Republic of Persian Gulf",
-    "dial_code": "+98",
-    "code": "IR"
-  },
+  {"name": "Iran, Islamic Republic of Persian Gulf", "dial_code": "+98", "code": "IR"},
   {
     "name": "Iraq",
     "dial_code": "+964",
@@ -559,11 +571,7 @@ var country_phone_codes = [
     "dial_code": "+686",
     "code": "KI",
   },
-  {
-    "name": "Korea, Democratic People's Republic of Korea",
-    "dial_code": "+850",
-    "code": "KP"
-  },
+  {"name": "Korea, Democratic People's Republic of Korea", "dial_code": "+850", "code": "KP"},
   {
     "name": "Korea, Republic of South Korea",
     "dial_code": "+82",
@@ -694,11 +702,7 @@ var country_phone_codes = [
     "dial_code": "+52",
     "code": "MX",
   },
-  {
-    "name": "Micronesia, Federated States of Micronesia",
-    "dial_code": "+691",
-    "code": "FM"
-  },
+  {"name": "Micronesia, Federated States of Micronesia", "dial_code": "+691", "code": "FM"},
   {
     "name": "Moldova",
     "dial_code": "+373",
@@ -762,7 +766,7 @@ var country_phone_codes = [
   {
     "name": "Netherlands Antilles",
     "dial_code": "+599",
-    "code": "AN",
+    "code": "CW",
   },
   {
     "name": "New Caledonia",
@@ -824,11 +828,7 @@ var country_phone_codes = [
     "dial_code": "+680",
     "code": "PW",
   },
-  {
-    "name": "Palestinian Territory, Occupied",
-    "dial_code": "+970",
-    "code": "PS"
-  },
+  {"name": "Palestinian Territory, Occupied", "dial_code": "+970", "code": "PS"},
   {
     "name": "Panama",
     "dial_code": "+507",
@@ -904,11 +904,7 @@ var country_phone_codes = [
     "dial_code": "+590",
     "code": "BL",
   },
-  {
-    "name": "Saint Helena, Ascension and Tristan Da Cunha",
-    "dial_code": "+290",
-    "code": "SH"
-  },
+  {"name": "Saint Helena, Ascension and Tristan Da Cunha", "dial_code": "+290", "code": "SH"},
   {
     "name": "Saint Kitts and Nevis",
     "dial_code": "+1869",
@@ -929,11 +925,7 @@ var country_phone_codes = [
     "dial_code": "+508",
     "code": "PM",
   },
-  {
-    "name": "Saint Vincent and the Grenadines",
-    "dial_code": "+1784",
-    "code": "VC"
-  },
+  {"name": "Saint Vincent and the Grenadines", "dial_code": "+1784", "code": "VC"},
   {
     "name": "Samoa",
     "dial_code": "+685",
@@ -980,6 +972,11 @@ var country_phone_codes = [
     "code": "SG",
   },
   {
+    "name": "Sint Maarten (Dutch part)",
+    "dial_code": "+1",
+    "code": "SX",
+  },
+  {
     "name": "Slovakia",
     "dial_code": "+421",
     "code": "SK",
@@ -1009,11 +1006,7 @@ var country_phone_codes = [
     "dial_code": "+211",
     "code": "SS",
   },
-  {
-    "name": "South Georgia and the South Sandwich Islands",
-    "dial_code": "+500",
-    "code": "GS"
-  },
+  {"name": "South Georgia and the South Sandwich Islands", "dial_code": "+500", "code": "GS"},
   {
     "name": "Spain",
     "dial_code": "+34",
@@ -1069,11 +1062,7 @@ var country_phone_codes = [
     "dial_code": "+992",
     "code": "TJ",
   },
-  {
-    "name": "Tanzania, United Republic of Tanzania",
-    "dial_code": "+255",
-    "code": "TZ"
-  },
+  {"name": "Tanzania, United Republic of Tanzania", "dial_code": "+255", "code": "TZ"},
   {
     "name": "Thailand",
     "dial_code": "+66",
@@ -1155,6 +1144,11 @@ var country_phone_codes = [
     "code": "US",
   },
   {
+    "name": "United States Minor Outlying Islands",
+    "dial_code": "+1",
+    "code": "UM",
+  },
+  {
     "name": "Uruguay",
     "dial_code": "+598",
     "code": "UY",
@@ -1169,11 +1163,7 @@ var country_phone_codes = [
     "dial_code": "+678",
     "code": "VU",
   },
-  {
-    "name": "Venezuela, Bolivarian Republic of Venezuela",
-    "dial_code": "+58",
-    "code": "VE"
-  },
+  {"name": "Venezuela, Bolivarian Republic of Venezuela", "dial_code": "+58", "code": "VE"},
   {
     "name": "Vietnam",
     "dial_code": "+84",
@@ -1195,6 +1185,11 @@ var country_phone_codes = [
     "code": "WF",
   },
   {
+    "name": "Western Sahara",
+    "dial_code": "+212",
+    "code": "EH",
+  },
+  {
     "name": "Yemen",
     "dial_code": "+967",
     "code": "YE",
@@ -1210,26 +1205,3 @@ var country_phone_codes = [
     "code": "ZW",
   },
 ];
-
-class CountryPhoneCode {
-  String name;
-  String dial_code;
-  String code;
-
-  CountryPhoneCode({
-    required this.name,
-    required this.dial_code,
-    required this.code,
-  });
-
-  factory CountryPhoneCode.from_map(Map<String, dynamic> map) {
-    return CountryPhoneCode(
-      name: map['name'],
-      dial_code: map['dial_code'],
-      code: map['code'],
-    );
-  }
-}
-
-List<CountryPhoneCode> country_phone_code_list =
-    country_phone_codes.map((e) => CountryPhoneCode.from_map(e)).toList();

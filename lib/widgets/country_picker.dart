@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:xapptor_ui/values/country_phone_codes.dart';
+import 'package:xapptor_ui/values/country/country.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
 
-class CountryPhoneCodesPicker extends StatefulWidget {
-  final ValueNotifier<CountryPhoneCode> current_phone_code;
+enum CountryPickerType {
+  name,
+  phone,
+}
+
+class CountryPicker extends StatefulWidget {
+  final CountryPickerType country_picker_type;
+  final ValueNotifier<Country> current_phone_code;
   final Color text_color;
   final Function setState;
 
-  const CountryPhoneCodesPicker({
+  const CountryPicker({
     super.key,
+    required this.country_picker_type,
     required this.current_phone_code,
     required this.text_color,
     required this.setState,
   });
 
   @override
-  State<CountryPhoneCodesPicker> createState() => _CountryPhoneCodesPickerState();
+  State<CountryPicker> createState() => _CountryPickerState();
 }
 
-class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
+class _CountryPickerState extends State<CountryPicker> {
   ScrollController scroll_controller = ScrollController();
   double item_height = 36;
   double alert_height = 0;
 
   show_alert() {
+    String alert_title =
+        widget.country_picker_type == CountryPickerType.name ? 'Choose country' : 'Choose phone country code';
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -34,23 +44,27 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
         alert_height = screen_height * (portrait ? 0.7 : 0.5);
 
         return AlertDialog(
-          title: const Text("Choose phone country code"),
+          title: Text(alert_title),
           content: SizedBox(
             height: alert_height,
             width: screen_width * (portrait ? 1 : 0.3),
             child: ListView.builder(
               controller: scroll_controller,
               shrinkWrap: true,
-              itemCount: country_phone_code_list.length,
+              itemCount: countries_list.length,
               cacheExtent: 100,
               itemBuilder: (context, index) {
+                String text_button_label = widget.country_picker_type == CountryPickerType.name
+                    ? countries_list[index].name
+                    : '${countries_list[index].name.split(',').first} ${countries_list[index].dial_code}';
+
                 return Container(
                   height: item_height,
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
-                        color: widget.current_phone_code.value == country_phone_code_list[index]
+                        color: widget.current_phone_code.value == countries_list[index]
                             ? widget.text_color
                             : Colors.transparent,
                       ),
@@ -58,7 +72,7 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      widget.current_phone_code.value = country_phone_code_list[index];
+                      widget.current_phone_code.value = countries_list[index];
 
                       double inital_offset = (item_height * index) - alert_height / 2;
 
@@ -68,7 +82,7 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      '${country_phone_code_list[index].name.split(',').first} ${country_phone_code_list[index].dial_code}',
+                      text_button_label,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: widget.text_color,
@@ -86,10 +100,14 @@ class _CountryPhoneCodesPickerState extends State<CountryPhoneCodesPicker> {
 
   @override
   Widget build(BuildContext context) {
+    String text_button_label = widget.country_picker_type == CountryPickerType.name
+        ? widget.current_phone_code.value.name
+        : '${widget.current_phone_code.value.name.split(',').first} ${widget.current_phone_code.value.dial_code}';
+
     return TextButton(
       onPressed: show_alert,
       child: Text(
-        '${widget.current_phone_code.value.name.split(',').first} ${widget.current_phone_code.value.dial_code}',
+        text_button_label,
         style: TextStyle(
           color: widget.text_color,
         ),
