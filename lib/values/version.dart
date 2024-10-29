@@ -19,6 +19,6 @@ Future<String> current_app_version() async {
   } else if (UniversalPlatform.isWeb) {
     platform_char = "wb";
   }
-  String core_version = "5.0.1";
+  String core_version = "6.0.0";
   return "Xapptor Core $core_version - $app_name ${packageInfo.version}_p_$platform_char";
 }

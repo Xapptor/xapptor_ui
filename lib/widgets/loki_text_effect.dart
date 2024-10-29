@@ -159,7 +159,7 @@ class _LokiTextEffectCharState extends State<LokiTextEffectChar> {
         ),
       ],
       color: widget.text_color,
-      fontSize: portrait ? 28 : 38,
+      fontSize: portrait ? 22 : 38,
       fontFamily: current_font_family,
       fontWeight: FontWeight.bold,
     );

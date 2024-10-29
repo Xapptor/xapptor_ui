@@ -15,6 +15,7 @@ AppBar TopBar({
 }) {
   double topbar_height = 65;
   return AppBar(
+    automaticallyImplyLeading: has_back_button,
     leading: has_back_button
         ? custom_leading ??
             IconButton(
