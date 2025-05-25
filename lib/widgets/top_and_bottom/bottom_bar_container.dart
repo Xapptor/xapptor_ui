@@ -49,7 +49,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
     for (var button in widget.bottom_bar_buttons) {
       Color final_foreground_color = current_page == widget.bottom_bar_buttons.indexOf(button)
           ? button.foreground_color
-          : button.foreground_color.withOpacity(0.5);
+          : button.foreground_color.withValues(alpha: 0.5);
 
       pages.add(button.page);
       buttons.add(

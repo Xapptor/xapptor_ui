@@ -218,7 +218,7 @@ class _QRScannerState extends State<QRScanner> {
                       widget.descriptive_text,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.4),
+                        color: Colors.white.withValues(alpha: 0.4),
                         fontSize: 18,
                       ),
                     ),

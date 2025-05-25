@@ -239,7 +239,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
       aspectRatio: 1,
       child: CustomCard(
         tooltip: tooltip,
-        splash_color: widget.button_background_color.first.withOpacity(0.3),
+        splash_color: widget.button_background_color.first.withValues(alpha: 0.3),
         linear_gradient: LinearGradient(
           colors: widget.button_background_color,
           begin: Alignment.topLeft,

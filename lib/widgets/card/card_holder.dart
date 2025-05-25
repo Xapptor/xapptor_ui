@@ -151,7 +151,7 @@ class _CardHolderState extends State<CardHolder> {
                             child: widget.icon != null
                                 ? Icon(
                                     widget.icon,
-                                    color: Colors.white.withOpacity(1.0),
+                                    color: Colors.white.withValues(alpha: 1.0),
                                     size: MediaQuery.of(context).size.height / 20,
                                   )
                                 : widget.image_src != ""
@@ -193,7 +193,7 @@ class _CardHolderState extends State<CardHolder> {
               child: Material(
                 color: Colors.white,
                 child: InkWell(
-                  splashColor: Colors.blueGrey.withOpacity(0.5),
+                  splashColor: Colors.blueGrey.withValues(alpha: 0.5),
                   onTap: () {
                     widget.delete_function!();
                   },
@@ -220,7 +220,7 @@ class _CardHolderState extends State<CardHolder> {
               child: Material(
                 color: Colors.white,
                 child: InkWell(
-                  splashColor: Colors.blueGrey.withOpacity(0.5),
+                  splashColor: Colors.blueGrey.withValues(alpha: 0.5),
                   onTap: () {
                     widget.edit_function!();
                   },

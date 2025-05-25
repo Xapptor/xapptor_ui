@@ -8,7 +8,7 @@ Widget custom_icon_button({
   required Color icon_color,
 }) {
   return CustomCard(
-    splash_color: icon_color.withOpacity(0.3),
+    splash_color: icon_color.withValues(alpha: 0.3),
     linear_gradient: const LinearGradient(
       colors: [
         Colors.transparent,

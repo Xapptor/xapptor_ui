@@ -42,8 +42,8 @@ Widget switch_button({
                     callback(new_value);
                   }
                 : null,
-            activeTrackColor: Colors.grey.withOpacity(0.5),
-            inactiveTrackColor: Colors.grey.withOpacity(0.5),
+            activeTrackColor: Colors.grey.withValues(alpha: 0.5),
+            inactiveTrackColor: Colors.grey.withValues(alpha: 0.5),
             activeColor: active_color,
             inactiveThumbColor: inactive_color,
           ),

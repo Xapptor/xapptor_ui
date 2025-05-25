@@ -75,7 +75,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
         decoration: BoxDecoration(
           color: widget.image_background_color == Colors.transparent
               ? widget.image_background_color
-              : widget.image_background_color.withOpacity(widget.opacity),
+              : widget.image_background_color.withValues(alpha: widget.opacity),
           borderRadius: BorderRadius.circular(
             widget.image_border_radius,
           ),
@@ -87,7 +87,7 @@ class IntroductionContainerState extends State<IntroductionContainer> {
             colorFilter: widget.image_background_color == Colors.transparent
                 ? null
                 : ColorFilter.mode(
-                    widget.image_background_color.withOpacity(widget.opacity),
+                    widget.image_background_color.withValues(alpha: widget.opacity),
                     BlendMode.dstATop,
                   ),
           ),
@@ -113,8 +113,8 @@ class IntroductionContainerState extends State<IntroductionContainer> {
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
           colors: [
-            Colors.lightBlueAccent.withOpacity(0.0),
-            Colors.blue.withOpacity(0.0),
+            Colors.lightBlueAccent.withValues(alpha: 0.0),
+            Colors.blue.withValues(alpha: 0.0),
           ],
           stops: const [0.0, 1.0],
         ),

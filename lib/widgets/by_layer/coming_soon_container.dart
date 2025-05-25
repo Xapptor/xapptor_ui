@@ -26,7 +26,7 @@ class ComingSoonContainer extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(border_radius),
-                color: Colors.blueGrey.shade500.withOpacity(0.7),
+                color: Colors.blueGrey.shade500.withValues(alpha: 0.7),
               ),
               child: AbsorbPointer(
                 absorbing: true,

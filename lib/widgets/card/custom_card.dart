@@ -45,7 +45,7 @@ class _CustomCardState extends State<CustomCard> {
     if (widget.linear_gradient.colors.first == Colors.transparent) {
       shadow_color = Colors.transparent;
     } else {
-      shadow_color = Colors.grey.withOpacity(0.5);
+      shadow_color = Colors.grey.withValues(alpha: 0.5);
     }
 
     Widget ink_well_widget(Widget child) {

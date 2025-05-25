@@ -40,8 +40,8 @@ QRScanner(
     cut_out_size: MediaQuery.of(context).size.width * 0.65,
     button_linear_gradient: LinearGradient(
       colors: [
-        Colors.blue.withOpacity(0.4),
-        Colors.green.withOpacity(0.4),
+        Colors.blue.withValues(alpha: 0.4),
+        Colors.green.withValues(alpha: 0.4),
       ],
     ),
     permission_message: "You must give permission to the camera to capture QR codes",
@@ -336,8 +336,8 @@ ContactUsContainer(
     container_background_color: Colors.white,
     card_background_color: Colors.white,
     linear_gradient_colors: [
-        Colors.black.withOpacity(0.6),
-        Colors.black.withOpacity(0.6),
+        Colors.black.withValues(alpha: 0.6),
+        Colors.black.withValues(alpha: 0.6),
     ],
     border_radius: 10,
 );
@@ -348,7 +348,7 @@ ContactUsContainer(
 CropWidget(
     child: Image.asset(
         "assets/images/logo.png",
-        color: Color.blue.withOpacity(0.40),
+        color: Color.blue.withValues(alpha: 0.40),
         fit: BoxFit.cover,
     ),
     general_alignment: Alignment.bottomLeft,
@@ -366,7 +366,7 @@ CustomCard(
         ...
     },
     border_radius: 1000,
-    splash_color: Colors.blue.withOpacity(0.3),
+    splash_color: Colors.blue.withValues(alpha: 0.3),
     child: Center(
         child: Text(
             your_text,
