@@ -1,9 +1,8 @@
-// ignore_for_file: avoid_web_libraries_in_flutter
-
-import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:web/web.dart' as web;
 import 'dart:ui_web';
+import 'dart:js_interop';
 
 class Webview extends StatefulWidget {
   final String src;
@@ -26,21 +25,26 @@ class Webview extends StatefulWidget {
 }
 
 class _WebviewState extends State<Webview> {
-  final IFrameElement _iframe_element = IFrameElement();
+  final web.HTMLIFrameElement _iframe_element = web.HTMLIFrameElement();
   bool page_loaded = false;
-  late ElementStream new_stream;
 
   @override
   void initState() {
     super.initState();
-    new_stream = _iframe_element.onLoad;
 
-    new_stream.listen((event) {
-      if (!page_loaded && widget.page_loaded_set_state) {
-        page_loaded = true;
-        setState(() {});
-      }
-    });
+    _iframe_element.addEventListener(
+      'load',
+      ((web.Event event) {
+        if (!page_loaded && widget.page_loaded_set_state) {
+          page_loaded = true;
+          setState(() {});
+        }
+
+        if (widget.loaded_callback != null) {
+          widget.loaded_callback!(_iframe_element.src);
+        }
+      }).toJS,
+    );
   }
 
   @override
@@ -77,7 +81,7 @@ class _WebviewState extends State<Webview> {
                     </body>
                   </html>
                     """;
-      _iframe_element.srcdoc = current_src;
+      _iframe_element.srcdoc = current_src.toJS;
     } else if (widget.src.toLowerCase().contains("http")) {
       _iframe_element.src = current_src;
     }

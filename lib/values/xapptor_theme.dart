@@ -9,7 +9,7 @@ final xapptor_theme = ThemeData.light().copyWith(
   colorScheme: xapptor_color_scheme_light,
   textTheme: xapptor_text_theme,
   scaffoldBackgroundColor: const Color(0xFFfafafb),
-  cardTheme: const CardTheme(
+  cardTheme: const CardThemeData(
     color: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
