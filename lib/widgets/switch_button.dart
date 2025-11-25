@@ -44,7 +44,7 @@ Widget switch_button({
                 : null,
             activeTrackColor: Colors.grey.withValues(alpha: 0.5),
             inactiveTrackColor: Colors.grey.withValues(alpha: 0.5),
-            activeColor: active_color,
+            activeThumbColor: active_color,
             inactiveThumbColor: inactive_color,
           ),
         ),
