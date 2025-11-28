@@ -1,8 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
-
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:math' as math;
+import 'package:xapptor_ui/values/ui.dart';
 
 /// A model class containing the color configuration for ExternalLinkButton.
 class ExternalLinkButtonColors {
@@ -121,8 +120,7 @@ class ExternalLinkButton extends StatefulWidget {
   State<ExternalLinkButton> createState() => _ExternalLinkButtonState();
 }
 
-class _ExternalLinkButtonState extends State<ExternalLinkButton>
-    with SingleTickerProviderStateMixin {
+class _ExternalLinkButtonState extends State<ExternalLinkButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale_animation;
   late Animation<double> _elevation_animation;
@@ -171,30 +169,48 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton>
   }
 
   void _on_tap_down(TapDownDetails details) {
+    _on_hover(false);
     setState(() => _is_pressed = true);
   }
 
   void _on_tap_up(TapUpDetails details) {
+    _on_hover(true);
     setState(() => _is_pressed = false);
   }
 
   void _on_tap_cancel() {
+    _on_hover(true);
     setState(() => _is_pressed = false);
   }
 
   Future<void> _on_tap() async {
     final uri = Uri.parse(widget.url);
     if (await canLaunchUrl(uri)) {
+      await _controller.reverse().orCancel.catchError((_) {});
+
+      await Future.delayed(const Duration(milliseconds: 200));
+
       await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+      if (last_orientation == Orientation.portrait) _controller.forward();
+
       widget.on_launched?.call();
     } else {
       widget.on_launch_failed?.call();
     }
   }
 
+  Orientation? last_orientation;
+
   @override
   Widget build(BuildContext context) {
     final colors = widget.colors;
+
+    if (last_orientation != MediaQuery.of(context).orientation) {
+      last_orientation = MediaQuery.of(context).orientation;
+
+      if (last_orientation == Orientation.portrait) _controller.forward();
+    }
 
     return MouseRegion(
       onEnter: (_) => _on_hover(true),
@@ -256,8 +272,7 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton>
                       // Glow effect on hover
                       if (_glow_animation.value > 0)
                         BoxShadow(
-                          color: colors.gradient_start
-                              .withAlpha((255 * 0.3 * _glow_animation.value).round()),
+                          color: colors.gradient_start.withAlpha((255 * 0.3 * _glow_animation.value).round()),
                           blurRadius: 20 * _glow_animation.value,
                           spreadRadius: 2 * _glow_animation.value,
                         ),
@@ -274,12 +289,12 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton>
                           size: 20,
                           color: Color.lerp(
                             colors.content,
-                            colors.content_hovered,
+                            Colors.white,
                             _glow_animation.value,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: sized_box_space),
                       Text(
                         widget.label,
                         style: TextStyle(
@@ -288,7 +303,7 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton>
                           letterSpacing: 0.5 + (_glow_animation.value * 0.3),
                           color: Color.lerp(
                             colors.content,
-                            colors.content_hovered,
+                            Colors.white,
                             _glow_animation.value,
                           ),
                         ),
@@ -306,7 +321,7 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton>
                             size: 14,
                             color: Color.lerp(
                               colors.content.withAlpha((255 * 0.7).round()),
-                              colors.content_hovered,
+                              Colors.white,
                               _glow_animation.value,
                             ),
                           ),

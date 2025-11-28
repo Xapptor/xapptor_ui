@@ -3,10 +3,10 @@ import 'package:xapptor_ui/utils/is_portrait.dart';
 
 // General UI data.
 
-double sized_box_space = 14;
-double outline_border_radius = 20;
-double outline_width = 3;
-double outline_padding = 15;
+const double sized_box_space = 16;
+const double outline_border_radius = 16;
+const double outline_width = 3;
+const double outline_padding = 16;
 
 double logo_height(BuildContext context) {
   bool portrait = is_portrait(context);

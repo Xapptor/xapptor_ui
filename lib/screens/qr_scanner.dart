@@ -130,9 +130,7 @@ class _QRScannerState extends State<QRScanner> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: sized_box_space * 2,
-                    ),
+                    const SizedBox(height: sized_box_space * 2),
                     SizedBox(
                       height: 50,
                       width: screen_width / (portrait ? 2 : 8),

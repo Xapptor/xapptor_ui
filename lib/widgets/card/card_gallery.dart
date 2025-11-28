@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/widgets_carousel.dart';
 import 'package:xapptor_ui/utils/get_assets_names.dart';
 import 'card_holder.dart';
@@ -58,9 +59,7 @@ class _CardGalleryState extends State<CardGallery> {
 
     if (widget.add_initial_space) {
       card_holders.add(
-        const SizedBox(
-          height: 30,
-        ),
+        const SizedBox(height: sized_box_space * 2),
       );
     }
 

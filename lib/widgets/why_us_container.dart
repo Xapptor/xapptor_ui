@@ -49,7 +49,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: sized_box_space * 2),
+          const SizedBox(height: sized_box_space * 2),
           SelectableText(
             widget.texts[0],
             textAlign: TextAlign.center,
@@ -115,7 +115,7 @@ class _WhyUsContainerState extends State<WhyUsContainer> {
               ),
             ],
           ),
-          SizedBox(height: sized_box_space * 2),
+          const SizedBox(height: sized_box_space * 2),
         ],
       ),
     );

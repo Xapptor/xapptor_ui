@@ -1,6 +1,7 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:xapptor_ui/values/ui.dart';
 import 'package:xapptor_ui/widgets/card/custom_card.dart';
 import 'package:xapptor_ui/utils/is_portrait.dart';
 
@@ -48,7 +49,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
           border_radius: 10,
           on_pressed: null,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(outline_border_radius),
             child: Image.asset(
               widget.image_1,
               fit: BoxFit.fitWidth,
@@ -144,7 +145,7 @@ class _DownloadAppsContainerState extends State<DownloadAppsContainer> {
                     border_radius: 10,
                     on_pressed: null,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(outline_border_radius),
                       child: Image.asset(
                         widget.image_2,
                         fit: BoxFit.fitWidth,
