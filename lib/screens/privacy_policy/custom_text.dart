@@ -13,6 +13,7 @@ Widget custom_text(
       style: const TextStyle(
         fontWeight: FontWeight.normal,
         fontSize: 14,
+        color: Colors.black87,
       ),
     ),
   );

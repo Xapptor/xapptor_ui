@@ -25,6 +25,7 @@ Widget custom_title(
             : type == CustomTitleType.type2
                 ? 18
                 : 16,
+        color: Colors.black87,
       ),
     ),
   );
