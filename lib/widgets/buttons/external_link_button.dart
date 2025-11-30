@@ -103,6 +103,15 @@ class ExternalLinkButton extends StatefulWidget {
   /// Callback when the URL fails to launch.
   final VoidCallback? on_launch_failed;
 
+  /// Maximum number of lines for the label text.
+  /// If null, text will wrap to as many lines as needed.
+  /// Set to 1 to truncate with ellipsis.
+  final int? max_lines;
+
+  /// Whether to allow text to wrap to multiple lines.
+  /// If false and text is too long, it will be truncated with ellipsis.
+  final bool allow_text_wrap;
+
   const ExternalLinkButton({
     super.key,
     required this.url,
@@ -114,6 +123,8 @@ class ExternalLinkButton extends StatefulWidget {
     this.show_external_icon = true,
     this.on_launched,
     this.on_launch_failed,
+    this.max_lines,
+    this.allow_text_wrap = true,
   });
 
   @override
@@ -280,6 +291,7 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton> with SingleTick
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: widget.allow_text_wrap ? CrossAxisAlignment.center : CrossAxisAlignment.center,
                     children: [
                       // Main icon with subtle rotation on hover
                       Transform.rotate(
@@ -295,17 +307,24 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton> with SingleTick
                         ),
                       ),
                       const SizedBox(width: sized_box_space),
-                      Text(
-                        widget.label,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.5 + (_glow_animation.value * 0.3),
-                          color: Color.lerp(
-                            colors.content,
-                            Colors.white,
-                            _glow_animation.value,
+                      Flexible(
+                        child: Text(
+                          widget.label,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.5 + (_glow_animation.value * 0.3),
+                            color: Color.lerp(
+                              colors.content,
+                              Colors.white,
+                              _glow_animation.value,
+                            ),
                           ),
+                          maxLines: widget.allow_text_wrap ? widget.max_lines : 1,
+                          overflow: widget.allow_text_wrap && widget.max_lines == null
+                              ? TextOverflow.visible
+                              : TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                       if (widget.show_external_icon) ...[
