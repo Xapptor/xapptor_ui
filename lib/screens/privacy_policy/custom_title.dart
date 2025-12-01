@@ -11,9 +11,13 @@ enum CustomTitleType {
 Widget custom_title(
   String text, {
   required CustomTitleType type,
+  Color? text_color,
+  Color? background_color,
 }) {
+  final Color txt_color = text_color ?? Colors.black87;
+  final Color bg_color = background_color ?? Colors.white;
   return Container(
-    color: Colors.white,
+    color: bg_color,
     margin: _margin_title,
     child: SelectableText(
       text,
@@ -25,7 +29,7 @@ Widget custom_title(
             : type == CustomTitleType.type2
                 ? 18
                 : 16,
-        color: Colors.black87,
+        color: txt_color,
       ),
     ),
   );

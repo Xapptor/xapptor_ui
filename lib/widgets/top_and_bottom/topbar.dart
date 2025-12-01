@@ -12,16 +12,18 @@ AppBar TopBar({
   required Widget? custom_leading,
   String? logo_path,
   Color? logo_color,
+  Color? back_button_color,
 }) {
   double topbar_height = 65;
+  final Color back_btn_color = back_button_color ?? Colors.white;
   return AppBar(
     automaticallyImplyLeading: has_back_button,
     leading: has_back_button
         ? custom_leading ??
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 FontAwesomeIcons.angleLeft,
-                color: Colors.white,
+                color: back_btn_color,
               ),
               onPressed: () {
                 Navigator.pop(context);

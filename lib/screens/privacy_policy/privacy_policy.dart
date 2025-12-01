@@ -20,6 +20,18 @@ class PrivacyPolicy extends StatefulWidget {
   final String logo_path;
   final DateTime? last_update_date;
 
+  /// Background color for the privacy policy screen.
+  /// Defaults to Colors.white if not specified.
+  final Color? background_color;
+
+  /// Text color for the privacy policy content.
+  /// Defaults to black/dark text if not specified.
+  final Color? text_color;
+
+  /// Back button icon color.
+  /// Defaults to Colors.white if not specified.
+  final Color? back_button_color;
+
   const PrivacyPolicy({
     super.key,
     required this.privacy_policy_model,
@@ -28,6 +40,9 @@ class PrivacyPolicy extends StatefulWidget {
     this.logo_color,
     this.logo_path = "assets/images/logo.png",
     this.last_update_date,
+    this.background_color,
+    this.text_color,
+    this.back_button_color,
   });
 
   @override
@@ -47,7 +62,12 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     double screen_width = MediaQuery.of(context).size.width;
     bool portrait = is_portrait(context);
 
+    // Use provided background color or default to white
+    final Color bg_color = widget.background_color ?? Colors.white;
+    final Color txt_color = widget.text_color ?? Colors.black87;
+
     return Scaffold(
+      backgroundColor: bg_color,
       appBar: widget.use_topbar
           ? TopBar(
               context: context,
@@ -57,54 +77,105 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               custom_leading: null,
               logo_path: widget.logo_path,
               logo_color: widget.logo_color,
+              back_button_color: widget.back_button_color,
             )
           : null,
       body: SafeArea(
         child: Container(
           width: screen_width,
-          color: Colors.white,
+          color: bg_color,
           child: UniversalPlatform.isWeb
               ? SingleChildScrollView(
                   child: FractionallySizedBox(
                     widthFactor: portrait ? 0.85 : 0.5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 50),
-                        //
-                        privacy_policy.introduction(
-                          last_update_date: widget.last_update_date ?? DateTime.now(),
-                        ),
-                        //
-                        privacy_policy.interpretation(),
-                        privacy_policy.definitions(
-                          app_name: widget.privacy_policy_model.app_name,
-                          company_name: widget.privacy_policy_model.company_name,
-                          company_address: widget.privacy_policy_model.company_address,
-                          company_country: widget.privacy_policy_model.company_country,
-                          website: widget.privacy_policy_model.website,
-                        ),
-                        //
-                        privacy_policy.personal_data(),
-                        privacy_policy.usage_data(),
-                        privacy_policy.information_collected(),
-                        privacy_policy.use_of_personal_data(),
-                        privacy_policy.retention_personal_data(),
-                        privacy_policy.transfer_personal_data(),
-                        privacy_policy.disclosure_personal_data(),
-                        //
-                        privacy_policy.security_personal_data(),
-                        privacy_policy.children_privacy(),
-                        privacy_policy.links_to_other_websites(),
-                        privacy_policy.changes(),
-                        privacy_policy.contact_us(
-                          email: widget.privacy_policy_model.email,
-                          phone_number: widget.privacy_policy_model.phone_number,
-                          website: widget.privacy_policy_model.website,
-                        ),
-                        //
-                        const SizedBox(height: 50),
-                      ],
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        textTheme: Theme.of(context).textTheme.apply(
+                              bodyColor: txt_color,
+                              displayColor: txt_color,
+                            ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 50),
+                          //
+                          privacy_policy.introduction(
+                            last_update_date: widget.last_update_date ?? DateTime.now(),
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          //
+                          privacy_policy.interpretation(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.definitions(
+                            app_name: widget.privacy_policy_model.app_name,
+                            company_name: widget.privacy_policy_model.company_name,
+                            company_address: widget.privacy_policy_model.company_address,
+                            company_country: widget.privacy_policy_model.company_country,
+                            website: widget.privacy_policy_model.website,
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          //
+                          privacy_policy.personal_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.usage_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.information_collected(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.use_of_personal_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.retention_personal_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.transfer_personal_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.disclosure_personal_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          //
+                          privacy_policy.security_personal_data(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.children_privacy(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.links_to_other_websites(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.changes(
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          privacy_policy.contact_us(
+                            email: widget.privacy_policy_model.email,
+                            phone_number: widget.privacy_policy_model.phone_number,
+                            website: widget.privacy_policy_model.website,
+                            background_color: bg_color,
+                            text_color: txt_color,
+                          ),
+                          //
+                          const SizedBox(height: 50),
+                        ],
+                      ),
                     ),
                   ),
                 )
