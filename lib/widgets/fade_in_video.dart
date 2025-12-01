@@ -31,8 +31,10 @@ class _FadeInVideoState extends State<FadeInVideo> with SingleTickerProviderStat
       duration: widget.fade_in_duration,
     );
 
-    widget.controller.initialize().then((_) {
+    widget.controller.initialize().then((_) async {
       if (mounted) {
+        // Always ensure video is muted before playing - background music handles audio
+        await widget.controller.setVolume(0);
         _fade_controller.forward();
         widget.controller.play();
         setState(() {});
