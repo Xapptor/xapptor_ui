@@ -23,23 +23,28 @@ extension PrivacypolicyValuesExtension on PrivacypolicyValues {
             "Contact Us",
             type: CustomTitleType.type1,
             text_color: txt_color,
+            background_color: bg_color,
           ),
           custom_text(
             "If you have any questions about this Privacy Policy, You can contact us:",
             text_color: txt_color,
+            background_color: bg_color,
           ),
           custom_text(
             "By email: $email",
             text_color: txt_color,
+            background_color: bg_color,
           ),
           custom_text(
             "By visiting this page on our website: $website",
             text_color: txt_color,
+            background_color: bg_color,
           ),
           phone_number != null
               ? custom_text(
                   "By phone number: $phone_number",
                   text_color: txt_color,
+                  background_color: bg_color,
                 )
               : null,
         ].whereType<Widget>().toList(),
