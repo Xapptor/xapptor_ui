@@ -21,6 +21,7 @@ class FadeInVideo extends StatefulWidget {
 
 class _FadeInVideoState extends State<FadeInVideo> with SingleTickerProviderStateMixin {
   late AnimationController _fade_controller;
+  bool _has_started_fade = false;
 
   @override
   void initState() {
@@ -31,15 +32,32 @@ class _FadeInVideoState extends State<FadeInVideo> with SingleTickerProviderStat
       duration: widget.fade_in_duration,
     );
 
-    widget.controller.initialize().then((_) async {
-      if (mounted) {
-        // Always ensure video is muted before playing - background music handles audio
-        await widget.controller.setVolume(0);
-        _fade_controller.forward();
-        widget.controller.play();
-        setState(() {});
-      }
-    });
+    // Check if controller is already initialized (common when reusing controllers)
+    if (widget.controller.value.isInitialized) {
+      // Controller already initialized - just ensure muted and start fade
+      _start_playback();
+    } else {
+      // Controller not initialized yet - wait for initialization
+      widget.controller.initialize().then((_) {
+        if (mounted) {
+          _start_playback();
+        }
+      }).catchError((error) {
+        // Handle initialization errors gracefully
+        debugPrint('FadeInVideo: Error initializing video: $error');
+      });
+    }
+  }
+
+  void _start_playback() {
+    if (_has_started_fade || !mounted) return;
+    _has_started_fade = true;
+
+    // Always ensure video is muted - background music handles audio
+    widget.controller.setVolume(0);
+    _fade_controller.forward();
+    // Don't call play() here - the slideshow already manages playback
+    setState(() {});
   }
 
   @override
