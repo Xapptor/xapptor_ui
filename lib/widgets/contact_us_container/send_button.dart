@@ -10,14 +10,14 @@ extension StateExtension on ContactUsContainerState {
         email_input_controller.text.isNotEmpty &&
         subject_input_controller.text.isNotEmpty &&
         message_input_controller.text.isNotEmpty) {
-      String newMessage =
+      String new_message =
           "${name_input_controller.text} has a message for you! \n\n Email: ${email_input_controller.text}\n\n Message: ${message_input_controller.text}";
 
       XapptorDB.instance.collection("emails").doc().set({
         "to": widget.email,
         "message": {
           "subject": "Message from contact us section: \"${subject_input_controller.text}\"",
-          "text": newMessage,
+          "text": new_message,
         }
       }).then((value) {
         name_input_controller.clear();
