@@ -291,6 +291,7 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton> with SingleTick
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: widget.allow_text_wrap ? CrossAxisAlignment.center : CrossAxisAlignment.center,
                     children: [
                       // Main icon with subtle rotation on hover
