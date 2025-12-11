@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:xapptor_ui/values/ui.dart';
@@ -196,6 +197,30 @@ class _ExternalLinkButtonState extends State<ExternalLinkButton> with SingleTick
 
   Future<void> _on_tap() async {
     final uri = Uri.parse(widget.url);
+
+    // On web (especially iOS Safari), launchUrl MUST be called synchronously
+    // within the user interaction context. Any async operations (like canLaunchUrl,
+    // animations, or delays) before launchUrl will cause Safari to block the popup.
+    // See: https://github.com/flutter/flutter/issues/75227
+    if (kIsWeb) {
+      // Launch immediately without checking canLaunchUrl or waiting for animations
+      final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+      if (launched) {
+        // Run animations after launch (non-blocking)
+        _controller.reverse().then((_) {
+          if (mounted && last_orientation == Orientation.portrait) {
+            _controller.forward();
+          }
+        });
+        widget.on_launched?.call();
+      } else {
+        widget.on_launch_failed?.call();
+      }
+      return;
+    }
+
+    // On native platforms, we can safely use async operations before launching
     if (await canLaunchUrl(uri)) {
       await _controller.reverse().orCancel.catchError((_) {});
 
