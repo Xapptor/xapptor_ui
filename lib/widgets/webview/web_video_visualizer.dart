@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xapptor_ui/widgets/webview/webview.dart';
-import 'package:xapptor_router/get_last_path_segment.dart';
+import 'package:xapptor_router/V2/get_last_path_segment_v2.dart';
 
 class WebVideoVisualizer extends StatefulWidget {
   String base_url;
@@ -29,7 +29,7 @@ class _WebVideoVisualizerState extends State<WebVideoVisualizer> {
   }
 
   check_url() async {
-    widget.id ??= get_last_path_segment();
+    widget.id ??= get_last_path_segment_v2();
     complete_url = widget.base_url + widget.id!;
     setState(() {});
   }
